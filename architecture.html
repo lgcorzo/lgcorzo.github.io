@@ -518,7 +518,7 @@
             <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
               Zoomable full-mesh topology connecting services, ports, and dark overlay networks:
             </p>
-            <div class="mermaid" style="text-align: center;">
+            <pre id="c4-mermaid-code" style="display: none;">
 graph TB
     subgraph PERIMETER["Air-Gapped External Boundary - Zero Ingress"]
         GIT["GitHub and GitLab Cloud API"]
@@ -620,7 +620,8 @@ graph TB
     class GVISOR,VAULT,ZITI_CTRL,ZITI_ROUTER purple;
     class MINIO,CNPG,KAFKA,LITELLM emerald;
     class GIT,FLUX border;
-</div>
+</pre>
+            <div id="c4-mermaid-rendered" style="text-align: center; min-height: 400px; overflow-x: auto;"></div>
           </div>
         </div>
 
@@ -1032,6 +1033,22 @@ sequenceDiagram
   </footer>
 
   <script>
+    let c4GraphRendered = false;
+    async function renderC4Graph() {
+      if (c4GraphRendered) return;
+      const codeEl = document.getElementById('c4-mermaid-code');
+      const targetEl = document.getElementById('c4-mermaid-rendered');
+      if (!codeEl || !targetEl) return;
+      try {
+        const code = codeEl.textContent.trim();
+        const { svg } = await mermaid.render('c4-mesh-diagram', code);
+        targetEl.innerHTML = svg;
+        c4GraphRendered = true;
+      } catch (e) {
+        console.error('Failed to render C4 diagram:', e);
+      }
+    }
+
     function switchNsView(view) {
       document.getElementById('view-ns-cards').style.display = view === 'cards' ? 'block' : 'none';
       document.getElementById('view-ns-flow').style.display = view === 'flow' ? 'block' : 'none';
@@ -1042,6 +1059,7 @@ sequenceDiagram
       document.getElementById('btn-view-mermaid').classList.toggle('active', view === 'mermaid');
       
       if (view === 'mermaid') {
+        renderC4Graph();
         window.dispatchEvent(new Event('resize'));
       }
     }
