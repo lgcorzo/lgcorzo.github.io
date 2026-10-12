@@ -884,3 +884,281 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+/* ==========================================================================
+   Interactive 10-Namespace Architecture Explorer & Visual Grid
+   ========================================================================== */
+.ns-explorer-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem;
+  margin-bottom: 3.5rem;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.ns-explorer-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-emerald));
+}
+
+.ns-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ns-view-toggle {
+  display: inline-flex;
+  background: rgba(8, 11, 18, 0.9);
+  padding: 5px;
+  border-radius: 9999px;
+  border: 1px solid var(--border-subtle);
+  gap: 4px;
+}
+
+.ns-view-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ns-view-btn.active {
+  background: var(--accent-cyan);
+  color: #080b12;
+  box-shadow: 0 0 15px var(--accent-cyan-glow);
+}
+
+.ns-view-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Architecture Layer Cards & Flow */
+.ns-layer-block {
+  margin-bottom: 2.5rem;
+}
+
+.ns-layer-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ns-layer-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.ns-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.ns-interactive-card {
+  background: rgba(13, 18, 31, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ns-interactive-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-border, var(--accent-cyan));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 25px var(--card-glow, rgba(0, 240, 255, 0.2));
+}
+
+.ns-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.ns-id-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  display: inline-block;
+}
+
+.ns-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.35rem;
+}
+
+.ns-sec-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-emerald);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.ns-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.ns-components-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.ns-comp-pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: #05070c;
+  color: #cbd5e1;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ns-relation-box {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 0.85rem;
+  font-size: 0.8rem;
+}
+
+.ns-relation-label {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.ns-links-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.ns-link-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+/* Layered Visual Flow Diagram */
+.flow-topology-wrapper {
+  background: #05070c;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.flow-topology-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.flow-layer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  position: relative;
+}
+
+.flow-node {
+  background: #0d121f;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.flow-node:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.flow-connector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  position: relative;
+}
+
+.flow-connector::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+  opacity: 0.4;
+}
+
+.flow-connector span {
+  background: #05070c;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  z-index: 1;
+}
