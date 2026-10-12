@@ -218,14 +218,14 @@
     if (!list || !panel) return;
 
     list.innerHTML = PIPELINE.map((s, i) => `
-      <li class="shrink-0 lg:shrink">
+      <div class="shrink-0 lg:shrink" role="presentation">
         <button type="button" role="tab" data-step="${i}" id="tab-${s.id}" aria-controls="pipeline-panel"
           class="step-btn flex w-full items-center gap-3 rounded-xl border border-line bg-white/[0.03] px-4 py-3 text-left transition hover:bg-white/[0.07] focus-visible:outline-2 focus-visible:outline-accent">
           <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg font-mono text-xs font-semibold ${ACCENT_BG[s.accent]} ${ACCENT_TEXT[s.accent]}">${i}</span>
           <span class="min-w-0"><span class="block text-sm font-semibold text-white">${esc(s.label)}</span>
           <span class="hidden truncate text-xs text-slate-500 lg:block">${esc(s.who)}</span></span>
         </button>
-      </li>`).join('');
+      </div>`).join('');
 
     const buttons = [...list.querySelectorAll('.step-btn')];
 
