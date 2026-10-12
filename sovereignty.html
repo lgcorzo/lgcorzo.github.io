@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereignty Policy & Fork Independence — Dark Gravity Ecosystem</title>
+  <meta name="description" content="Comprehensive architectural declaration of supply-chain sovereignty, Git remote topology, 100% independent GHCR container releases, zero-upstream-rebase policy, and 38-repository decoupled storage factory.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0d121f',
+        primaryColor: '#101726',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#00f0ff',
+        lineColor: '#00f0ff',
+        secondaryColor: '#162036',
+        tertiaryColor: '#05070c'
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <span>DARK GRAVITY</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+        <li><a href="sovereignty.html" class="nav-link active">Sovereignty Policy</a></li>
+        <li><a href="index.html#projects" class="nav-link">Ecosystem</a></li>
+        <li><a href="index.html#security" class="nav-link">Zero-Trust</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="https://github.com/lgcorzo/docs" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          @lgcorzo/docs
+        </a>
+        <a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer" class="btn btn-purple">
+          NotebookLM KB
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero" style="padding-top: 8.5rem; padding-bottom: 3.5rem;">
+    <div class="hero-container">
+      <div class="badge badge-purple" style="margin-bottom: 1.25rem;">
+        <span class="badge-dot"></span>
+        Supply-Chain Autonomy & Formal Fork Policy
+      </div>
+      <h1 class="hero-title" style="font-size: 3.2rem; line-height: 1.15;">
+        Sovereignty Policy & Fork Independence
+      </h1>
+      <p class="hero-subtitle" style="max-width: 860px;">
+        Formal governance and technical architecture establishing <strong>100% operational autonomy</strong> across 38 storage, cryptographic, and SDK repositories. Zero reliance on upstream registries, immutable semantic versioning, and automated self-healing.
+      </p>
+
+      <div class="hero-stats" style="grid-template-columns: repeat(4, 1fr); margin-top: 2.5rem;">
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--accent-cyan);">100%</div>
+          <div class="stat-label">Sovereign Git Remotes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--accent-purple);">38 / 38</div>
+          <div class="stat-label">Decoupled Repositories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--accent-emerald);">Oct 10, 2026</div>
+          <div class="stat-label">Independence Baseline</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: var(--accent-amber);">0 CVE</div>
+          <div class="stat-label">Autonomous CodeQL SLA</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Core Declaration Section -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="section-container">
+      
+      <div class="feature-card" style="margin-bottom: 3rem; background: linear-gradient(135deg, rgba(16, 23, 38, 0.85) 0%, rgba(13, 18, 31, 0.95) 100%); border-left: 4px solid var(--accent-cyan);">
+        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 0.75rem;">
+          The 4 Pillars of Sovereign Ecosystem Autonomy
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.25rem;">
+          As documented in the official <a href="https://github.com/lgcorzo/docs" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">@lgcorzo/docs</a> architectural charter, the Dark Gravity ecosystem maintains absolute decoupling from external upstream entities (including upstream MinIO and third-party tooling). All software artifacts running in production are compiled, scanned, packaged, and deployed solely through controlled sovereign pipelines.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div style="background: rgba(8, 11, 18, 0.6); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 1</div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">Git Remote Topology</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
+              Zero active upstream remotes. All default branches (<code style="font-family: var(--font-mono); font-size: 0.75rem;">main</code>/<code style="font-family: var(--font-mono); font-size: 0.75rem;">master</code>) push exclusively to <code style="font-family: var(--font-mono); font-size: 0.75rem;">github.com/lgcorzo/*</code> under isolated access controls and mandatory branch protection.
+            </p>
+          </div>
+
+          <div style="background: rgba(8, 11, 18, 0.6); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-purple); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 2</div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">Hermetic Container Registry</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
+              Upstream image registries (<code style="font-family: var(--font-mono); font-size: 0.75rem;">quay.io</code>, <code style="font-family: var(--font-mono); font-size: 0.75rem;">docker.io</code>) are decommissioned. All images are compiled hermetically via GitHub Actions and published directly to <code style="font-family: var(--font-mono); font-size: 0.75rem;">ghcr.io/lgcorzo/*</code>.
+            </p>
+          </div>
+
+          <div style="background: rgba(8, 11, 18, 0.6); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 3</div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">Zero-:latest Policy</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
+              All production manifests, Helm charts, and Kustomize overlays bind to immutable semantic tags (<code style="font-family: var(--font-mono); font-size: 0.75rem;">v*.*.*-lgcorzo.*</code>), preventing silent downstream poisoning or non-reproducible deployments.
+            </p>
+          </div>
+
+          <div style="background: rgba(8, 11, 18, 0.6); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-amber); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 4</div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">No Upstream Rebase</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
+              Upstream commits are treated as third-party reference sources, never as authoritative base branches. No destructive automated rebases occur; all updates pass through human-in-the-loop validation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maintenance Lifecycle Diagram -->
+      <div class="feature-card" style="margin-bottom: 3.5rem;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-cyan); text-align: center;">
+          Automated CI/CD & Sovereign Maintenance Lifecycle
+        </h3>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">
+          Workflow enforcing AST-driven vulnerability scanning, human sign-off, and hermetic multi-arch container releases.
+        </p>
+        
+        <div class="mermaid" style="text-align: center;">
+graph TD
+    UPSTREAM["Upstream Tracking Branch<br/>(Weekly sync inspection cron)"]
+    FACTORY["Dark Gravity Factory CA/CD<br/>Daily Trivy, CodeQL, VulnCheck + Autonomous AST Patching"]
+    HITL["Human-in-the-Loop (HITL) Gate<br/>Mandatory code review & sign-off prior to merge"]
+    RELEASE["Hermetic Multi-Stage Build & Release<br/>Multi-arch AMD64/ARM64, GHCR Registry, Minisign/Cosign"]
+
+    UPSTREAM -->|Delta Ingestion| FACTORY
+    FACTORY -->|Generates Verified PR| HITL
+    HITL -->|Manual Cryptographic Sign-Off| RELEASE
+
+    classDef cyan stroke:#00f0ff,stroke-width:2px,fill:#0d121f,color:#fff;
+    classDef purple stroke:#a855f7,stroke-width:2px,fill:#101726,color:#fff;
+    classDef emerald stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
+    classDef border stroke:#475569,stroke-width:1px,fill:#080b12,color:#f8fafc;
+
+    class UPSTREAM border;
+    class FACTORY purple;
+    class HITL cyan;
+    class RELEASE emerald;
+</div>
+      </div>
+
+      <!-- 38 Repositories 4-Tier Matrix -->
+      <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+        <span class="section-tag">Ecosystem Classification</span>
+        <h2 class="section-title">The 38 Decoupled Repositories Across 4 Tiers</h2>
+        <p class="section-description" style="margin: 0;">
+          Full breakdown of storage, crypto acceleration, SDKs, and tooling repositories operating under the sovereign umbrella.
+        </p>
+      </div>
+
+      <div class="table-wrapper" style="margin-bottom: 3.5rem;">
+        <table class="security-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Component Classification</th>
+              <th>Repositories Under @lgcorzo</th>
+              <th>Role in Sovereign AI Factory</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">Tier 1</strong></td>
+              <td><strong>Core Storage & Infrastructure</strong></td>
+              <td><code style="font-family: var(--font-mono);">minio</code>, <code style="font-family: var(--font-mono);">mc</code>, <code style="font-family: var(--font-mono);">operator</code>, <code style="font-family: var(--font-mono);">kes</code>, <code style="font-family: var(--font-mono);">console</code>, <code style="font-family: var(--font-mono);">directpv</code>, <code style="font-family: var(--font-mono);">warp</code>, <code style="font-family: var(--font-mono);">sidekick</code>, <code style="font-family: var(--font-mono);">certgen</code>, <code style="font-family: var(--font-mono);">dperf</code></td>
+              <td>High-throughput object storage engine, Kubernetes Operator orchestration, KMS secret management, bare-metal NVMe CSI storage, and storage benchmarking.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-purple);">Tier 2</strong></td>
+              <td><strong>Crypto & SIMD Acceleration</strong></td>
+              <td><code style="font-family: var(--font-mono);">sha256-simd</code>, <code style="font-family: var(--font-mono);">md5-simd</code>, <code style="font-family: var(--font-mono);">blake2b-simd</code>, <code style="font-family: var(--font-mono);">simdjson-go</code>, <code style="font-family: var(--font-mono);">highwayhash</code>, <code style="font-family: var(--font-mono);">crc64nvme</code>, <code style="font-family: var(--font-mono);">sio</code>, <code style="font-family: var(--font-mono);">asm2plan9s</code></td>
+              <td>Hardware-accelerated AVX-512 / ARM Neon cryptographic primitives, SIMD JSON parsing, and streaming encryption libraries ensuring wire-speed throughput.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-emerald);">Tier 3</strong></td>
+              <td><strong>SDKs & Core Client Libraries</strong></td>
+              <td><code style="font-family: var(--font-mono);">minio-go</code>, <code style="font-family: var(--font-mono);">madmin-go</code>, <code style="font-family: var(--font-mono);">kms-go</code>, <code style="font-family: var(--font-mono);">pkg</code>, <code style="font-family: var(--font-mono);">cli</code>, <code style="font-family: var(--font-mono);">colorjson</code>, <code style="font-family: var(--font-mono);">csvparser</code>, <code style="font-family: var(--font-mono);">dnscache</code>, <code style="font-family: var(--font-mono);">filepath</code>, <code style="font-family: var(--font-mono);">mtls</code>, <code style="font-family: var(--font-mono);">multipart-debug</code>, <code style="font-family: var(--font-mono);">mux</code>, <code style="font-family: var(--font-mono);">pkger</code>, <code style="font-family: var(--font-mono);">selfupdate</code>, <code style="font-family: var(--font-mono);">websocket</code>, <code style="font-family: var(--font-mono);">xxml</code>, <code style="font-family: var(--font-mono);">zipindex</code></td>
+              <td>Client SDKs, cluster administration APIs, KMS integration layers, and low-level networking primitives for autonomous agentic services.</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-amber);">Tier 4</strong></td>
+              <td><strong>Testing, Documentation & Infra</strong></td>
+              <td><code style="font-family: var(--font-mono);">mint</code>, <code style="font-family: var(--font-mono);">docs</code>, <code style="font-family: var(--font-mono);">minio-cf</code></td>
+              <td>Automated end-to-end integration test suites, Sphinx documentation compilation engines, and cloud provider configuration templates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Real Evidence of Production Autonomy -->
+      <div class="feature-card" style="margin-bottom: 3.5rem;">
+        <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 1rem;">
+          Verifiable Evidence of Production Autonomy
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          The sovereign cluster is not a theoretical fork&mdash;it powers live enterprise production workloads with verified runtime immutability:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+          <div style="background: #080b12; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <h4 style="font-size: 1rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">1. Live Kubernetes Workloads</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+              Deployments in the <code style="font-family: var(--font-mono); font-size: 0.75rem;">storage</code> namespace use strictly sovereign images:
+              <br/>&bull; <code style="font-family: var(--font-mono); font-size: 0.72rem;">ghcr.io/lgcorzo/operator:v7.1.1-lgcorzo.3</code>
+              <br/>&bull; <code style="font-family: var(--font-mono); font-size: 0.72rem;">ghcr.io/lgcorzo/minio:v0.1.0-lgcorzo.2</code>
+              <br/>&bull; <code style="font-family: var(--font-mono); font-size: 0.72rem;">ghcr.io/lgcorzo/mc:v0.1.1-lgcorzo.2</code>
+            </p>
+          </div>
+
+          <div style="background: #080b12; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <h4 style="font-size: 1rem; color: var(--accent-purple); margin-bottom: 0.5rem;">2. Go 1.26 Modern Toolchains</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+              All tools compile hermetically against <code style="font-family: var(--font-mono); font-size: 0.75rem;">golang:1.26-alpine</code> with multi-arch (<code style="font-family: var(--font-mono); font-size: 0.75rem;">linux/amd64</code>, <code style="font-family: var(--font-mono); font-size: 0.75rem;">linux/arm64</code>) binary releases, independent of upstream build environments.
+            </p>
+          </div>
+
+          <div style="background: #080b12; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <h4 style="font-size: 1rem; color: var(--accent-emerald); margin-bottom: 0.5rem;">3. AIStor Decoupled Architecture</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+              All enhancements follow the <strong>AIStor extension standard</strong>: multi-tenancy, autonomous agent streaming, and formal regulatory compliance with EU AI Act and SOC 2 Type II specifications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Callout -->
+      <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);">
+        <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem;">
+          Explore the Full Sovereign Docs Engine
+        </h3>
+        <p style="color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem;">
+          Review the complete Go Module decoupling specifications, cluster deployment manifests, and active repository status matrix on GitHub.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="https://github.com/lgcorzo/docs" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            View @lgcorzo/docs on GitHub
+          </a>
+          <a href="architecture.html" class="btn btn-outline">
+            Cluster Architecture Deep Dive
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>DARK GRAVITY CA/CD</h3>
+        <p>
+          Next-generation autonomous agentic software factory built with Rust, Hatchet, and zero-trust hardware sandboxes. Engineered by Luis Galo Corzo.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Sovereignty</h4>
+        <ul class="footer-links">
+          <li><a href="sovereignty.html">Sovereignty Policy</a></li>
+          <li><a href="https://github.com/lgcorzo/docs" target="_blank" rel="noopener noreferrer">@lgcorzo/docs Engine</a></li>
+          <li><a href="architecture.html#k8s-namespaces">10 Namespaces</a></li>
+          <li><a href="index.html#compliance">EU AI Act & SOC 2</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Architecture</h4>
+        <ul class="footer-links">
+          <li><a href="architecture.html#k8s-namespaces">Kubernetes Mesh</a></li>
+          <li><a href="architecture.html#openziti-mesh">OpenZiti Dark Overlay</a></li>
+          <li><a href="architecture.html#security-lifecycle">Zero-Trust Pipeline</a></li>
+          <li><a href="architecture.html#low-resource">Low-Resource Engine</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul class="footer-links">
+          <li><a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer">GitHub Profile</a></li>
+          <li><a href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
+          <li><a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer">NotebookLM Architecture KB</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Dark Gravity Engineering. Designed and Maintained by Luis Galo Corzo.</span>
+      <span>Autonomous CA/CD Software Factory V7.2 / V7.3</span>
+    </div>
+  </footer>
+
+</body>
+</html>
