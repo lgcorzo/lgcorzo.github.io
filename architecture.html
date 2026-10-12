@@ -93,15 +93,430 @@
         </p>
       </div>
 
-      <!-- Mermaid Diagram: 10 Namespaces Inter-Relations -->
-      <div class="feature-card" style="margin-bottom: 3.5rem; overflow-x: auto;">
-        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-cyan); text-align: center;">
-          Full 10-Namespace Topographical Map & Inter-Service Dataflows
-        </h3>
-        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
-          Shows the exact relations, ports, and protocols connecting all 10 namespaces inside the enterprise Kubernetes cluster.
-        </p>
-        <div class="mermaid" style="text-align: center;">
+      <!-- Enhanced 10-Namespace Interactive Matrix & Visual Topology -->
+      <div class="ns-explorer-container">
+        <div class="ns-header-bar">
+          <div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 0.35rem;">
+              10-Namespace Production Mesh & Service Matrix
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin: 0;">
+              Structured across 4 architectural operational planes with zero-trust egress and isolated runtimes.
+            </p>
+          </div>
+          <div class="ns-view-toggle">
+            <button class="ns-view-btn active" id="btn-view-cards" onclick="switchNsView('cards')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Architectural Planes
+            </button>
+            <button class="ns-view-btn" id="btn-view-flow" onclick="switchNsView('flow')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              Dataflow Pipeline
+            </button>
+            <button class="ns-view-btn" id="btn-view-mermaid" onclick="switchNsView('mermaid')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Mermaid C4 Graph
+            </button>
+          </div>
+        </div>
+
+        <!-- VIEW 1: Architectural Planes Cards -->
+        <div id="view-ns-cards">
+
+          <!-- Plane A: Autonomous Execution & Sandboxing -->
+          <div class="ns-layer-block">
+            <div class="ns-layer-title" style="--lane-color: var(--accent-cyan);">
+              <span>Layer 1 — Autonomous Execution & Sandboxing Runtimes</span>
+            </div>
+            <div class="ns-cards-grid">
+              
+              <!-- 1. agents -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-cyan); --card-glow: rgba(0,240,255,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge">ns / agents</span>
+                    <span class="ns-sec-badge">Deny-All Egress</span>
+                  </div>
+                  <h4 class="ns-card-title">Autonomous Agent Runtime</h4>
+                  <p class="ns-card-desc">
+                    Executes Rust-based agents (<strong>Rustant</strong>, <strong>ZeroClaw</strong>, <strong>DocAgent</strong>) and deep research processes. Runs with native sidecars (<code style="font-family: var(--font-mono); font-size: 0.75rem;">restartPolicy: Always</code>) for resilient pod lifecycles.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">factory-worker</span>
+                    <span class="ns-comp-pill">factory-mcp-server (:8100)</span>
+                    <span class="ns-comp-pill">deep-research (:8200)</span>
+                    <span class="ns-comp-pill">hatchet-proxy (:7070)</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">orchestrators (gRPC)</span>
+                    <span class="ns-link-chip">confluent (events)</span>
+                    <span class="ns-link-chip">development (runsc)</span>
+                    <span class="ns-link-chip">security (JIT tokens)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 9. development -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-purple); --card-glow: rgba(168,85,247,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #c084fc; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">ns / development</span>
+                    <span class="ns-sec-badge" style="color: #f43f5e; border-color: rgba(244,63,94,0.3); background: rgba(244,63,94,0.1);">gVisor Hardware Sandbox</span>
+                  </div>
+                  <h4 class="ns-card-title">Ephemeral Micro-Sandboxes</h4>
+                  <p class="ns-card-desc">
+                    Runs untrusted code synthesis, syntax checking, and unit test suites inside strictly isolated user-space kernels via <code style="font-family: var(--font-mono); font-size: 0.75rem;">runsc</code>. Memory clamped to ≤ 30 MiB RAM, CPU clamped to ≤ 250m.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">gVisor (runsc)</span>
+                    <span class="ns-comp-pill">Ephemeral Jobs</span>
+                    <span class="ns-comp-pill">Memory Clamp: 30MiB</span>
+                    <span class="ns-comp-pill">CPU Clamp: 250m</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (dispatched via MCP)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Plane B: Workflow Orchestration & Event Streaming -->
+          <div class="ns-layer-block">
+            <div class="ns-layer-title" style="--lane-color: var(--accent-purple);">
+              <span>Layer 2 — Workflow Orchestration & Asynchronous Event Streaming</span>
+            </div>
+            <div class="ns-cards-grid">
+
+              <!-- 2. orchestrators -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-cyan); --card-glow: rgba(0,240,255,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge">ns / orchestrators</span>
+                    <span class="ns-sec-badge">Durable State Checkpoints</span>
+                  </div>
+                  <h4 class="ns-card-title">Hatchet Workflow Engine</h4>
+                  <p class="ns-card-desc">
+                    Drives crash-resilient 6-phase autonomous DAGs (Ingestion &rarr; Plan &rarr; Code &rarr; Validation &rarr; Review &rarr; Delivery). Automatically retries flaky steps and checkpoints DAG states directly to PostgreSQL.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">hatchet-engine (:7077/:8000)</span>
+                    <span class="ns-comp-pill">keda-operator</span>
+                    <span class="ns-comp-pill">gRPC Workflow Dispatch</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (gRPC task dispatch)</span>
+                    <span class="ns-link-chip">storage (Postgres state)</span>
+                    <span class="ns-link-chip">confluent (triggers)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. confluent -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-emerald); --card-glow: rgba(16,185,129,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #34d399; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1);">ns / confluent</span>
+                    <span class="ns-sec-badge">KRaft Consensus</span>
+                  </div>
+                  <h4 class="ns-card-title">Enterprise Kafka Event Mesh</h4>
+                  <p class="ns-card-desc">
+                    Zero-dependency high-throughput distributed event streaming for mission ingestion, real-time agent internal thoughts, and cryptographic audit events across all autonomous nodes.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">Apache Kafka (KRaft)</span>
+                    <span class="ns-comp-pill">Schema Registry</span>
+                    <span class="ns-comp-pill">topic: mission-ingestion</span>
+                    <span class="ns-comp-pill">topic: agent-thought</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (publishes thoughts)</span>
+                    <span class="ns-link-chip">orchestrators (triggers DAG)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Plane C: AI Gateway, GraphRAG & Sovereign Data -->
+          <div class="ns-layer-block">
+            <div class="ns-layer-title" style="--lane-color: var(--accent-emerald);">
+              <span>Layer 3 — AI Intelligence, GraphRAG & Sovereign Data Layer</span>
+            </div>
+            <div class="ns-cards-grid">
+
+              <!-- 6. llm-apps -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-cyan); --card-glow: rgba(0,240,255,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge">ns / llm-apps</span>
+                    <span class="ns-sec-badge">FinOps Budget Controls</span>
+                  </div>
+                  <h4 class="ns-card-title">LiteLLM AI Gateway & Semantica</h4>
+                  <p class="ns-card-desc">
+                    Centralized LLM router injecting FinOps virtual tags, enforced spending caps, and caching. Includes <strong>Semantica-AGI</strong> for tracking causal code provenance and <strong>R2R GraphRAG</strong>.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">LiteLLM Proxy (:4000)</span>
+                    <span class="ns-comp-pill">Semantica Lineage</span>
+                    <span class="ns-comp-pill">R2R GraphRAG (:7272)</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (model queries)</span>
+                    <span class="ns-link-chip">security (API keys)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. knowledge -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-purple); --card-glow: rgba(168,85,247,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #c084fc; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">ns / knowledge</span>
+                    <span class="ns-sec-badge">AST Trees & Vectors</span>
+                  </div>
+                  <h4 class="ns-card-title">Semantic Code Memory</h4>
+                  <p class="ns-card-desc">
+                    Maintains high-dimensional code vectors and symbol dependency graphs using <strong>deepwiki-rs</strong> (Tree-sitter AST engine) and pgvector for zero-latency semantic codebase lookups.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">pgvector CNPG Cluster</span>
+                    <span class="ns-comp-pill">deepwiki-rs Daemon</span>
+                    <span class="ns-comp-pill">Code AST Graph Engine</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (symbol resolution)</span>
+                    <span class="ns-link-chip">storage (persistence)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. storage -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-emerald); --card-glow: rgba(16,185,129,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #34d399; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1);">ns / storage</span>
+                    <span class="ns-sec-badge">Sovereign S3 + DirectPV</span>
+                  </div>
+                  <h4 class="ns-card-title">PostgreSQL & S3 Storage Tier</h4>
+                  <p class="ns-card-desc">
+                    Primary on-premise storage tier. High-performance CloudNativePG PostgreSQL 16 cluster, MinIO S3 object storage for MLflow runs and DAG step artifacts, mounted via direct-attached DirectPV NVMe disks.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">CloudNativePG 16</span>
+                    <span class="ns-comp-pill">MinIO S3 Sovereign</span>
+                    <span class="ns-comp-pill">DirectPV CSI Driver</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">orchestrators (checkpoints)</span>
+                    <span class="ns-link-chip">agents (build artifacts)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Plane D: Zero-Trust Security, Dark Fabric & GitOps -->
+          <div class="ns-layer-block" style="margin-bottom: 0;">
+            <div class="ns-layer-title" style="--lane-color: var(--accent-rose);">
+              <span>Layer 4 — Zero-Trust Security, Dark Network Fabric & GitOps</span>
+            </div>
+            <div class="ns-cards-grid">
+
+              <!-- 8. openziti -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-cyan); --card-glow: rgba(0,240,255,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge">ns / openziti</span>
+                    <span class="ns-sec-badge">Zero Open Ports</span>
+                  </div>
+                  <h4 class="ns-card-title">OpenZiti Dark Network Mesh</h4>
+                  <p class="ns-card-desc">
+                    Removes the traditional perimeter by eliminating all open listening ports. Encapsulates pod-to-pod communications into an identity-based mTLS 1.3 cryptographic dark overlay mesh.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">Ziti Controller (:8441)</span>
+                    <span class="ns-comp-pill">Ziti Edge Routers (:3022)</span>
+                    <span class="ns-comp-pill">Dark Egress / Dial-Out</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">All 10 Namespaces (Encrypted Overlay)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 7. security -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-purple); --card-glow: rgba(168,85,247,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #c084fc; border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.1);">ns / security</span>
+                    <span class="ns-sec-badge">5-Minute JIT Tokens</span>
+                  </div>
+                  <h4 class="ns-card-title">Vault & SealedSecrets Identity</h4>
+                  <p class="ns-card-desc">
+                    Issues dynamic, non-renewable 5-minute (300s) Just-In-Time Git tokens for pull request creation. Tokens are immediately overwritten with zeroization (54.2ns) upon drop.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">HashiCorp Vault</span>
+                    <span class="ns-comp-pill">Bitnami SealedSecrets</span>
+                    <span class="ns-comp-pill">Keycloak OIDC</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">agents (credential provider)</span>
+                    <span class="ns-link-chip">orchestrators (auth)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 10. flux-system -->
+              <div class="ns-interactive-card" style="--card-border: var(--accent-emerald); --card-glow: rgba(16,185,129,0.2);">
+                <div>
+                  <div class="ns-card-top">
+                    <span class="ns-id-badge" style="color: #34d399; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1);">ns / flux-system</span>
+                    <span class="ns-sec-badge">Pull Reconciliation</span>
+                  </div>
+                  <h4 class="ns-card-title">FluxCD v2 GitOps Engine</h4>
+                  <p class="ns-card-desc">
+                    Continuous reconciliation engine that monitors Git repositories and applies declarative Kubernetes manifests automatically. Completely immune to configuration drift.
+                  </p>
+                  <div class="ns-components-list">
+                    <span class="ns-comp-pill">Flux Source Controller</span>
+                    <span class="ns-comp-pill">Kustomize Controller</span>
+                    <span class="ns-comp-pill">Helm Controller</span>
+                  </div>
+                </div>
+                <div class="ns-relation-box">
+                  <div class="ns-relation-label">Connected Namespaces:</div>
+                  <div class="ns-links-wrap">
+                    <span class="ns-link-chip">All 10 Namespaces (Declarative State)</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- VIEW 2: Visual Pipeline Flow -->
+        <div id="view-ns-flow" style="display: none;">
+          <div class="flow-topology-wrapper">
+            <div class="flow-topology-header">
+              <h4 style="color: var(--accent-cyan); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">
+                End-to-End Autonomous Pipeline & Namespace Interaction Flow
+              </h4>
+              <p style="color: var(--text-secondary); font-size: 0.88rem;">
+                Trace how an autonomous mission travels through namespaces from outbound polling to micro-sandboxed verification.
+              </p>
+            </div>
+
+            <!-- Step 1: Perimeter to Agent -->
+            <div class="flow-layer">
+              <div class="flow-node" style="border-color: rgba(0, 240, 255, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">01. OUTBOUND POLL (30-60s)</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">GitHub / GitLab API</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">No inbound webhooks. Outbound worker dials Git through Ziti router tunnel.</p>
+              </div>
+              <div class="flow-node" style="border-color: rgba(168, 85, 247, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-purple); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">02. CREDENTIAL ISSUANCE</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / security (Vault)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Generates 5-minute dynamic token. Worker signs with Ed25519 verifiable key.</p>
+              </div>
+            </div>
+
+            <div class="flow-connector">
+              <span>&darr; Event Published to Kafka Bus &darr;</span>
+            </div>
+
+            <!-- Step 2: Confluent to Orchestrators -->
+            <div class="flow-layer">
+              <div class="flow-node" style="border-color: rgba(16, 185, 129, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">03. EVENT STREAMING</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / confluent (Kafka)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Partitions <code style="font-size: 0.75rem;">mission-ingestion</code> and streams real-time thoughts to audit topics.</p>
+              </div>
+              <div class="flow-node" style="border-color: rgba(0, 240, 255, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">04. DURABLE WORKFLOW</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / orchestrators (Hatchet)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Triggers 6-phase DAG. Dispatches steps via gRPC over hatchet-proxy sidecars.</p>
+              </div>
+            </div>
+
+            <div class="flow-connector">
+              <span>&darr; Agent Dispatches Sandboxed Execution &darr;</span>
+            </div>
+
+            <!-- Step 3: Agents to Knowledge / LLM / Sandbox -->
+            <div class="flow-layer">
+              <div class="flow-node" style="border-color: rgba(168, 85, 247, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-purple); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">05. MEMORY & INFERENCE</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / knowledge &amp; ns / llm-apps</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Queries deepwiki-rs Tree-sitter AST and LiteLLM gateway with virtual tag budgets.</p>
+              </div>
+              <div class="flow-node" style="border-color: rgba(244, 63, 94, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">06. SECURE SANDBOX EXECUTION</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / development (gVisor runsc)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Executes code mutation & runs unit test suite inside user-space kernel (30MiB RAM).</p>
+              </div>
+            </div>
+
+            <div class="flow-connector">
+              <span>&darr; State Checkpointing & Reconciliation &darr;</span>
+            </div>
+
+            <!-- Step 4: Storage & GitOps -->
+            <div class="flow-layer">
+              <div class="flow-node" style="border-color: rgba(16, 185, 129, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">07. PERSISTENCE & AUDIT</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / storage (CloudNativePG &amp; MinIO)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Persists run state, MLflow artifacts, and zeroizes memory keys in 54.2 nanoseconds.</p>
+              </div>
+              <div class="flow-node" style="border-color: rgba(0, 240, 255, 0.4);">
+                <div style="font-size: 0.72rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">08. GITOPS RECONCILIATION</div>
+                <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / flux-system (FluxCD v2)</div>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Continuously pulls and reconciles desired state across all 10 namespaces with 0 drift.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 3: Mermaid C4 Graph (Expanded View) -->
+        <div id="view-ns-mermaid" style="display: none;">
+          <div style="background: #05070c; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; overflow-x: auto;">
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+              Zoomable full-mesh topology connecting services, ports, and dark overlay networks:
+            </p>
+            <div class="mermaid" style="text-align: center;">
 graph TB
     subgraph PERIMETER["Air-Gapped External Boundary - Zero Ingress"]
         GIT["GitHub and GitLab Cloud API"]
@@ -204,7 +619,11 @@ graph TB
     class MINIO,CNPG,KAFKA,LITELLM emerald;
     class GIT,FLUX border;
 </div>
+          </div>
+        </div>
+
       </div>
+
 
       <!-- Namespace Breakdown Table -->
       <div class="table-wrapper" style="margin-bottom: 3.5rem;">
@@ -608,5 +1027,20 @@ sequenceDiagram
     </div>
   </footer>
 
+  <script>
+    function switchNsView(view) {
+      document.getElementById('view-ns-cards').style.display = view === 'cards' ? 'block' : 'none';
+      document.getElementById('view-ns-flow').style.display = view === 'flow' ? 'block' : 'none';
+      document.getElementById('view-ns-mermaid').style.display = view === 'mermaid' ? 'block' : 'none';
+      
+      document.getElementById('btn-view-cards').classList.toggle('active', view === 'cards');
+      document.getElementById('btn-view-flow').classList.toggle('active', view === 'flow');
+      document.getElementById('btn-view-mermaid').classList.toggle('active', view === 'mermaid');
+      
+      if (view === 'mermaid') {
+        window.dispatchEvent(new Event('resize'));
+      }
+    }
+  </script>
 </body>
 </html>
