@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Gravity Architecture — Kubernetes Topology, Zero-Trust & Low-Resource Factory</title>
-  <meta name="description" content="Technical deep dive into Dark Gravity CA/CD: 10-namespace Kubernetes architecture, zero-trust cryptographic boundaries, gVisor low-resource sandboxing, and sovereign open-source toolchain.">
+  <title>Dark Gravity Architecture — 10 Namespaces, OpenZiti Dark Network & Low-Resource Factory</title>
+  <meta name="description" content="Technical deep dive into Dark Gravity CA/CD: 10-namespace Kubernetes architecture, OpenZiti mTLS 1.3 dark network overlay, zero-trust cryptographic boundaries, gVisor low-resource sandboxing, and sovereign open-source toolchain.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,8 +40,9 @@
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="#k8s-topology" class="nav-link active">Kubernetes Topology</a></li>
-        <li><a href="#security-model" class="nav-link">Zero-Trust Security</a></li>
+        <li><a href="#k8s-namespaces" class="nav-link active">10 Namespaces & Relations</a></li>
+        <li><a href="#openziti-mesh" class="nav-link">OpenZiti Dark Overlay</a></li>
+        <li><a href="#security-lifecycle" class="nav-link">Zero-Trust Pipeline</a></li>
         <li><a href="#low-resource" class="nav-link">Low-Resource Engine</a></li>
         <li><a href="#open-source-stack" class="nav-link">Open-Source Stack</a></li>
       </ul>
@@ -49,259 +50,401 @@
         <a href="index.html#projects" class="btn btn-outline">
           Ecosystem
         </a>
-        <a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          Architecture KB
+        <a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer" class="btn btn-purple">
+          NotebookLM KB
         </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero" style="padding-bottom: 3rem;">
+  <header class="hero" style="padding-bottom: 3.5rem;">
     <div class="hero-glow"></div>
     <div class="hero-container">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>Deep Dive • Kubernetes & Zero-Trust Architecture</span>
+        <span>Deep Dive • Kubernetes Namespaces & OpenZiti Dark Mesh</span>
       </div>
       <h1 class="hero-title">
-        Enterprise Autonomous Factory on <span class="gradient-text">Open-Source & Limited Resources</span>
+        10-Namespace Topology, <span class="gradient-text">OpenZiti Zero-Trust Security</span> & Limited-Resource Engineering
       </h1>
       <p class="hero-subtitle">
-        How Dark Gravity orchestrates a multi-agent CA/CD software factory inside air-gapped Kubernetes clusters, enforcing hardware micro-sandboxing (≤ 30 MiB RAM) and 100% sovereign open-source components.
+        How Dark Gravity orchestrates an autonomous multi-agent software factory across 10 isolated Kubernetes namespaces, bound together by an OpenZiti mTLS 1.3 dark network overlay with zero open public ingress ports and strict micro-sandboxing (≤ 30 MiB RAM).
       </p>
       <div class="hero-cta">
-        <a href="#k8s-topology" class="btn btn-primary">
-          Explore Kubernetes Namespaces
+        <a href="#k8s-namespaces" class="btn btn-primary">
+          Explore 10-Namespace Inter-Relations
         </a>
-        <a href="#low-resource" class="btn btn-purple">
-          Micro-Sandbox & FinOps Clamping
+        <a href="#openziti-mesh" class="btn btn-purple">
+          OpenZiti Dark Network Mesh
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Section 1: Kubernetes 10-Namespace Topology -->
-  <section id="k8s-topology" class="section">
+  <!-- Section 1: Detailed 10-Namespace Architecture & Inter-Relations -->
+  <section id="k8s-namespaces" class="section">
     <div class="section-container">
       <div class="section-header">
-        <span class="section-tag">Cluster Architecture</span>
-        <h2 class="section-title">10-Namespace Kubernetes Production Topology</h2>
+        <span class="section-tag">Kubernetes Architecture</span>
+        <h2 class="section-title">The 10 Namespaces & Their Precise Inter-Relations</h2>
         <p class="section-description">
-          Complete network and compute isolation across 10 dedicated Kubernetes namespaces, enforcing Deny-All default egress and zero open ingress ports.
+          Every capability in Dark Gravity is compartmentalized into a dedicated Kubernetes namespace. Outbound NetworkPolicies enforce a Deny-All posture; communication occurs strictly over authenticated channels with cryptographic identities.
         </p>
       </div>
 
-      <!-- Mermaid Diagram: Kubernetes Architecture -->
+      <!-- Mermaid Diagram: 10 Namespaces Inter-Relations -->
       <div class="feature-card" style="margin-bottom: 3.5rem; overflow-x: auto;">
-        <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--accent-cyan); text-align: center;">
-          Interactive C4 Container Architecture & Network Flow
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-cyan); text-align: center;">
+          Full 10-Namespace Topographical Map & Inter-Service Dataflows
         </h3>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Shows the exact relations, ports, and protocols connecting all 10 namespaces inside the enterprise Kubernetes cluster.
+        </p>
         <div class="mermaid" style="text-align: center;">
 graph TB
     subgraph PERIMETER["Air-Gapped External Boundary (Zero Public Ingress)"]
-        GH["GitHub / GitLab API"]
-        POLL["GitPlatformPoller Daemon<br/>(Outbound Pull every 30-60s)"]
-        GH <-->|Outbound TLS Polling| POLL
+        GIT["GitHub / GitLab Cloud API"]
     end
 
-    subgraph K8S_CLUSTER["Dark Gravity Kubernetes Enterprise Cluster"]
-        subgraph NS_AGENTS["Namespace: agents"]
-            FW["factory-worker<br/>(Rustant / ZeroClaw / DocAgent)"]
-            FMCP["factory-mcp-server<br/>(Axum SSE :8100)"]
-            DRW["factory-deep-research<br/>(Worker :8200)"]
+    subgraph K8S["Dark Gravity Enterprise Kubernetes Cluster (10 Namespaces)"]
+
+        subgraph NS1["1. ns/agents (Autonomous Runtime)"]
+            WORKER["factory-worker<br/>(Rustant / ZeroClaw / DocAgent)"]
+            MCP["factory-mcp-server<br/>(Axum SSE :8100)"]
+            RESEARCH["factory-deep-research<br/>(Worker :8200)"]
+            PROXY["hatchet-proxy sidecar<br/>(:7070 -> :7077)"]
         end
 
-        subgraph NS_ORCHESTRATION["Namespace: orchestrators"]
+        subgraph NS2["2. ns/orchestrators (Workflow Engine)"]
             HATCHET["Hatchet Durable Engine<br/>(gRPC :7077 / API :8000)"]
-            KEDA["KEDA Autoscaler"]
+            KEDA["KEDA Autoscalers"]
         end
 
-        subgraph NS_STREAMING["Namespace: confluent"]
+        subgraph NS3["3. ns/confluent (Event Bus)"]
             KAFKA["Apache Kafka (KRaft)<br/>• mission-ingestion<br/>• agent-thought<br/>• mission-events"]
         end
 
-        subgraph NS_STORAGE["Namespace: storage & knowledge"]
-            CNPG["CloudNativePG PostgreSQL 16<br/>(State Checkpoints & pgvector)"]
-            MINIO["Sovereign MinIO S3 Cluster<br/>(Buckets: checkpoints, artifacts, mlflow)"]
-            R2R["R2R GraphRAG<br/>(Semantic Code Memory :7272)"]
+        subgraph NS4["4. ns/storage (Sovereign Data Tier)"]
+            CNPG["CloudNativePG PostgreSQL 16<br/>(State Checkpoints & DB)"]
+            MINIO["Sovereign MinIO S3 Cluster<br/>(dg-factory-checkpoints / mlflow)"]
+            DIRECTPV["DirectPV CSI Driver<br/>(NVMe Direct-Attached Storage)"]
         end
 
-        subgraph NS_SECURITY["Namespace: security & openziti"]
+        subgraph NS5["5. ns/knowledge (Semantic Memory)"]
+            PGVECTOR["pgvector CNPG Cluster<br/>(High-dimensional Embeddings)"]
+            DEEPWIKI["deepwiki-rs Daemon<br/>(Tree-sitter AST Graph Engine)"]
+        end
+
+        subgraph NS6["6. ns/llm-apps (AI Gateway & Provenance)"]
+            LITELLM["LiteLLM AI Gateway<br/>(Proxy :4000 / Virtual Tags)"]
+            SEMANTICA["Semantica-AGI Engine<br/>(Causal Lineage & Proof)"]
+            R2R["R2R GraphRAG<br/>(Semantic Code Search :7272)"]
+        end
+
+        subgraph NS7["7. ns/security (Identity & Secrets)"]
             VAULT["HashiCorp Vault<br/>(5-min JIT Tokens)"]
-            ZITI["OpenZiti Controller & Routers<br/>(mTLS 1.3 Dark Overlay)"]
             SEALED["Bitnami SealedSecrets"]
+            KEYCLOAK["Keycloak OIDC"]
         end
 
-        subgraph NS_SANDBOX["Namespace: development (Ephemeral Micro-Sandboxes)"]
-            GVISOR["gVisor (runsc) Pods & Jobs<br/>• RAM clamped <= 30 MiB<br/>• CPU clamped <= 250m<br/>• Criterion Zeroize: 54.2 ns"]
+        subgraph NS8["8. ns/openziti (Dark Network Fabric)"]
+            ZITI_CTRL["OpenZiti Controller<br/>(:8441 Control Plane)"]
+            ZITI_ROUTER["Ziti Edge Routers<br/>(:3022 Dark Ingress/Egress)"]
         end
 
-        subgraph NS_GITOPS["Namespace: flux-system"]
-            FLUX["FluxCD v2 Controllers<br/>(Pull-based reconciliation)"]
+        subgraph NS9["9. ns/development (Micro-Sandboxes)"]
+            GVISOR["gVisor (runsc) Sandboxes<br/>• Ephemeral Pods / Jobs<br/>• Clamped: RAM <= 30 MiB / CPU <= 250m"]
         end
+
+        subgraph NS10["10. ns/flux-system (GitOps Reconciliation)"]
+            FLUX["FluxCD v2 Controllers<br/>(Source / Kustomize / Helm)"]
+        end
+
     end
 
-    POLL -->|Ed25519 VC / mission-input| KAFKA
-    KAFKA -->|Trigger DAG| HATCHET
-    HATCHET -->|Durable Step Dispatch| FW
-    FW <-->|Tool Dispatch / SSE| FMCP
-    FW <-->|Context Queries| R2R
-    FW <-->|5-min JIT Tokens| VAULT
-    FMCP -->|Launch Ephemeral Job| GVISOR
-    HATCHET <-->|Checkpoints & Artifacts| MINIO
-    HATCHET <-->|Workflow State| CNPG
-    FW -->|Outbound PR Delivery| GH
-    FLUX -.->|Reconciles Manifests| K8S_CLUSTER
+    %% Perimeter & Polling Flow
+    GIT <-->|Outbound Polling (30-60s) via Ziti Edge| WORKER
+
+    %% Inter-Namespace Relations
+    WORKER -->|Publish Ed25519 Mission / Events| KAFKA
+    KAFKA -->|Trigger Mission DAG| HATCHET
+    HATCHET <-->|gRPC Durable Workflows| PROXY
+    PROXY <--> WORKER
+
+    WORKER <-->|Dispatch MCP Tools via SSE| MCP
+    MCP -->|Spawn Ephemeral runsc Pod| GVISOR
+    WORKER <-->|Semantic Code Context| R2R
+    WORKER <-->|AST Graph Queries| DEEPWIKI
+
+    WORKER <-->|Inference via Vtags| LITELLM
+    WORKER -->|Record Causal Provenance| SEMANTICA
+
+    WORKER <-->|Fetch 5-min JIT Credentials| VAULT
+    HATCHET <-->|Persist DAG Checkpoints| CNPG
+    HATCHET <-->|Archive Step Snapshots| MINIO
+    MINIO <-->|Line-rate Block IO| DIRECTPV
+
+    %% OpenZiti Dark Mesh Overlay Wrapping
+    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS1
+    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS2
+    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS4
+    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS6
+
+    %% GitOps Pull Reconciliation
+    FLUX -.->|Pull Reconciles K8s Manifests| K8S
 
     classDef cyan stroke:#00f0ff,stroke-width:2px,fill:#0d121f,color:#fff;
     classDef purple stroke:#a855f7,stroke-width:2px,fill:#101726,color:#fff;
     classDef emerald stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
-    classDef border stroke:rgba(255,255,255,0.2),stroke-width:1px,fill:#080b12,color:#f8fafc;
+    classDef border stroke:rgba(255,255,255,0.25),stroke-width:1px,fill:#080b12,color:#f8fafc;
 
-    class FW,FMCP,HATCHET cyan;
-    class GVISOR,VAULT,ZITI purple;
-    class MINIO,CNPG,KAFKA emerald;
-    class GH,POLL,FLUX border;
+    class WORKER,MCP,HATCHET cyan;
+    class GVISOR,VAULT,ZITI_CTRL,ZITI_ROUTER purple;
+    class MINIO,CNPG,KAFKA,LITELLM emerald;
+    class GIT,FLUX border;
         </div>
       </div>
 
-      <!-- Namespace Breakdown Cards -->
+      <!-- Namespace Breakdown Table -->
+      <div class="table-wrapper" style="margin-bottom: 3.5rem;">
+        <table class="security-table">
+          <thead>
+            <tr>
+              <th>Namespace</th>
+              <th>Core Microservices & Components</th>
+              <th>Namespace Role in Autonomous Loop</th>
+              <th>Connected Namespaces</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">1. agents</strong></td>
+              <td><code style="font-family: var(--font-mono);">factory-worker</code>, <code style="font-family: var(--font-mono);">factory-mcp-server</code> (:8100), <code style="font-family: var(--font-mono);">deep-research-worker</code> (:8200)</td>
+              <td>Hosts the AI personas (*Rustant*, *ZeroClaw*, *DocAgent*). Uses native sidecars with <code style="font-family: var(--font-mono);">restartPolicy: Always</code> for zero startup crashes.</td>
+              <td>orchestrators, confluent, security, development, llm-apps, knowledge</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">2. orchestrators</strong></td>
+              <td><code style="font-family: var(--font-mono);">hatchet-engine</code> (gRPC :7077, API :8000), <code style="font-family: var(--font-mono);">keda-operator</code></td>
+              <td>Coordinates crash-resilient 6-phase durable DAGs. Dispatches steps to workers and persists state transitions.</td>
+              <td>agents, storage, confluent</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">3. confluent</strong></td>
+              <td>Apache Kafka (KRaft consensus), Schema Registry</td>
+              <td>Decoupled event streaming for <code style="font-family: var(--font-mono);">mission-ingestion</code>, real-time <code style="font-family: var(--font-mono);">agent-thought</code>, and audit telemetry.</td>
+              <td>agents, orchestrators</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">4. storage</strong></td>
+              <td>CloudNativePG PostgreSQL 16, Sovereign MinIO S3 cluster, DirectPV CSI</td>
+              <td>Primary state store: database checkpoints, MLflow experiment artifacts, and encrypted DAG state in S3.</td>
+              <td>orchestrators, agents, knowledge</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">5. knowledge</strong></td>
+              <td><code style="font-family: var(--font-mono);">pgvector</code> CNPG cluster, <code style="font-family: var(--font-mono);">deepwiki-rs</code> AST engine</td>
+              <td>Maintains semantic code embeddings and Tree-sitter AST symbol graphs for instantaneous code indexing.</td>
+              <td>agents, storage</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">6. llm-apps</strong></td>
+              <td>LiteLLM Gateway (:4000/:4001), Semantica-AGI, R2R GraphRAG (:7272)</td>
+              <td>Central AI gateway injecting FinOps virtual tags, tracking causal code provenance, and serving GraphRAG memory.</td>
+              <td>agents, security</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">7. security</strong></td>
+              <td>HashiCorp Vault, Bitnami SealedSecrets, Keycloak OIDC</td>
+              <td>Issues unrenewable 5-minute Just-In-Time (JIT) access tokens for Git and databases; decrypts cluster secrets.</td>
+              <td>agents, orchestrators, storage</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">8. openziti</strong></td>
+              <td>OpenZiti Controller (:8441), Ziti Edge Routers (:3022)</td>
+              <td>Dark network fabric closing all inbound ports. Provides programmable mTLS 1.3 overlays between pods.</td>
+              <td>All namespaces (mesh overlay)</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">9. development</strong></td>
+              <td>Ephemeral gVisor (<code style="font-family: var(--font-mono);">runsc</code>) sandboxed Pods and Jobs</td>
+              <td>Isolated execution environment where untrusted code, compilation, and test suites run clamped to ≤ 30 MiB RAM.</td>
+              <td>agents</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--accent-cyan);">10. flux-system</strong></td>
+              <td>FluxCD v2 Controllers (Source, Kustomize, Helm, Notification)</td>
+              <td>GitOps pull-based engine ensuring zero cluster drift without exposing write-access credentials to CI/CD.</td>
+              <td>All namespaces (GitOps declarative state)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: OpenZiti Dark Network & Zero Public Ingress -->
+  <section id="openziti-mesh" class="section" style="background: var(--bg-secondary);">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-tag">Network Security</span>
+        <h2 class="section-title">OpenZiti Dark Network Overlay & Zero-Ingress Architecture</h2>
+        <p class="section-description">
+          Why Dark Gravity is invisible to port scanners and immune to perimeter penetration. All network connections are dial-out, authenticated by cryptographic keypairs, and encrypted in transit via OpenZiti mTLS 1.3.
+        </p>
+      </div>
+
+      <!-- Mermaid Diagram: OpenZiti Dark Overlay -->
+      <div class="feature-card" style="margin-bottom: 3.5rem; overflow-x: auto;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-purple); text-align: center;">
+          OpenZiti Dark Fabric vs. Traditional Vulnerable Perimeter
+        </h3>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Traditional webhooks require public IP ingress and open firewall ports. Dark Gravity eliminates all public listening ports.
+        </p>
+        <div class="mermaid" style="text-align: center;">
+graph LR
+    subgraph ATTACKER["Public Internet Scanners & Adversaries"]
+        SCAN["Nmap / Shodan / Zero-Day Exploits"]
+    end
+
+    subgraph TRADITIONAL["Traditional Vulnerable Setup (Rejected)"]
+        PUB_IP["Public Ingress IP / Ingress Controller"]
+        PORT["Open Ports: :80, :443, :8080"]
+        WEBHOOK["Inbound Webhook Listener"]
+        PUB_IP --> PORT --> WEBHOOK
+    end
+
+    subgraph DARK_GRAVITY["Dark Gravity Sovereign Cluster (Zero Open Ports)"]
+        FIREWALL["Deny-All Perimeter Firewall<br/>(0 Inbound Ports Open)"]
+        
+        subgraph ZITI_FABRIC["OpenZiti Programmable Dark Network Mesh"]
+            Z_ROUTER["Ziti Edge Router<br/>(Dial-Out Dark Tunnel)"]
+            Z_CTRL["OpenZiti Controller<br/>(mTLS 1.3 Zero-Trust Auth)"]
+        end
+
+        subgraph INTERNAL_SERVICES["Internal Kubernetes Microservices"]
+            POLLER["factory-cli poller<br/>(Outbound API Query)"]
+            WORKERS["factory-worker Pods"]
+            S3["Sovereign MinIO S3"]
+        end
+
+        POLLER -->|Outbound TLS Polling| GITHUB["GitHub API"]
+        Z_ROUTER <-->|Encrypted Pod-to-Pod Mesh| WORKERS
+        Z_ROUTER <-->|mTLS 1.3| S3
+        Z_CTRL -->|Identity Validation| Z_ROUTER
+    end
+
+    SCAN -.->|Blocked: No Open Ports!| FIREWALL
+
+    classDef red stroke:#f43f5e,stroke-width:2px,fill:#1f131a,color:#fff;
+    classDef green stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
+    classDef purple stroke:#a855f7,stroke-width:2px,fill:#0d121f,color:#fff;
+    classDef blue stroke:#00f0ff,stroke-width:2px,fill:#101726,color:#fff;
+
+    class SCAN,PUB_IP,PORT,WEBHOOK red;
+    class FIREWALL,Z_ROUTER,Z_CTRL,POLLER,WORKERS,S3 green;
+    class ZITI_FABRIC purple;
+        </div>
+      </div>
+
+      <!-- OpenZiti Key Innovations Cards -->
       <div class="grid-3">
         <div class="feature-card">
-          <div class="card-icon icon-cyan">🤖</div>
-          <h3 class="card-title">1. agents & orchestrators</h3>
+          <div class="card-icon icon-purple">🛡️</div>
+          <h3 class="card-title">Zero Ingress Ports</h3>
           <p class="card-text">
-            Executes autonomous agent workers (<code style="font-family: var(--font-mono);">factory-worker</code>) using native Kubernetes sidecar <code style="font-family: var(--font-mono);">initContainers</code> with <code style="font-family: var(--font-mono);">restartPolicy: Always</code> for zero-startup crashes. Directed by Hatchet gRPC durable engine.
+            Traditional webhooks require opening ports (:80, :443) or configuring reverse tunnels. Dark Gravity uses outbound polling: the cluster initiates all connections; no external traffic can probe internal pods.
           </p>
           <div class="card-tags">
-            <span class="tag tag-cyan">factory-worker</span>
-            <span class="tag">Hatchet gRPC</span>
-            <span class="tag">Axum MCP</span>
+            <span class="tag tag-cyan">0 Open Ports</span>
+            <span class="tag">Dark Service</span>
+            <span class="tag">Anti-DDoS</span>
           </div>
         </div>
 
         <div class="feature-card">
-          <div class="card-icon icon-purple">⚡</div>
-          <h3 class="card-title">2. confluent (Kafka KRaft)</h3>
+          <div class="card-icon icon-cyan">🔐</div>
+          <h3 class="card-title">mTLS 1.3 Dark Overlay</h3>
           <p class="card-text">
-            High-throughput event bus running KRaft consensus without ZooKeeper. Streams real-time cognitive thoughts (<code style="font-family: var(--font-mono);">agent-thought</code>), mission intake, and audit events required for EU AI Act Article 12 compliance.
+            All pod-to-pod communications (Worker to Hatchet, Worker to Vault, Worker to MinIO) run inside the OpenZiti dark network overlay, encrypted with mutual TLS 1.3 and validated against cryptographic hardware identities.
           </p>
           <div class="card-tags">
-            <span class="tag tag-cyan">Kafka KRaft</span>
-            <span class="tag">Zero ZooKeeper</span>
-            <span class="tag">Cognitive Stream</span>
+            <span class="tag tag-cyan">mTLS 1.3</span>
+            <span class="tag">Edge Routers</span>
+            <span class="tag">Zero Eavesdropping</span>
           </div>
         </div>
 
         <div class="feature-card">
-          <div class="card-icon icon-emerald">🔒</div>
-          <h3 class="card-title">3. security & openziti</h3>
+          <div class="card-icon icon-emerald">🚫</div>
+          <h3 class="card-title">Deny-All Egress Policies</h3>
           <p class="card-text">
-            Encapsulates all pod-to-pod and cluster-to-cluster network traffic inside an OpenZiti mTLS 1.3 overlay. Vault issues non-renewable 5-minute dynamic session tokens, eliminating static stored secrets.
+            Kubernetes <code style="font-family: var(--font-mono); font-size: 0.85em;">NetworkPolicies</code> restrict pod egress. Even if untrusted code executes inside a sandbox, it cannot reach arbitrary IP addresses on the internet or intranet; only designated Ziti edge endpoints are routable.
           </p>
           <div class="card-tags">
-            <span class="tag tag-cyan">Vault JIT</span>
-            <span class="tag">OpenZiti mTLS</span>
-            <span class="tag">SealedSecrets</span>
+            <span class="tag tag-cyan">NetworkPolicy</span>
+            <span class="tag">Egress Clamped</span>
+            <span class="tag">Air-Gap Strict</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 2: Zero-Trust Defense in Depth & Memory Forensic Wiping -->
-  <section id="security-model" class="section" style="background: var(--bg-secondary);">
+  <!-- Section 3: Zero-Trust Cryptographic Pipeline & Forensic Memory Wiping -->
+  <section id="security-lifecycle" class="section">
     <div class="section-container">
       <div class="section-header">
-        <span class="section-tag">Security Architecture</span>
-        <h2 class="section-title">Zero-Trust Cryptographic Pipeline</h2>
+        <span class="section-tag">Cryptographic Pipeline</span>
+        <h2 class="section-title">Zero-Trust Security Lifecycle: From Ingestion to 54.2 ns Wipe</h2>
         <p class="section-description">
-          Defense-in-depth model guaranteeing that rogue code, malicious prompt injections, or compromised dependencies cannot escape into the host network or persist in memory.
+          Cryptographic enforcement at every boundary: Ed25519 Non-Human Identities, HashiCorp Vault 5-minute dynamic session tokens, and Criterion-verified null-byte RAM wiping.
         </p>
       </div>
 
       <div class="feature-card" style="margin-bottom: 3.5rem; overflow-x: auto;">
-        <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--accent-purple); text-align: center;">
-          Cryptographic Lifecycle: From Issue Ingestion to Forensic Wiping
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-cyan); text-align: center;">
+          Mission Ingestion to Credential Destruction Lifecycle
         </h3>
         <div class="mermaid" style="text-align: center;">
 sequenceDiagram
     autonumber
-    actor Human as Human Operator / PO
+    actor Human as Human Operator (PO)
     participant Poller as GitPlatformPoller (Rust)
-    participant Vault as HashiCorp Vault
+    participant Vault as HashiCorp Vault (JIT)
     participant Kafka as Kafka (mission-input)
-    participant Worker as factory-worker (Rustant/ZeroClaw)
+    participant Hatchet as Hatchet Durable Engine
+    participant Worker as factory-worker (ZeroClaw)
     participant Sandbox as gVisor (runsc) Sandbox
-    participant RAM as Process Memory (Zeroize)
+    participant RAM as Process RAM (ZeroizeOnDrop)
 
     Human->>Poller: Tags Issue with 'autonomous-mission' [RAM<=30MiB, TIMEOUT<=300s]
-    Poller->>Vault: Requests ephemeral 5-min JIT access token
-    Vault-->>Poller: Returns non-renewable token (TTL: 300s)
+    Poller->>Vault: Requests ephemeral JIT Git token (secret/data/repos/*)
+    Vault-->>Poller: Issues dynamic token with 5-minute (300s) non-renewable TTL
     Poller->>Poller: Signs payload with Ed25519 (W3C Verifiable Credential)
     Poller->>Kafka: Publishes signed mission payload
-    Kafka->>Worker: Hatchet DAG dispatches mission step
+    Kafka->>Hatchet: Triggers cacd-mission-dag execution
+    Hatchet->>Worker: Dispatches Phase 2 (zeroclaw:execute)
     Worker->>Sandbox: Spawns ephemeral gVisor container (RAM <= 30 MiB, CPU <= 250m)
-    Sandbox->>Sandbox: Executes surgical AST refactor & tests in user-space kernel
-    Sandbox-->>Worker: Returns execution diff & test results
-    Worker->>RAM: Drops credential struct (ZeroizeOnDrop triggered)
-    RAM-->>RAM: Null-byte overwrite forensic wipe in 54.2 nanoseconds
-        </div>
-      </div>
-
-      <!-- Security Pillars Breakdown -->
-      <div class="grid-3">
-        <div class="feature-card">
-          <div class="card-icon icon-cyan">🔑</div>
-          <h3 class="card-title">Ed25519 Non-Human Identity</h3>
-          <p class="card-text">
-            Every agent action, commit, and database change is signed with an Ed25519 keypair (<code style="font-family: var(--font-mono);">ed25519-dalek</code>) and wrapped in a W3C Verifiable Credential, providing tamper-proof non-repudiation.
-          </p>
-          <div class="card-tags">
-            <span class="tag tag-cyan">W3C VC</span>
-            <span class="tag">Ed25519</span>
-            <span class="tag">Audit Proof</span>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="card-icon icon-emerald">⏱️</div>
-          <h3 class="card-title">54.2 ns RAM Wiping</h3>
-          <p class="card-text">
-            Sensitive credentials implement <code style="font-family: var(--font-mono);">#[derive(Zeroize, ZeroizeOnDrop)]</code>. Upon dropping from heap or stack, RAM memory undergoes immediate null-byte wiping benchmarked at <strong>54.2 nanoseconds</strong>.
-          </p>
-          <div class="card-tags">
-            <span class="tag tag-cyan">ZeroizeOnDrop</span>
-            <span class="tag">Criterion Benchmark</span>
-            <span class="tag">Zero Cold-Boot</span>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="card-icon icon-purple">⚖️</div>
-          <h3 class="card-title">LLM-as-a-Judge SAST Gate</h3>
-          <p class="card-text">
-            Phase 4 invokes <code style="font-family: var(--font-mono);">security_review</code> through an independent frontier model family via LiteLLM. A strict score threshold of <strong>≥ 8.0 / 10.0</strong> is required before any Pull Request can be created.
-          </p>
-          <div class="card-tags">
-            <span class="tag tag-cyan">SAST ≥ 8.0/10</span>
-            <span class="tag">Heterogeneous AI</span>
-            <span class="tag">Causal Provenance</span>
-          </div>
+    Sandbox->>Sandbox: Applies AST refactor & runs unit test suite in user-space
+    Sandbox-->>Worker: Emits code patch & test execution result
+    Worker->>RAM: Drops credential struct (ZeroizeOnDrop)
+    RAM-->>RAM: Null-byte overwrite wipe in 54.2 nanoseconds (Criterion benchmark)
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Section 3: Operating on Limited Resources (FinOps & gVisor Clamping) -->
-  <section id="low-resource" class="section">
+  <!-- Section 4: Engineering for Limited Resources (gVisor & FinOps) -->
+  <section id="low-resource" class="section" style="background: var(--bg-secondary);">
     <div class="section-container">
       <div class="section-header">
-        <span class="section-tag">Resource Efficiency</span>
-        <h2 class="section-title">How to Run an Autonomous Factory on Limited Resources</h2>
+        <span class="section-tag">Resource Optimization</span>
+        <h2 class="section-title">Operating an Industrial Autonomous Factory on Limited Resources</h2>
         <p class="section-description">
-          Dark Gravity is engineered to thrive on constrained bare-metal or modest cloud instances by replacing heavyweight VMs with micro-sandboxes, memory-zeroed processes, and predictive FinOps guards.
+          How Dark Gravity runs on modest hardware or bare-metal servers by replacing heavy virtual machines with sub-second gVisor micro-sandboxes and predictive FinOps budget clamps.
         </p>
       </div>
 
@@ -335,14 +478,14 @@ sequenceDiagram
     </div>
   </section>
 
-  <!-- Section 4: 100% Sovereign Open-Source Stack -->
-  <section id="open-source-stack" class="section" style="background: var(--bg-secondary);">
+  <!-- Section 5: 100% Sovereign Open-Source Stack -->
+  <section id="open-source-stack" class="section">
     <div class="section-container">
       <div class="section-header">
-        <span class="section-tag">Sovereign Components</span>
+        <span class="section-tag">Open-Source Sovereignty</span>
         <h2 class="section-title">The Complete Open-Source Toolchain</h2>
         <p class="section-description">
-          Zero vendor lock-in. Every layer of Dark Gravity is composed of open-source projects or hardened, independently maintained sovereign forks.
+          Zero commercial vendor lock-in. Every layer of Dark Gravity is composed of open-source projects or hardened, independently maintained sovereign forks.
         </p>
       </div>
 
@@ -435,16 +578,16 @@ sequenceDiagram
       <div class="footer-col">
         <h4>Architecture</h4>
         <ul class="footer-links">
-          <li><a href="#k8s-topology">Kubernetes Topology</a></li>
-          <li><a href="#security-model">Zero-Trust Pipeline</a></li>
-          <li><a href="#low-resource">Low-Resource Sandboxing</a></li>
-          <li><a href="#open-source-stack">Open-Source Stack</a></li>
+          <li><a href="#k8s-namespaces">10 Namespaces & Relations</a></li>
+          <li><a href="#openziti-mesh">OpenZiti Dark Mesh</a></li>
+          <li><a href="#security-lifecycle">Zero-Trust Pipeline</a></li>
+          <li><a href="#low-resource">Low-Resource Engine</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Sovereignty</h4>
         <ul class="footer-links">
-          <li><a href="index.html#security">Zero-Trust Network</a></li>
+          <li><a href="index.html#security">Zero-Trust Security</a></li>
           <li><a href="index.html#infrastructure">Sovereign MinIO S3</a></li>
           <li><a href="index.html#compliance">EU AI Act & SOC 2</a></li>
           <li><a href="index.html#projects">73 Repositories</a></li>
@@ -455,7 +598,7 @@ sequenceDiagram
         <ul class="footer-links">
           <li><a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer">GitHub Profile</a></li>
           <li><a href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
-          <li><a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer">Architecture KB</a></li>
+          <li><a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer">NotebookLM Architecture KB</a></li>
         </ul>
       </div>
     </div>
