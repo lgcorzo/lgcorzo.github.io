@@ -103,107 +103,107 @@
         </p>
         <div class="mermaid" style="text-align: center;">
 graph TB
-    subgraph PERIMETER["Air-Gapped External Boundary (Zero Public Ingress)"]
-        GIT["GitHub / GitLab Cloud API"]
+    subgraph PERIMETER["Air-Gapped External Boundary - Zero Ingress"]
+        GIT["GitHub and GitLab Cloud API"]
     end
 
-    subgraph K8S["Dark Gravity Enterprise Kubernetes Cluster (10 Namespaces)"]
+    subgraph K8S_CLUSTER["Enterprise Kubernetes Cluster - 10 Namespaces"]
 
-        subgraph NS1["1. ns/agents (Autonomous Runtime)"]
-            WORKER["factory-worker<br/>(Rustant / ZeroClaw / DocAgent)"]
-            MCP["factory-mcp-server<br/>(Axum SSE :8100)"]
-            RESEARCH["factory-deep-research<br/>(Worker :8200)"]
-            PROXY["hatchet-proxy sidecar<br/>(:7070 -> :7077)"]
+        subgraph NS_AGENTS["1. ns agents - Autonomous Runtime"]
+            WORKER["factory-worker<br/>Rustant, ZeroClaw, DocAgent"]
+            MCP["factory-mcp-server<br/>Axum SSE port 8100"]
+            RESEARCH["factory-deep-research<br/>Worker port 8200"]
+            PROXY["hatchet-proxy sidecar<br/>port 7070 to 7077"]
         end
 
-        subgraph NS2["2. ns/orchestrators (Workflow Engine)"]
-            HATCHET["Hatchet Durable Engine<br/>(gRPC :7077 / API :8000)"]
+        subgraph NS_ORCHESTRATORS["2. ns orchestrators - Workflow Engine"]
+            HATCHET["Hatchet Durable Engine<br/>gRPC 7077 and API 8000"]
             KEDA["KEDA Autoscalers"]
         end
 
-        subgraph NS3["3. ns/confluent (Event Bus)"]
-            KAFKA["Apache Kafka (KRaft)<br/>• mission-ingestion<br/>• agent-thought<br/>• mission-events"]
+        subgraph NS_CONFLUENT["3. ns confluent - Event Bus"]
+            KAFKA["Apache Kafka KRaft<br/>mission-ingestion<br/>agent-thought<br/>mission-events"]
         end
 
-        subgraph NS4["4. ns/storage (Sovereign Data Tier)"]
-            CNPG["CloudNativePG PostgreSQL 16<br/>(State Checkpoints & DB)"]
-            MINIO["Sovereign MinIO S3 Cluster<br/>(dg-factory-checkpoints / mlflow)"]
-            DIRECTPV["DirectPV CSI Driver<br/>(NVMe Direct-Attached Storage)"]
+        subgraph NS_STORAGE["4. ns storage - Sovereign Data Tier"]
+            CNPG["CloudNativePG PostgreSQL 16<br/>Checkpoints and App State"]
+            MINIO["Sovereign MinIO S3 Cluster<br/>checkpoints and mlflow buckets"]
+            DIRECTPV["DirectPV CSI Driver<br/>NVMe Direct-Attached Storage"]
         end
 
-        subgraph NS5["5. ns/knowledge (Semantic Memory)"]
-            PGVECTOR["pgvector CNPG Cluster<br/>(High-dimensional Embeddings)"]
-            DEEPWIKI["deepwiki-rs Daemon<br/>(Tree-sitter AST Graph Engine)"]
+        subgraph NS_KNOWLEDGE["5. ns knowledge - Semantic Memory"]
+            PGVECTOR["pgvector CNPG Cluster<br/>High-dimensional Embeddings"]
+            DEEPWIKI["deepwiki-rs Daemon<br/>Tree-sitter AST Graph Engine"]
         end
 
-        subgraph NS6["6. ns/llm-apps (AI Gateway & Provenance)"]
-            LITELLM["LiteLLM AI Gateway<br/>(Proxy :4000 / Virtual Tags)"]
-            SEMANTICA["Semantica-AGI Engine<br/>(Causal Lineage & Proof)"]
-            R2R["R2R GraphRAG<br/>(Semantic Code Search :7272)"]
+        subgraph NS_LLM["6. ns llm-apps - AI Gateway and Provenance"]
+            LITELLM["LiteLLM AI Gateway<br/>Proxy port 4000 and Vtags"]
+            SEMANTICA["Semantica-AGI Engine<br/>Causal Lineage and Proof"]
+            R2R["R2R GraphRAG<br/>Semantic Code Search port 7272"]
         end
 
-        subgraph NS7["7. ns/security (Identity & Secrets)"]
-            VAULT["HashiCorp Vault<br/>(5-min JIT Tokens)"]
+        subgraph NS_SECURITY["7. ns security - Identity and Secrets"]
+            VAULT["HashiCorp Vault<br/>5-min JIT Tokens"]
             SEALED["Bitnami SealedSecrets"]
             KEYCLOAK["Keycloak OIDC"]
         end
 
-        subgraph NS8["8. ns/openziti (Dark Network Fabric)"]
-            ZITI_CTRL["OpenZiti Controller<br/>(:8441 Control Plane)"]
-            ZITI_ROUTER["Ziti Edge Routers<br/>(:3022 Dark Ingress/Egress)"]
+        subgraph NS_OPENZITI["8. ns openziti - Dark Network Fabric"]
+            ZITI_CTRL["OpenZiti Controller<br/>port 8441 Control Plane"]
+            ZITI_ROUTER["Ziti Edge Routers<br/>port 3022 Dark Overlay"]
         end
 
-        subgraph NS9["9. ns/development (Micro-Sandboxes)"]
-            GVISOR["gVisor (runsc) Sandboxes<br/>• Ephemeral Pods / Jobs<br/>• Clamped: RAM <= 30 MiB / CPU <= 250m"]
+        subgraph NS_DEV["9. ns development - Ephemeral Sandboxes"]
+            GVISOR["gVisor runsc Micro-Sandboxes<br/>RAM clamped to 30 MiB<br/>CPU clamped to 250m"]
         end
 
-        subgraph NS10["10. ns/flux-system (GitOps Reconciliation)"]
-            FLUX["FluxCD v2 Controllers<br/>(Source / Kustomize / Helm)"]
+        subgraph NS_FLUX["10. ns flux-system - GitOps Engine"]
+            FLUX["FluxCD v2 Controllers<br/>Source and Kustomize"]
         end
 
     end
 
-    %% Perimeter & Polling Flow
-    GIT <-->|Outbound Polling (30-60s) via Ziti Edge| WORKER
+    %% Perimeter Outbound Polling
+    GIT ---|Outbound Polling 30-60s| WORKER
 
     %% Inter-Namespace Relations
-    WORKER -->|Publish Ed25519 Mission / Events| KAFKA
+    WORKER -->|Publish Mission and Thoughts| KAFKA
     KAFKA -->|Trigger Mission DAG| HATCHET
-    HATCHET <-->|gRPC Durable Workflows| PROXY
-    PROXY <--> WORKER
+    HATCHET ---|gRPC Durable Steps| PROXY
+    PROXY --- WORKER
 
-    WORKER <-->|Dispatch MCP Tools via SSE| MCP
-    MCP -->|Spawn Ephemeral runsc Pod| GVISOR
-    WORKER <-->|Semantic Code Context| R2R
-    WORKER <-->|AST Graph Queries| DEEPWIKI
+    WORKER ---|Dispatch MCP Tools| MCP
+    MCP -->|Launch Ephemeral Job| GVISOR
+    WORKER ---|Semantic Code Context| R2R
+    WORKER ---|AST Symbol Queries| DEEPWIKI
 
-    WORKER <-->|Inference via Vtags| LITELLM
+    WORKER ---|LLM Calls via Vtags| LITELLM
     WORKER -->|Record Causal Provenance| SEMANTICA
 
-    WORKER <-->|Fetch 5-min JIT Credentials| VAULT
-    HATCHET <-->|Persist DAG Checkpoints| CNPG
-    HATCHET <-->|Archive Step Snapshots| MINIO
-    MINIO <-->|Line-rate Block IO| DIRECTPV
+    WORKER ---|Fetch 5-min JIT Tokens| VAULT
+    HATCHET ---|Persist DAG Checkpoints| CNPG
+    HATCHET ---|Archive Artifacts| MINIO
+    MINIO ---|Line-rate Block IO| DIRECTPV
 
-    %% OpenZiti Dark Mesh Overlay Wrapping
-    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS1
-    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS2
-    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS4
-    ZITI_ROUTER -.->|mTLS 1.3 Encapsulation| NS6
+    %% OpenZiti Dark Fabric Overlay
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| WORKER
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| HATCHET
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| MINIO
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| LITELLM
 
-    %% GitOps Pull Reconciliation
-    FLUX -.->|Pull Reconciles K8s Manifests| K8S
+    %% GitOps Reconciliation
+    FLUX -.->|Reconciles Manifests| WORKER
 
     classDef cyan stroke:#00f0ff,stroke-width:2px,fill:#0d121f,color:#fff;
     classDef purple stroke:#a855f7,stroke-width:2px,fill:#101726,color:#fff;
     classDef emerald stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
-    classDef border stroke:rgba(255,255,255,0.25),stroke-width:1px,fill:#080b12,color:#f8fafc;
+    classDef border stroke:#475569,stroke-width:1px,fill:#080b12,color:#f8fafc;
 
     class WORKER,MCP,HATCHET cyan;
     class GVISOR,VAULT,ZITI_CTRL,ZITI_ROUTER purple;
     class MINIO,CNPG,KAFKA,LITELLM emerald;
     class GIT,FLUX border;
-        </div>
+</div>
       </div>
 
       <!-- Namespace Breakdown Table -->
@@ -305,38 +305,38 @@ graph TB
         </p>
         <div class="mermaid" style="text-align: center;">
 graph LR
-    subgraph ATTACKER["Public Internet Scanners & Adversaries"]
-        SCAN["Nmap / Shodan / Zero-Day Exploits"]
+    subgraph ATTACKER["Public Internet Scanners and Adversaries"]
+        SCAN["Nmap, Shodan, Port Scanners"]
     end
 
-    subgraph TRADITIONAL["Traditional Vulnerable Setup (Rejected)"]
-        PUB_IP["Public Ingress IP / Ingress Controller"]
-        PORT["Open Ports: :80, :443, :8080"]
+    subgraph TRADITIONAL["Traditional Vulnerable Setup - REJECTED"]
+        PUB_IP["Public Ingress IP"]
+        PORT["Open Ports 80, 443, 8080"]
         WEBHOOK["Inbound Webhook Listener"]
         PUB_IP --> PORT --> WEBHOOK
     end
 
-    subgraph DARK_GRAVITY["Dark Gravity Sovereign Cluster (Zero Open Ports)"]
-        FIREWALL["Deny-All Perimeter Firewall<br/>(0 Inbound Ports Open)"]
+    subgraph DARK_GRAVITY["Dark Gravity Sovereign Cluster - ZERO INGRESS"]
+        FIREWALL["Deny-All Perimeter Firewall<br/>Zero Inbound Ports Open"]
         
         subgraph ZITI_FABRIC["OpenZiti Programmable Dark Network Mesh"]
-            Z_ROUTER["Ziti Edge Router<br/>(Dial-Out Dark Tunnel)"]
-            Z_CTRL["OpenZiti Controller<br/>(mTLS 1.3 Zero-Trust Auth)"]
+            Z_ROUTER["Ziti Edge Router<br/>Dial-Out Dark Tunnel"]
+            Z_CTRL["OpenZiti Controller<br/>mTLS 1.3 Zero-Trust Auth"]
         end
 
         subgraph INTERNAL_SERVICES["Internal Kubernetes Microservices"]
-            POLLER["factory-cli poller<br/>(Outbound API Query)"]
+            POLLER["factory-cli poller<br/>Outbound API Queries"]
             WORKERS["factory-worker Pods"]
             S3["Sovereign MinIO S3"]
         end
 
         POLLER -->|Outbound TLS Polling| GITHUB["GitHub API"]
-        Z_ROUTER <-->|Encrypted Pod-to-Pod Mesh| WORKERS
-        Z_ROUTER <-->|mTLS 1.3| S3
+        Z_ROUTER ---|Encrypted Pod-to-Pod Mesh| WORKERS
+        Z_ROUTER ---|mTLS 1.3| S3
         Z_CTRL -->|Identity Validation| Z_ROUTER
     end
 
-    SCAN -.->|Blocked: No Open Ports!| FIREWALL
+    SCAN -.->|Blocked - No Listening Ports| FIREWALL
 
     classDef red stroke:#f43f5e,stroke-width:2px,fill:#1f131a,color:#fff;
     classDef green stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
@@ -346,7 +346,7 @@ graph LR
     class SCAN,PUB_IP,PORT,WEBHOOK red;
     class FIREWALL,Z_ROUTER,Z_CTRL,POLLER,WORKERS,S3 green;
     class ZITI_FABRIC purple;
-        </div>
+</div>
       </div>
 
       <!-- OpenZiti Key Innovations Cards -->
@@ -420,19 +420,19 @@ sequenceDiagram
     participant Sandbox as gVisor (runsc) Sandbox
     participant RAM as Process RAM (ZeroizeOnDrop)
 
-    Human->>Poller: Tags Issue with 'autonomous-mission' [RAM<=30MiB, TIMEOUT<=300s]
-    Poller->>Vault: Requests ephemeral JIT Git token (secret/data/repos/*)
-    Vault-->>Poller: Issues dynamic token with 5-minute (300s) non-renewable TTL
+    Human->>Poller: Tags Issue with autonomous-mission (RAM max 30MiB, Timeout 300s)
+    Poller->>Vault: Requests ephemeral JIT Git token (secret/data/repos)
+    Vault-->>Poller: Issues dynamic token with 5-minute non-renewable TTL
     Poller->>Poller: Signs payload with Ed25519 (W3C Verifiable Credential)
     Poller->>Kafka: Publishes signed mission payload
     Kafka->>Hatchet: Triggers cacd-mission-dag execution
     Hatchet->>Worker: Dispatches Phase 2 (zeroclaw:execute)
-    Worker->>Sandbox: Spawns ephemeral gVisor container (RAM <= 30 MiB, CPU <= 250m)
-    Sandbox->>Sandbox: Applies AST refactor & runs unit test suite in user-space
-    Sandbox-->>Worker: Emits code patch & test execution result
+    Worker->>Sandbox: Spawns ephemeral gVisor container (RAM max 30 MiB, CPU max 250m)
+    Sandbox->>Sandbox: Applies AST refactor and runs unit tests in user-space
+    Sandbox-->>Worker: Emits code patch and test results
     Worker->>RAM: Drops credential struct (ZeroizeOnDrop)
     RAM-->>RAM: Null-byte overwrite wipe in 54.2 nanoseconds (Criterion benchmark)
-        </div>
+</div>
       </div>
     </div>
   </section>
