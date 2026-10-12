@@ -1,0 +1,801 @@
+[
+  {
+    "description": "Dark Gravity Archive Indexer: Compresses and indexes ZIP archives for O(1) random artifact access without full disk extraction.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "zipindex",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/zipindex"
+  },
+  {
+    "description": "Dark Gravity Fast XML: High-performance memory-efficient XML 1.0 parser for parsing AWS S3 response envelopes.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "xxml",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/xxml"
+  },
+  {
+    "description": "Dark Gravity Storage Benchmark: S3 IOPS and latency stress-testing tool validating storage SLA gates before Dark Gravity deployments.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "warp",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/warp"
+  },
+  {
+    "description": "Dark Gravity DARE Encryption: Pure Go Data At Rest Encryption (DARE) implementing authenticated encryption for model weights and tokens.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "sio",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/sio"
+  },
+  {
+    "description": "Dark Gravity High-Throughput Parser: AVX-512 SIMD-accelerated JSON parser streaming gigabytes/sec within strict 30 MiB sandbox limits.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "simdjson-go",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/simdjson-go"
+  },
+  {
+    "description": "Dark Gravity Binary Updater: Secure, atomic self-update engine for sovereign CLI tools without external package manager dependencies.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "selfupdate",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/selfupdate"
+  },
+  {
+    "description": "Dark Gravity Binary Packager: Toolchain building reproducible Debian, RPM, and APK packages for sovereign storage binaries.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "pkger",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/pkger"
+  },
+  {
+    "description": "Dark Gravity Streaming Diagnostics: HTTP multipart upload tracing utility for troubleshooting large model weight transfers.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "multipart-debug",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/multipart-debug"
+  },
+  {
+    "description": "Dark Gravity S3 Conformance Suite: Comprehensive S3 API compatibility verification suite executed during Dark Gravity release gates.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "mint",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/mint"
+  },
+  {
+    "description": "Dark Gravity Cloud Templates: Infrastructure-as-code deployment templates for distributed sovereign storage nodes.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "minio-cf",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/minio-cf"
+  },
+  {
+    "description": "Dark Gravity Storage Design System: Sovereign mirror of MinIO Design System powering responsive dashboards for Dark Gravity storage.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "mds",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/mds"
+  },
+  {
+    "description": "Dark Gravity Parallel Hashing: AVX-512 & AVX2 hardware-accelerated parallel MD5 engine for high-speed artifact deduplication.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "md5-simd",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/md5-simd"
+  },
+  {
+    "description": "Dark Gravity Storage CLI: MinIO Client (mc) utility independently maintained for CI/CD bucket mirroring, checkpoint archiving, and S3 permission audits.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "mc",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/mc"
+  },
+  {
+    "description": "Dark Gravity Storage Admin SDK: Go management SDK automating bucket quotas, node health inspection, and rolling storage updates.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "madmin-go",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/madmin-go"
+  },
+  {
+    "description": "Dark Gravity Stream Indexer: Assembly HighwayHash (>10 GB/s/core) enabling instantaneous AST symbol indexing and artifact hashing.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "highwayhash",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/highwayhash"
+  },
+  {
+    "description": "Dark Gravity Lexical Traversal: Flat-key filesystem traversal optimized for S3 prefix walking across sovereign storage buckets.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "filepath",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/filepath"
+  },
+  {
+    "description": "Dark Gravity Zero-Allocation DNS: Concurrent DNS caching library optimizing outbound GitPlatformPoller queries in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "dnscache",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/dnscache"
+  },
+  {
+    "description": "Dark Gravity Streaming Parser: High-throughput zero-buffer CSV parser processing metric dumps without exceeding sandbox memory bounds.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "csvparser",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/csvparser"
+  },
+  {
+    "description": "Dark Gravity NVMe Checksum: CLMUL SIMD-accelerated CRC64 computation verifying NVMe block payloads at line rate in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "crc64nvme",
+    "primaryLanguage": {
+      "name": "Assembly"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/crc64nvme"
+  },
+  {
+    "description": "Dark Gravity Telemetry Formatter: Zero-overhead syntax-highlighted JSON formatter for Dark Gravity CLI diagnostics and task inspection.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "colorjson",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/colorjson"
+  },
+  {
+    "description": "Dark Gravity Certificate Authority: Generates self-signed TLS/mTLS X.509 certificates for air-gapped Dark Gravity Kubernetes pods.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "certgen",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/certgen"
+  },
+  {
+    "description": "Dark Gravity BLAKE2b Primitive: SIMD-vectorized pure Go BLAKE2b hashing for cryptographic integrity in Dark Gravity pipelines.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "blake2b-simd",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/blake2b-simd"
+  },
+  {
+    "description": "Dark Gravity SIMD Compiler: Translates AMD64 assembly into Plan 9 bytes for Go, enabling custom SIMD crypto compilation in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "asm2plan9s",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/asm2plan9s"
+  },
+  {
+    "description": "Dark Gravity Semantic Provenance: Graph-native context infrastructure tracking accountable AI artifacts and compliance lineage across factory workflows.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "semantica",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/semantica"
+  },
+  {
+    "description": "Dark Gravity Architecture Knowledge Graph: High-performance Rust engine generating AST-driven OpenWiki documentation and code context for autonomous agents.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "deepwiki-rs",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/deepwiki-rs"
+  },
+  {
+    "description": "Dark Gravity Spec-Execution Bridge: Architectural handoff connecting Spec-Driven Development (Spec Kit) with Superpowers TDD execution discipline for agents.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "speckit-superpowers-bridge",
+    "primaryLanguage": {
+      "name": "Shell"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/speckit-superpowers-bridge"
+  },
+  {
+    "description": "Dark Gravity LLMOps Standard: ISO/IEC/IEEE 42010 agent observability, prompt lineage, and runtime guardrails for autonomous agents in the Dark Gravity factory.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "llmops-python-package",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/llmops-python-package"
+  },
+  {
+    "description": "Dark Gravity CA/CD Core: Autonomous Agent Factory orchestrating Hatchet DAGs (Ingest->Plan->Code->Verify->Deliver) with Ed25519 NHI credentials & gVisor sandboxing.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "rust_CACD_autonomous_factory",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 2,
+    "url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory"
+  },
+  {
+    "description": "Dark Gravity MLOps Standard: Deterministic ML pipelines, DVC data versioning, MLflow S3 tracking, and model lineage testing under strict gVisor sandboxing bounds.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "mlops-python-package",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/mlops-python-package"
+  },
+  {
+    "description": "Dark Gravity Multi-Agent Pair Programming: Production FastAPI service deploying AutoGen multi-agent teams with OpenAI-compatible endpoints for code synthesis.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "fastapi-autogen-team",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/fastapi-autogen-team"
+  },
+  {
+    "description": "Dark Gravity Auto-Remediator: Autonomous Kubernetes error remediation engine listening to FluxCD alerts, driving Jules SDK fixes, and auditing to MLflow.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "Jules_remediator",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/Jules_remediator"
+  },
+  {
+    "description": "Dark Gravity GitOps Layer: FluxCD v2 declarative manifests, SealedSecrets, and network zero-trust policies orchestrating Dark Gravity Kubernetes clusters.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "gitops_internal_lgcorzo",
+    "primaryLanguage": {
+      "name": "Shell"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/gitops_internal_lgcorzo"
+  },
+  {
+    "description": "Dark Gravity Founder Profile: Architectural portfolio, sovereign infrastructure, and autonomous agent factories engineered by Luis Galo Corzo.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "lgcorzo",
+    "primaryLanguage": null,
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/lgcorzo"
+  },
+  {
+    "description": "Dark Gravity Realtime Transport: Hardened WebSocket transport layer for streaming telemetry between agent runtimes and storage daemons.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "websocket",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/websocket"
+  },
+  {
+    "description": "Dark Gravity HTTP Load Balancer: High-performance sidecar load balancer optimizing S3 traffic distribution across sovereign storage pods.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "sidekick",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/sidekick"
+  },
+  {
+    "description": "Dark Gravity Hardware Crypto: AVX-512 & ARM64 SIMD hardware-accelerated SHA256 hashing for tamper-proof artifact verification in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "sha256-simd",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/sha256-simd"
+  },
+  {
+    "description": "Dark Gravity Storage Libraries: Shared core utility and networking packages powering the sovereign S3 storage cluster in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "pkg",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/pkg"
+  },
+  {
+    "description": "Dark Gravity Storage Operator: Hardened Kubernetes Operator automating in-cluster sovereign S3 storage deployment and lifecycle for Dark Gravity.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "operator",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/operator"
+  },
+  {
+    "description": "Dark Gravity HTTP Router: High-throughput HTTP multiplexer powering sovereign S3 API routing and agent telemetry endpoints.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "mux",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/mux"
+  },
+  {
+    "description": "Dark Gravity Mutual TLS: Hardened cryptographic mTLS protocol utilities securing zero-trust node-to-node communication in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "mtls",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/mtls"
+  },
+  {
+    "description": "Dark Gravity S3 Client SDK: Hardened Go client library for zero-trust, high-throughput artifact and checkpoint transmission in Dark Gravity.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "minio-go",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/minio-go"
+  },
+  {
+    "description": "Dark Gravity Sovereign Storage: Hardened, zero-CVE S3 object storage server independently maintained to insulate the autonomous factory from upstream licensing closures.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "minio",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/minio"
+  },
+  {
+    "description": "Dark Gravity KMS Driver: Go client library for cryptographic key management communication across Dark Gravity storage nodes.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "kms-go",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/kms-go"
+  },
+  {
+    "description": "Dark Gravity Sovereign KMS: Key Encryption Server providing hardware-backed zero-trust authenticated encryption at rest for sensitive model weights.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "kes",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/kes"
+  },
+  {
+    "description": "Dark Gravity Network Benchmarker: High-speed TCP/UDP network throughput testing utility validating low-latency inter-agent communication.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "dperf",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/dperf"
+  },
+  {
+    "description": "Dark Gravity Sovereign Storage Docs: Complete operational architecture and API specifications for Dark Gravity's hardened S3 storage tier.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "docs",
+    "primaryLanguage": {
+      "name": "SCSS"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/docs"
+  },
+  {
+    "description": "Dark Gravity CSI Driver: Kubernetes CSI direct-attached NVMe storage driver independently maintained for high-throughput pipeline execution.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "directpv",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/directpv"
+  },
+  {
+    "description": "Dark Gravity Storage Console: Sovereign web administration dashboard for monitoring Dark Gravity S3 object storage health and bucket quotas.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "console",
+    "primaryLanguage": {
+      "name": "JavaScript"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/console"
+  },
+  {
+    "description": "Dark Gravity CLI Tools: Command-line utilities for deploying and managing sovereign S3 storage infrastructure in Dark Gravity namespaces.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "cli",
+    "primaryLanguage": {
+      "name": "Go"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/cli"
+  },
+  {
+    "description": "[ACL 2026] Open-source framework for holistic, structured repository-level documentation across multilingual codebases",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "CodeWiki",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/CodeWiki"
+  },
+  {
+    "description": "Dark Gravity Storage & RAG UI: Full-stack dashboard for inspecting autonomous RAG retrieval pipelines, documents, and agent semantic memory.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "R2R-Application",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/R2R-Application"
+  },
+  {
+    "description": "MocoGPT is an GPT mock server, which can be used to test your GPT API calls.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "mocogpt",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/mocogpt"
+  },
+  {
+    "description": "Open Source DeepWiki: AI-Powered Wiki Generator for GitHub/Gitlab/Bitbucket Repositories. Join the discord: https://discord.gg/gMwThUMeme",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "deepwiki-open",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/deepwiki-open"
+  },
+  {
+    "description": "Open-source implementation of AlphaEvolve",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "openevolve",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/openevolve"
+  },
+  {
+    "description": "Google Cloud Knowledge Catalog Tools and Samples",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "knowledge-catalog",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/knowledge-catalog"
+  },
+  {
+    "description": "FinRobot: An Open-Source AI Agent Platform for Financial Analysis using LLMs \ud83d\ude80 \ud83d\ude80 \ud83d\ude80 ",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "FinRobot",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/FinRobot"
+  },
+  {
+    "description": "OpenWiki is a CLI that writes and maintains agent documentation for your codebase.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "openwiki",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/openwiki"
+  },
+  {
+    "description": "Dark Gravity RAG Engine: Sovereign production-ready retrieval-augmented generation engine powering contextual memory and documentation retrieval for agents.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "R2R-Engine",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/R2R-Engine"
+  },
+  {
+    "description": "Clinical psychology web platform and digital consult for Marta M\u00f3stoles, maintained under Dark Gravity continuous delivery.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "la_consulta_de_marta",
+    "primaryLanguage": {
+      "name": "TypeScript"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/la_consulta_de_marta"
+  },
+  {
+    "description": "Rust Agent Development Kit (ADK-Rust): Build AI agents in Rust with modular components for models, tools, memory, realtime voice, and more. ADK-Rust is a flexible framework for developing AI agents with simplicity and power. Model-agnostic, deployment-agnostic, optimized for frontier AI models. Includes support for real-time voice agents.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "adk-rust",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/adk-rust"
+  },
+  {
+    "description": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "TradingAgents",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/TradingAgents"
+  },
+  {
+    "description": "\u2699\ufe0f\ud83e\udd80 Build modular and scalable LLM Applications in Rust",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "rig",
+    "primaryLanguage": {
+      "name": "Rust"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/rig"
+  },
+  {
+    "description": "10 Lessons to Get Started Building AI Agents",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "ai-agents-for-beginners",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/ai-agents-for-beginners"
+  },
+  {
+    "description": "An agentic skills framework & software development methodology that works.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "superpowers",
+    "primaryLanguage": {
+      "name": "Shell"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/superpowers"
+  },
+  {
+    "description": "\ud83d\udcab Toolkit to help you get started with SDD or any other process!",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "spec-kit",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/spec-kit"
+  },
+  {
+    "description": "asynchronous-optimization",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "Asynchronous-Optimization",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/Asynchronous-Optimization"
+  },
+  {
+    "description": "Dark Gravity Doc Worker: Autonomous agent extracting AST codebase knowledge graphs and generating ISO/OpenWiki architecture documentation.",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "Documentation_agent",
+    "primaryLanguage": {
+      "name": "Shell"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/Documentation_agent"
+  },
+  {
+    "description": "",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "vscode_developer",
+    "primaryLanguage": {
+      "name": "Dockerfile"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/vscode_developer"
+  },
+  {
+    "description": "",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "cod_fish_classification_app",
+    "primaryLanguage": {
+      "name": "C#"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/cod_fish_classification_app"
+  },
+  {
+    "description": "",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "GEN_AI_Course",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/GEN_AI_Course"
+  },
+  {
+    "description": "",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "lgcorzo.github.io",
+    "primaryLanguage": null,
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/lgcorzo.github.io"
+  },
+  {
+    "description": "Dark Gravity Scheduling Research: Mathematical modeling and heuristic optimization of DevOps pipelines via Job Shop Scheduling (JSP).",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "devops_job_shop_scheduling",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/devops_job_shop_scheduling"
+  },
+  {
+    "description": "A keras model to classify cod fish",
+    "forkCount": 0,
+    "isFork": false,
+    "name": "cod_fish_classification_keras_model",
+    "primaryLanguage": {
+      "name": "Jupyter Notebook"
+    },
+    "stargazerCount": 0,
+    "url": "https://github.com/lgcorzo/cod_fish_classification_keras_model"
+  }
+]
