@@ -1,103 +1,73 @@
 const GITHUB_REPOS = [
   {
     "name": "rust_CACD_autonomous_factory",
-    "description": "Dark Gravity CA/CD Core: Autonomous Agent Factory orchestrating Hatchet DAGs (Ingest->Plan->Code->Verify->Deliver) with Ed25519 NHI credentials & gVisor sandboxing.",
+    "description": "Dark Gravity CA/CD Core: Autonomous Agent Factory in Rust orchestrating Hatchet DAGs with Ed25519 NHI credentials & gVisor sandboxed execution.",
     "url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
     "stars": 2,
     "forks": 0,
     "language": "Rust",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
-  },
-  {
-    "name": "Documentation_agent",
-    "description": "Dark Gravity Doc Worker: Autonomous agent extracting AST codebase knowledge graphs and generating ISO/OpenWiki architecture documentation.",
-    "url": "https://github.com/lgcorzo/Documentation_agent",
-    "stars": 1,
-    "forks": 0,
-    "language": "Shell",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "autonomy",
+    "category_label": "Autonomous Agent Factory"
   },
   {
     "name": "fastapi-autogen-team",
-    "description": "Dark Gravity Multi-Agent Pair Programming: Production FastAPI service deploying AutoGen multi-agent teams with OpenAI-compatible endpoints for code synthesis.",
+    "description": "High-Throughput Agentic Service: Low-latency Axum & Rig Rust microservice exposing OpenAI-compatible streaming endpoints for multi-agent squads.",
     "url": "https://github.com/lgcorzo/fastapi-autogen-team",
     "stars": 1,
     "forks": 0,
     "language": "Rust",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
-  },
-  {
-    "name": "gitops_internal_lgcorzo",
-    "description": "Dark Gravity GitOps Layer: FluxCD v2 declarative manifests, SealedSecrets, and network zero-trust policies orchestrating Dark Gravity Kubernetes clusters.",
-    "url": "https://github.com/lgcorzo/gitops_internal_lgcorzo",
-    "stars": 1,
-    "forks": 0,
-    "language": "Shell",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
-  },
-  {
-    "name": "Jules_remediator",
-    "description": "Dark Gravity Auto-Remediator: Autonomous Kubernetes error remediation engine listening to FluxCD alerts, driving Jules SDK fixes, and auditing to MLflow.",
-    "url": "https://github.com/lgcorzo/Jules_remediator",
-    "stars": 1,
-    "forks": 0,
-    "language": "Rust",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "llmops",
+    "category_label": "Agentic Microservices"
   },
   {
     "name": "llmops-python-package",
-    "description": "Dark Gravity LLMOps Standard: ISO/IEC/IEEE 42010 agent observability, prompt lineage, and runtime guardrails for autonomous agents in the Dark Gravity factory.",
+    "description": "Enterprise LLMOps Standard: ISO/IEC/IEEE 42010 agent observability, prompt lineage, OpenWiki automated documentation, and MCP tool integration.",
     "url": "https://github.com/lgcorzo/llmops-python-package",
     "stars": 1,
     "forks": 0,
-    "language": "Jupyter Notebook",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "language": "Python",
+    "category": "llmops",
+    "category_label": "Enterprise LLMOps Standard"
   },
   {
     "name": "mlops-python-package",
-    "description": "Dark Gravity MLOps Standard: Deterministic ML pipelines, DVC data versioning, MLflow S3 tracking, and model lineage testing under strict gVisor sandboxing bounds.",
+    "description": "Industrial MLOps Standard: Reproducible ML pipelines, DVC data versioning, MLflow tracking, Hydra configurations, and SHAP explainability under strict CI gates.",
     "url": "https://github.com/lgcorzo/mlops-python-package",
     "stars": 1,
     "forks": 0,
-    "language": "Jupyter Notebook",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "language": "Python",
+    "category": "mlops",
+    "category_label": "Industrial MLOps Standard"
   },
   {
     "name": "R2R-Application",
-    "description": "Dark Gravity Storage & RAG UI: Full-stack dashboard for inspecting autonomous RAG retrieval pipelines, documents, and agent semantic memory.",
+    "description": "Full-stack Next.js/React dashboard for inspecting autonomous RAG retrieval pipelines, documents, and agent semantic memory.",
     "url": "https://github.com/lgcorzo/R2R-Application",
     "stars": 1,
     "forks": 0,
     "language": "TypeScript",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "ai",
+    "category_label": "RAG Observability UI"
   },
   {
     "name": "R2R-Engine",
-    "description": "Dark Gravity RAG Engine: Sovereign production-ready retrieval-augmented generation engine powering contextual memory and documentation retrieval for agents.",
+    "description": "Sovereign production-ready retrieval-augmented generation engine with hybrid graph indexing powering contextual memory for agents.",
     "url": "https://github.com/lgcorzo/R2R-Engine",
     "stars": 1,
     "forks": 0,
     "language": "Python",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "ai",
+    "category_label": "Production RAG Engine"
   },
   {
     "name": "semantica",
-    "description": "Dark Gravity Semantic Provenance: Graph-native context infrastructure tracking accountable AI artifacts and compliance lineage across factory workflows.",
+    "description": "Semantic Provenance Infrastructure: Graph-native context tracking accountable AI artifacts and compliance lineage across industrial pipelines.",
     "url": "https://github.com/lgcorzo/semantica",
     "stars": 1,
     "forks": 0,
     "language": "Python",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "ai",
+    "category_label": "Semantic Context Infrastructure"
   },
   {
     "name": "deepwiki-rs",
@@ -111,13 +81,13 @@ const GITHUB_REPOS = [
   },
   {
     "name": "speckit-superpowers-bridge",
-    "description": "Dark Gravity Spec-Execution Bridge: Architectural handoff connecting Spec-Driven Development (Spec Kit) with Superpowers TDD execution discipline for agents.",
+    "description": "Spec-Driven Development (SDD) handoff bridge uniting Spec Kit (formal contracts) with Superpowers execution discipline (TDD & subagent reviews).",
     "url": "https://github.com/lgcorzo/speckit-superpowers-bridge",
     "stars": 0,
     "forks": 0,
     "language": "Shell",
-    "category": "core",
-    "category_label": "Autonomous Factory Core"
+    "category": "autonomy",
+    "category_label": "Spec-Driven Development Bridge"
   },
   {
     "name": "cli",
@@ -611,13 +581,13 @@ const GITHUB_REPOS = [
   },
   {
     "name": "devops_job_shop_scheduling",
-    "description": "Dark Gravity Scheduling Research: Mathematical modeling and heuristic optimization of DevOps pipelines via Job Shop Scheduling (JSP).",
+    "description": "Applied Operations Research: Mathematical modeling and genetic algorithm heuristic optimization for Job Shop Scheduling (JSP) makespan reduction.",
     "url": "https://github.com/lgcorzo/devops_job_shop_scheduling",
     "stars": 0,
     "forks": 0,
-    "language": "Jupyter Notebook",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
+    "language": "Python",
+    "category": "mlops",
+    "category_label": "Industrial Optimization"
   },
   {
     "name": "GEN_AI_Course",
