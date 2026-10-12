@@ -102,40 +102,53 @@
 
   /** Display categories. */
   const CATEGORIES = [
-    { id: 'featured', label: 'Featured' },
-    { id: 'all', label: 'All' },
-    { id: 'mlops', label: 'MLOps & Platform' },
-    { id: 'ai', label: 'AI, Agents & RAG' },
-    { id: 'systems', label: 'Systems Engineering' },
+    { id: 'featured', label: 'Flagship Projects' },
+    { id: 'all', label: 'All Repositories' },
+    { id: 'mlops', label: 'Industrial MLOps' },
+    { id: 'ai', label: 'LLMOps & Agents' },
+    { id: 'systems', label: 'Systems & Sovereignty' },
   ];
 
   const MLOPS = new Set([
-    'mlops-python-package', 'llmops-python-package', 'gitops_internal_lgcorzo', 'Jules_remediator',
-    'Asynchronous-Optimization', 'devops_job_shop_scheduling', 'cod_fish_classification_app',
+    'mlops-python-package', 'llmops-python-package', 'devops_job_shop_scheduling',
+    'Asynchronous-Optimization', 'cod_fish_classification_app',
     'cod_fish_classification_keras_model', 'knowledge-catalog',
   ]);
   const AI = new Set([
-    'R2R-Application', 'R2R-Engine', 'semantica', 'deepwiki-rs', 'deepwiki-open', 'CodeWiki', 'openwiki',
+    'fastapi-autogen-team', 'R2R-Application', 'R2R-Engine', 'semantica',
+    'speckit-superpowers-bridge', 'deepwiki-rs', 'deepwiki-open', 'CodeWiki', 'openwiki',
     'FinRobot', 'TradingAgents', 'ai-agents-for-beginners', 'GEN_AI_Course', 'mocogpt', 'openevolve',
-    'adk-rust', 'rig', 'Documentation_agent', 'fastapi-autogen-team', 'spec-kit', 'superpowers',
-    'speckit-superpowers-bridge', 'rust_CACD_autonomous_factory',
+    'adk-rust', 'rig', 'spec-kit', 'superpowers',
   ]);
 
   /** Hand-picked featured projects (order matters). */
   const FEATURED = [
-    'rust_CACD_autonomous_factory', 'mlops-python-package', 'llmops-python-package', 'R2R-Engine',
-    'semantica', 'deepwiki-rs', 'gitops_internal_lgcorzo', 'Jules_remediator', 'fastapi-autogen-team',
+    'mlops-python-package',
+    'llmops-python-package',
+    'fastapi-autogen-team',
+    'rust_CACD_autonomous_factory',
+    'speckit-superpowers-bridge',
+    'devops_job_shop_scheduling',
+    'R2R-Engine',
+    'semantica',
   ];
 
   /** Optional live demos / extra links. */
   const DEMOS = {
     'rust_CACD_autonomous_factory': { label: 'Architecture', url: 'architecture.html' },
+    'speckit-superpowers-bridge': { label: 'Lifecycle', url: 'lifecycle.html' },
     'docs': { label: 'Sovereignty', url: 'sovereignty.html' },
     'lgcorzo.github.io': { label: 'Live site', url: 'https://lgcorzo.github.io' },
   };
 
   /** Repos intentionally hidden from the grid. */
-  const HIDDEN = new Set(['lgcorzo']);
+  const HIDDEN = new Set([
+    'lgcorzo',
+    'Documentation_agent',
+    'gitops_internal_lgcorzo',
+    'Jules_remediator',
+    'Microk8s_lgcorzo',
+  ]);
 
   /** Keyword → tech badge rules applied to name + description. */
   const BADGE_RULES = [
@@ -333,7 +346,7 @@
     function card(r) {
       const color = LANG_COLORS[r.language] || '#94a3b8';
       const demo = DEMOS[r.name];
-      const catLabel = { mlops: 'MLOps', ai: 'AI & RAG', systems: 'Systems' }[r.view];
+      const catLabel = { mlops: 'Industrial MLOps', ai: 'LLMOps & Agents', systems: 'Systems & Infra' }[r.view] || 'Systems';
       return `
       <article class="glass card-hover flex flex-col p-6">
         <div class="flex items-start justify-between gap-3">
