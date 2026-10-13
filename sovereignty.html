@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sovereignty Policy & Fork Independence — Dark Gravity Ecosystem</title>
-  <meta name="description" content="Comprehensive architectural declaration of supply-chain sovereignty, Git remote topology, 100% independent GHCR container releases, zero-upstream-rebase policy, and 38-repository decoupled storage factory.">
+  <title>Fork Policy & Independence — lgcorzo lab</title>
+  <meta name="description" content="Fork policy for the lgcorzo lab: Git remote topology, independent container releases, no automatic upstream rebases, and the trade-offs of maintaining forks.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="architecture.html" class="nav-link">Architecture</a></li>
         <li><a href="lifecycle.html" class="nav-link">Project Lifecycle</a></li>
-        <li><a href="sovereignty.html" class="nav-link active">Sovereignty Policy</a></li>
+        <li><a href="sovereignty.html" class="nav-link active">Fork Policy</a></li>
         <li><a href="index.html#projects" class="nav-link">Ecosystem</a></li>
         <li><a href="index.html#security" class="nav-link">Zero-Trust</a></li>
       </ul>
@@ -63,31 +63,31 @@
     <div class="hero-container">
       <div class="badge badge-purple" style="margin-bottom: 1.25rem;">
         <span class="badge-dot"></span>
-        Supply-Chain Autonomy & Formal Fork Policy
+        Lab Notes • Supply-chain & fork policy for the lab
       </div>
       <h1 class="hero-title" style="font-size: 3.2rem; line-height: 1.15;">
-        Sovereignty Policy & Fork Independence
+        Fork Policy for the Lab Ecosystem
       </h1>
       <p class="hero-subtitle" style="max-width: 860px;">
-        Formal governance and technical architecture establishing <strong>100% operational autonomy</strong> across 38 storage, cryptographic, and SDK repositories. Zero reliance on upstream registries, immutable semantic versioning, and automated self-healing.
+        The policy I use in my personal lab to keep forked storage, cryptographic and SDK repositories independent of upstream changes: separate remotes, own releases, semantic versioning. It is a design decision with trade-offs (maintenance cost, drift from upstream), not a claim of production readiness.
       </p>
 
       <div class="hero-stats" style="grid-template-columns: repeat(4, 1fr); margin-top: 2.5rem;">
         <div class="stat-card">
-          <div class="stat-value" style="color: var(--accent-cyan);">100%</div>
-          <div class="stat-label">Sovereign Git Remotes</div>
+          <div class="stat-value" style="color: var(--accent-cyan);">Own remotes</div>
+          <div class="stat-label">Default branches push to lgcorzo/*</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" style="color: var(--accent-purple);">38 / 38</div>
-          <div class="stat-label">Decoupled Repositories</div>
+          <div class="stat-value" style="color: var(--accent-purple);">38</div>
+          <div class="stat-label">Forks in scope</div>
         </div>
         <div class="stat-card">
           <div class="stat-value" style="color: var(--accent-emerald);">Oct 10, 2026</div>
-          <div class="stat-label">Independence Baseline</div>
+          <div class="stat-label">Policy baseline date</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" style="color: var(--accent-amber);">0 CVE</div>
-          <div class="stat-label">Autonomous CodeQL SLA</div>
+          <div class="stat-value" style="color: var(--accent-amber);">Tracked</div>
+          <div class="stat-label">Advisories reviewed, some explicitly accepted</div>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
           The 4 Pillars of Sovereign Ecosystem Autonomy
         </h3>
         <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.25rem;">
-          As documented in the official <a href="https://github.com/lgcorzo/docs" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">@lgcorzo/docs</a> architectural charter, the Dark Gravity ecosystem maintains absolute decoupling from external upstream entities (including upstream MinIO and third-party tooling). All software artifacts running in production are compiled, scanned, packaged, and deployed solely through controlled sovereign pipelines.
+          As documented in the official <a href="https://github.com/lgcorzo/docs" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">@lgcorzo/docs</a> architectural charter, the lab aims to stay decoupled from external upstream entities (including upstream MinIO and third-party tooling). All software artifacts running in production are compiled, scanned, packaged, and deployed solely through controlled sovereign pipelines.
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
@@ -110,7 +110,7 @@
             <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 1</div>
             <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">Git Remote Topology</h4>
             <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
-              Zero active upstream remotes. All default branches (<code style="font-family: var(--font-mono); font-size: 0.75rem;">main</code>/<code style="font-family: var(--font-mono); font-size: 0.75rem;">master</code>) push exclusively to <code style="font-family: var(--font-mono); font-size: 0.75rem;">github.com/lgcorzo/*</code> under isolated access controls and mandatory branch protection.
+              No upstream remotes configured for pushing. Default branches (<code style="font-family: var(--font-mono); font-size: 0.75rem;">main</code>/<code style="font-family: var(--font-mono); font-size: 0.75rem;">master</code>) push exclusively to <code style="font-family: var(--font-mono); font-size: 0.75rem;">github.com/lgcorzo/*</code> under isolated access controls and mandatory branch protection.
             </p>
           </div>
 
@@ -134,7 +134,7 @@
             <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--accent-amber); font-weight: 700; margin-bottom: 0.35rem;">PILLAR 4</div>
             <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">No Upstream Rebase</h4>
             <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">
-              Upstream commits are treated as third-party reference sources, never as authoritative base branches. No destructive automated rebases occur; all updates pass through human-in-the-loop validation.
+              Upstream commits are treated as third-party reference sources, not as authoritative base branches. No destructive automated rebases occur; all updates pass through human-in-the-loop validation.
             </p>
           </div>
         </div>
@@ -287,9 +287,9 @@ graph TD
         </p>
       </div>
       <div class="footer-col">
-        <h4>Sovereignty</h4>
+        <h4>Policy</h4>
         <ul class="footer-links">
-          <li><a href="sovereignty.html">Sovereignty Policy</a></li>
+          <li><a href="sovereignty.html">Fork Policy</a></li>
           <li><a href="https://github.com/lgcorzo/docs" target="_blank" rel="noopener noreferrer">@lgcorzo/docs Engine</a></li>
           <li><a href="architecture.html#k8s-namespaces">10 Namespaces</a></li>
           <li><a href="index.html#compliance">EU AI Act & SOC 2</a></li>

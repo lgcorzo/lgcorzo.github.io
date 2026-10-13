@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Gravity Architecture — 10 Namespaces, OpenZiti Dark Network & Low-Resource Factory</title>
+  <title>Dark Gravity Architecture Notes — Design Choices Under Test | lgcorzo lab</title>
   <meta name="description" content="Technical deep dive into Dark Gravity CA/CD: 10-namespace Kubernetes architecture, OpenZiti mTLS 1.3 dark network overlay, zero-trust cryptographic boundaries, gVisor low-resource sandboxing, and sovereign open-source toolchain.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,13 +65,13 @@
     <div class="hero-container">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>Deep Dive • Kubernetes Namespaces & OpenZiti Dark Mesh</span>
+        <span>Lab Notes • Architecture of the Dark Gravity experiment</span>
       </div>
       <h1 class="hero-title">
         10-Namespace Topology, <span class="gradient-text">OpenZiti Zero-Trust Security</span> & Limited-Resource Engineering
       </h1>
       <p class="hero-subtitle">
-        How Dark Gravity orchestrates an autonomous multi-agent software factory across 10 isolated Kubernetes namespaces, bound together by an OpenZiti mTLS 1.3 dark network overlay with zero open public ingress ports and strict micro-sandboxing (≤ 30 MiB RAM).
+        The current architecture of the Dark Gravity lab: an experimental multi-agent software factory across 10 Kubernetes namespaces, with an OpenZiti overlay and gVisor micro-sandboxing. These are design choices under test; some are implemented, some are still being validated. Check the repository README for the up-to-date status.
       </p>
       <div class="hero-cta">
         <a href="#k8s-namespaces" class="btn btn-primary">
@@ -170,7 +170,7 @@
                   </div>
                   <h4 class="ns-card-title">Ephemeral Micro-Sandboxes</h4>
                   <p class="ns-card-desc">
-                    Runs untrusted code synthesis, syntax checking, and unit test suites inside strictly isolated user-space kernels via <code style="font-family: var(--font-mono); font-size: 0.75rem;">runsc</code>. Memory clamped to ≤ 30 MiB RAM, CPU clamped to ≤ 250m.
+                    Runs untrusted code synthesis, syntax checking, and unit test suites inside strictly isolated user-space kernels via <code style="font-family: var(--font-mono); font-size: 0.75rem;">runsc</code>. Configured target limits: ≤ 30 MiB RAM and ≤ 250m CPU (still being validated against real workloads).
                   </p>
                   <div class="ns-components-list">
                     <span class="ns-comp-pill">gVisor (runsc)</span>
@@ -383,7 +383,7 @@
                   </div>
                   <h4 class="ns-card-title">Vault & SealedSecrets Identity</h4>
                   <p class="ns-card-desc">
-                    Issues dynamic, non-renewable 5-minute (300s) Just-In-Time Git tokens for pull request creation. Tokens are immediately overwritten with zeroization (54.2ns) upon drop.
+                    Issues dynamic, non-renewable 5-minute (300s) Just-In-Time Git tokens for pull request creation. Tokens are designed to be zeroized on drop (Zeroize crate).
                   </p>
                   <div class="ns-components-list">
                     <span class="ns-comp-pill">HashiCorp Vault</span>
@@ -501,7 +501,7 @@
               <div class="flow-node" style="border-color: rgba(16, 185, 129, 0.4);">
                 <div style="font-size: 0.72rem; color: var(--accent-emerald); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">07. PERSISTENCE & AUDIT</div>
                 <div style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;">ns / storage (CloudNativePG &amp; MinIO)</div>
-                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Persists run state, MLflow artifacts, and zeroizes memory keys in 54.2 nanoseconds.</p>
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">Persists run state, MLflow artifacts, and zeroizes memory keys on drop.</p>
               </div>
               <div class="flow-node" style="border-color: rgba(0, 240, 255, 0.4);">
                 <div style="font-size: 0.72rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 700; margin-bottom: 0.25rem;">08. GITOPS RECONCILIATION</div>
@@ -571,7 +571,7 @@ graph TB
         end
 
         subgraph NS_DEV["9. ns development - Ephemeral Sandboxes"]
-            GVISOR["gVisor runsc Micro-Sandboxes<br/>RAM clamped to 30 MiB<br/>CPU clamped to 250m"]
+            GVISOR["gVisor runsc Micro-Sandboxes<br/>Target: 30 MiB RAM / 250m CPU"]
         end
 
         subgraph NS_FLUX["10. ns flux-system - GitOps Engine"]
@@ -643,7 +643,7 @@ graph TB
             <tr>
               <td><strong style="color: var(--accent-cyan);">1. agents</strong></td>
               <td><code style="font-family: var(--font-mono);">factory-worker</code>, <code style="font-family: var(--font-mono);">factory-mcp-server</code> (:8100), <code style="font-family: var(--font-mono);">deep-research-worker</code> (:8200)</td>
-              <td>Hosts the AI personas (*Rustant*, *ZeroClaw*, *DocAgent*). Uses native sidecars with <code style="font-family: var(--font-mono);">restartPolicy: Always</code> for zero startup crashes.</td>
+              <td>Hosts the AI personas (*Rustant*, *ZeroClaw*, *DocAgent*). Uses native sidecars with <code style="font-family: var(--font-mono);">restartPolicy: Always</code> to reduce startup ordering failures.</td>
               <td>orchestrators, confluent, security, development, llm-apps, knowledge</td>
             </tr>
             <tr>
@@ -691,13 +691,13 @@ graph TB
             <tr>
               <td><strong style="color: var(--accent-cyan);">9. development</strong></td>
               <td>Ephemeral gVisor (<code style="font-family: var(--font-mono);">runsc</code>) sandboxed Pods and Jobs</td>
-              <td>Isolated execution environment where untrusted code, compilation, and test suites run clamped to ≤ 30 MiB RAM.</td>
+              <td>Isolated execution environment where untrusted code, compilation, and test suites run with a target limit of ≤ 30 MiB RAM.</td>
               <td>agents</td>
             </tr>
             <tr>
               <td><strong style="color: var(--accent-cyan);">10. flux-system</strong></td>
               <td>FluxCD v2 Controllers (Source, Kustomize, Helm, Notification)</td>
-              <td>GitOps pull-based engine ensuring zero cluster drift without exposing write-access credentials to CI/CD.</td>
+              <td>GitOps pull-based engine aimed at detecting and reconciling cluster drift without exposing write-access credentials to CI/CD.</td>
               <td>All namespaces (GitOps declarative state)</td>
             </tr>
           </tbody>
@@ -775,7 +775,7 @@ graph LR
       <div class="grid-3">
         <div class="feature-card">
           <div class="card-icon icon-purple">🛡️</div>
-          <h3 class="card-title">Zero Ingress Ports</h3>
+          <h3 class="card-title">No Public Ingress (design goal)</h3>
           <p class="card-text">
             Traditional webhooks require opening ports (:80, :443) or configuring reverse tunnels. Dark Gravity uses outbound polling: the cluster initiates all connections; no external traffic can probe internal pods.
           </p>
@@ -795,7 +795,7 @@ graph LR
           <div class="card-tags">
             <span class="tag tag-cyan">mTLS 1.3</span>
             <span class="tag">Edge Routers</span>
-            <span class="tag">Zero Eavesdropping</span>
+            <span class="tag">Encrypted overlay</span>
           </div>
         </div>
 
@@ -820,7 +820,7 @@ graph LR
     <div class="section-container">
       <div class="section-header">
         <span class="section-tag">Cryptographic Pipeline</span>
-        <h2 class="section-title">Zero-Trust Security Lifecycle: From Ingestion to 54.2 ns Wipe</h2>
+        <h2 class="section-title">Zero-Trust Security Lifecycle (as designed): From Ingestion to Credential Wipe</h2>
         <p class="section-description">
           Cryptographic enforcement at every boundary: Ed25519 Non-Human Identities, HashiCorp Vault 5-minute dynamic session tokens, and Criterion-verified null-byte RAM wiping.
         </p>
@@ -853,7 +853,7 @@ sequenceDiagram
     Sandbox->>Sandbox: Applies AST refactor and runs unit tests in user-space
     Sandbox-->>Worker: Emits code patch and test results
     Worker->>RAM: Drops credential struct (ZeroizeOnDrop)
-    RAM-->>RAM: Null-byte overwrite wipe in 54.2 nanoseconds (Criterion benchmark)
+    RAM-->>RAM: Null-byte overwrite wipe on drop (micro-benchmarked, not a production guarantee)
 </div>
       </div>
     </div>
@@ -873,13 +873,13 @@ sequenceDiagram
       <div class="grid-2">
         <div class="feature-card">
           <div class="card-icon icon-cyan">📦</div>
-          <h3 class="card-title">gVisor Micro-Sandboxing (≤ 30 MiB RAM)</h3>
+          <h3 class="card-title">gVisor Micro-Sandboxing (target ≤ 30 MiB RAM)</h3>
           <p class="card-text">
             Traditional VM-based sandboxes require gigabytes of RAM and take 30+ seconds to boot. Dark Gravity uses <strong>gVisor (<code style="font-family: var(--font-mono);">runsc</code>)</strong>:
           </p>
           <ul style="color: var(--text-secondary); font-size: 0.92rem; padding-left: 1.25rem; line-height: 1.8;">
             <li><strong>User-Space Kernel:</strong> gVisor intercepts Linux syscalls in user-space, preventing kernel exploits without full virtualization overhead.</li>
-            <li><strong>Aggressive Resource Clamps:</strong> Agent sandbox pods are restricted to <strong>RAM ≤ 30 MiB</strong> and <strong>CPU ≤ 250m</strong>. Sidecars are restricted to <strong>RAM ≤ 20 MiB</strong> and <strong>CPU ≤ 100m</strong>.</li>
+            <li><strong>Resource limits under test:</strong> Agent sandbox pods are configured with <strong>RAM ≤ 30 MiB</strong> and <strong>CPU ≤ 250m</strong>. Sidecars are restricted to <strong>RAM ≤ 20 MiB</strong> and <strong>CPU ≤ 100m</strong>.</li>
             <li><strong>Sub-Second Boot Time:</strong> Micro-sandboxes launch in milliseconds, allowing hundreds of tests to execute concurrently on a single commodity node.</li>
           </ul>
         </div>
@@ -900,14 +900,14 @@ sequenceDiagram
     </div>
   </section>
 
-  <!-- Section 5: 100% Sovereign Open-Source Stack -->
+  <!-- Section 5: Open-Source Stack -->
   <section id="open-source-stack" class="section">
     <div class="section-container">
       <div class="section-header">
         <span class="section-tag">Open-Source Sovereignty</span>
         <h2 class="section-title">The Complete Open-Source Toolchain</h2>
         <p class="section-description">
-          Zero commercial vendor lock-in. Every layer of Dark Gravity is composed of open-source projects or hardened, independently maintained sovereign forks.
+          The lab is built on open-source projects, some of them maintained as independent forks. Avoiding vendor lock-in is a goal with its own cost: every fork has to be patched and kept up to date by me.
         </p>
       </div>
 
@@ -926,7 +926,7 @@ sequenceDiagram
               <td><strong>Language & Core</strong></td>
               <td><strong>Rust 2024 / Tokio</strong></td>
               <td>MIT / Apache 2.0</td>
-              <td>Memory-safe, high-concurrency runtime with zero garbage collection overhead.</td>
+              <td>Memory-safe, high-concurrency runtime without a garbage collector.</td>
             </tr>
             <tr>
               <td><strong>Orchestration</strong></td>
@@ -962,7 +962,7 @@ sequenceDiagram
               <td><strong>Runtime Isolation</strong></td>
               <td><strong>Google gVisor (runsc)</strong></td>
               <td>Apache 2.0</td>
-              <td>User-space kernel sandboxing restricting untrusted code execution to ≤ 30 MiB RAM.</td>
+              <td>User-space kernel sandboxing for untrusted code execution (target ≤ 30 MiB RAM).</td>
             </tr>
             <tr>
               <td><strong>Network Security</strong></td>
