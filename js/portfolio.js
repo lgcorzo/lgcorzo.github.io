@@ -86,7 +86,7 @@
     },
   ];
 
-  /** Key differentiators. */
+  /** Design choices under test (hypotheses, not guarantees). */
   const HIGHLIGHTS = [
     { icon: 'M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6l-8-3z', title: 'Zero open ports', text: 'Outbound-only polling and an OpenZiti dark overlay mean there is no inbound attack surface to scan.' },
     { icon: 'M12 8v4l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', title: 'Ephemeral credentials', text: 'Five-minute Vault tokens, Ed25519-signed missions and memory zeroization in 54.2 ns.' },
@@ -102,12 +102,18 @@
 
   /** Display categories. */
   const CATEGORIES = [
-    { id: 'featured', label: 'Flagship Projects' },
+    { id: 'featured', label: 'Start Here' },
+    { id: 'darkgravity', label: 'Dark Gravity Lab' },
+    { id: 'systems', label: 'Infrastructure & GitOps' },
+    { id: 'ai', label: 'LLMOps, Agents & Knowledge' },
+    { id: 'mlops', label: 'Industrial AI & MLOps' },
     { id: 'all', label: 'All Repositories' },
-    { id: 'mlops', label: 'Industrial MLOps' },
-    { id: 'ai', label: 'LLMOps & Agents' },
-    { id: 'systems', label: 'Systems & Sovereignty' },
   ];
+
+  const DARKGRAVITY = new Set([
+    'rust_CACD_autonomous_factory', 'speckit-superpowers-bridge', 'spec-kit', 'superpowers',
+    'openevolve', 'adk-rust', 'rig',
+  ]);
 
   const MLOPS = new Set([
     'mlops-python-package', 'llmops-python-package', 'devops_job_shop_scheduling',
@@ -171,6 +177,7 @@
 
   /** Resolve a repo to one of the display categories. */
   function categoryOf(repo) {
+    if (DARKGRAVITY.has(repo.name)) return 'darkgravity';
     if (MLOPS.has(repo.name)) return 'mlops';
     if (AI.has(repo.name)) return 'ai';
     return 'systems';
@@ -317,6 +324,7 @@
     const counts = {
       featured: FEATURED.length,
       all: repos.length,
+      darkgravity: repos.filter((r) => r.view === 'darkgravity').length,
       mlops: repos.filter((r) => r.view === 'mlops').length,
       ai: repos.filter((r) => r.view === 'ai').length,
       systems: repos.filter((r) => r.view === 'systems').length,
@@ -346,7 +354,7 @@
     function card(r) {
       const color = LANG_COLORS[r.language] || '#94a3b8';
       const demo = DEMOS[r.name];
-      const catLabel = { mlops: 'Industrial MLOps', ai: 'LLMOps & Agents', systems: 'Systems & Infra' }[r.view] || 'Systems';
+      const catLabel = { darkgravity: 'Dark Gravity', mlops: 'Industrial AI', ai: 'LLMOps & Agents', systems: 'Infra & GitOps' }[r.view] || 'Systems';
       return `
       <article class="glass card-hover flex flex-col p-6">
         <div class="flex items-start justify-between gap-3">

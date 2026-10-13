@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Autonomous Project Lifecycle — Spec-Driven Development, Hatchet DAG, R2R GraphRAG & Living C4 Documentation</title>
+  <title>Mission Lifecycle Notes — Spec-Driven Development, Hatchet DAG & C4 | lgcorzo lab</title>
   <meta name="description" content="End-to-end lifecycle of the Dark Gravity CA/CD autonomous software factory: from Jira, GitHub, or GitLab issues through Spec-Kit SDD, durable Hatchet DAG execution in gVisor sandboxes, to R2R GraphRAG AST living memory and automated C4 architecture documentation.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,14 +215,14 @@
     <div class="hero-container">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>CA/CD Autonomous Software Factory • Mission Execution Protocol</span>
+        <span>Lab Notes • Mission lifecycle of the Dark Gravity experiment</span>
       </div>
       <h1 class="hero-title">
         The Autonomous Project Lifecycle: <br/>
         <span class="gradient-text">From Backlog Issue to Living C4 Architecture</span>
       </h1>
       <p class="hero-subtitle">
-        How Dark Gravity ingests Jira, GitHub, and GitLab issues via air-gapped outbound polling, executes Spec-Driven Development (SDD) with Spec-Kit, runs durable multi-task DAGs in Hatchet and gVisor micro-sandboxes, and auto-generates verified C4 architecture documentation backed by R2R GraphRAG and OpenWiki.
+        The lifecycle I am experimenting with: issue ingestion by outbound polling, Spec-Driven Development with Spec-Kit, durable Hatchet DAGs in gVisor sandboxes, and generated C4 documentation. It describes the intended design and what I am testing; limitations and failed runs belong in the lab notebook.
       </p>
       <div class="hero-cta">
         <a href="#lifecycle-flow" class="btn btn-primary">
@@ -248,19 +248,19 @@
         </div>
         <div class="metric-card">
           <div class="metric-value">≤ 30 MiB</div>
-          <div class="metric-label">gVisor Sandbox RAM Cap</div>
+          <div class="metric-label">gVisor Sandbox RAM Target</div>
         </div>
         <div class="metric-card">
-          <div class="metric-value">54.2 ns</div>
+          <div class="metric-value">Zeroize</div>
           <div class="metric-label">Secret RAM Zeroization</div>
         </div>
         <div class="metric-card">
           <div class="metric-value">≥ 8.0/10</div>
-          <div class="metric-label">SAST LLM Judge Threshold</div>
+          <div class="metric-label">LLM Judge Threshold (configured)</div>
         </div>
         <div class="metric-card">
           <div class="metric-value">&lt; 5%</div>
-          <div class="metric-label">Orphan Symbol Rate (OSR Gate)</div>
+          <div class="metric-label">Orphan Symbol Rate (OSR gate target)</div>
         </div>
       </div>
     </div>
@@ -273,7 +273,7 @@
         <span class="section-tag">Autonomous Workforce &amp; Human Sovereignty</span>
         <h2 class="section-title">4 Specialized Agent Personas &amp; 4 HITL Governance Vertices</h2>
         <p class="section-description">
-          Dark Gravity combines specialized agent bounded contexts with strict human oversight. Autonomous agents formulate specs and surgically write code, but human tech leads maintain absolute sovereignty over sprint budgets and production branch merges.
+          Dark Gravity combines specialized agent bounded contexts with strict human oversight. Autonomous agents formulate specs and surgically write code, but a human keeps the final decision over budgets and merges.
         </p>
       </div>
 
@@ -343,10 +343,10 @@
       <!-- The 4 HITL Governance Vertices -->
       <div style="margin-top: 3.5rem;">
         <h3 style="font-size: 1.6rem; font-weight: 700; text-align: center; margin-bottom: 0.75rem;">
-          The 4 Zero-Friction Human-in-the-Loop (HITL) Vertices
+          The 4 Human-in-the-Loop (HITL) Checkpoints
         </h3>
         <p style="color: var(--text-secondary); text-align: center; max-width: 780px; margin: 0 auto;">
-          Strict physical boundaries ensure agents cannot run wild or merge code autonomously. Human supervisors steer intent and retain absolute veto authority.
+          Branch protection and review gates are designed to prevent agents from merging code on their own. The human steers intent and keeps the veto.
         </p>
 
         <div class="hitl-grid">
@@ -370,7 +370,7 @@
             <div class="hitl-vertex">HITL Vertex 3</div>
             <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">Exception Override</h4>
             <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55;">
-              <strong>Human System Architect:</strong> Zero intervention during active loops. Alerts fire only if Aethelgard hits the 3-retry limit or a spend velocity trip trips to <code style="color: var(--accent-rose);">Agent-Stuck</code>. The architect untangles the edge case.
+              <strong>Human System Architect:</strong> Ideally no intervention during active loops. Alerts fire only if Aethelgard hits the 3-retry limit or a spend velocity trip trips to <code style="color: var(--accent-rose);">Agent-Stuck</code>. The architect untangles the edge case.
             </p>
           </div>
 
@@ -434,7 +434,7 @@ sequenceDiagram
     Bridge->>ZeroClaw: Dispatches atomic task (T001 -> T002...)
     ZeroClaw->>Sandbox: Provisions gVisor runsc container (RAM <= 30 MiB)
     ZeroClaw->>Sandbox: Executes ADK-Rust AST surgery & cargo test
-    Sandbox->>Sandbox: Zeroizes RAM secrets in 54.2 ns upon completion
+    Sandbox->>Sandbox: Zeroizes in-memory secrets on completion
     ZeroClaw->>Hatchet: Checkpoints BridgeState to MinIO S3 & Postgres
     Note over ZeroClaw,Hatchet: SAST LLM Judge evaluates score >= 8.0/10
 
@@ -571,7 +571,7 @@ sequenceDiagram
             Superspec Bridging, Hatchet Long-Term DAG &amp; Crash Checkpoints
           </h3>
           <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            The <code style="color: var(--accent-emerald);">speckit-superpowers-bridge</code> (Superspec) parses Spec-Kit <code style="color: #cbd5e1;">tasks.md</code> into structured domain entities and maps them into Hatchet's durable <code style="color: #cbd5e1;">develop-task</code> sub-workflows. Hatchet guarantees at-least-once, crash-resilient execution across distributed worker nodes.
+            The <code style="color: var(--accent-emerald);">speckit-superpowers-bridge</code> (Superspec) parses Spec-Kit <code style="color: #cbd5e1;">tasks.md</code> into structured domain entities and maps them into Hatchet's durable <code style="color: #cbd5e1;">develop-task</code> sub-workflows. Hatchet provides at-least-once, durable execution semantics; how well this holds up in the lab is one of the things being tested.
           </p>
 
           <div class="grid-2">
@@ -608,7 +608,7 @@ pub struct StepCheckpoint {
             gVisor Micro-Sandboxing, AST Surgery &amp; Aethelgard Circuit Breaker
           </h3>
           <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            Execution occurs exclusively in ephemeral <strong>gVisor (<code style="color: #cbd5e1;">runsc</code>)</strong> user-space sandboxes clamped to <strong>RAM &le; 30 MiB</strong> and <strong>CPU &le; 250m</strong>. AST code mutations are executed via native ADK-Rust, followed by rigorous logical and security gates.
+            Execution occurs exclusively in ephemeral <strong>gVisor (<code style="color: #cbd5e1;">runsc</code>)</strong> user-space sandboxes configured with target limits of <strong>RAM &le; 30 MiB</strong> and <strong>CPU &le; 250m</strong>. AST code mutations are executed via native ADK-Rust, followed by test and security gates.
           </p>
 
           <div class="grid-3">
@@ -619,9 +619,9 @@ pub struct StepCheckpoint {
               </p>
             </div>
             <div style="background: rgba(13, 18, 31, 0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 1rem; font-weight: 600; color: var(--accent-emerald); margin-bottom: 0.35rem;">2. 54.2 ns RAM Zeroization</h4>
+              <h4 style="font-size: 1rem; font-weight: 600; color: var(--accent-emerald); margin-bottom: 0.35rem;">2. In-Memory Secret Zeroization</h4>
               <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
-                All JIT tokens and credentials derive <code style="color: #cbd5e1;">#[derive(Zeroize, ZeroizeOnDrop)]</code>, overwritten with null bytes in 54.2 ns (beating the 4.33 &mu;s SLA) upon task completion.
+                All JIT tokens and credentials derive <code style="color: #cbd5e1;">#[derive(Zeroize, ZeroizeOnDrop)]</code>, so they are overwritten in memory when dropped. Timing figures from micro-benchmarks are not treated as production guarantees.
               </p>
             </div>
             <div style="background: rgba(13, 18, 31, 0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
@@ -657,7 +657,7 @@ pub struct StepCheckpoint {
               </ul>
             </div>
             <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Zero-Noise PR Protocol</h4>
+              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Low-Noise PR Protocol</h4>
               <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
                 The poller places an immediate "eyes" (👀) reaction upon comment detection to acknowledge receipt without posting spam comments. It strictly ignores self-authored bot accounts to prevent infinite loops, and posts a single comprehensive summary when the directive finishes.
               </p>
@@ -903,7 +903,7 @@ graph LR
             <tr style="border-bottom: 1px solid var(--border-subtle);">
               <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-cyan);">1. Ingestion</td>
               <td style="padding: 1rem 1.25rem;">Outbound HTTPS Polling (30–60s) via <code style="color: #cbd5e1;">GitPlatformPoller</code></td>
-              <td style="padding: 1rem 1.25rem;">Zero open inbound ports; W3C Ed25519 VC signing (<code style="color: #cbd5e1;">did:factory</code>)</td>
+              <td style="padding: 1rem 1.25rem;">No public inbound ports (design goal); W3C Ed25519 VC signing (<code style="color: #cbd5e1;">did:factory</code>)</td>
               <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> Tagged <code style="color: #cbd5e1;">autonomous-mission</code> &amp; resource limit block extracted</td>
             </tr>
             <tr style="border-bottom: 1px solid var(--border-subtle);">
@@ -915,19 +915,19 @@ graph LR
             <tr style="border-bottom: 1px solid var(--border-subtle);">
               <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-emerald);">3. Execution</td>
               <td style="padding: 1rem 1.25rem;">Superspec Bridge + ADK-Rust AST surgery</td>
-              <td style="padding: 1rem 1.25rem;">gVisor (<code style="color: #cbd5e1;">runsc</code>) sandboxes (RAM &le; 30 MiB, CPU &le; 250m)</td>
+              <td style="padding: 1rem 1.25rem;">gVisor (<code style="color: #cbd5e1;">runsc</code>) sandboxes (target RAM &le; 30 MiB, CPU &le; 250m)</td>
               <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> Task executed with MinIO S3 <code style="color: #cbd5e1;">BridgeState</code> checkpoint</td>
             </tr>
             <tr style="border-bottom: 1px solid var(--border-subtle);">
               <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-amber);">4. Validation</td>
               <td style="padding: 1rem 1.25rem;">Logical tests + SAST LLM-as-a-Judge (<code style="color: #cbd5e1;">security_review</code>)</td>
-              <td style="padding: 1rem 1.25rem;">Heterogeneous model routing via LiteLLM; 54.2 ns secret wipe</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> 100% test pass + SAST Score &ge; 8.0/10.0 (max 3 retries)</td>
+              <td style="padding: 1rem 1.25rem;">Heterogeneous model routing via LiteLLM; secret zeroization on drop</td>
+              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> all tests pass + review score &ge; 8.0/10.0 (max 3 retries)</td>
             </tr>
             <tr style="border-bottom: 1px solid var(--border-subtle);">
               <td style="padding: 1rem 1.25rem; font-weight: 700; color: #60a5fa;">5. Delivery</td>
               <td style="padding: 1rem 1.25rem;">Remote feature branch creation &amp; atomic PR/MR opening</td>
-              <td style="padding: 1rem 1.25rem;">Outbound API egress only; Zero-Noise 👀 reactions</td>
+              <td style="padding: 1rem 1.25rem;">Outbound API egress only; low-noise 👀 reactions</td>
               <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> PR opened linking <code style="color: #cbd5e1;">Closes #ID</code>; <strong>manual human merge (Vertex 4)</strong></td>
             </tr>
             <tr>
