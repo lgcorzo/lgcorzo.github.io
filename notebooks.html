@@ -315,6 +315,236 @@
         </div>
       </article>
 
+      <!-- Entry 006: Interrupted Mission Recovery & Side-Effect Idempotency -->
+      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-emerald-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-400">AUTONOMOUS RESILIENCE</span>
+            <span class="font-mono text-xs text-slate-500">EXP-2026-006 · Oct 2026</span>
+          </div>
+          <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white">
+          Durable Execution &amp; Idempotency: Crash Resilience Under Node Termination in Hatchet Orchestrator
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/missions/mission-001/recovery-test.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/missions/mission-001/recovery-test.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_006.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-006</a>
+        </p>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
+              <p class="mt-1 text-sm text-slate-300">Prove that terminating an autonomous agent worker mid-execution with SIGKILL / pod eviction does not leave orphan branches or create duplicate pull requests upon recovery.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
+              <p class="mt-1 text-sm text-slate-300">Hatchet durable task engine with persistent step state stored in PostgreSQL. Worker executed in Kubernetes sandbox with Ed25519-signed checkpointing.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
+              <p class="mt-1 text-sm text-slate-300">Simulated pod kill during the Code step. Upon orchestrator restart, the task resumed from the exact step checkpoint in 3.4s without re-running completed git initializations or producing duplicate PRs.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
+              <p class="mt-1 text-sm text-slate-300">Agent tasks must be strictly partitioned into pure read/plan phases and transactional write steps with deterministic idempotency keys derived from task UUID and commit SHA.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
+              <p class="mt-1 text-sm text-slate-300">In physical automation (CNC machines, automated storage systems), interrupted jobs must never re-dispatch destructive physical actions. Durable state guarantees zero-duplicate side effects.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 007: Adversarial Security & Sandbox Isolation in gVisor -->
+      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-rose-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-rose-400">SANDBOX SECURITY</span>
+            <span class="font-mono text-xs text-slate-500">EXP-2026-007 · Oct 2026</span>
+          </div>
+          <span class="chip font-mono text-xs">Runtime: gVisor runsc &amp; Calico Egress Policies</span>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white">
+          Zero-Trust Execution Boundary: Syscall Filtering and Calico Egress Blocking Under Adversarial Injection
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/security/threat-model.md</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_007.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-007</a>
+        </p>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
+              <p class="mt-1 text-sm text-slate-300">Verify that untrusted LLM-generated code running inside agent workers cannot execute host kernel escapes, access host device nodes, or exfiltrate credentials over public networks.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
+              <p class="mt-1 text-sm text-slate-300">gVisor (<code class="text-slate-200">runsc</code>) user-space kernel sandbox paired with strict Calico Default Deny egress network policy and non-root UID execution.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
+              <p class="mt-1 text-sm text-slate-300">Kernel exploit simulations (<code class="text-slate-200">sys_ptrace</code>, <code class="text-slate-200">klogctl</code>) were blocked at the user-space boundary (<code class="text-slate-200">Operation not permitted</code>). Outbound exfiltration probes to public IPs timed out with 100% packet drop.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
+              <p class="mt-1 text-sm text-slate-300">Standard Linux namespaces and cgroups do not provide sufficient isolation for autonomous code execution. Sandboxed user-space virtualization kernels (gVisor or Firecracker) are non-negotiable.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
+              <p class="mt-1 text-sm text-slate-300">Edge industrial computing nodes connected to PLCs and OT fieldbuses must run untrusted analytic extensions in microVMs to prevent lateral movement into physical process controllers.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 008: Deterministic Verification vs. LLM-as-a-Judge Bias -->
+      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-amber-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-amber-400">BENCHMARK &amp; EVALUATION</span>
+            <span class="font-mono text-xs text-slate-500">EXP-2026-008 · Oct 2026</span>
+          </div>
+          <span class="chip font-mono text-xs">Repo: lgcorzo/mlops-python-package</span>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white">
+          Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge Plausibility Bias (44% False Negatives)
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Artifact: <a href="https://github.com/lgcorzo/mlops-python-package/blob/main/evidence/evaluations/llm-judge-vs-pytest-benchmark.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/evaluations/llm-judge-vs-pytest-benchmark.json</a> · Lab: <a href="https://github.com/lgcorzo/mlops-python-package/blob/main/wiki/quality/exp_2026_008_llm_judge_vs_pytest.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-008</a>
+        </p>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
+              <p class="mt-1 text-sm text-slate-300">Measure the accuracy gap and false-negative rate when using LLM code reviewers to evaluate PR safety vs. deterministic automated test suites (pytest, mypy, Semgrep).</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Dataset</h3>
+              <p class="mt-1 text-sm text-slate-300">50 code mutations on ML inference routines (25 correct, 25 subtle defects: silent slicing, divide-by-zero, off-by-one). Evaluated by GPT-4o reviewer vs automated pytest suite.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
+              <p class="mt-1 text-sm text-slate-300">The LLM judge suffered a <strong>44% False Negative rate</strong> (approving 11 flawed PRs due to convincing docstrings and plausible syntax). The automated test suite caught <strong>100% (25/25)</strong> of defects.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
+              <p class="mt-1 text-sm text-slate-300">LLM judges are useful for readability and style guidance, but must <strong>never</strong> act as PR merge gates. Deterministic test suites and strict type checkers are mathematically required.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
+              <p class="mt-1 text-sm text-slate-300">In robotic welding and CNC kinematic controllers, plausible-looking code with geometric sign errors causes catastrophic physical collisions. Safety relies on mathematical proof, not LLM opinion.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 009: AST Context Efficiency Benchmark -->
+      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-indigo-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-indigo-400">CONTEXT OPTIMIZATION</span>
+            <span class="font-mono text-xs text-slate-500">EXP-2026-009 · Oct 2026</span>
+          </div>
+          <span class="chip font-mono text-xs">Tools: Graphify AST Knowledge Graph &amp; R2R</span>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white">
+          AST Subgraphs vs. Raw Grep: Achieving 91.8% Token Reduction and 94% First-Pass Code Generation
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/ast-graph-token-efficiency.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/benchmarks/ast-graph-token-efficiency.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_009.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-009</a>
+        </p>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
+              <p class="mt-1 text-sm text-slate-300">Measure token consumption, retrieval latency, and refactoring accuracy when providing agents with a 2-hop AST dependency subgraph instead of full-file dumps or keyword grep.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Methodology</h3>
+              <p class="mt-1 text-sm text-slate-300">Evaluated on a 120-file code repository (>45k LoC). Baseline: ripgrep dumping matching files into prompt context. Graph: 2-hop neighborhood extraction from Graphify <code class="text-slate-200">graph.json</code>.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
+              <p class="mt-1 text-sm text-slate-300">The AST graph slashed prompt tokens from 38,400 to 3,150 (<strong>91.8% token cut</strong>) and retrieval latency from 3.8s to 420ms. First-pass compilation rate jumped from 62% to <strong>94%</strong>.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
+              <p class="mt-1 text-sm text-slate-300">Eliminating "lost-in-the-middle" attention degradation by pruning irrelevant symbols is the single most effective way to improve agent code quality and cut inference costs.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
+              <p class="mt-1 text-sm text-slate-300">In massive industrial software codebases (millions of lines of C++/C#/Rust), targeted AST dependency subgraphs are the only technically viable and cost-effective mechanism for automated refactoring.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Entry 010: Resource Governance & Memory Bounding in gVisor -->
+      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-teal-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-teal-400">RESOURCE GOVERNANCE</span>
+            <span class="font-mono text-xs text-slate-500">EXP-2026-010 · Oct 2026</span>
+          </div>
+          <span class="chip font-mono text-xs">Runtime: gVisor / cgroups v2 (512Mi Clamping)</span>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white">
+          Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping and Safe Out-of-Memory Termination
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/resource-profiling-512mi.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/benchmarks/resource-profiling-512mi.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_010.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-010</a>
+        </p>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
+              <p class="mt-1 text-sm text-slate-300">Verify that autonomous factory tasks strictly adhere to declared resource budgets (CPU: 500m, RAM: 512Mi, Timeout: 300s) and handle intentional memory exhaustion gracefully.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
+              <p class="mt-1 text-sm text-slate-300">Kubernetes pod configured with strict cgroups v2 resource limits running on gVisor runtime, profiled via Prometheus/cAdvisor exporters.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
+              <p class="mt-1 text-sm text-slate-300">Standard test runs peaked at 285 MiB RAM (55.6% budget) and 380m CPU. When subjected to intentional memory exhaustion, gVisor terminated the pod cleanly in 2.8s (exit code 137, OOMKilled) with zero host memory pressure.</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
+              <p class="mt-1 text-sm text-slate-300">Compiling large Rust workspaces requires 1.5–2 GiB; realistic micro-sandboxes (512Mi) must execute pre-built binaries or targeted test suites. Honest resource profiling prevents production surprise.</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
+              <p class="mt-1 text-sm text-slate-300">On shopfloor edge industrial PCs, autonomous AI diagnostic workers must operate within hard memory ceilings to ensure they never starve real-time deterministic machine control cycles.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </section>
 
     <!-- Lab Policy Footer -->
