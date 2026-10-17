@@ -103,7 +103,8 @@
   /** Display categories. */
   const CATEGORIES = [
     { id: 'featured', label: 'Start Here' },
-    { id: 'darkgravity', label: 'Dark Gravity Lab' },
+    { id: 'darkgravity', label: 'Dark Gravity Factory' },
+    { id: 'minio', label: 'MinIO & Storage' },
     { id: 'systems', label: 'Infrastructure & GitOps' },
     { id: 'ai', label: 'LLMOps, Agents & Knowledge' },
     { id: 'mlops', label: 'Industrial AI & MLOps' },
@@ -175,9 +176,18 @@
     [/zero-trust|openziti/i, 'Zero-trust'],
   ];
 
+  const MINIO = new Set([
+    'minio', 'mc', 'madmin-go', 'kes', 'kms-go', 'directpv', 'dperf', 'console', 'cli',
+    'operator', 'minio-go', 'minio-cf', 'sidekick', 'warp', 'mint', 'md5-simd',
+    'simdjson-go', 'sha256-simd', 'highwayhash', 'blake2b-simd', 'crc64nvme', 'certgen',
+    'dnscache', 'filepath', 'pkg', 'mux', 'mtls', 'websocket', 'zipindex', 'xxml',
+    'sio', 'selfupdate', 'pkger', 'multipart-debug', 'colorjson', 'csvparser', 'asm2plan9s',
+  ]);
+
   /** Resolve a repo to one of the display categories. */
   function categoryOf(repo) {
     if (DARKGRAVITY.has(repo.name)) return 'darkgravity';
+    if (MINIO.has(repo.name)) return 'minio';
     if (MLOPS.has(repo.name)) return 'mlops';
     if (AI.has(repo.name)) return 'ai';
     return 'systems';
