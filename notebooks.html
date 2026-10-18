@@ -87,6 +87,155 @@
     <!-- Entries -->
     <section class="container-x mt-16 space-y-12">
 
+      <!-- Featured Entry: Dark Gravity Screencast Walkthrough -->
+      <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-accent/20 border border-accent/40 px-2.5 py-1 font-mono text-xs font-semibold text-accent">TECHNICAL DEMO &amp; SCREENCAST</span>
+            <span class="font-mono text-xs text-slate-400">1080p · 60 FPS · 5:00 Walkthrough</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
+            <span class="rounded-md bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 font-mono text-[11px] text-emerald-400">EU AI Act Conformant</span>
+          </div>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
+          Dark Gravity: 5-Minute Technical Demonstration Screencast &amp; Autonomous Pipeline Walkthrough
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Walkthrough: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/screencast_walkthrough.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">docs/screencast_walkthrough.md</a> · Script: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/scripts/render_screencast.py" target="_blank" rel="noopener noreferrer" class="text-accent underline">scripts/render_screencast.py</a>
+        </p>
+
+        <!-- Video Player Section (YouTube Embed) -->
+        <div class="mt-8 rounded-xl border border-line bg-black/60 p-2 sm:p-4 overflow-hidden">
+          <div class="relative w-full overflow-hidden rounded-lg bg-black shadow-2xl aspect-video">
+            <iframe 
+              class="absolute inset-0 h-full w-full border-0 rounded-lg"
+              src="https://www.youtube-nocookie.com/embed/FASQOk8mg4M?rel=0&modestbranding=1" 
+              title="Dark Gravity Technical Demonstration Screencast" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 px-2 text-xs text-slate-400 font-mono">
+            <div class="flex items-center gap-3">
+              <span>Video Specs: 1080p HD · 60 FPS · 5:00 Duration · Narration + Synchronized Subtitles</span>
+              <a href="https://youtu.be/FASQOk8mg4M" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:underline inline-flex items-center gap-1">
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-current"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                Watch on YouTube
+              </a>
+            </div>
+            <a href="assets/videos/screencast_dark_gravity_walkthrough.mp4" download class="text-accent hover:underline flex items-center gap-1">
+              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download Raw MP4 (27MB)
+            </a>
+          </div>
+        </div>
+
+        <p class="mt-6 text-sm sm:text-base leading-relaxed text-slate-300">
+          This comprehensive technical demonstration screencast showcases Dark Gravity's live autonomous execution, gVisor container sandboxing, Non-Human Identity (NHI) Ed25519 verification, and strict Human-in-the-Loop (HITL) governance.
+        </p>
+
+        <!-- Structured Timeline Grid -->
+        <div class="mt-8 space-y-4">
+          <h3 class="font-mono text-xs uppercase tracking-wider text-accent">🎬 Screencast Timeline &amp; Section Breakdown</h3>
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <!-- Section 1 -->
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-accent">Section 1 (0:00 - 0:45)</span>
+                <span class="chip text-[10px]">Ingestion &amp; NHI</span>
+              </div>
+              <h4 class="mt-2 text-sm font-semibold text-white">Issue Creation &amp; Cryptographic Ingestion</h4>
+              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
+                <li>• Issue <code class="text-slate-200">#104</code> created in <code class="text-slate-200">rust_CACD_autonomous_factory</code> with labels <code class="text-slate-200">[autonomous-mission, dark-gravity]</code>.</li>
+                <li>• Explicit resource constraint parsing: <code class="text-slate-200">CPU: 500m, RAM: 512Mi, Timeout: 300s</code>.</li>
+                <li>• Outbound polling daemon (<code class="text-slate-200">factory-cli poller</code>) detects issue without inbound webhooks.</li>
+                <li>• Ed25519 NHI engine signs a W3C Verifiable Credential under <code class="text-slate-200">did:factory:dark-gravity-euskadi</code>.</li>
+                <li>• Payload dispatched to Confluent Kafka topic <code class="text-slate-200">mission-input</code> with offset idempotency.</li>
+              </ul>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-accent-2">Section 2 (0:45 - 2:00)</span>
+                <span class="chip text-[10px]">Orchestration &amp; gVisor</span>
+              </div>
+              <h4 class="mt-2 text-sm font-semibold text-white">Cluster Orchestration &amp; Sandboxed Execution</h4>
+              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
+                <li>• Hatchet orchestrates 6-phase DAG: <code class="text-slate-200">Ingestion → Plan → Code Sandbox → Validation → SAST Audit → Review</code>.</li>
+                <li>• ZeroClaw executor spawned inside Kubernetes pod with <code class="text-slate-200">RuntimeClass: gvisor-runsc</code> (Kernel Isolation L3).</li>
+                <li>• Real-time cgroup gauges confirm active enforcement: CPU capped at 340m/500m (68%), RAM clamped to 218Mi/512Mi (42%).</li>
+                <li>• Durable state step checkpoints (<code class="text-slate-200">StepCheckpoint#03</code>) written to PostgreSQL for fault recovery.</li>
+                <li>• Zero trust OpenZiti mTLS 1.3 overlay mesh secures inter-agent tool calls with zero public ingress ports.</li>
+              </ul>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-accent-3">Section 3 (2:00 - 3:15)</span>
+                <span class="chip text-[10px]">Delivery &amp; SAST Gates</span>
+              </div>
+              <h4 class="mt-2 text-sm font-semibold text-white">GitOps Delivery &amp; Quality Triad Gates</h4>
+              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
+                <li>• ZeroClaw performs surgical tree-sitter AST mutations on <code class="text-slate-200">crates/factory-mcp-server/src/tools/spec_kit_tool.rs</code>.</li>
+                <li>• Sandboxed unit test suite (<code class="text-slate-200">cargo test -p factory-mcp-server</code>) achieves 18/18 passes in gVisor sandbox.</li>
+                <li>• Auditor Agent completes automated SAST scan, verifying 0 high/critical CVEs and a 10.0/10.0 security score.</li>
+                <li>• Automatically opens PR <code class="text-slate-200">#42</code> with unified git diffs, test logs, and cryptographic proof of lineage.</li>
+              </ul>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold text-amber-300">Section 4 (3:15 - 4:15)</span>
+                <span class="chip text-[10px]">Governance &amp; HITL</span>
+              </div>
+              <h4 class="mt-2 text-sm font-semibold text-white">Interactive Directives &amp; HITL Merge Shield</h4>
+              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
+                <li>• Human architect comments <code class="text-slate-200">@darkgravity /status</code> on PR #42; bot reacts with status matrix &amp; FinOps metrics.</li>
+                <li>• Architect issues <code class="text-slate-200">@darkgravity /refine Add strict validation for empty payload strings</code>.</li>
+                <li>• ZeroClaw re-enters gVisor sandbox, applies AST mutation, passes tests (19/19), and pushes commit <code class="text-slate-200">e9f8a12</code>.</li>
+                <li>• <strong class="text-rose-400">Strict Governance Shield</strong>: Git merge capability is <strong>PERMANENTLY BLOCKED</strong> (<code class="text-slate-200">🔒 MERGE BLOCKED - Awaiting Human Maintainer Approval</code>).</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 5 Full Width -->
+          <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-semibold text-slate-300">Section 5 (4:15 - 5:00)</span>
+              <span class="chip text-[10px]">Telemetry &amp; Compliance Audit</span>
+            </div>
+            <h4 class="mt-2 text-sm font-semibold text-white">Observability, Cost Metrics &amp; EU AI Act Compliance</h4>
+            <div class="mt-3 grid gap-4 sm:grid-cols-3 text-xs text-slate-300">
+              <div class="rounded-lg bg-black/40 p-3 border border-line">
+                <span class="font-mono text-[10px] text-accent uppercase">Execution Telemetry</span>
+                <p class="mt-1 font-mono text-white">60,570 Tokens</p>
+                <p class="text-slate-400 text-[11px]">42,150 prompt + 18,420 completion</p>
+              </div>
+              <div class="rounded-lg bg-black/40 p-3 border border-line">
+                <span class="font-mono text-[10px] text-emerald-400 uppercase">FinOps Budget</span>
+                <p class="mt-1 font-mono text-white">$0.5097 USD Total</p>
+                <p class="text-slate-400 text-[11px]">$0.4285 LLM + $0.0812 compute</p>
+              </div>
+              <div class="rounded-lg bg-black/40 p-3 border border-line">
+                <span class="font-mono text-[10px] text-accent-2 uppercase">Stage Latencies</span>
+                <p class="mt-1 font-mono text-white">875s Total Run</p>
+                <p class="text-slate-400 text-[11px]">Sandbox (380s), Val (210s), SAST (128s)</p>
+              </div>
+            </div>
+            <p class="mt-3 text-xs text-slate-400">
+              Cryptographic W3C Verifiable Credential audit trail stored for EU AI Act Conformity Assessment &amp; SOC 2 Type II compliance in <code class="text-slate-300">evidence/missions/mission-001/report.json</code>.
+            </p>
+          </div>
+        </div>
+      </article>
+
       <!-- Entry 001: GitOps CI / Kubeconform Failure -->
       <article class="glass rounded-2xl border border-line p-7 sm:p-9">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
