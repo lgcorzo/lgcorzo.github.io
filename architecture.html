@@ -518,109 +518,6 @@
             <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
               Zoomable full-mesh topology connecting services, ports, and dark overlay networks:
             </p>
-            <pre id="c4-mermaid-code" style="display: none;">
-graph TB
-    subgraph PERIMETER["Air-Gapped External Boundary - Zero Ingress"]
-        GIT["GitHub and GitLab Cloud API"]
-    end
-
-    subgraph K8S_CLUSTER["Enterprise Kubernetes Cluster - 10 Namespaces"]
-
-        subgraph NS_AGENTS["1. ns agents - Autonomous Runtime"]
-            WORKER["factory-worker<br/>Rustant, ZeroClaw, DocAgent"]
-            MCP["factory-mcp-server<br/>Axum SSE port 8100"]
-            RESEARCH["factory-deep-research<br/>Worker port 8200"]
-            PROXY["hatchet-proxy sidecar<br/>port 7070 to 7077"]
-        end
-
-        subgraph NS_ORCHESTRATORS["2. ns orchestrators - Workflow Engine"]
-            HATCHET["Hatchet Durable Engine<br/>gRPC 7077 and API 8000"]
-            KEDA["KEDA Autoscalers"]
-        end
-
-        subgraph NS_CONFLUENT["3. ns confluent - Event Bus"]
-            KAFKA["Apache Kafka KRaft<br/>mission-ingestion<br/>agent-thought<br/>mission-events"]
-        end
-
-        subgraph NS_STORAGE["4. ns storage - Sovereign Data Tier"]
-            CNPG["CloudNativePG PostgreSQL 16<br/>Checkpoints and App State"]
-            MINIO["Sovereign MinIO S3 Cluster<br/>checkpoints and mlflow buckets"]
-            DIRECTPV["DirectPV CSI Driver<br/>NVMe Direct-Attached Storage"]
-        end
-
-        subgraph NS_KNOWLEDGE["5. ns knowledge - Semantic Memory"]
-            PGVECTOR["pgvector CNPG Cluster<br/>High-dimensional Embeddings"]
-            DEEPWIKI["deepwiki-rs Daemon<br/>Tree-sitter AST Graph Engine"]
-        end
-
-        subgraph NS_LLM["6. ns llm-apps - AI Gateway and Provenance"]
-            LITELLM["LiteLLM AI Gateway<br/>Proxy port 4000 and Vtags"]
-            SEMANTICA["Semantica-AGI Engine<br/>Causal Lineage and Proof"]
-            R2R["R2R GraphRAG<br/>Semantic Code Search port 7272"]
-        end
-
-        subgraph NS_SECURITY["7. ns security - Identity and Secrets"]
-            VAULT["HashiCorp Vault<br/>5-min JIT Tokens"]
-            SEALED["Bitnami SealedSecrets"]
-            KEYCLOAK["Keycloak OIDC"]
-        end
-
-        subgraph NS_OPENZITI["8. ns openziti - Dark Network Fabric"]
-            ZITI_CTRL["OpenZiti Controller<br/>port 8441 Control Plane"]
-            ZITI_ROUTER["Ziti Edge Routers<br/>port 3022 Dark Overlay"]
-        end
-
-        subgraph NS_DEV["9. ns development - Ephemeral Sandboxes"]
-            GVISOR["gVisor runsc Micro-Sandboxes<br/>Target: 30 MiB RAM / 250m CPU"]
-        end
-
-        subgraph NS_FLUX["10. ns flux-system - GitOps Engine"]
-            FLUX["FluxCD v2 Controllers<br/>Source and Kustomize"]
-        end
-
-    end
-
-    %% Perimeter Outbound Polling
-    GIT ---|Outbound Polling 30-60s| WORKER
-
-    %% Inter-Namespace Relations
-    WORKER -->|Publish Mission and Thoughts| KAFKA
-    KAFKA -->|Trigger Mission DAG| HATCHET
-    HATCHET ---|gRPC Durable Steps| PROXY
-    PROXY --- WORKER
-
-    WORKER ---|Dispatch MCP Tools| MCP
-    MCP -->|Launch Ephemeral Job| GVISOR
-    WORKER ---|Semantic Code Context| R2R
-    WORKER ---|AST Symbol Queries| DEEPWIKI
-
-    WORKER ---|LLM Calls via Vtags| LITELLM
-    WORKER -->|Record Causal Provenance| SEMANTICA
-
-    WORKER ---|Fetch 5-min JIT Tokens| VAULT
-    HATCHET ---|Persist DAG Checkpoints| CNPG
-    HATCHET ---|Archive Artifacts| MINIO
-    MINIO ---|Line-rate Block IO| DIRECTPV
-
-    %% OpenZiti Dark Fabric Overlay
-    ZITI_ROUTER -.->|mTLS 1.3 Overlay| WORKER
-    ZITI_ROUTER -.->|mTLS 1.3 Overlay| HATCHET
-    ZITI_ROUTER -.->|mTLS 1.3 Overlay| MINIO
-    ZITI_ROUTER -.->|mTLS 1.3 Overlay| LITELLM
-
-    %% GitOps Reconciliation
-    FLUX -.->|Reconciles Manifests| WORKER
-
-    classDef cyan stroke:#00f0ff,stroke-width:2px,fill:#0d121f,color:#fff;
-    classDef purple stroke:#a855f7,stroke-width:2px,fill:#101726,color:#fff;
-    classDef emerald stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
-    classDef border stroke:#475569,stroke-width:1px,fill:#080b12,color:#f8fafc;
-
-    class WORKER,MCP,HATCHET cyan;
-    class GVISOR,VAULT,ZITI_CTRL,ZITI_ROUTER purple;
-    class MINIO,CNPG,KAFKA,LITELLM emerald;
-    class GIT,FLUX border;
-</pre>
             <div id="c4-mermaid-rendered" style="text-align: center; min-height: 400px; overflow-x: auto;"></div>
           </div>
         </div>
@@ -1033,17 +930,122 @@ sequenceDiagram
   </footer>
 
   <script>
+    const C4_MERMAID_CODE = `graph TB
+    subgraph PERIMETER["Air-Gapped External Boundary - Zero Ingress"]
+        GIT["GitHub and GitLab Cloud API"]
+    end
+
+    subgraph K8S_CLUSTER["Enterprise Kubernetes Cluster - 10 Namespaces"]
+
+        subgraph NS_AGENTS["1. ns agents - Autonomous Runtime"]
+            WORKER["factory-worker<br/>Rustant, ZeroClaw, DocAgent"]
+            MCP["factory-mcp-server<br/>Axum SSE port 8100"]
+            RESEARCH["factory-deep-research<br/>Worker port 8200"]
+            PROXY["hatchet-proxy sidecar<br/>port 7070 to 7077"]
+        end
+
+        subgraph NS_ORCHESTRATORS["2. ns orchestrators - Workflow Engine"]
+            HATCHET["Hatchet Durable Engine<br/>gRPC 7077 and API 8000"]
+            KEDA["KEDA Autoscalers"]
+        end
+
+        subgraph NS_CONFLUENT["3. ns confluent - Event Bus"]
+            KAFKA["Apache Kafka KRaft<br/>mission-ingestion<br/>agent-thought<br/>mission-events"]
+        end
+
+        subgraph NS_STORAGE["4. ns storage - Sovereign Data Tier"]
+            CNPG["CloudNativePG PostgreSQL 16<br/>Checkpoints and App State"]
+            MINIO["Sovereign MinIO S3 Cluster<br/>checkpoints and mlflow buckets"]
+            DIRECTPV["DirectPV CSI Driver<br/>NVMe Direct-Attached Storage"]
+        end
+
+        subgraph NS_KNOWLEDGE["5. ns knowledge - Semantic Memory"]
+            PGVECTOR["pgvector CNPG Cluster<br/>High-dimensional Embeddings"]
+            DEEPWIKI["deepwiki-rs Daemon<br/>Tree-sitter AST Graph Engine"]
+        end
+
+        subgraph NS_LLM["6. ns llm-apps - AI Gateway and Provenance"]
+            LITELLM["LiteLLM AI Gateway<br/>Proxy port 4000 and Vtags"]
+            SEMANTICA["Semantica-AGI Engine<br/>Causal Lineage and Proof"]
+            R2R["R2R GraphRAG<br/>Semantic Code Search port 7272"]
+        end
+
+        subgraph NS_SECURITY["7. ns security - Identity and Secrets"]
+            VAULT["HashiCorp Vault<br/>5-min JIT Tokens"]
+            SEALED["Bitnami SealedSecrets"]
+            KEYCLOAK["Keycloak OIDC"]
+        end
+
+        subgraph NS_OPENZITI["8. ns openziti - Dark Network Fabric"]
+            ZITI_CTRL["OpenZiti Controller<br/>port 8441 Control Plane"]
+            ZITI_ROUTER["Ziti Edge Routers<br/>port 3022 Dark Overlay"]
+        end
+
+        subgraph NS_DEV["9. ns development - Ephemeral Sandboxes"]
+            GVISOR["gVisor runsc Micro-Sandboxes<br/>Target: 30 MiB RAM / 250m CPU"]
+        end
+
+        subgraph NS_FLUX["10. ns flux-system - GitOps Engine"]
+            FLUX["FluxCD v2 Controllers<br/>Source and Kustomize"]
+        end
+
+    end
+
+    %% Perimeter Outbound Polling
+    GIT ---|Outbound Polling 30-60s| WORKER
+
+    %% Inter-Namespace Relations
+    WORKER -->|Publish Mission and Thoughts| KAFKA
+    KAFKA -->|Trigger Mission DAG| HATCHET
+    HATCHET ---|gRPC Durable Steps| PROXY
+    PROXY --- WORKER
+
+    WORKER ---|Dispatch MCP Tools| MCP
+    MCP -->|Launch Ephemeral Job| GVISOR
+    WORKER ---|Semantic Code Context| R2R
+    WORKER ---|AST Symbol Queries| DEEPWIKI
+
+    WORKER ---|LLM Calls via Vtags| LITELLM
+    WORKER -->|Record Causal Provenance| SEMANTICA
+
+    WORKER ---|Fetch 5-min JIT Tokens| VAULT
+    HATCHET ---|Persist DAG Checkpoints| CNPG
+    HATCHET ---|Archive Artifacts| MINIO
+    MINIO ---|Line-rate Block IO| DIRECTPV
+
+    %% OpenZiti Dark Fabric Overlay
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| WORKER
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| HATCHET
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| MINIO
+    ZITI_ROUTER -.->|mTLS 1.3 Overlay| LITELLM
+
+    %% GitOps Reconciliation
+    FLUX -.->|Reconciles Manifests| WORKER
+
+    classDef cyan stroke:#00f0ff,stroke-width:2px,fill:#0d121f,color:#fff;
+    classDef purple stroke:#a855f7,stroke-width:2px,fill:#101726,color:#fff;
+    classDef emerald stroke:#10b981,stroke-width:2px,fill:#05070c,color:#fff;
+    classDef border stroke:#475569,stroke-width:1px,fill:#080b12,color:#f8fafc;
+
+    class WORKER,MCP,HATCHET cyan;
+    class GVISOR,VAULT,ZITI_CTRL,ZITI_ROUTER purple;
+    class MINIO,CNPG,KAFKA,LITELLM emerald;
+    class GIT,FLUX border;`;
+
     let c4GraphRendered = false;
     async function renderC4Graph() {
       if (c4GraphRendered) return;
-      const codeEl = document.getElementById('c4-mermaid-code');
       const targetEl = document.getElementById('c4-mermaid-rendered');
-      if (!codeEl || !targetEl) return;
+      if (!targetEl) return;
       try {
-        const code = codeEl.textContent.trim();
-        const { svg } = await mermaid.render('c4-mesh-diagram', code);
-        targetEl.innerHTML = svg;
-        c4GraphRendered = true;
+        const { svg } = await mermaid.render('c4-mesh-diagram', C4_MERMAID_CODE);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(svg, 'text/html');
+        const svgEl = doc.body ? doc.body.firstElementChild : null;
+        if (svgEl) {
+          targetEl.replaceChildren(svgEl);
+          c4GraphRendered = true;
+        }
       } catch (e) {
         console.error('Failed to render C4 diagram:', e);
       }
