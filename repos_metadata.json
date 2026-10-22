@@ -449,7 +449,7 @@
     "url": "https://github.com/lgcorzo/minio-go"
   },
   {
-    "description": "Dark Gravity Sovereign Storage: Hardened, zero-CVE S3 object storage server independently maintained to insulate the autonomous factory from upstream licensing closures.",
+    "description": "Dark Gravity Sovereign Storage: Hardened S3 object storage server independently maintained to insulate the autonomous factory from upstream licensing closures.",
     "forkCount": 0,
     "isFork": false,
     "name": "minio",

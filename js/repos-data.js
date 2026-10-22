@@ -171,7 +171,7 @@ const GITHUB_REPOS = [
   },
   {
     "name": "minio",
-    "description": "Dark Gravity Sovereign Storage: Hardened, zero-CVE S3 object storage server independently maintained to insulate the autonomous factory from upstream licensing closures.",
+    "description": "Dark Gravity Sovereign Storage: Hardened S3 object storage server independently maintained to insulate the autonomous factory from upstream licensing closures.",
     "url": "https://github.com/lgcorzo/minio",
     "stars": 1,
     "forks": 0,
