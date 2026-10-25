@@ -12,11 +12,11 @@ Core orchestrators, autonomous remediation agents, agent development kits, RAG e
 | Repository | Language | Description | Key Focus |
 | :--- | :--- | :--- | :--- |
 | [**rust_CACD_autonomous_factory**](https://github.com/lgcorzo/rust_CACD_autonomous_factory) | Rust | Dark Gravity CA/CD Core: Hatchet DAG orchestrator, Ed25519 NHI credentials & gVisor sandboxes. | Core Factory Orchestrator |
-| [**Jules_remediator**](https://github.com/lgcorzo/Jules_remediator) | Rust | Autonomous factory for Kubernetes error remediation via Jules agent & FluxCD webhooks. | Autonomous Healing |
+| **Jules_remediator** *(Private Factory)* | Rust | Autonomous factory for Kubernetes error remediation via Jules agent & FluxCD webhooks. | Autonomous Healing |
 | [**fastapi-autogen-team**](https://github.com/lgcorzo/fastapi-autogen-team) | Rust | High-throughput Axum & Rig microservice exposing OpenAI-compatible streaming endpoints for agent squads. | Agentic Service |
 | [**mlops-python-package**](https://github.com/lgcorzo/mlops-python-package) | Python | Industrial MLOps Standard: Reproducible ML pipelines, DVC versioning, MLflow tracking, SHAP explainability. | Industrial MLOps Standard |
 | [**llmops-python-package**](https://github.com/lgcorzo/llmops-python-package) | Python | Enterprise LLMOps Standard: ISO/IEC/IEEE 42010 agent observability, prompt lineage, OpenWiki auto-docs. | Enterprise LLMOps Standard |
-| [**gitops_internal_lgcorzo**](https://github.com/lgcorzo/gitops_internal_lgcorzo) | Shell / K8s | Cluster infrastructure, SealedSecrets, OpenZiti dark networking, and GitOps deployments. | Sovereign Infrastructure |
+| **gitops_internal_lgcorzo** *(Private Infra)* | Shell / K8s | Cluster infrastructure, SealedSecrets, OpenZiti dark networking, and GitOps deployments. | Sovereign Infrastructure |
 | [**semantica**](https://github.com/lgcorzo/semantica) | Python | Knowledge extraction & semantic graph memory engine for autonomous agents. | Cognitive Memory |
 | [**deepwiki-rs**](https://github.com/lgcorzo/deepwiki-rs) | Rust | High-performance CodeGraph & Repomix documentation generator in Rust. | Code Analysis & Wiki |
 | [**speckit-superpowers-bridge**](https://github.com/lgcorzo/speckit-superpowers-bridge) | Shell | Bridge combining Spec Kit (SDD: spec, plan, tasks) with Superpowers (TDD, subagents, review). | SDD / Process Bridge |
