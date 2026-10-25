@@ -272,7 +272,7 @@
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / CRITICAL</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h).<br>
+                    <strong>Attack Type:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-53995 &amp; CVE-2026-115886 / GHSA-wqmh-qccw-pqwf &amp; GHSA-2wqp-q3c6-ccj5).<br>
                     <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, malicious third-party scorer keyword arguments in model evaluation and registration endpoints allowed attackers to forge server-side requests into cluster-internal endpoints. Simultaneously, crafted <code class="text-slate-200">FileStore</code> trace IDs enabled traversal out of intended root directories to write arbitrary payloads onto worker disks.
                   </p>
                 </div>
@@ -283,7 +283,7 @@
                     <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Inode reuse race conditions and SQLite journal symlink attacks (GHSA-filelock-sqlsym).<br>
+                    <strong>Attack Type:</strong> Inode reuse race conditions and SQLite journal symlink attacks (CVE-2026-112940, CVE-2026-112907, CVE-2026-112913 / GHSA-v4x8-3wr5-3wq8).<br>
                     <strong>Mechanism:</strong> In multi-tenant environments or shared compute instances, when <code class="text-slate-200">filelock.ReadWriteLock</code> reopens lock databases by name, a planted symlink or sidecar journal file induces the process running with elevated worker privileges to overwrite or unlink its own operational files.
                   </p>
                 </div>
@@ -294,14 +294,25 @@
                     <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MEDIUM</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Algorithmic Complexity Attack / Unbounded Regex (CWE-400 / CWE-1333) in OpenTelemetry.<br>
+                    <strong>Attack Type:</strong> Algorithmic Complexity Attack / Unbounded Regex (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333) in OpenTelemetry.<br>
                     <strong>Mechanism:</strong> Malicious incoming HTTP headers containing deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> and <code class="text-slate-200">traceparent</code> entries caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>, starving CPU cycles across ingress proxy pipelines.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-rose-300 font-semibold">
+                    <span>D. Virtualenv Bash Activator Regression &amp; GitPython RCE</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Attack Type:</strong> Arbitrary Command Injection on Activation (CVE-2026-115586) and Submodule Traversal RCE (CVE-2026-114145).<br>
+                    <strong>Mechanism:</strong> Upstream package <code class="text-slate-200">virtualenv 21.14.9</code> shipped a regression where the bash activator left <code class="text-slate-200">--prompt</code> unescaped in <code class="text-slate-200">$PS1</code>, executing arbitrary shell code on developer activation.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-purple-300 font-semibold">
-                    <span>D. Infrastructure Secret Exposure &amp; Weak Master Keys</span>
+                    <span>E. Infrastructure Secret Exposure &amp; Weak Master Keys</span>
                     <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">INFRASTRUCTURE</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
@@ -321,9 +332,10 @@
                 <div class="text-rose-400 font-semibold">// The Vulnerability Cascading Sequence</div>
                 <div class="text-slate-400">1. Original dependency was flagged for low-severity issues.</div>
                 <div class="text-slate-400">2. Automated bot bumped <code class="text-slate-200">filelock &rarr; 3.32.2</code> and <code class="text-slate-200">mlflow &rarr; 3.16.1</code>.</div>
-                <div class="text-slate-400">3. <strong>The Failure:</strong> The newly released version introduced fresh High-Severity CVEs (such as SQLite lock journal symlink overwrites and unauthenticated SSRF kwargs).</div>
-                <div class="text-slate-400">4. <strong>Lockfile Contamination:</strong> Meanwhile, <code class="text-slate-200">opentelemetry-api</code> remained pinned to vulnerable <code class="text-slate-200">1.30.0</code> transitively because <code class="text-slate-200">opentelemetry-instrumentation</code> had a tight upper bound (<code class="text-slate-200">&lt;0.52</code>), causing resolution deadlocks.</div>
-                <div class="text-slate-400">5. <strong>Manifest Drift:</strong> Merging individual Dependabot PRs caused merge conflicts and left <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> out of sync with <code class="text-slate-200">poetry.lock</code>.</div>
+                <div class="text-slate-400">3. <strong>The Failure:</strong> The newly released versions introduced fresh High-Severity CVEs: SQLite lock journal symlink overwrites (<code class="text-slate-200">CVE-2026-112940</code>) in filelock, and unauthenticated SSRF (<code class="text-slate-200">CVE-2026-115886</code>) and trace ID path traversal (<code class="text-slate-200">CVE-2026-53995</code>) in MLflow.</div>
+                <div class="text-slate-400">4. <strong>The Upstream Patch Regression:</strong> Upgrading <code class="text-slate-200">virtualenv &rarr; 21.14.9</code> introduced <code class="text-slate-200">CVE-2026-115586</code> (bash activator command execution), requiring an immediate follow-up jump to <code class="text-slate-200">21.14.13</code>.</div>
+                <div class="text-slate-400">5. <strong>Lockfile Contamination:</strong> Meanwhile, <code class="text-slate-200">opentelemetry-api</code> remained pinned to vulnerable <code class="text-slate-200">1.30.0</code> transitively because <code class="text-slate-200">opentelemetry-instrumentation</code> had a tight upper bound (<code class="text-slate-200">&lt;0.52</code>), causing resolution deadlocks.</div>
+                <div class="text-slate-400">6. <strong>Manifest Drift:</strong> Merging individual Dependabot PRs caused merge conflicts and left <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> out of sync with <code class="text-slate-200">poetry.lock</code>.</div>
               </div>
             </div>
           </div>
@@ -392,6 +404,14 @@
                   <span class="text-white font-bold text-base">Hourly</span>
                   <span class="text-[11px] text-slate-400 block">Autonomous Guard</span>
                 </div>
+              </div>
+
+              <!-- LinkedIn & Docs Reference -->
+              <div class="mt-4 rounded-xl border border-line bg-white/[0.02] p-3 text-xs text-slate-400">
+                <span>Detailed LinkedIn Executive Briefing: </span>
+                <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/the_supply_chain_upgrade_paradox_article.md" target="_blank" rel="noopener noreferrer" class="text-accent underline font-mono">
+                  docs/linkedin/the_supply_chain_upgrade_paradox_article.md
+                </a>
               </div>
             </div>
           </div>
