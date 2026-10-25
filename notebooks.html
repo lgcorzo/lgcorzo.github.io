@@ -270,12 +270,12 @@
               <div class="mt-2 space-y-3 font-mono text-xs">
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>1. Path Traversal &amp; SSRF via MLflow</span>
+                    <span>1. FileStore Path Traversal &amp; Arbitrary File Write via MLflow</span>
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Server-Side Request Forgery &amp; Arbitrary File Write (CVE-2026-53995 / GHSA-wqmh-qccw-pqwf).<br>
-                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, third-party scorer evaluation endpoints allowed request forgery, while crafted trace IDs enabled traversal out of intended root directories. Resolved in <code class="text-slate-200">3.17.2</code>.
+                    <strong>Vulnerability:</strong> Path Traversal &amp; Arbitrary File Write (CVE-2026-53995 / GHSA-wqmh-qccw-pqwf).<br>
+                    <strong>Mechanism:</strong> In MLflow tracking server backends using FileStore, crafted <code class="text-slate-200">trace_id</code> parameters in tracking endpoints allowed directory traversal out of designated experiment storage roots to write arbitrary payloads on the server. Resolved in <code class="text-slate-200">3.17.2</code>.
                   </p>
                 </div>
 
@@ -456,15 +456,15 @@
               <div class="mt-4 space-y-3 font-mono text-xs">
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
                   <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
-                    <span>// Empirical Mechanism: Bash Prompt Injection Regression (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
+                    <span>// Conceptual Model &amp; Mechanism: Bash Prompt Injection Regression (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
                     <a href="https://github.com/pypa/virtualenv/pull/3418" target="_blank" rel="noopener noreferrer" class="text-[10px] text-accent underline">Upstream: pypa/virtualenv#3418 (commit 5f48d711)</a>
                   </div>
-                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># In virtualenv 21.14.9 (activate.sh prompt refactoring in commit 5f48d711):</span>
-<span class="text-yellow-300">- PS1="`__v_prompt`$PS1"           # Unescaped prompt evaluation when promptvars active</span>
-<span class="text-slate-500"># In virtualenv 21.14.13 (resolved in PR #444):</span>
+                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># Simplified conceptual model of prompt expansion in 21.14.9 (released Oct 17, 2026):</span>
+<span class="text-yellow-300">- PS1="`__v_prompt`$PS1"           # Unescaped evaluation when promptvars enabled</span>
+<span class="text-slate-500"># In virtualenv 21.14.13 (released Oct 22, 2026 upstream, resolved in PR #444):</span>
 <span class="text-emerald-400">+ # Sanitized prompt generation &amp; disabled raw subshell command evaluation</span></code></pre>
                   <p class="mt-2 text-[11px] text-slate-400 font-sans">
-                    <strong>Vector scope &amp; condition:</strong> Requires an attacker or script to pass a crafted <code>--prompt</code> value containing command syntax, with code execution occurring when the prompt is redrawn under shell environments where prompt expansion is enabled (e.g. <code>shopt -s promptvars</code> or subshells inheriting <code>PS1</code>).
+                    <strong>Vector scope &amp; condition:</strong> Upstream release 21.14.9 corrected the primary injection in 21.14.8, but its prompt refactoring left <code>activate.sh</code> vulnerable under specific conditions: when an attacker or untrusted configuration provides a crafted <code>--prompt</code> value and the virtual environment is activated in a Bash shell with active prompt expansion (<code>shopt -s promptvars</code>), commands execute as the prompt is redrawn. Fixed cleanly upstream in 21.14.13.
                   </p>
                 </div>
 
@@ -514,7 +514,7 @@
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="text-emerald-300 font-semibold mb-1">Tier 2: Multi-Manifest Version Parity &amp; CI Lock Checking</div>
                   <p class="font-sans text-slate-300 text-xs">
-                    Security scanners evaluate distinct files differently. We implemented a unified export protocol ensuring that <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and MLflow runtime environment <code class="text-slate-200">python_env.yaml</code> maintain strict version parity. CI workflows execute <code class="text-slate-200">poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
+                    Security scanners evaluate distinct files differently (e.g. Dependabot parses <code class="text-slate-200">poetry.lock</code> and <code class="text-slate-200">requirements.txt</code>, while container runs load <code class="text-slate-200">python_env.yaml</code>). We implemented a synchronized export check ensuring that <code class="text-slate-200">requirements.txt</code> is systematically re-exported from <code class="text-slate-200">poetry.lock</code> on dependency changes, preventing silent runtime drift between CI test environments and deployed MLflow artifacts. CI workflows execute <code class="text-slate-200">poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
                   </p>
                 </div>
 
