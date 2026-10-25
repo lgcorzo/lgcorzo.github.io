@@ -260,9 +260,9 @@
           <!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
           <div class="space-y-6">
             <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Vulnerabilities Detected by Security Scanners</h3>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Vulnerabilities Detected by Security Scanners (5 Supply Chain + 1 Configuration)</h3>
               <p class="mt-1 text-sm text-slate-300">
-                Our static application and dependency scanners cataloged two distinct categories of issues:
+                Our static application and dependency scanners cataloged six distinct security surfaces across two categories:
               </p>
 
               <!-- Category A -->
@@ -303,12 +303,23 @@
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>4. Upstream Patch Regression in Virtualenv &amp; GitPython RCE</span>
+                    <span>4. Upstream Patch Regression in Virtualenv</span>
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Arbitrary Command Injection on Activation (CVE-2026-115586 in virtualenv) and Submodule Traversal RCE (CVE-2026-114145 in GitPython).<br>
-                    <strong>Mechanism:</strong> Upstream package <code class="text-slate-200">virtualenv 21.14.9</code> shipped a patch regression where the bash activator left <code class="text-slate-200">--prompt</code> unescaped in <code class="text-slate-200">$PS1</code>, executing arbitrary shell code on developer activation.
+                    <strong>Vulnerability:</strong> Arbitrary Command Injection on Environment Activation (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc).<br>
+                    <strong>Mechanism:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> fixed an earlier symlink flaw but introduced a severe regression: unescaped <code class="text-slate-200">--prompt</code> values in the bash activator allowed shell command substitution via <code class="text-slate-200">$PS1</code> on developer machine activation.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-rose-300 font-semibold">
+                    <span>5. Submodule Traversal &amp; Symlink Aliases in GitPython</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (CVE-2026-114145 / GHSA-83vg-56qc-22m7).<br>
+                    <strong>Mechanism:</strong> Symbolic links aliasing <code class="text-slate-200">.gitmodules</code> and unvalidated submodule mutation targets allowed repository clone operations to escape working trees and overwrite local shell scripts.
                   </p>
                 </div>
               </div>
@@ -318,11 +329,11 @@
               <div class="mt-2 space-y-3 font-mono text-xs">
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-purple-300 font-semibold">
-                    <span>5. LLM Gateway Master Key &amp; Local Configuration Sanitization</span>
+                    <span>6. LLM Gateway Master Key &amp; Credential Isolation</span>
                     <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">CONFIGURATION</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Hardening Scope:</strong> Permissive master key allowances on internal proxy gateways and untracked environment templates.<br>
+                    <strong>Hardening Scope:</strong> Permissive master key allowances on internal proxy gateways and untracked developer environment templates.<br>
                     <strong>Mechanism:</strong> Rotated internal gateways to cryptographically enforced 256-bit keys via Bitnami Sealed Secrets and established mandatory <code class="text-slate-200">.example</code> templates for local tooling to prevent token leakage.
                   </p>
                 </div>
@@ -330,18 +341,148 @@
             </div>
 
             <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">2. The "Upgrade Was Worse" Supply Chain Trap</h3>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">2. The "Upgrade Was Worse" Supply Chain Trap: Empirical PR Evidence</h3>
               <p class="mt-1 text-sm text-slate-300">
-                During initial automated triage on Day 1, Dependabot and autonomous agents bumped packages to immediate minor releases. This created an insidious failure loop:
+                During automated triage on Day 1, Dependabot and autonomous agents bumped packages to immediate minor releases, creating an insidious failure loop documented across our merged pull requests:
               </p>
-              <div class="mt-3 rounded-xl border border-line bg-black/50 p-4 font-mono text-xs text-slate-300 space-y-2">
-                <div class="text-rose-400 font-semibold">// The Vulnerability Cascading Sequence</div>
-                <div class="text-slate-400">1. Original dependency was flagged for low-severity issues.</div>
-                <div class="text-slate-400">2. Automated bot bumped <code class="text-slate-200">filelock &rarr; 3.32.2</code> and <code class="text-slate-200">mlflow &rarr; 3.16.1</code>.</div>
-                <div class="text-slate-400">3. <strong>The Failure:</strong> The newly released versions introduced fresh High-Severity CVEs: SQLite lock journal symlink overwrites (<code class="text-slate-200">CVE-2026-112940</code>) in filelock, and unauthenticated SSRF (<code class="text-slate-200">CVE-2026-115886</code>) and trace ID path traversal (<code class="text-slate-200">CVE-2026-53995</code>) in MLflow.</div>
-                <div class="text-slate-400">4. <strong>The Upstream Patch Regression:</strong> Upgrading <code class="text-slate-200">virtualenv &rarr; 21.14.9</code> introduced <code class="text-slate-200">CVE-2026-115586</code> (bash activator command execution), requiring an immediate follow-up jump to <code class="text-slate-200">21.14.13</code>.</div>
-                <div class="text-slate-400">5. <strong>Lockfile Contamination:</strong> Meanwhile, <code class="text-slate-200">opentelemetry-api</code> remained pinned to vulnerable <code class="text-slate-200">1.30.0</code> transitively because <code class="text-slate-200">opentelemetry-instrumentation</code> had a tight upper bound (<code class="text-slate-200">&lt;0.52</code>), causing resolution deadlocks.</div>
-                <div class="text-slate-400">6. <strong>Manifest Drift:</strong> Merging individual Dependabot PRs caused merge conflicts and left <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> out of sync with <code class="text-slate-200">poetry.lock</code>.</div>
+              
+              <!-- Evidence Table -->
+              <div class="mt-3 overflow-x-auto rounded-xl border border-line bg-black/40">
+                <table class="w-full text-left font-mono text-xs text-slate-300">
+                  <thead class="border-b border-line bg-white/[0.04] text-[11px] text-slate-400 uppercase">
+                    <tr>
+                      <th class="p-2.5">Package</th>
+                      <th class="p-2.5">Initial PR (Day 1)</th>
+                      <th class="p-2.5">Trap Classification / Flaw</th>
+                      <th class="p-2.5">Final Remediation PR</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-line/50 text-[11px]">
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">virtualenv</td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/434" target="_blank" rel="noopener noreferrer" class="text-accent underline font-semibold">PR #434</a>
+                        <span class="block text-[10px] text-slate-400">commit 635370d (21.14.2 &rarr; 21.14.9)</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-rose-400 font-semibold block">Patch Regression</span>
+                        <span class="text-slate-300 text-[10px]">Introduced CVE-2026-115586 (RCE in $PS1 prompt)</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/444" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #444</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit 13e1df6 (jumped to 21.14.13)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">filelock</td>
+                      <td class="p-2.5">
+                        <span class="text-slate-300">Locked at 3.32.2</span>
+                        <span class="block text-[10px] text-slate-400">Automated minor line bump</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-amber-300 font-semibold block">Intermediate Still Vulnerable</span>
+                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-112940 (SQLite symlink overwrite)</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/445" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #445</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit 798408b (breaking jump to 4.2.1)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">mlflow</td>
+                      <td class="p-2.5">
+                        <span class="text-slate-300">Locked at 3.16.1</span>
+                        <span class="block text-[10px] text-slate-400">Automated minor line bump</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-amber-300 font-semibold block">Intermediate Still Vulnerable</span>
+                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-53995 &amp; CVE-2026-115886</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/446" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #446</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit c236015 (skipped to 3.17.2)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">opentelemetry-api</td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/438" target="_blank" rel="noopener noreferrer" class="text-accent underline font-semibold">PR #438</a>
+                        <span class="block text-[10px] text-slate-400">commit 14bc2f3 (1.30.0 &rarr; 1.45.1)</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-yellow-300 font-semibold block">Solver Deadlock</span>
+                        <span class="text-slate-300 text-[10px]">Blocked by instrumentation &lt;0.52; poetry left 1.30.0</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/442" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #442</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit 00ef1fe (widened bound to &lt;1.0.0)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">gitpython</td>
+                      <td class="p-2.5">
+                        <span class="text-slate-300">Locked at 3.2.0</span>
+                        <span class="block text-[10px] text-slate-400">Active baseline</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-rose-400 font-semibold block">Traversal RCE</span>
+                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-114145 / GHSA-83vg-56qc-22m7</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/437" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #437</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit b868119 (bumped to 3.2.1)</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-white">setuptools</td>
+                      <td class="p-2.5">
+                        <span class="text-slate-300">Locked at 83.0.0</span>
+                        <span class="block text-[10px] text-slate-400">Active baseline</span>
+                      </td>
+                      <td class="p-2.5">
+                        <span class="text-rose-400 font-semibold block">Directory Traversal</span>
+                        <span class="text-slate-300 text-[10px]">Vulnerable to GHSA-xmj3-9gf7-h52w &amp; GHSA-grgh-hr87-3jpw</span>
+                      </td>
+                      <td class="p-2.5">
+                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/443" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #443</a>
+                        <span class="block text-[10px] text-emerald-300/80">commit 50b8ddc (bumped to 84.1.0)</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Real Git Evidence & Diff Breakdown -->
+              <div class="mt-4 space-y-3 font-mono text-xs">
+                <div class="rounded-xl border border-line bg-black/60 p-3.5">
+                  <div class="flex items-center justify-between text-rose-400 font-semibold mb-2">
+                    <span>// Empirical Evidence 1: Upstream Bash Prompt RCE (virtualenv)</span>
+                    <span class="text-[10px] text-slate-400">GHSA-cx6f-vjhg-g3cc / PR #434 vs #444</span>
+                  </div>
+                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># In virtualenv 21.14.9 (introduced in PR #434):</span>
+<span class="text-rose-400">- PS1="($(basename "$VIRTUAL_ENV")) $PS1" # If --prompt contained $(command), bash executed it on activate!</span>
+<span class="text-slate-500"># In virtualenv 21.14.13 (resolved in PR #444):</span>
+<span class="text-emerald-400">+ # Escaped promptvars and disabled syntax evaluation across bash/zsh activators</span></code></pre>
+                </div>
+
+                <div class="rounded-xl border border-line bg-black/60 p-3.5">
+                  <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
+                    <span>// Empirical Evidence 2: Solver Deadlock Resolution (PR #442)</span>
+                    <span class="text-[10px] text-slate-400">pyproject.toml &bull; commit 00ef1fe</span>
+                  </div>
+                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-rose-400">- opentelemetry-instrumentation = ">=0.51b0,<0.52"       # Locked opentelemetry-api <= 1.30.0</span>
+<span class="text-emerald-400">+ opentelemetry-instrumentation = ">=0.51b0,<1.0.0"       # Allowed resolution of modern OTel</span>
+<span class="text-emerald-400">+ opentelemetry-exporter-otlp-proto-http = ">=1.45.1,<2.0.0"</span>
+<span class="text-emerald-400">+ opentelemetry-exporter-otlp = ">=1.45.1,<2.0.0"</span>
+<span class="text-emerald-400">+ opentelemetry-api = ">=1.45.1,<2.0.0"                   # Explicit patched transitive floor</span></code></pre>
+                </div>
+
+                <div class="rounded-xl border border-line bg-black/60 p-3.5">
+                  <div class="text-accent font-semibold mb-1">// Timeline &amp; Conflict Root Cause</div>
+                  <p class="font-sans text-slate-300 text-xs leading-relaxed">
+                    Merging individual PRs #443, #444, #445, and #446 sequentially into <code class="text-slate-200">main</code> created a merge conflict in <code class="text-slate-200">poetry.lock</code> on active branch <code class="text-slate-200">PR #442</code>. Furthermore, <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> drifted out of sync, requiring an automated multi-manifest re-lock and export pass before CI passed all tests cleanly.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -414,11 +555,23 @@
               </div>
 
               <!-- LinkedIn & Docs Reference -->
-              <div class="mt-4 rounded-xl border border-line bg-white/[0.02] p-3 text-xs text-slate-400">
-                <span>Detailed LinkedIn Executive Briefing: </span>
-                <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/the_supply_chain_upgrade_paradox_article.md" target="_blank" rel="noopener noreferrer" class="text-accent underline font-mono">
-                  docs/linkedin/the_supply_chain_upgrade_paradox_article.md
-                </a>
+              <div class="mt-4 rounded-xl border border-line bg-white/[0.02] p-3 text-xs text-slate-400 space-y-1.5">
+                <div>
+                  <span class="text-slate-300 font-semibold">Executive Long-Form Article: </span>
+                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/the_supply_chain_upgrade_paradox_article.md" target="_blank" rel="noopener noreferrer" class="text-accent underline font-mono">
+                    the_supply_chain_upgrade_paradox_article.md
+                  </a>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <span class="text-slate-300 font-semibold">Short Executive Briefings: </span>
+                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/linkedin_post_short_en.md" target="_blank" rel="noopener noreferrer" class="text-accent-2 underline font-mono">
+                    linkedin_post_short_en.md (EN)
+                  </a>
+                  <span class="text-slate-500">&bull;</span>
+                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/linkedin_post_short.md" target="_blank" rel="noopener noreferrer" class="text-accent-3 underline font-mono">
+                    linkedin_post_short.md (ES)
+                  </a>
+                </div>
               </div>
             </div>
           </div>
