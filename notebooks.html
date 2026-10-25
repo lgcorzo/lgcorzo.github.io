@@ -49,7 +49,7 @@
       <div class="max-w-3xl">
         <p class="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3.5 py-1.5 font-mono text-xs text-slate-300">
           <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-2 opacity-70"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-accent-2"></span></span>
-          Live Engineering Logbook · Real Runs &amp; Architectural Decisions
+          Engineering Logbook · System Evaluations, Benchmarks &amp; Architectural Decisions
         </p>
         <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
           Engineering Lab Notebooks
@@ -91,8 +91,8 @@
       <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
           <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-accent/20 border border-accent/40 px-2.5 py-1 font-mono text-xs font-semibold text-accent">TECHNICAL DEMO (RENDERIZADO)</span>
-            <span class="font-mono text-xs text-slate-400">1080p · 60 FPS · 5:00 Walkthrough</span>
+            <span class="rounded-lg bg-accent/20 border border-accent/40 px-2.5 py-1 font-mono text-xs font-semibold text-accent">TECHNICAL DEMO (SCRIPTED RENDER)</span>
+            <span class="font-mono text-xs text-slate-400">1080p · 60 FPS · 5:00 Architecture Walkthrough</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
@@ -238,22 +238,22 @@
             <span class="font-mono text-xs text-slate-400">EXP-2026-012 · Oct 25, 2026</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="chip font-mono text-xs">Attack Taxonomy &amp; Incident Report</span>
-            <span class="rounded-md bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 font-mono text-[11px] text-amber-400">CVE Breakdown &amp; Zero-Trust Hardening</span>
+            <span class="chip font-mono text-xs">Security Audit &amp; Technical Analysis</span>
+            <span class="rounded-md bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 font-mono text-[11px] text-amber-400">CVE Analysis &amp; Configuration Hardening</span>
           </div>
         </div>
 
         <h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
-          The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Attack Vectors, and Root-Cause Remediation Across Fleet &amp; Kubernetes
+          The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Failure Modes, and Root-Cause Remediation Across Fleet &amp; Kubernetes
         </h2>
         <p class="mt-2 text-sm text-slate-400 font-mono">
-          Scope: <strong>CVE-2026 Attack Taxonomy</strong> &bull; <strong>The "Upgrade Was Worse" Supply Chain Trap</strong> &bull; <strong>Kubernetes Zero-Trust Sealed Secrets</strong> &bull; <strong>Multi-Manifest Synchronization</strong>
+          Scope: <strong>Vulnerability Audit</strong> &bull; <strong>The "Upgrade Was Worse" Supply Chain Trap</strong> &bull; <strong>Kubernetes Sealed Secrets</strong> &bull; <strong>Multi-Manifest Synchronization</strong>
         </p>
 
         <!-- Executive Summary Banner -->
         <div class="mt-6 rounded-xl border border-rose-500/30 bg-rose-950/20 p-4 text-xs text-slate-300 leading-relaxed">
-          <strong class="text-rose-400 font-semibold font-mono uppercase tracking-wider block mb-1">Executive Summary of Incident &amp; Forensic Analysis</strong>
-          During our organization-wide security auditing of 65+ active repositories and production Kubernetes clusters, we confronted a barrage of high-severity vulnerabilities spanning supply-chain dependencies (SCA), static application security flaws (SAST), and infrastructure secret exposures. Most critically, attempting a standard automated package bump on Day 1 triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published "patched" library introduced a secondary critical vulnerability that was more hazardous than the original issue. Here is the meticulous analysis of the detected threat vectors, the anatomy of the attacks, and the exact architectural resolutions implemented.
+          <strong class="text-rose-400 font-semibold font-mono uppercase tracking-wider block mb-1">Executive Summary: Security Audit &amp; Technical Analysis</strong>
+          During our scheduled security audit across our organization's portfolio of 69 repositories, our scanners identified high-severity supply-chain vulnerabilities and configuration findings. Most notably, attempting an automated patch on virtualenv triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published library introduced a secondary command injection flaw. Here is the technical breakdown of the findings, the failure modes, and the exact remediation steps.
         </div>
 
         <div class="mt-8 grid gap-8 lg:grid-cols-2">
@@ -304,18 +304,18 @@
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
                     <span>4. Upstream Patch Regression in Virtualenv</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Arbitrary Command Injection on Environment Activation (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc).<br>
-                    <strong>Mechanism:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> fixed an earlier symlink flaw but introduced a severe regression: unescaped <code class="text-slate-200">--prompt</code> values in the bash activator allowed shell command substitution via <code class="text-slate-200">$PS1</code> on developer machine activation.
+                    <strong>Vulnerability:</strong> Command Injection on Environment Activation via Unescaped Prompt (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc).<br>
+                    <strong>Mechanism &amp; Scope:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> fixed an earlier symlink flaw but introduced a regression: unescaped <code class="text-slate-200">--prompt</code> values in the bash activator allowed shell command substitution via <code class="text-slate-200">$PS1</code> when activating an environment created with a crafted prompt argument or untrusted project configuration.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
                     <span>5. Submodule Traversal &amp; Symlink Aliases in GitPython</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
                     <strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (CVE-2026-114145 / GHSA-83vg-56qc-22m7).<br>
@@ -343,7 +343,7 @@
             <div>
               <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">2. The "Upgrade Was Worse" Supply Chain Trap: Empirical PR Evidence</h3>
               <p class="mt-1 text-sm text-slate-300">
-                During automated triage on Day 1, Dependabot and autonomous agents bumped packages to immediate minor releases, creating an insidious failure loop documented across our merged pull requests:
+                During automated triage, Dependabot and autonomous agents processed package updates, revealing distinct failure modes documented across our merged pull requests:
               </p>
               
               <!-- Evidence Table -->
@@ -352,8 +352,8 @@
                   <thead class="border-b border-line bg-white/[0.04] text-[11px] text-slate-400 uppercase">
                     <tr>
                       <th class="p-2.5">Package</th>
-                      <th class="p-2.5">Initial PR (Day 1)</th>
-                      <th class="p-2.5">Trap Classification / Flaw</th>
+                      <th class="p-2.5">Initial State / PR (Day 1)</th>
+                      <th class="p-2.5">Trap Classification / Vulnerability</th>
                       <th class="p-2.5">Final Remediation PR</th>
                     </tr>
                   </thead>
@@ -377,11 +377,11 @@
                       <td class="p-2.5 font-bold text-white">filelock</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.32.2</span>
-                        <span class="block text-[10px] text-slate-400">Automated minor line bump</span>
+                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Intermediate Still Vulnerable</span>
-                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-112940 (SQLite symlink overwrite)</span>
+                        <span class="text-amber-300 font-semibold block">Vulnerable Minor Baseline</span>
+                        <span class="text-slate-300 text-[10px]">Retained CVE-2026-112940 (SQLite symlink overwrite)</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/445" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #445</a>
@@ -392,11 +392,11 @@
                       <td class="p-2.5 font-bold text-white">mlflow</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.16.1</span>
-                        <span class="block text-[10px] text-slate-400">Automated minor line bump</span>
+                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Intermediate Still Vulnerable</span>
-                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-53995 &amp; CVE-2026-115886</span>
+                        <span class="text-amber-300 font-semibold block">Vulnerable Minor Baseline</span>
+                        <span class="text-slate-300 text-[10px]">Retained CVE-2026-53995 &amp; CVE-2026-115886</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/446" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #446</a>
@@ -422,10 +422,10 @@
                       <td class="p-2.5 font-bold text-white">gitpython</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.2.0</span>
-                        <span class="block text-[10px] text-slate-400">Active baseline</span>
+                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-rose-400 font-semibold block">Traversal RCE</span>
+                        <span class="text-rose-400 font-semibold block">Direct Security Patch</span>
                         <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-114145 / GHSA-83vg-56qc-22m7</span>
                       </td>
                       <td class="p-2.5">
@@ -437,10 +437,10 @@
                       <td class="p-2.5 font-bold text-white">setuptools</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 83.0.0</span>
-                        <span class="block text-[10px] text-slate-400">Active baseline</span>
+                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-rose-400 font-semibold block">Directory Traversal</span>
+                        <span class="text-rose-400 font-semibold block">Direct Security Patch</span>
                         <span class="text-slate-300 text-[10px]">Vulnerable to GHSA-xmj3-9gf7-h52w &amp; GHSA-grgh-hr87-3jpw</span>
                       </td>
                       <td class="p-2.5">
@@ -452,22 +452,25 @@
                 </table>
               </div>
 
-              <!-- Real Git Evidence & Diff Breakdown -->
+              <!-- Technical Evidence & Diff Breakdown -->
               <div class="mt-4 space-y-3 font-mono text-xs">
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
                   <div class="flex items-center justify-between text-rose-400 font-semibold mb-2">
-                    <span>// Empirical Evidence 1: Upstream Bash Prompt RCE (virtualenv)</span>
-                    <span class="text-[10px] text-slate-400">GHSA-cx6f-vjhg-g3cc / PR #434 vs #444</span>
+                    <span>// Conceptual Mechanism: Bash Prompt Injection (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
+                    <span class="text-[10px] text-slate-400">Illustrative &bull; Upstream: pypa/virtualenv#3466</span>
                   </div>
                   <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># In virtualenv 21.14.9 (introduced in PR #434):</span>
-<span class="text-rose-400">- PS1="($(basename "$VIRTUAL_ENV")) $PS1" # If --prompt contained $(command), bash executed it on activate!</span>
+<span class="text-rose-400">- PS1="($(basename "$VIRTUAL_ENV")) $PS1" # If --prompt contained $(command), bash executed it on activate</span>
 <span class="text-slate-500"># In virtualenv 21.14.13 (resolved in PR #444):</span>
 <span class="text-emerald-400">+ # Escaped promptvars and disabled syntax evaluation across bash/zsh activators</span></code></pre>
+                  <p class="mt-2 text-[11px] text-slate-400 font-sans">
+                    <strong>Vector scope:</strong> Requires an untrusted project or user script to pass a crafted <code>--prompt</code> containing command substitution syntax (or opening a malicious repo configured to activate with an unescaped prompt variable), which bash evaluated under the local user session upon activation.
+                  </p>
                 </div>
 
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
                   <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
-                    <span>// Empirical Evidence 2: Solver Deadlock Resolution (PR #442)</span>
+                    <span>// Empirical Evidence: Dependency Solver Deadlock Resolution (PR #442)</span>
                     <span class="text-[10px] text-slate-400">pyproject.toml &bull; commit 00ef1fe</span>
                   </div>
                   <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-rose-400">- opentelemetry-instrumentation = ">=0.51b0,<0.52"       # Locked opentelemetry-api <= 1.30.0</span>
@@ -478,9 +481,9 @@
                 </div>
 
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
-                  <div class="text-accent font-semibold mb-1">// Timeline &amp; Conflict Root Cause</div>
+                  <div class="text-accent font-semibold mb-1">// Governance: Human-in-the-Loop (HITL) vs. Fleet Autonomy</div>
                   <p class="font-sans text-slate-300 text-xs leading-relaxed">
-                    Merging individual PRs #443, #444, #445, and #446 sequentially into <code class="text-slate-200">main</code> created a merge conflict in <code class="text-slate-200">poetry.lock</code> on active branch <code class="text-slate-200">PR #442</code>. Furthermore, <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> drifted out of sync, requiring an automated multi-manifest re-lock and export pass before CI passed all tests cleanly.
+                    While routine, low-risk patch updates across peripheral fleet repositories were verified and merged autonomously (EXP-011), core services (<code class="text-slate-200">mlops-python-package</code>, <code class="text-slate-200">rust_CACD_autonomous_factory</code>) enforce strict Human-in-the-Loop policies. AI agents drafted the fixes, resolved the multi-manifest drift across <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and <code class="text-slate-200">python_env.yaml</code>, and passed all test suites, but final merge requires human architectural sign-off.
                   </p>
                 </div>
               </div>
@@ -538,9 +541,9 @@
               </p>
               <div class="mt-2 grid grid-cols-3 gap-2 text-center font-mono">
                 <div class="rounded-lg bg-black/40 p-3 border border-line">
-                  <span class="text-[10px] text-emerald-400 uppercase block">62 Repos</span>
+                  <span class="text-[10px] text-emerald-400 uppercase block">62 of 69 Repos</span>
                   <span class="text-white font-bold text-base">0 Alerts</span>
-                  <span class="text-[11px] text-slate-400 block">Clean Fleet</span>
+                  <span class="text-[11px] text-slate-400 block">Clean Fleet (7 in review)</span>
                 </div>
                 <div class="rounded-lg bg-black/40 p-3 border border-line">
                   <span class="text-[10px] text-accent uppercase block">Kubernetes</span>
@@ -550,27 +553,18 @@
                 <div class="rounded-lg bg-black/40 p-3 border border-line">
                   <span class="text-[10px] text-purple-400 uppercase block">Monitor Loop</span>
                   <span class="text-white font-bold text-base">Hourly</span>
-                  <span class="text-[11px] text-slate-400 block">Autonomous Guard</span>
+                  <span class="text-[11px] text-slate-400 block">Automated Audit &amp; Triage</span>
                 </div>
               </div>
 
-              <!-- LinkedIn & Docs Reference -->
+              <!-- Context & Documentation Note -->
               <div class="mt-4 rounded-xl border border-line bg-white/[0.02] p-3 text-xs text-slate-400 space-y-1.5">
                 <div>
-                  <span class="text-slate-300 font-semibold">Executive Long-Form Article: </span>
-                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/the_supply_chain_upgrade_paradox_article.md" target="_blank" rel="noopener noreferrer" class="text-accent underline font-mono">
-                    the_supply_chain_upgrade_paradox_article.md
-                  </a>
+                  <span class="text-slate-300 font-semibold">Public Documentation: </span>
+                  <span>Published as Entry 012 in the Engineering Lab Notebook (<a href="notebooks.html" class="text-accent underline font-mono">lgcorzo.github.io/notebooks.html</a>).</span>
                 </div>
-                <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
-                  <span class="text-slate-300 font-semibold">Short Executive Briefings: </span>
-                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/linkedin_post_short_en.md" target="_blank" rel="noopener noreferrer" class="text-accent-2 underline font-mono">
-                    linkedin_post_short_en.md (EN)
-                  </a>
-                  <span class="text-slate-500">&bull;</span>
-                  <a href="https://github.com/lgcorzo/gitops_internal_lgcorzo/blob/main/docs/linkedin/linkedin_post_short.md" target="_blank" rel="noopener noreferrer" class="text-accent-3 underline font-mono">
-                    linkedin_post_short.md (ES)
-                  </a>
+                <div class="text-[11px] text-slate-400">
+                  Shared as an executive briefing and case study on LinkedIn for engineering leaders managing supply chain security and autonomous CI/CD fleets.
                 </div>
               </div>
             </div>
@@ -603,7 +597,7 @@
             <div>
               <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
               <p class="mt-1 text-sm text-slate-300">
-                Can an enterprise-scale portfolio of 69 repositories (spanning Python, Rust, Go, TypeScript, and Docker/Kubernetes GitOps) be autonomously audited, triaged, and remediated without exhausting agent token budgets or inducing human fatigue, while maintaining a strict cryptographic audit trail and zero regressions?
+                Can an enterprise-scale portfolio of 69 repositories (spanning Python, Rust, Go, TypeScript, and Docker/Kubernetes GitOps) be autonomously audited, triaged, and remediated without exhausting agent token budgets or inducing human fatigue, while maintaining a strict cryptographic audit trail and verifying regression-free test passes?
               </p>
             </div>
             <div>
@@ -660,7 +654,7 @@
             <div>
               <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Action &amp; Production Standard</h3>
               <p class="mt-1 text-sm text-slate-300">
-                The tri-agent architecture (Antigravity + Dark Gravity + Jules) is now the official industrial blueprint for repository fleet maintenance across the <code class="text-slate-200">lgcorzo</code> ecosystem. The 60-minute cron pipeline runs continuously, guaranteeing near-zero latency from vulnerability disclosure to verified production merge.
+                The tri-agent architecture (Antigravity + Dark Gravity + Jules) is now the official industrial blueprint for repository fleet maintenance across the <code class="text-slate-200">lgcorzo</code> ecosystem. The 60-minute cron pipeline runs continuously, establishing an automated hourly sweep from vulnerability discovery to verified PR remediation.
               </p>
             </div>
             <div class="grid grid-cols-3 gap-2 text-center">
@@ -1040,11 +1034,11 @@
           <div class="space-y-4">
             <div>
               <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">LLM judges are useful for readability and style guidance, but must <strong>never</strong> act as PR merge gates. Deterministic test suites and strict type checkers are mathematically required.</p>
+              <p class="mt-1 text-sm text-slate-300">LLM judges are useful for readability and style guidance, but should not serve as unilateral merge gates. Deterministic test suites and strict type checkers remain non-negotiable verification gates.</p>
             </div>
             <div>
               <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">In robotic welding and CNC kinematic controllers, plausible-looking code with geometric sign errors causes catastrophic physical collisions. Safety relies on mathematical proof, not LLM opinion.</p>
+              <p class="mt-1 text-sm text-slate-300">In robotic welding and CNC kinematic controllers, plausible-looking code with geometric sign errors causes catastrophic physical collisions. Safety relies on deterministic validation, not generative consensus.</p>
             </div>
           </div>
         </div>
