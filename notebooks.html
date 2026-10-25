@@ -350,34 +350,35 @@
 
               <div class="mt-3 space-y-3 font-mono text-xs">
                 <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 1: Constraint Relaxation &amp; Direct Transitive Pinning</div>
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 1: Constraint Widening &amp; Explicit Transitive Pinning</div>
                   <p class="font-sans text-slate-300 text-xs">
-                    We updated <code class="text-slate-200">pyproject.toml</code> to widen tight bounds (allowing <code class="text-slate-200">opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their security-patched floors:
-                    <br>&bull; <code class="text-emerald-400">opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code>
+                    We updated <code class="text-slate-200">pyproject.toml</code> to widen tight bounds (allowing <code class="text-slate-200">opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their verified, patched security floors:
+                    <br>&bull; <code class="text-emerald-400">opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code> (tested via local test suites against OpenTelemetry 0.66b1)
                     <br>&bull; <code class="text-emerald-400">mlflow &gt;= 3.17.2, &lt; 4.0.0</code>
                     <br>&bull; <code class="text-emerald-400">filelock &gt;= 4.2.1</code>
+                    <br>&bull; <code class="text-emerald-400">gitpython &gt;= 3.2.1</code> (resolves submodule clone RCE)
                     <br>&bull; <code class="text-emerald-400">setuptools &gt;= 84.1.0</code>
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 2: Strict Multi-Manifest Tri-Sync</div>
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 2: Multi-Manifest Version Parity &amp; CI Lock Checking</div>
                   <p class="font-sans text-slate-300 text-xs">
-                    Dependabot flags alerts per manifest. We implemented a unified export protocol ensuring that <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and MLflow runtime environment <code class="text-slate-200">python_env.yaml</code> maintain byte-for-byte version parity, running <code class="text-slate-200">poetry check --lock</code> and full static verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
+                    Security scanners evaluate distinct files differently. We implemented a unified export protocol ensuring that <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and MLflow runtime environment <code class="text-slate-200">python_env.yaml</code> maintain strict version parity. CI workflows execute <code class="text-slate-200">poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="text-emerald-300 font-semibold mb-1">Tier 3: Asymmetric Sealed Secrets Rotation in Kubernetes</div>
                   <p class="font-sans text-slate-300 text-xs">
-                    Eliminated <code class="text-slate-200">LITELLM_DANGEROUSLY_PERMIT_WEAK_OR_UNSET_MASTER_KEY</code>. Generated a cryptographically random 256-bit master key (<code class="text-slate-200">sk-f7d0dec...</code>) and sealed it using Bitnami's <code class="text-slate-200">kubeseal</code> with asymmetric public-key cryptography. Propagated the sealed secret across namespaces (<code class="text-slate-200">llm-apps</code>, <code class="text-slate-200">agents</code>, <code class="text-slate-200">jules-remediator</code>), securely updating OpenWebUI, R2R, Rust Agent Team, and Dark Gravity workers.
+                    Eliminated permissive weak/unset master key flags on the internal LLM gateway. Generated a cryptographically random 256-bit master key and sealed it using Bitnami's <code class="text-slate-200">kubeseal</code> with asymmetric public-key cryptography (storing encrypted secrets safely in Git). Propagated the sealed secret across operational namespaces, securely updating inference gateways, RAG backends, and autonomous agent workers.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="text-emerald-300 font-semibold mb-1">Tier 4: Git Tracking Sanitization &amp; Secret Isolation</div>
                   <p class="font-sans text-slate-300 text-xs">
-                    Unlinked developer configuration files from git history via <code class="text-slate-200">git rm --cached .mcp.json</code>, created sanitized templates (<code class="text-slate-200">.mcp.example.json</code>) with dynamic environment variable placeholders (<code class="text-slate-200">${LITELLM_API_KEY}</code>), and amended commits to eliminate credentials from pull request diffs.
+                    Unlinked developer configuration files from git history via <code class="text-slate-200">git rm --cached</code>, created sanitized templates with dynamic environment variable placeholders, rotated active credentials, and amended commits to eliminate all token references from pull request diffs.
                   </p>
                 </div>
               </div>
@@ -397,7 +398,7 @@
                 <div class="rounded-lg bg-black/40 p-3 border border-line">
                   <span class="text-[10px] text-accent uppercase block">Kubernetes</span>
                   <span class="text-white font-bold text-base">256-bit</span>
-                  <span class="text-[11px] text-slate-400 block">Sealed Zero-Trust</span>
+                  <span class="text-[11px] text-slate-400 block">Sealed in Git</span>
                 </div>
                 <div class="rounded-lg bg-black/40 p-3 border border-line">
                   <span class="text-[10px] text-purple-400 uppercase block">Monitor Loop</span>
