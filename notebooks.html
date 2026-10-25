@@ -230,6 +230,174 @@
         </div>
       </article>
 
+      <!-- Entry 012: The Supply Chain Upgrade Paradox & Root-Cause Remediation Deep Dive -->
+      <article class="glass rounded-2xl border border-rose-500/40 bg-gradient-to-br from-rose-500/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+          <div class="flex items-center gap-3">
+            <span class="rounded-lg bg-rose-500/20 border border-rose-500/40 px-2.5 py-1 font-mono text-xs font-semibold text-rose-400">CRITICAL SECURITY DEEP-DIVE</span>
+            <span class="font-mono text-xs text-slate-400">EXP-2026-012 · Oct 25, 2026</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="chip font-mono text-xs">Attack Taxonomy &amp; Incident Report</span>
+            <span class="rounded-md bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 font-mono text-[11px] text-amber-400">CVE Breakdown &amp; Zero-Trust Hardening</span>
+          </div>
+        </div>
+
+        <h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
+          The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Attack Vectors, and Root-Cause Remediation Across Fleet &amp; Kubernetes
+        </h2>
+        <p class="mt-2 text-sm text-slate-400 font-mono">
+          Scope: <strong>CVE-2026 Attack Taxonomy</strong> &bull; <strong>The "Upgrade Was Worse" Supply Chain Trap</strong> &bull; <strong>Kubernetes Zero-Trust Sealed Secrets</strong> &bull; <strong>Multi-Manifest Synchronization</strong>
+        </p>
+
+        <!-- Executive Summary Banner -->
+        <div class="mt-6 rounded-xl border border-rose-500/30 bg-rose-950/20 p-4 text-xs text-slate-300 leading-relaxed">
+          <strong class="text-rose-400 font-semibold font-mono uppercase tracking-wider block mb-1">Executive Summary of Incident &amp; Forensic Analysis</strong>
+          During our organization-wide security auditing of 65+ active repositories and production Kubernetes clusters, we confronted a barrage of high-severity vulnerabilities spanning supply-chain dependencies (SCA), static application security flaws (SAST), and infrastructure secret exposures. Most critically, attempting a standard automated package bump on Day 1 triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published "patched" library introduced a secondary critical vulnerability that was more hazardous than the original issue. Here is the meticulous analysis of the detected threat vectors, the anatomy of the attacks, and the exact architectural resolutions implemented.
+        </div>
+
+        <div class="mt-8 grid gap-8 lg:grid-cols-2">
+          <!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Attack Vectors &amp; Threat Taxonomy Detected</h3>
+              <p class="mt-1 text-sm text-slate-300">
+                The audit uncovered four distinct categories of active attack vectors across our services:
+              </p>
+
+              <div class="mt-3 space-y-3 font-mono text-xs">
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-rose-300 font-semibold">
+                    <span>A. Remote Code Execution &amp; SSRF via MLflow</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / CRITICAL</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Attack Type:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h).<br>
+                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, malicious third-party scorer keyword arguments in model evaluation and registration endpoints allowed attackers to forge server-side requests into cluster-internal endpoints. Simultaneously, crafted <code class="text-slate-200">FileStore</code> trace IDs enabled traversal out of intended root directories to write arbitrary payloads onto worker disks.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-amber-300 font-semibold">
+                    <span>B. Local File Overwrite &amp; Symlink Hijacking via Filelock</span>
+                    <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Attack Type:</strong> Inode reuse race conditions and SQLite journal symlink attacks (GHSA-filelock-sqlsym).<br>
+                    <strong>Mechanism:</strong> In multi-tenant environments or shared compute instances, when <code class="text-slate-200">filelock.ReadWriteLock</code> reopens lock databases by name, a planted symlink or sidecar journal file induces the process running with elevated worker privileges to overwrite or unlink its own operational files.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-yellow-300 font-semibold">
+                    <span>C. Uncontrolled Resource Consumption (ReDoS / DoS)</span>
+                    <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MEDIUM</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Attack Type:</strong> Algorithmic Complexity Attack / Unbounded Regex (CWE-400 / CWE-1333) in OpenTelemetry.<br>
+                    <strong>Mechanism:</strong> Malicious incoming HTTP headers containing deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> and <code class="text-slate-200">traceparent</code> entries caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>, starving CPU cycles across ingress proxy pipelines.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="flex items-center justify-between text-purple-300 font-semibold">
+                    <span>D. Infrastructure Secret Exposure &amp; Weak Master Keys</span>
+                    <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">INFRASTRUCTURE</span>
+                  </div>
+                  <p class="mt-1 font-sans text-slate-300 text-xs">
+                    <strong>Attack Type:</strong> Plaintext secret leakage and weak credential enforcement.<br>
+                    <strong>Mechanism:</strong> Production LiteLLM clusters allowed weak/unset keys via <code class="text-slate-200">LITELLM_DANGEROUSLY_PERMIT_WEAK_OR_UNSET_MASTER_KEY="true"</code>, while local configuration files (<code class="text-slate-200">.mcp.json</code>) risked leaking API tokens if tracked by Git before ignore boundaries were applied.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">2. The "Upgrade Was Worse" Supply Chain Trap</h3>
+              <p class="mt-1 text-sm text-slate-300">
+                During initial automated triage on Day 1, Dependabot and autonomous agents bumped packages to immediate minor releases. This created an insidious failure loop:
+              </p>
+              <div class="mt-3 rounded-xl border border-line bg-black/50 p-4 font-mono text-xs text-slate-300 space-y-2">
+                <div class="text-rose-400 font-semibold">// The Vulnerability Cascading Sequence</div>
+                <div class="text-slate-400">1. Original dependency was flagged for low-severity issues.</div>
+                <div class="text-slate-400">2. Automated bot bumped <code class="text-slate-200">filelock &rarr; 3.32.2</code> and <code class="text-slate-200">mlflow &rarr; 3.16.1</code>.</div>
+                <div class="text-slate-400">3. <strong>The Failure:</strong> The newly released version introduced fresh High-Severity CVEs (such as SQLite lock journal symlink overwrites and unauthenticated SSRF kwargs).</div>
+                <div class="text-slate-400">4. <strong>Lockfile Contamination:</strong> Meanwhile, <code class="text-slate-200">opentelemetry-api</code> remained pinned to vulnerable <code class="text-slate-200">1.30.0</code> transitively because <code class="text-slate-200">opentelemetry-instrumentation</code> had a tight upper bound (<code class="text-slate-200">&lt;0.52</code>), causing resolution deadlocks.</div>
+                <div class="text-slate-400">5. <strong>Manifest Drift:</strong> Merging individual Dependabot PRs caused merge conflicts and left <code class="text-slate-200">requirements.txt</code> and <code class="text-slate-200">python_env.yaml</code> out of sync with <code class="text-slate-200">poetry.lock</code>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: How We Solved It -->
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-emerald-400">3. How It Was Meticulously Solved</h3>
+              <p class="mt-1 text-sm text-slate-300">
+                Rather than blind incremental upgrades, we implemented a four-tier surgical engineering strategy:
+              </p>
+
+              <div class="mt-3 space-y-3 font-mono text-xs">
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 1: Constraint Relaxation &amp; Direct Transitive Pinning</div>
+                  <p class="font-sans text-slate-300 text-xs">
+                    We updated <code class="text-slate-200">pyproject.toml</code> to widen tight bounds (allowing <code class="text-slate-200">opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their security-patched floors:
+                    <br>&bull; <code class="text-emerald-400">opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code>
+                    <br>&bull; <code class="text-emerald-400">mlflow &gt;= 3.17.2, &lt; 4.0.0</code>
+                    <br>&bull; <code class="text-emerald-400">filelock &gt;= 4.2.1</code>
+                    <br>&bull; <code class="text-emerald-400">setuptools &gt;= 84.1.0</code>
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 2: Strict Multi-Manifest Tri-Sync</div>
+                  <p class="font-sans text-slate-300 text-xs">
+                    Dependabot flags alerts per manifest. We implemented a unified export protocol ensuring that <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and MLflow runtime environment <code class="text-slate-200">python_env.yaml</code> maintain byte-for-byte version parity, running <code class="text-slate-200">poetry check --lock</code> and full static verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 3: Asymmetric Sealed Secrets Rotation in Kubernetes</div>
+                  <p class="font-sans text-slate-300 text-xs">
+                    Eliminated <code class="text-slate-200">LITELLM_DANGEROUSLY_PERMIT_WEAK_OR_UNSET_MASTER_KEY</code>. Generated a cryptographically random 256-bit master key (<code class="text-slate-200">sk-f7d0dec...</code>) and sealed it using Bitnami's <code class="text-slate-200">kubeseal</code> with asymmetric public-key cryptography. Propagated the sealed secret across namespaces (<code class="text-slate-200">llm-apps</code>, <code class="text-slate-200">agents</code>, <code class="text-slate-200">jules-remediator</code>), securely updating OpenWebUI, R2R, Rust Agent Team, and Dark Gravity workers.
+                  </p>
+                </div>
+
+                <div class="rounded-lg border border-line bg-black/40 p-3">
+                  <div class="text-emerald-300 font-semibold mb-1">Tier 4: Git Tracking Sanitization &amp; Secret Isolation</div>
+                  <p class="font-sans text-slate-300 text-xs">
+                    Unlinked developer configuration files from git history via <code class="text-slate-200">git rm --cached .mcp.json</code>, created sanitized templates (<code class="text-slate-200">.mcp.example.json</code>) with dynamic environment variable placeholders (<code class="text-slate-200">${LITELLM_API_KEY}</code>), and amended commits to eliminate credentials from pull request diffs.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">4. Measured Outcome &amp; Architectural Standard</h3>
+              <p class="mt-1 text-sm text-slate-300">
+                The full remediation resulted in:
+              </p>
+              <div class="mt-2 grid grid-cols-3 gap-2 text-center font-mono">
+                <div class="rounded-lg bg-black/40 p-3 border border-line">
+                  <span class="text-[10px] text-emerald-400 uppercase block">62 Repos</span>
+                  <span class="text-white font-bold text-base">0 Alerts</span>
+                  <span class="text-[11px] text-slate-400 block">Clean Fleet</span>
+                </div>
+                <div class="rounded-lg bg-black/40 p-3 border border-line">
+                  <span class="text-[10px] text-accent uppercase block">Kubernetes</span>
+                  <span class="text-white font-bold text-base">256-bit</span>
+                  <span class="text-[11px] text-slate-400 block">Sealed Zero-Trust</span>
+                </div>
+                <div class="rounded-lg bg-black/40 p-3 border border-line">
+                  <span class="text-[10px] text-purple-400 uppercase block">Monitor Loop</span>
+                  <span class="text-white font-bold text-base">Hourly</span>
+                  <span class="text-[11px] text-slate-400 block">Autonomous Guard</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
       <!-- Entry 011: Multi-Agent Vulnerability Remediation with Dark Gravity, Antigravity & Jules -->
       <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-purple-500/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
