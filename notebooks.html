@@ -271,22 +271,22 @@
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
                     <span>1. Path Traversal &amp; SSRF via MLflow</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / CRITICAL</span>
+                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-53995 &amp; CVE-2026-115886 / GHSA-wqmh-qccw-pqwf &amp; GHSA-2wqp-q3c6-ccj5).<br>
-                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, third-party scorer keyword arguments in model evaluation endpoints allowed request forgery into internal VPC endpoints. Simultaneously, crafted <code class="text-slate-200">FileStore</code> trace IDs enabled traversal out of intended root directories to write arbitrary payloads onto worker disks.
+                    <strong>Vulnerability:</strong> Server-Side Request Forgery &amp; Arbitrary File Write (CVE-2026-53995 / GHSA-wqmh-qccw-pqwf).<br>
+                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, third-party scorer evaluation endpoints allowed request forgery, while crafted trace IDs enabled traversal out of intended root directories. Resolved in <code class="text-slate-200">3.17.2</code>.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-amber-300 font-semibold">
-                    <span>2. SQLite Symlink Overwrites &amp; Oplocks in Filelock</span>
-                    <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH</span>
+                    <span>2. SQLite Symlink Overwrites in Filelock</span>
+                    <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH (LOCAL)</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Inode reuse race conditions and SQLite journal symlink attacks (CVE-2026-112940, CVE-2026-112907, CVE-2026-112913 / GHSA-v4x8-3wr5-3wq8).<br>
-                    <strong>Mechanism:</strong> In multi-tenant environments, when <code class="text-slate-200">filelock.ReadWriteLock</code> reopens lock databases by static names, a planted symlink or sidecar journal file induces the process running with elevated container privileges to overwrite or unlink its own operational files.
+                    <strong>Vulnerability:</strong> Local Symlink Overwrite (CVE-2026-112940 / GHSA-v4x8-3wr5-3wq8, CVSS 7.1).<br>
+                    <strong>Mechanism:</strong> Requires local access in a shared non-sticky directory where planted symlinks or sidecar journal files induce elevated processes to unlink or overwrite their own lock files. No fix in 3.x; resolved in <code class="text-slate-200">4.2.1</code>.
                   </p>
                 </div>
 
@@ -296,8 +296,8 @@
                     <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MEDIUM</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Algorithmic Complexity / Unbounded Regex (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333) in OpenTelemetry.<br>
-                    <strong>Mechanism:</strong> Malicious incoming HTTP headers containing deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> entries caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>, starving CPU cycles across ingress proxy pipelines.
+                    <strong>Vulnerability:</strong> Algorithmic Complexity / Unbounded Regex (GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333).<br>
+                    <strong>Mechanism:</strong> Deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> headers caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>. Resolved in <code class="text-slate-200">1.45.1</code>.
                   </p>
                 </div>
 
@@ -318,8 +318,8 @@
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (CVE-2026-114145 / GHSA-83vg-56qc-22m7).<br>
-                    <strong>Mechanism:</strong> Symbolic links aliasing <code class="text-slate-200">.gitmodules</code> and unvalidated submodule mutation targets allowed repository clone operations to escape working trees and overwrite local shell scripts.
+                    <strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (GHSA-83vg-56qc-22m7).<br>
+                    <strong>Mechanism:</strong> Symbolic links aliasing <code class="text-slate-200">.gitmodules</code> and unvalidated submodule mutation targets allowed repository operations to escape working trees. Resolved in <code class="text-slate-200">3.2.1</code>.
                   </p>
                 </div>
               </div>
@@ -377,30 +377,30 @@
                       <td class="p-2.5 font-bold text-white">filelock</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.32.2</span>
-                        <span class="block text-[10px] text-slate-400">Day 1 automated bot bump</span>
+                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Vulnerable Minor Bump</span>
-                        <span class="text-slate-300 text-[10px]">Retained CVE-2026-112940 (SQLite symlink overwrite)</span>
+                        <span class="text-amber-300 font-semibold block">Vulnerable 3.x Baseline</span>
+                        <span class="text-slate-300 text-[10px]">No fix in 3.x branch (needs local access); fix only in 4.2.1</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/445" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #445</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit 798408b (breaking jump to 4.2.1)</span>
+                        <span class="block text-[10px] text-emerald-300/80">commit 798408b (Dependabot proposed 4.2.1)</span>
                       </td>
                     </tr>
                     <tr>
                       <td class="p-2.5 font-bold text-white">mlflow</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.16.1</span>
-                        <span class="block text-[10px] text-slate-400">Day 1 automated bot bump</span>
+                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Vulnerable Minor Bump</span>
-                        <span class="text-slate-300 text-[10px]">Retained CVE-2026-53995 &amp; CVE-2026-115886</span>
+                        <span class="text-amber-300 font-semibold block">Vulnerable 3.16.x Baseline</span>
+                        <span class="text-slate-300 text-[10px]">Carried CVE-2026-53995; fix required jumping to 3.17.2</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/446" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #446</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit c236015 (skipped to 3.17.2)</span>
+                        <span class="block text-[10px] text-emerald-300/80">commit c236015 (Dependabot proposed 3.17.2)</span>
                       </td>
                     </tr>
                     <tr>
@@ -422,11 +422,11 @@
                       <td class="p-2.5 font-bold text-white">gitpython</td>
                       <td class="p-2.5">
                         <span class="text-slate-300">Locked at 3.2.0</span>
-                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
+                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
                       </td>
                       <td class="p-2.5">
                         <span class="text-rose-400 font-semibold block">Direct Security Patch</span>
-                        <span class="text-slate-300 text-[10px]">Vulnerable to CVE-2026-114145 / GHSA-83vg-56qc-22m7</span>
+                        <span class="text-slate-300 text-[10px]">Vulnerable to GHSA-83vg-56qc-22m7</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/437" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #437</a>
