@@ -302,13 +302,13 @@
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-rose-300 font-semibold">
+                  <div class="flex items-center justify-between text-yellow-300 font-semibold">
                     <span>4. Upstream Patch Regression in Virtualenv</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
+                    <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MODERATE</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Command Injection on Environment Activation via Unescaped Prompt (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc).<br>
-                    <strong>Mechanism &amp; Scope:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> fixed an earlier symlink flaw but introduced a regression: unescaped <code class="text-slate-200">--prompt</code> values in the bash activator allowed shell command substitution via <code class="text-slate-200">$PS1</code> when activating an environment created with a crafted prompt argument or untrusted project configuration.
+                    <strong>Vulnerability:</strong> Command Injection via Unescaped Prompt Expansion (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc, Moderate).<br>
+                    <strong>Mechanism &amp; Scope:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> addressed command injection in 21.14.8 (CVE-2026-113723 / GHSA-6w3r-xr62-4xcp) but introduced a new variant in <code class="text-slate-200">activate.sh</code>: unescaped <code class="text-slate-200">--prompt</code> values allowed code execution when the bash prompt was redrawn in environments with active prompt expansion (<code class="text-slate-200">shopt -s promptvars</code>). Fixed in <code class="text-slate-200">21.14.13</code>.
                   </p>
                 </div>
 
@@ -362,11 +362,11 @@
                       <td class="p-2.5 font-bold text-white">virtualenv</td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/434" target="_blank" rel="noopener noreferrer" class="text-accent underline font-semibold">PR #434</a>
-                        <span class="block text-[10px] text-slate-400">commit 635370d (21.14.2 &rarr; 21.14.9)</span>
+                        <span class="block text-[10px] text-slate-400">commit 635370d (bumped to 21.14.9)</span>
                       </td>
                       <td class="p-2.5">
-                        <span class="text-rose-400 font-semibold block">Patch Regression</span>
-                        <span class="text-slate-300 text-[10px]">Introduced CVE-2026-115586 (RCE in $PS1 prompt)</span>
+                        <span class="text-yellow-300 font-semibold block">Patch Regression (Moderate)</span>
+                        <span class="text-slate-300 text-[10px]">Introduced CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc variant</span>
                       </td>
                       <td class="p-2.5">
                         <a href="https://github.com/lgcorzo/mlops-python-package/pull/444" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #444</a>
@@ -455,16 +455,16 @@
               <!-- Technical Evidence & Diff Breakdown -->
               <div class="mt-4 space-y-3 font-mono text-xs">
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
-                  <div class="flex items-center justify-between text-rose-400 font-semibold mb-2">
-                    <span>// Conceptual Mechanism: Bash Prompt Injection (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
-                    <span class="text-[10px] text-slate-400">Illustrative &bull; Upstream: pypa/virtualenv#3466</span>
+                  <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
+                    <span>// Empirical Mechanism: Bash Prompt Injection Regression (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
+                    <a href="https://github.com/pypa/virtualenv/pull/3418" target="_blank" rel="noopener noreferrer" class="text-[10px] text-accent underline">Upstream: pypa/virtualenv#3418 (commit 5f48d711)</a>
                   </div>
-                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># In virtualenv 21.14.9 (introduced in PR #434):</span>
-<span class="text-rose-400">- PS1="($(basename "$VIRTUAL_ENV")) $PS1" # If --prompt contained $(command), bash executed it on activate</span>
+                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># In virtualenv 21.14.9 (activate.sh prompt refactoring in commit 5f48d711):</span>
+<span class="text-yellow-300">- PS1="`__v_prompt`$PS1"           # Unescaped prompt evaluation when promptvars active</span>
 <span class="text-slate-500"># In virtualenv 21.14.13 (resolved in PR #444):</span>
-<span class="text-emerald-400">+ # Escaped promptvars and disabled syntax evaluation across bash/zsh activators</span></code></pre>
+<span class="text-emerald-400">+ # Sanitized prompt generation &amp; disabled raw subshell command evaluation</span></code></pre>
                   <p class="mt-2 text-[11px] text-slate-400 font-sans">
-                    <strong>Vector scope:</strong> Requires an untrusted project or user script to pass a crafted <code>--prompt</code> containing command substitution syntax (or opening a malicious repo configured to activate with an unescaped prompt variable), which bash evaluated under the local user session upon activation.
+                    <strong>Vector scope &amp; condition:</strong> Requires an attacker or script to pass a crafted <code>--prompt</code> value containing command syntax, with code execution occurring when the prompt is redrawn under shell environments where prompt expansion is enabled (e.g. <code>shopt -s promptvars</code> or subshells inheriting <code>PS1</code>).
                   </p>
                 </div>
 
