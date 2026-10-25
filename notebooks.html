@@ -260,64 +260,70 @@
           <!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
           <div class="space-y-6">
             <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Attack Vectors &amp; Threat Taxonomy Detected</h3>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Vulnerabilities Detected by Security Scanners</h3>
               <p class="mt-1 text-sm text-slate-300">
-                The audit uncovered four distinct categories of active attack vectors across our services:
+                Our static application and dependency scanners cataloged two distinct categories of issues:
               </p>
 
-              <div class="mt-3 space-y-3 font-mono text-xs">
+              <!-- Category A -->
+              <div class="mt-3 text-xs font-mono font-semibold text-accent uppercase tracking-wider">Category A: Third-Party Supply Chain CVEs</div>
+              <div class="mt-2 space-y-3 font-mono text-xs">
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>A. Remote Code Execution &amp; SSRF via MLflow</span>
+                    <span>1. Path Traversal &amp; SSRF via MLflow</span>
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / CRITICAL</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-53995 &amp; CVE-2026-115886 / GHSA-wqmh-qccw-pqwf &amp; GHSA-2wqp-q3c6-ccj5).<br>
-                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, malicious third-party scorer keyword arguments in model evaluation and registration endpoints allowed attackers to forge server-side requests into cluster-internal endpoints. Simultaneously, crafted <code class="text-slate-200">FileStore</code> trace IDs enabled traversal out of intended root directories to write arbitrary payloads onto worker disks.
+                    <strong>Vulnerability:</strong> Server-Side Request Forgery (SSRF) and Path Traversal Arbitrary File Write (CVE-2026-53995 &amp; CVE-2026-115886 / GHSA-wqmh-qccw-pqwf &amp; GHSA-2wqp-q3c6-ccj5).<br>
+                    <strong>Mechanism:</strong> In unauthenticated MLflow tracking servers, third-party scorer keyword arguments in model evaluation endpoints allowed request forgery into internal VPC endpoints. Simultaneously, crafted <code class="text-slate-200">FileStore</code> trace IDs enabled traversal out of intended root directories to write arbitrary payloads onto worker disks.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-amber-300 font-semibold">
-                    <span>B. Local File Overwrite &amp; Symlink Hijacking via Filelock</span>
+                    <span>2. SQLite Symlink Overwrites &amp; Oplocks in Filelock</span>
                     <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Inode reuse race conditions and SQLite journal symlink attacks (CVE-2026-112940, CVE-2026-112907, CVE-2026-112913 / GHSA-v4x8-3wr5-3wq8).<br>
-                    <strong>Mechanism:</strong> In multi-tenant environments or shared compute instances, when <code class="text-slate-200">filelock.ReadWriteLock</code> reopens lock databases by name, a planted symlink or sidecar journal file induces the process running with elevated worker privileges to overwrite or unlink its own operational files.
+                    <strong>Vulnerability:</strong> Inode reuse race conditions and SQLite journal symlink attacks (CVE-2026-112940, CVE-2026-112907, CVE-2026-112913 / GHSA-v4x8-3wr5-3wq8).<br>
+                    <strong>Mechanism:</strong> In multi-tenant environments, when <code class="text-slate-200">filelock.ReadWriteLock</code> reopens lock databases by static names, a planted symlink or sidecar journal file induces the process running with elevated container privileges to overwrite or unlink its own operational files.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-yellow-300 font-semibold">
-                    <span>C. Uncontrolled Resource Consumption (ReDoS / DoS)</span>
+                    <span>3. Algorithmic Complexity (ReDoS) in OpenTelemetry</span>
                     <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MEDIUM</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Algorithmic Complexity Attack / Unbounded Regex (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333) in OpenTelemetry.<br>
-                    <strong>Mechanism:</strong> Malicious incoming HTTP headers containing deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> and <code class="text-slate-200">traceparent</code> entries caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>, starving CPU cycles across ingress proxy pipelines.
+                    <strong>Vulnerability:</strong> Algorithmic Complexity / Unbounded Regex (CVE-2026-114603 / GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333) in OpenTelemetry.<br>
+                    <strong>Mechanism:</strong> Malicious incoming HTTP headers containing deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> entries caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>, starving CPU cycles across ingress proxy pipelines.
                   </p>
                 </div>
 
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>D. Virtualenv Bash Activator Regression &amp; GitPython RCE</span>
+                    <span>4. Upstream Patch Regression in Virtualenv &amp; GitPython RCE</span>
                     <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH / RCE</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Arbitrary Command Injection on Activation (CVE-2026-115586) and Submodule Traversal RCE (CVE-2026-114145).<br>
-                    <strong>Mechanism:</strong> Upstream package <code class="text-slate-200">virtualenv 21.14.9</code> shipped a regression where the bash activator left <code class="text-slate-200">--prompt</code> unescaped in <code class="text-slate-200">$PS1</code>, executing arbitrary shell code on developer activation.
+                    <strong>Vulnerability:</strong> Arbitrary Command Injection on Activation (CVE-2026-115586 in virtualenv) and Submodule Traversal RCE (CVE-2026-114145 in GitPython).<br>
+                    <strong>Mechanism:</strong> Upstream package <code class="text-slate-200">virtualenv 21.14.9</code> shipped a patch regression where the bash activator left <code class="text-slate-200">--prompt</code> unescaped in <code class="text-slate-200">$PS1</code>, executing arbitrary shell code on developer activation.
                   </p>
                 </div>
+              </div>
 
+              <!-- Category B -->
+              <div class="mt-4 text-xs font-mono font-semibold text-purple-400 uppercase tracking-wider">Category B: Infrastructure Configuration Hardening</div>
+              <div class="mt-2 space-y-3 font-mono text-xs">
                 <div class="rounded-lg border border-line bg-black/40 p-3">
                   <div class="flex items-center justify-between text-purple-300 font-semibold">
-                    <span>E. Infrastructure Secret Exposure &amp; Weak Master Keys</span>
-                    <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">INFRASTRUCTURE</span>
+                    <span>5. LLM Gateway Master Key &amp; Local Configuration Sanitization</span>
+                    <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">CONFIGURATION</span>
                   </div>
                   <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Attack Type:</strong> Plaintext secret leakage and weak credential enforcement.<br>
-                    <strong>Mechanism:</strong> Production LiteLLM clusters allowed weak/unset keys via <code class="text-slate-200">LITELLM_DANGEROUSLY_PERMIT_WEAK_OR_UNSET_MASTER_KEY="true"</code>, while local configuration files (<code class="text-slate-200">.mcp.json</code>) risked leaking API tokens if tracked by Git before ignore boundaries were applied.
+                    <strong>Hardening Scope:</strong> Permissive master key allowances on internal proxy gateways and untracked environment templates.<br>
+                    <strong>Mechanism:</strong> Rotated internal gateways to cryptographically enforced 256-bit keys via Bitnami Sealed Secrets and established mandatory <code class="text-slate-200">.example</code> templates for local tooling to prevent token leakage.
                   </p>
                 </div>
               </div>
