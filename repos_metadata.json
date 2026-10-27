@@ -1,5 +1,16 @@
 [
   {
+    "description": "Dark LiteLLM: Sovereign, hardened LLM proxy and router for multi-model governance, deployed to GHCR and PyPI.",
+    "forkCount": 0,
+    "isFork": true,
+    "name": "dark-litellm",
+    "primaryLanguage": {
+      "name": "Python"
+    },
+    "stargazerCount": 1,
+    "url": "https://github.com/lgcorzo/dark-litellm"
+  },
+  {
     "description": "Dark Gravity Archive Indexer: Compresses and indexes ZIP archives for O(1) random artifact access without full disk extraction.",
     "forkCount": 0,
     "isFork": true,
