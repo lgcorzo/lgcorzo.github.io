@@ -234,6 +234,38 @@
           <div class="glass p-5"><p class="font-mono text-xs text-accent-3">THE LEARNING</p><p class="mt-2 text-sm leading-relaxed text-slate-400">What works, where it fails and which patterns are worth evaluating elsewhere. A human gate stays before every merge.</p></div>
         </div>
 
+        <!-- Actual Operational Status Matrix -->
+        <div class="reveal glass mt-12 p-7 sm:p-8">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p class="font-mono text-xs uppercase tracking-wider text-accent">Engineering Transparency · Actual Factory Status</p>
+              <h3 class="mt-1 text-xl font-bold text-white">What is Implemented, Deployed, Verified &amp; Designed</h3>
+            </div>
+            <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-accent hover:underline">evidence/verified_status.json ↗</a>
+          </div>
+          <p class="mt-2 text-sm text-slate-400">
+            Rather than claiming autonomous software engineering is a finished product, Dark Gravity tracks every subsystem across four explicit verification states:
+          </p>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
+              <span class="font-mono text-xs font-semibold text-emerald-400">1. IMPLEMENTED (RUST 2024)</span>
+              <p class="mt-2 text-xs leading-relaxed text-slate-300">5-crate Onion workspace (<code class="text-slate-200">factory-core</code> to <code class="text-slate-200">factory-cli</code>), Ed25519 NHI signing, <code class="text-slate-200">zeroize</code> memory wipe (54.2 ns Criterion micro-benchmark), 4-Vertex HITL &amp; <code class="text-slate-200">CircuitBreakerGuard</code>.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
+              <span class="font-mono text-xs font-semibold text-accent">2. DEPLOYED (CLUSTER &amp; CI)</span>
+              <p class="mt-2 text-xs leading-relaxed text-slate-300">10-namespace K8s topology via FluxCD, Hatchet DAG + Kafka KRaft bus, CloudNativePG + sovereign <code class="text-slate-200">@lgcorzo</code> MinIO S3, <code class="text-slate-200">dark-litellm</code>, <code class="text-slate-200">R2R</code>, <code class="text-slate-200">semantica</code>, and the hourly Project 6 vulnerability monitor.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
+              <span class="font-mono text-xs font-semibold text-accent-2">3. VERIFIED (QUALITY GATES)</span>
+              <p class="mt-2 text-xs leading-relaxed text-slate-300">Enforced <code class="text-slate-200">clippy -D warnings</code>, <code class="text-slate-200">ruff</code>, multi-OS <code class="text-slate-200">pytest</code> / <code class="text-slate-200">cargo test</code>, custom <code class="text-slate-200">codeql.yml</code> static analysis, and SHA-256 hash-pinned security audit lockfiles across active repos.</p>
+            </div>
+            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
+              <span class="font-mono text-xs font-semibold text-amber-300">4. DESIGNED / IN VALIDATION</span>
+              <p class="mt-2 text-xs leading-relaxed text-slate-300">Multi-node chaos/failover drills, automated <code class="text-slate-200">DocAgent</code> R&amp;D grant telemetry export, and technical readiness controls aligned with EU AI Act Art. 12/14 &amp; SOC 2 Type II (no third-party certification claimed).</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Interactive pipeline story -->
         <div class="mt-16">
           <div class="reveal">
@@ -297,7 +329,7 @@
             <h2 class="section-title">Projects, curated</h2>
             <p class="section-lead">Repositories grouped by function: Dark Gravity (autonomous engineering lab), infrastructure &amp; GitOps (do ideas survive deployment, limits and recovery?), and LLMOps, agents &amp; knowledge systems (RAG, multi-agent orchestration, evaluation, observability). Every card links straight to the code.</p>
             <p class="mt-3 text-sm leading-relaxed text-slate-400">
-              <strong class="text-slate-300">Fork note:</strong> Forked repositories in this lab are maintained separately to stay independent of upstream license and release changes, at the cost of extra maintenance. Learn more in the <a href="sovereignty.html" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Fork Policy</a>.
+              <strong class="text-slate-300">Why we fork &amp; maintain principal projects (41 forks / 71 total repos):</strong> Principal open-source dependencies—including SDD &amp; agent toolchains (<code class="text-slate-300">spec-kit</code>, <code class="text-slate-300">superpowers</code>, <code class="text-slate-300">speckit-superpowers-bridge</code>, <code class="text-slate-300">adk-rust</code>), cognitive memory &amp; AST engines (<code class="text-slate-300">semantica</code>, <code class="text-slate-300">deepwiki-rs</code>, <code class="text-slate-300">CodeWiki</code>, <code class="text-slate-300">openwiki</code>, <code class="text-slate-300">dark-litellm</code>), and the 38-repo MinIO S3/SIMD stack—are forked and maintained under our own strict code quality rules: deterministic CLI/schema contracts, SHA-256 hash-pinned lockfiles, custom CodeQL &amp; <code class="text-slate-300">pip-audit</code>/<code class="text-slate-300">cargo audit</code> gates, and an hourly autonomous remediation pipeline (GitHub Project 6 + Jules). Read the full rationale in the <a href="sovereignty.html" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Fork Policy &amp; Code Quality Governance</a>.
             </p>
           </div>
           <label class="relative block w-full lg:w-80">

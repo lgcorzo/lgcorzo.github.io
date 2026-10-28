@@ -680,15 +680,15 @@
     "url": "https://github.com/lgcorzo/TradingAgents"
   },
   {
-    "description": "\u2699\ufe0f\ud83e\udd80 Build modular and scalable LLM Applications in Rust",
+    "description": "Low-level GPU configuration and compute capability utility for local lab hardware acceleration.",
     "forkCount": 0,
-    "isFork": true,
-    "name": "rig",
+    "isFork": false,
+    "name": "gpu-unlock",
     "primaryLanguage": {
-      "name": "Rust"
+      "name": "Shell"
     },
     "stargazerCount": 0,
-    "url": "https://github.com/lgcorzo/rig"
+    "url": "https://github.com/lgcorzo/gpu-unlock"
   },
   {
     "description": "10 Lessons to Get Started Building AI Agents",
@@ -702,7 +702,7 @@
     "url": "https://github.com/lgcorzo/ai-agents-for-beginners"
   },
   {
-    "description": "An agentic skills framework & software development methodology that works.",
+    "description": "Hardened fork of Superpowers: Agentic skills framework and software development methodology enforcing TDD, git worktrees, and subagent review.",
     "forkCount": 0,
     "isFork": true,
     "name": "superpowers",
@@ -713,7 +713,7 @@
     "url": "https://github.com/lgcorzo/superpowers"
   },
   {
-    "description": "\ud83d\udcab Toolkit to help you get started with SDD or any other process!",
+    "description": "Hardened fork of GitHub Spec Kit: Specification-Driven Development (SDD) toolkit and CLI governed by custom CodeQL, pip-audit, and multi-OS pytest gates.",
     "forkCount": 0,
     "isFork": true,
     "name": "spec-kit",
@@ -768,22 +768,24 @@
     "url": "https://github.com/lgcorzo/cod_fish_classification_app"
   },
   {
-    "description": "",
+    "description": "Practical notebooks and architectural labs on Generative AI, RAG pipelines, and LLM systems engineering.",
     "forkCount": 0,
     "isFork": false,
     "name": "GEN_AI_Course",
     "primaryLanguage": {
-      "name": "Python"
+      "name": "Jupyter Notebook"
     },
     "stargazerCount": 0,
     "url": "https://github.com/lgcorzo/GEN_AI_Course"
   },
   {
-    "description": "",
+    "description": "Public Lab for AI Systems Engineering: Interactive architecture showcase, Dark Gravity factory status, fork governance policy, and lab notebooks.",
     "forkCount": 0,
     "isFork": false,
     "name": "lgcorzo.github.io",
-    "primaryLanguage": null,
+    "primaryLanguage": {
+      "name": "HTML"
+    },
     "stargazerCount": 1,
     "url": "https://github.com/lgcorzo/lgcorzo.github.io"
   },
