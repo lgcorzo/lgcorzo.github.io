@@ -804,7 +804,7 @@ sequenceDiagram
         <span class="section-tag">Open-Source Sovereignty</span>
         <h2 class="section-title">The Complete Open-Source Toolchain</h2>
         <p class="section-description">
-          The lab is built on open-source projects, some of them maintained as independent forks. Avoiding vendor lock-in is a goal with its own cost: every fork has to be patched and kept up to date by me.
+          The lab is built on open-source projects, with 41 principal dependencies maintained as independent forks under <code style="font-family: var(--font-mono);">@lgcorzo</code> to enforce deterministic SDD contracts, SHA-256 lockfile pinning, custom CodeQL analysis, and hourly autonomous CVE remediation (GitHub Project 6).
         </p>
       </div>
 
@@ -823,7 +823,25 @@ sequenceDiagram
               <td><strong>Language & Core</strong></td>
               <td><strong>Rust 2024 / Tokio</strong></td>
               <td>MIT / Apache 2.0</td>
-              <td>Memory-safe, high-concurrency runtime without a garbage collector.</td>
+              <td>Memory-safe, high-concurrency runtime without a garbage collector (`clippy -D warnings`).</td>
+            </tr>
+            <tr>
+              <td><strong>SDD & Agent Methodology</strong></td>
+              <td><strong>spec-kit + superpowers + speckit-superpowers-bridge</strong></td>
+              <td>MIT (Hardened Forks @lgcorzo)</td>
+              <td>Deterministic Spec-Driven Development (`spec.md` → `plan.md` → `tasks.md`) bridged to TDD & subagent execution under guard rules.</td>
+            </tr>
+            <tr>
+              <td><strong>Cognitive Memory & AST</strong></td>
+              <td><strong>R2R-Engine / semantica / deepwiki-rs / openwiki</strong></td>
+              <td>MIT / Apache 2.0 (Hardened Forks)</td>
+              <td>GraphRAG code retrieval, causal provenance graphs, Tree-sitter AST analysis (`OSR &lt; 5%`), and automated OpenWiki/OKF docs.</td>
+            </tr>
+            <tr>
+              <td><strong>LLM Gateway & FinOps</strong></td>
+              <td><strong>dark-litellm (@lgcorzo)</strong></td>
+              <td>MIT (Hardened Fork)</td>
+              <td>Multi-model proxy injecting FinOps virtual tags (`x-vtags-*`) and spend velocity circuit breakers (`+$1.00/60s`).</td>
             </tr>
             <tr>
               <td><strong>Orchestration</strong></td>
@@ -846,8 +864,8 @@ sequenceDiagram
             <tr>
               <td><strong>Sovereign S3 Storage</strong></td>
               <td><strong>MinIO Hardened Core (@lgcorzo)</strong></td>
-              <td>Apache 2.0 (Sovereign Fork)</td>
-              <td>Air-gapped object storage for checkpoints, compliance artifacts, and MLflow models.</td>
+              <td>Apache 2.0 (38 Sovereign Forks)</td>
+              <td>Air-gapped object storage for checkpoints, compliance artifacts, and MLflow models compiled to `ghcr.io/lgcorzo/*`.</td>
             </tr>
             <tr>
               <td><strong>Hardware SIMD</strong></td>
@@ -909,9 +927,9 @@ sequenceDiagram
           <li><a href="index.html#security">Zero-Trust Security</a></li>
           <li><a href="index.html#infrastructure">Sovereign MinIO S3</a></li>
           <li><a href="lifecycle.html">Project Lifecycle</a></li>
-          <li><a href="sovereignty.html">Sovereignty Policy</a></li>
-          <li><a href="index.html#compliance">EU AI Act & SOC 2</a></li>
-          <li><a href="index.html#projects">73 Repositories</a></li>
+          <li><a href="sovereignty.html">Fork &amp; Quality Policy</a></li>
+          <li><a href="index.html#compliance">EU AI Act &amp; SOC 2 Readiness</a></li>
+          <li><a href="index.html#projects">63 Public / 71 Total Repos</a></li>
         </ul>
       </div>
       <div class="footer-col">

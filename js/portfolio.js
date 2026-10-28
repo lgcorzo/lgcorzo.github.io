@@ -37,7 +37,7 @@
       who: 'ZeroClaw · gVisor (runsc)',
       title: 'A developer agent edits code in a sandbox',
       body: 'ZeroClaw consumes the contract and applies surgical code changes inside a disposable gVisor micro-sandbox. Credentials are short-lived and are zeroized from memory as soon as they are dropped.',
-      bullets: ['User-space kernel isolation', '5-minute just-in-time Git tokens', 'Memory wiped in 54.2 ns'],
+      bullets: ['User-space kernel isolation', '5-minute just-in-time Git tokens', 'Memory wiped in 54.2 ns (Criterion micro-benchmark)'],
     },
     {
       id: 'validate', label: 'Validate', tag: 'Phase 3', accent: 'accent',
@@ -89,7 +89,7 @@
   /** Design choices under test (hypotheses, not guarantees). */
   const HIGHLIGHTS = [
     { icon: 'M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6l-8-3z', title: 'Zero open ports', text: 'Outbound-only polling and an OpenZiti dark overlay mean there is no inbound attack surface to scan.' },
-    { icon: 'M12 8v4l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', title: 'Ephemeral credentials', text: 'Five-minute Vault tokens, Ed25519-signed missions and memory zeroization in 54.2 ns.' },
+    { icon: 'M12 8v4l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', title: 'Ephemeral credentials', text: 'Five-minute Vault tokens, Ed25519 signed missions and memory zeroization (54.2 ns micro-benchmark).' }, // gitleaks:allow
     { icon: 'M4 4h16v12H4zM8 20h8M12 16v4', title: 'Sandboxed by default', text: 'Every code change runs in a gVisor micro-sandbox clamped to 30 MiB RAM and 250m CPU.' },
     { icon: 'M16 11a4 4 0 1 0-8 0M4 21a8 8 0 0 1 16 0', title: 'Human always in control', text: 'No automatic merges. Branch protection plus PR directives keep a person in the loop.' },
     { icon: 'M3 12h4l3-8 4 16 3-8h4', title: 'Durable & observable', text: 'Hatchet checkpoints every step; MLflow, Kafka and provenance logs make every decision auditable.' },
@@ -113,7 +113,7 @@
 
   const DARKGRAVITY = new Set([
     'rust_CACD_autonomous_factory', 'speckit-superpowers-bridge', 'spec-kit', 'superpowers',
-    'openevolve', 'adk-rust', 'rig',
+    'openevolve', 'adk-rust', 'dark-litellm', 'deepwiki-rs',
   ]);
 
   const MLOPS = new Set([
@@ -125,7 +125,7 @@
     'fastapi-autogen-team', 'R2R-Application', 'R2R-Engine', 'semantica',
     'speckit-superpowers-bridge', 'deepwiki-rs', 'deepwiki-open', 'CodeWiki', 'openwiki',
     'FinRobot', 'TradingAgents', 'ai-agents-for-beginners', 'GEN_AI_Course', 'mocogpt', 'openevolve',
-    'adk-rust', 'rig', 'spec-kit', 'superpowers',
+    'adk-rust', 'dark-litellm', 'spec-kit', 'superpowers',
   ]);
 
   /** Hand-picked featured projects (order matters). */
@@ -335,6 +335,7 @@
       featured: FEATURED.length,
       all: repos.length,
       darkgravity: repos.filter((r) => r.view === 'darkgravity').length,
+      minio: repos.filter((r) => r.view === 'minio').length,
       mlops: repos.filter((r) => r.view === 'mlops').length,
       ai: repos.filter((r) => r.view === 'ai').length,
       systems: repos.filter((r) => r.view === 'systems').length,
@@ -364,7 +365,7 @@
     function card(r) {
       const color = LANG_COLORS[r.language] || '#94a3b8';
       const demo = DEMOS[r.name];
-      const catLabel = { darkgravity: 'Dark Gravity', mlops: 'Industrial AI', ai: 'LLMOps & Agents', systems: 'Infra & GitOps' }[r.view] || 'Systems';
+      const catLabel = { darkgravity: 'Dark Gravity', minio: 'Sovereign S3', mlops: 'Industrial AI', ai: 'LLMOps & Agents', systems: 'Infra & GitOps' }[r.view] || 'Systems';
       return `
       <article class="glass card-hover flex flex-col p-6">
         <div class="flex items-start justify-between gap-3">

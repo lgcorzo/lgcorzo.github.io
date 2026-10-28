@@ -511,13 +511,33 @@ const GITHUB_REPOS = [
   },
   {
     "name": "lgcorzo.github.io",
-    "description": "",
+    "description": "Public Lab for AI Systems Engineering: Interactive architecture showcase, Dark Gravity factory status, fork governance policy, and lab notebooks.",
     "url": "https://github.com/lgcorzo/lgcorzo.github.io",
     "stars": 1,
     "forks": 0,
-    "language": "Markdown",
+    "language": "HTML",
     "category": "apps",
     "category_label": "Ecosystem & Apps"
+  },
+  {
+    "name": "dark-litellm",
+    "description": "Dark Gravity Sovereign LLM Gateway: Hardened LiteLLM proxy enforcing FinOps virtual tags, spend velocity circuit breakers, and audited dependency trees.",
+    "url": "https://github.com/lgcorzo/dark-litellm",
+    "stars": 0,
+    "forks": 0,
+    "language": "Python",
+    "category": "llmops",
+    "category_label": "Sovereign LLM Gateway"
+  },
+  {
+    "name": "gpu-unlock",
+    "description": "Low-level GPU configuration and compute capability utility for local lab hardware acceleration.",
+    "url": "https://github.com/lgcorzo/gpu-unlock",
+    "stars": 0,
+    "forks": 0,
+    "language": "Shell",
+    "category": "systems",
+    "category_label": "Hardware & Compute"
   },
   {
     "name": "adk-rust",
@@ -591,17 +611,17 @@ const GITHUB_REPOS = [
   },
   {
     "name": "GEN_AI_Course",
-    "description": "",
+    "description": "Practical notebooks and architectural labs on Generative AI, RAG pipelines, and LLM systems engineering.",
     "url": "https://github.com/lgcorzo/GEN_AI_Course",
     "stars": 0,
     "forks": 0,
-    "language": "Python",
+    "language": "Jupyter Notebook",
     "category": "apps",
     "category_label": "Ecosystem & Apps"
   },
   {
     "name": "knowledge-catalog",
-    "description": "Google Cloud Knowledge Catalog Tools and Samples",
+    "description": "Google Cloud Knowledge Catalog Tools and Samples maintained under lab CI quality gates.",
     "url": "https://github.com/lgcorzo/knowledge-catalog",
     "stars": 0,
     "forks": 0,
@@ -621,7 +641,7 @@ const GITHUB_REPOS = [
   },
   {
     "name": "mocogpt",
-    "description": "MocoGPT is an GPT mock server, which can be used to test your GPT API calls.",
+    "description": "MocoGPT is a GPT mock server used for deterministic testing of LLM API integrations.",
     "url": "https://github.com/lgcorzo/mocogpt",
     "stars": 0,
     "forks": 0,
@@ -631,7 +651,7 @@ const GITHUB_REPOS = [
   },
   {
     "name": "openevolve",
-    "description": "Open-source implementation of AlphaEvolve",
+    "description": "Hardened fork of OpenEvolve (evolutionary coding agent framework) maintained under strict Python dependency and CodeQL security gates.",
     "url": "https://github.com/lgcorzo/openevolve",
     "stars": 0,
     "forks": 0,
@@ -641,28 +661,8 @@ const GITHUB_REPOS = [
   },
   {
     "name": "openwiki",
-    "description": "OpenWiki is a CLI that writes and maintains agent documentation for your codebase.",
+    "description": "Hardened fork of OpenWiki CLI that generates and maintains AST-backed agent documentation across codebases.",
     "url": "https://github.com/lgcorzo/openwiki",
-    "stars": 0,
-    "forks": 0,
-    "language": "TypeScript",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
-    "name": "rig",
-    "description": "\u2699\ufe0f\ud83e\udd80 Build modular and scalable LLM Applications in Rust",
-    "url": "https://github.com/lgcorzo/rig",
-    "stars": 0,
-    "forks": 0,
-    "language": "Rust",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
-    "name": "spec-kit",
-    "description": "\ud83d\udcab Toolkit to help you get started with SDD or any other process!",
-    "url": "https://github.com/lgcorzo/spec-kit",
     "stars": 0,
     "forks": 0,
     "language": "Python",
@@ -670,14 +670,24 @@ const GITHUB_REPOS = [
     "category_label": "Ecosystem & Apps"
   },
   {
+    "name": "spec-kit",
+    "description": "Hardened fork of GitHub Spec Kit: Specification-Driven Development (SDD) toolkit and CLI governed by custom CodeQL, pip-audit, and multi-OS pytest gates.",
+    "url": "https://github.com/lgcorzo/spec-kit",
+    "stars": 0,
+    "forks": 0,
+    "language": "Python",
+    "category": "autonomy",
+    "category_label": "Specification Framework"
+  },
+  {
     "name": "superpowers",
-    "description": "An agentic skills framework & software development methodology that works.",
+    "description": "Hardened fork of Superpowers: Agentic skills framework and software development methodology enforcing TDD, git worktrees, and subagent review.",
     "url": "https://github.com/lgcorzo/superpowers",
     "stars": 0,
     "forks": 0,
     "language": "Shell",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
+    "category": "autonomy",
+    "category_label": "Agent Methodology"
   },
   {
     "name": "TradingAgents",
