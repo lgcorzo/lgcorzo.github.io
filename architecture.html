@@ -3,26 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Architecture &amp; Governance — Dark Gravity Autonomous Software Factory</title>
-  <meta name="description" content="Technical architecture, mission workflows, security boundaries, and ADR-008 workspace standard for the Dark Gravity Autonomous Software Factory.">
+  <title>Architecture: how Dark Gravity is built and where it runs</title>
+  <meta name="description" content="The five Rust crates, the five-step mission pipeline, the ADR-008 workspace standard, where each part runs in Kubernetes, and the security boundaries, with evidence links.">
   <link rel="canonical" href="https://lgcorzo.github.io/architecture.html">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-
-  <!-- Unified Navigation Header -->
+  <!--SHELL:HEADER-->
   <header class="site-header">
     <div class="container">
-      <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="index.html" class="site-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Dark Gravity Lab</span>
-        </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="architecture.html" class="nav-link active">Architecture</a></li>
+          <li><a href="architecture.html" class="nav-link" aria-current="page">Architecture</a></li>
           <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
           <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
@@ -30,372 +26,248 @@
       </nav>
     </div>
   </header>
+  <!--/SHELL:HEADER-->
 
   <main id="main">
     <div class="container">
-      <!-- Page Hero -->
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Architecture</p>
+
       <section class="hero">
-        <h1>Dark Gravity Architecture &amp; Governance</h1>
-        <p class="hero-subtitle">
-          The Dark Gravity Autonomous Software Factory is a Rust-based Continuous Agentic / Continuous Deployment (CA/CD) system designed for zero-trust, security-critical environments. It coordinates specialized multi-agent personas through Spec-Driven Development (SDD), Domain-Driven Design (DDD), and strict cryptographic, kernel, and human-in-the-loop (HITL) boundaries.
+        <h1>Architecture: how Dark Gravity is built and where it runs</h1>
+        <p class="lede">
+          This page answers six questions, in order. Each section heading
+          is the question it answers.
         </p>
-      </section>
-
-      <!-- Status Taxonomy Standard -->
-      <section>
-        <h2>Status taxonomy</h2>
-        <p>Every architectural claim, feature, and component across this page carries one of four explicit verification tags:</p>
-        <div class="status-legend">
-          <div class="status-legend-item">
-            <span class="status-tag status-verified">Verified</span>
-            <span>Confirmed by automated CI suites or published evidence files.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-deployed">Deployed</span>
-            <span>Running and active in live cluster environments.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-implemented">Implemented</span>
-            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-designed">Designed</span>
-            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
-          </div>
+        <div class="minute">
+          <h2>In one minute</h2>
+          <ul>
+            <li>The code is five Rust crates. The inner crate does no I/O.</li>
+            <li>A mission is five Hatchet steps. Untrusted code runs only in a gVisor sandbox.</li>
+            <li>ADR-008 adds a Kubernetes object, <code>AgentWorkspace</code>, and hard sandbox limits.</li>
+            <li>Tags show how much is proven: <a href="index.html#status-tags">Designed, Implemented, Deployed, Verified</a>.</li>
+          </ul>
         </div>
       </section>
 
-      <!-- Section 1: Overview & 5-Crate Onion Workspace -->
-      <section id="workspace-architecture">
-        <h2>What is the workspace architecture?</h2>
-        <p>
-          Dark Gravity is structured as an Onion Architecture across a 5-crate workspace in Rust Edition 2024 (<code class="font-mono">rust-version = "1.85"</code>, verified on <code class="font-mono">1.97.1</code>). The domain core contains zero external I/O, ensuring that business rules, safety invariants, and cryptographic assertions remain isolated from transport layers.
-        </p>
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#overview">How is the code organised?</a></li>
+          <li><a href="#mission-flow">How does a mission flow?</a></li>
+          <li><a href="#adr-008">What is the ADR-008 standard?</a></li>
+          <li><a href="#where-things-run">Where does each part run?</a></li>
+          <li><a href="#security">What are the security boundaries?</a></li>
+          <li><a href="#evidence">What is the evidence?</a></li>
+        </ol>
+      </nav>
 
+      <section id="overview">
+        <h2>How is the code organised?</h2>
+        <p>
+          The workspace has five crates in Rust edition 2024. They are
+          layered like an onion: inner crates know nothing about outer ones.
+          That keeps business rules free of network and disk code.
+        </p>
         <div class="table-container">
           <table>
-            <thead>
-              <tr>
-                <th>Crate Name</th>
-                <th>Architectural Layer</th>
-                <th>Role &amp; Responsibilities</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <thead><tr><th scope="col">Crate</th><th scope="col">Layer</th><th scope="col">What it does</th></tr></thead>
             <tbody>
-              <tr>
-                <td><code class="font-mono">factory-core</code></td>
-                <td>Domain Core</td>
-                <td>Pure domain models (<code class="font-mono">Mission</code>, <code class="font-mono">Task</code>), aggregate roots, domain errors, and security traits (<code class="font-mono">SecurityBounds</code>, <code class="font-mono">SecurityValidator</code>) with zero external I/O.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">factory-application</code></td>
-                <td>Application Layer</td>
-                <td>Agent workflows (<code class="font-mono">Rustant</code>, <code class="font-mono">ZeroClaw</code>, <code class="font-mono">DevOpsAgent</code>, <code class="font-mono">DocAgent</code>), Hatchet 6-phase durable DAG definitions, and resilience circuits.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">factory-infrastructure</code></td>
-                <td>Infrastructure Layer</td>
-                <td>External service adapters for Apache Kafka, CloudNativePG (<code class="font-mono">pgvector</code>), HashiCorp Vault, R2R GraphRAG, OpenZiti, S3 storage, and Semantica.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">factory-mcp-server</code></td>
-                <td>Interface Layer</td>
-                <td>Axum-based Model Context Protocol (MCP) server running on port 8100 that dispatches tool executions and launches gVisor sandbox jobs.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">factory-cli</code></td>
-                <td>Entry Point</td>
-                <td>Binary entrypoint wiring workspace dependencies, starting the Hatchet worker, running GitPlatformPoller, and hosting the ADR-008 CRD operator controller.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
+              <tr><td><code>factory-core</code></td><td>Domain</td><td>Mission and task types, errors, and security rules. No I/O.</td></tr>
+              <tr><td><code>factory-application</code></td><td>Application</td><td>The agents and the Hatchet workflows that use them.</td></tr>
+              <tr><td><code>factory-infrastructure</code></td><td>Adapters</td><td>Clients for Kafka, Vault, OpenZiti, R2R, S3 and Git hosts.</td></tr>
+              <tr><td><code>factory-mcp-server</code></td><td>Interface</td><td>An MCP server on port 8100. It offers tools, including the one that launches sandbox jobs.</td></tr>
+              <tr><td><code>factory-cli</code></td><td>Entry point</td><td>Runs the Hatchet worker, the Git poller and the workspace operator.</td></tr>
             </tbody>
           </table>
         </div>
-
-        <h3>Enterprise integration interfaces</h3>
-        <p>
-          Dark Gravity integrates into enterprise software factories through three non-invasive, pull-based mechanisms:
+        <p class="status-line">
+          Status: <span class="status-tag status-implemented">Implemented</span>
+          Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/Cargo.toml"><code>Cargo.toml</code></a>.
         </p>
-        <ul style="margin: 0.75rem 0 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-          <li>
-            <strong>Outbound Polling (<code class="font-mono">GitPlatformPoller</code>)</strong>: Periodically polls GitHub/GitLab APIs (every 30&ndash;60&nbsp;seconds) for issues tagged <code class="font-mono">autonomous-mission</code>. It signs mission payloads with an Ed25519 Verifiable Credential and publishes them to Kafka topic <code class="font-mono">mission-input</code>.
-          </li>
-          <li>
-            <strong>Interactive PR Directives</strong>: Engineers interact with active PRs via comment mentions (such as <code class="font-mono">@darkgravity /status</code>, <code class="font-mono">/interact</code>, <code class="font-mono">/refine</code>, <code class="font-mono">/validate</code>). The poller reacts with eyes (&bull;) and posts structured execution progress.
-          </li>
-          <li>
-            <strong>GitOps Delivery</strong>: Generated code changes are pushed to isolated remote feature branches, opening formal PRs linked to originating issues (<code class="font-mono">Closes #ID</code>).
-          </li>
-        </ul>
+        <p>
+          The agents are <code>Rustant</code> (plans and reviews),
+          <code>ZeroClaw</code> (writes and tests code), plus
+          <code>AuditorAgent</code>, <code>FinOpsAgent</code>,
+          <code>QAObserver</code> and <code>DocAgent</code>.
+        </p>
       </section>
 
-      <!-- Section 2: Mission Flow (Hatchet DAG) -->
       <section id="mission-flow">
-        <h2>How do missions flow through the factory?</h2>
+        <h2>How does a mission flow?</h2>
         <p>
-          Mission execution is coordinated by a crash-resilient <strong>Hatchet 6-Phase Durable DAG</strong> (<code class="font-mono">cacd-mission-dag</code>) backed by PostgreSQL state checkpoints and MinIO S3 storage. Each step runs with a 30-minute execution timeout to handle long-running compilation and testing tasks safely.
+          A poller reads labelled issues from GitHub or GitLab, signs the
+          request, and publishes it to the Kafka topic
+          <code>mission-input</code>. The worker starts a Hatchet workflow
+          with five tasks. Hatchet retries a task if its worker dies.
         </p>
-
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Phase</th>
-                <th>Responsible Agent</th>
-                <th>Execution Details</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>1. Ingestion &amp; Plan</strong></td>
-                <td><code class="font-mono">RustantAgent</code> (PO)</td>
-                <td>Queries R2R GraphRAG for codebase context, executes Spec-Kit slash commands, and produces atomic, dependency-ordered tasks in <code class="font-mono">tasks.md</code>.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>2. Execution</strong></td>
-                <td><code class="font-mono">ZeroClawAgent</code> (Dev)</td>
-                <td>Consumes tasks via <code class="font-mono">speckit-superpowers-bridge</code>, applying AST-guided code edits inside isolated gVisor micro-sandboxes.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>3. Validation</strong></td>
-                <td><code class="font-mono">ZeroClawAgent</code> (Dev)</td>
-                <td>Executes compile checks, test suites, and linters (<code class="font-mono">cargo test</code>, <code class="font-mono">clippy</code>, <code class="font-mono">pytest</code>) inside the gVisor sandbox.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>4. Security Review</strong></td>
-                <td><code class="font-mono">RustantAgent</code> (Reviewer)</td>
-                <td>Invokes the <code class="font-mono">security_review</code> tool: an LLM-as-a-Judge SAST audit routed via LiteLLM to an independent model family. Enforces score &ge; 8.0/10.0 and records causal lineage in Semantica.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>5. Delivery</strong></td>
-                <td><code class="font-mono">factory-deliver</code></td>
-                <td>Pushes feature branch, opens a formal PR/MR with linked issues (<code class="font-mono">Closes #ID</code>), and awaits human review.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ol class="steps">
+          <li><strong><code>rustant-plan</code></strong>Looks up context in R2R and writes the plan and task list with Spec Kit.</li>
+          <li><strong><code>zeroclaw-execute</code></strong>Applies the tasks to the code through the Spec Kit bridge, in a sandbox job.</li>
+          <li><strong><code>zeroclaw-validate</code></strong>Runs tests and linters in the sandbox.</li>
+          <li><strong><code>rustant-review</code></strong>An AI judge scores the diff for security. A score below 8.0 out of 10 rejects it.</li>
+          <li><strong><code>factory-deliver</code></strong>Opens a pull request that links the issue. A human reviews and merges.</li>
+        </ol>
+        <p class="status-line">
+          Status: <span class="status-tag status-deployed">Deployed</span>
+          Task names: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/autonomous_mission.rs"><code>autonomous_mission.rs</code></a>.
+          A full run was seen in the Hatchet dashboard on v0.2.8; no evidence file records it yet.
+        </p>
+        <p class="note">
+          Kafka naming: the poller and worker use <code>mission-input</code>.
+          The name <code>mission-ingestion</code> appears only in a test
+          binary, an inspection tool and ADR-008. The owner should confirm
+          which is intended.
+        </p>
       </section>
 
-      <!-- Section 3: ADR-008 CRD Workspace Standard -->
       <section id="adr-008">
-        <h2>What is the ADR-008 workspace standard?</h2>
+        <h2>What is the ADR-008 standard?</h2>
         <p>
-          Merged in PR #547 and deployed in version v0.2.8, <strong>ADR-008 (&ldquo;CRD &amp; GitOps Workspace Standard&rdquo; v3.1)</strong> transitions the factory from raw pod scheduling to a declarative, Kubernetes-native Custom Resource Definition (<code class="font-mono">AgentWorkspace</code>) managed by an active controller in <code class="font-mono">factory-cli</code>.
+          ADR-008 describes a Kubernetes-native way to manage agent
+          workspaces. It adds a custom resource, <code>AgentWorkspace</code>,
+          which says which repository and branch an agent may work on and how
+          much memory and CPU it gets. An operator written in Rust (kube-rs)
+          reconciles it.
         </p>
-
         <div class="grid-2">
           <div class="card">
-            <h3>Declarative CRD Lifecycle</h3>
+            <h3>What the object holds</h3>
             <p>
-              The <code class="font-mono">AgentWorkspace</code> CRD (<code class="font-mono">agentworkspaces.darkgravity.io/v1alpha1</code>) declares the mission contract, repository target, branch, and resource boundaries. The controller reconciles workspaces through state phases: <code class="font-mono">Pending &rarr; Cloned &rarr; Active &rarr; Completed / Failed</code>.
+              Repository URL and target branch (both immutable), a mission
+              reference, a constitution file path, and resource limits. Its
+              phase is one of <code>Pending</code>, <code>Initializing</code>,
+              <code>Running</code>, <code>Paused</code>, <code>Completed</code>
+              or <code>Failed</code>.
             </p>
           </div>
           <div class="card">
-            <h3>Strict Admission Bounds</h3>
+            <h3>The sandbox bound</h3>
             <p>
-              ValidatingAdmissionPolicies (<code class="font-mono">dg-sandbox-bounds-jobs</code> and <code class="font-mono">dg-sandbox-bounds-pods</code>) enforce hard limits in sandbox namespaces: memory &le; 30&nbsp;MiB, CPU &le; 250m, and forbid ephemeral containers and privilege escalation.
+              In the <code>development</code> namespace every container must
+              declare requests and limits, with memory at most 30Mi and CPU
+              at most 250m. Ephemeral containers are refused. The bound
+              covers the workload, not gVisor&rsquo;s own overhead, which the
+              ADR says is still to be measured.
             </p>
           </div>
         </div>
-
-        <div class="callout">
-          <div class="callout-title">ADR-008 Status: Merged &amp; Deployed (v0.2.8)</div>
-          <p>
-            The CRD definitions, admission policies, and controller runtime are merged in PR #547 and verified through integration test suites. Sandbox job templates declare explicit requests (<code class="font-mono">16Mi / 50m</code>) alongside limits to satisfy cluster admission constraints.
-          </p>
+        <div class="table-container">
+          <table>
+            <thead><tr><th scope="col">Part</th><th scope="col">Status</th><th scope="col">Note</th></tr></thead>
+            <tbody>
+              <tr><td>Decision text (v3, accepted 2026-10-30)</td><td><span class="status-tag status-designed">Designed</span></td><td>The v3.1 amendment is marked &ldquo;Proposed, pending Architecture Board review&rdquo; in the ADR file.</td></tr>
+              <tr><td>Code merged in PR #547</td><td><span class="status-tag status-implemented">Implemented</span></td><td>CRD, operator, admission policies and tests are in the repository.</td></tr>
+              <tr><td><code>AgentWorkspace</code> CRD installed</td><td><span class="status-tag status-deployed">Deployed</span></td><td>Present in the cluster since 2026-10-31.</td></tr>
+              <tr><td>Admission policies for sandbox limits</td><td><span class="status-tag status-deployed">Deployed</span></td><td>Policies and bindings <code>dg-sandbox-bounds-jobs</code> and <code>-pods</code> are live.</td></tr>
+              <tr><td>Operator running and managing workspaces</td><td><span class="status-tag status-implemented">Implemented</span></td><td>No operator pod and no <code>AgentWorkspace</code> objects were found on 2026-10-31.</td></tr>
+            </tbody>
+          </table>
         </div>
+        <p class="status-line">
+          Sources:
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md">ADR-008 file</a>,
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/specs/008-crd-workspace-standard">spec folder</a>,
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/deploy"><code>deploy/</code></a>.
+        </p>
       </section>
 
-      <!-- Section 4: Where Things Run (Kubernetes Topology) -->
       <section id="where-things-run">
-        <h2>Where do components run?</h2>
+        <h2>Where does each part run?</h2>
         <p>
-          Dark Gravity operates across focused namespaces in the cluster, separating orchestration, agents, models, security, and sandboxed execution:
+          The lab cluster runs on MicroK8s. This table lists what was seen
+          running on 2026-10-31. Names come from the cluster, not from the
+          design documents.
         </p>
-
         <div class="table-container">
           <table>
-            <thead>
-              <tr>
-                <th>Namespace</th>
-                <th>Workload Category</th>
-                <th>Active Components &amp; Security Profile</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <thead><tr><th scope="col">Namespace</th><th scope="col">What runs there</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr>
-                <td><code class="font-mono">orchestrators</code></td>
-                <td>Workflow &amp; Messaging</td>
-                <td>Hatchet Engine (:7077 / :8000), Apache Kafka bus, Hatchet Postgres backend.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">agents</code></td>
-                <td>Factory Agents</td>
-                <td><code class="font-mono">factory-poller</code>, <code class="font-mono">factory-mcp-server</code> (:8100), <code class="font-mono">FinOpsAgent</code>, <code class="font-mono">AuditorAgent</code>.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">development</code> / <code class="font-mono">sandbox-exec</code></td>
-                <td>Micro-sandboxes</td>
-                <td>Ephemeral gVisor (<code class="font-mono">runsc</code>) Jobs executing compilation and tests. Memory clamped &le; 30&nbsp;MiB.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">jules-remediator</code></td>
-                <td>Error Remediation</td>
-                <td>Autonomous error remediation and pipeline diagnostic classifier.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">ml-apps</code></td>
-                <td>Cognitive Plane</td>
-                <td><code class="font-mono">dark-litellm</code> gateway (:4000/:4001), <code class="font-mono">semantica</code> engine, <code class="font-mono">R2R-Engine</code> (:7272).</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">storage</code></td>
-                <td>Persistence Plane</td>
-                <td>CloudNativePG PostgreSQL 16 cluster (<code class="font-mono">mlflow-db</code>, 3 instances), MinIO S3 cluster.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">security</code></td>
-                <td>Identity &amp; Secrets</td>
-                <td>HashiCorp Vault (5-min JIT tokens), Bitnami SealedSecrets, Keycloak OIDC.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
-              <tr>
-                <td><code class="font-mono">openziti</code></td>
-                <td>Dark Network</td>
-                <td>OpenZiti Controller (:8441) and Edge Routers (:3022) for zero inbound ports.</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-              </tr>
+              <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image v0.2.8).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>orchestrators</code></td><td>The Hatchet engine and KEDA autoscaler.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>confluent</code></td><td>Kafka brokers and KRaft controller, managed by the Confluent operator.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class, under the 30Mi/250m policy.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>llm-apps</code></td><td>LiteLLM, R2R, Semantica, MLflow, Ollama, OpenWebUI and document tools.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>storage</code></td><td>PostgreSQL (CloudNativePG, 3 instances), MinIO, Redis, RabbitMQ.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>security</code></td><td>Keycloak for sign-in.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>openziti</code></td><td>OpenZiti controller and router.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>jules-remediator</code>, <code>ml-apps</code></td><td>The remediation service and the MLOps package.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
             </tbody>
           </table>
         </div>
+        <p class="note">
+          The baseline report also names <code>dark-gravity</code> and
+          <code>sandbox-exec</code>. Neither exists in the cluster today, and
+          its image names (such as <code>v7.2.0</code>) differ from the
+          running ones. Treat that report as a snapshot from 2026-10-01.
+        </p>
       </section>
 
-      <!-- Section 5: Security Boundaries & Governance -->
-      <section id="security-boundaries">
+      <section id="security">
         <h2>What are the security boundaries?</h2>
-        <p>
-          Dark Gravity enforces layered defense-in-depth across the network, process memory, container kernel, and human authority levels:
-        </p>
-
-        <div class="grid-2">
-          <div class="card">
-            <h3>Cryptographic Non-Human Identity (NHI)</h3>
-            <p>
-              Agents sign all mission state transitions and artifacts using Ed25519 keypairs wrapped in W3C Verifiable Credentials (<code class="font-mono">Ed25519Signature2020</code>).
-            </p>
-            <span class="status-tag status-verified" style="margin-top: 0.5rem;">Verified</span>
-          </div>
-          <div class="card">
-            <h3>Forensic Memory Zeroization</h3>
-            <p>
-              Sensitive credential buffers implement <code class="font-mono">Zeroize</code> and <code class="font-mono">ZeroizeOnDrop</code>, wiping memory immediately on drop. Benchmarked via Criterion at <strong>54.2 ns</strong>.
-            </p>
-            <span class="status-tag status-verified" style="margin-top: 0.5rem;">Verified</span>
-          </div>
-          <div class="card">
-            <h3>Predictive FinOps Guard</h3>
-            <p>
-              LiteLLM routes inject Virtual Tags (<code class="font-mono">x-vtags-*</code>). <code class="font-mono">FinOpsAgent</code> samples spend every 60s, detecting velocity anomalies (>+$1.00/min) and triggering HardStops at 90% budget ($45 of $50).
-            </p>
-            <span class="status-tag status-verified" style="margin-top: 0.5rem;">Verified</span>
-          </div>
-          <div class="card">
-            <h3>Strict Human-in-the-Loop Policy</h3>
-            <p>
-              Autonomous agents can open PRs, push branches, and resolve CI failures, but merging to default branches (<code class="font-mono">main</code>) is strictly a manual human action. Direct automated merges are forbidden.
-            </p>
-            <span class="status-tag status-verified" style="margin-top: 0.5rem;">Verified</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6: Evidence Ledger Links -->
-      <section id="evidence">
-        <h2>Where is the evidence?</h2>
-        <p>
-          To maintain transparency, all empirical tests, snapshots, and security benchmarks are linked directly to their evidence files in the repository:
-        </p>
-
         <div class="table-container">
           <table>
-            <thead>
-              <tr>
-                <th>Evidence Document</th>
-                <th>Scope &amp; Methodology</th>
-                <th>Repository Path</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <thead><tr><th scope="col">Boundary</th><th scope="col">How it works</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>Baseline Snapshot</strong></td>
-                <td>Empirical inspection of cluster workloads, image digests, KEDA triggers, and RBAC bindings.</td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/baseline.md"><code class="font-mono">evidence/baseline.md</code></a></td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>Reliability Test Suite</strong></td>
-                <td>Kafka consumer lag, Hatchet DAG step retries, and circuit breaker loop detection tests.</td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code class="font-mono">evidence/reliability-tests.md</code></a></td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>Security Test Suite</strong></td>
-                <td>Ed25519 signature validation, gVisor syscall blocking, and Cilium egress denial verification.</td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security-tests.md"><code class="font-mono">evidence/security-tests.md</code></a></td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>Threat Model Matrix</strong></td>
-                <td>STRIDE threat assessment covering prompt injection, kernel escape, and credential leakage.</td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md"><code class="font-mono">evidence/security/threat-model.md</code></a></td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>Verified Status Ledger</strong></td>
-                <td>Machine-readable JSON tracking implementation and deployment status across all components.</td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code class="font-mono">evidence/verified_status.json</code></a></td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
+              <tr><td>Sandbox</td><td>Generated code runs under gVisor (runtime class <code>gvisor</code>, handler <code>runsc</code>). Firecracker was considered and not chosen, because gVisor starts faster and fits Kubernetes.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td>Resource limits</td><td>30Mi and 250m per container, checked when the job is created.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td>Identity</td><td>Missions are signed with Ed25519 keys as W3C verifiable credentials.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
+              <tr><td>Secrets</td><td>Vault tokens that last five minutes, wiped from memory on drop.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
+              <tr><td>Network</td><td>OpenZiti overlay. The controller and router run; the claim of zero inbound ports is not verified here.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td>Spend</td><td>Halts missions at 90% of a daily budget (default $50, so $45) and flags a rise above $1 per minute.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
+              <tr><td>Human approval</td><td>The pipeline only opens a pull or merge request. It has no merge step, so a person merges.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
             </tbody>
           </table>
         </div>
-
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
-          Scope statement: Evidence covers automated CI pipelines, unit test suites, and empirical microk8s cluster inspection. Multi-node saturation drills and long-running soak benchmarks remain in validation under the Designed status.
+        <p class="note">
+          Read the <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md">threat model</a>
+          for the attacks considered. It mentions both gVisor and Firecracker,
+          so it overstates the choice.
         </p>
       </section>
+
+      <section id="evidence">
+        <h2>What is the evidence?</h2>
+        <p>
+          These files are maintainer-written reports. They are useful, but
+          they are not independent audits, and some call themselves
+          &ldquo;certified&rdquo;. This site does not repeat that word.
+        </p>
+        <div class="table-container">
+          <table>
+            <thead><tr><th scope="col">File</th><th scope="col">What it covers</th><th scope="col">Limit</th></tr></thead>
+            <tbody>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>verified_status.json</code></a></td><td>Format, lint, adversarial and unit-test gates passed.</td><td>One run on 2026-10-18.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/baseline.md"><code>baseline.md</code></a></td><td>Workloads, custom resources and permissions in the cluster.</td><td>Snapshot of 2026-10-01. Namespaces and images have changed.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a></td><td>Killed worker recovery and a failing-test scenario.</td><td>Sandbox environment, 2026-10-15. No soak test.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security-tests.md"><code>security-tests.md</code></a></td><td>Secret redaction and sandbox limits.</td><td>2026-10-15, before the ADR-008 limits.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md"><code>threat-model.md</code></a></td><td>Threats and planned controls.</td><td>A design document, not a test result.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="index.html" rel="prev"><small>&larr; Previous</small><strong>Home</strong><br><span class="note">What Dark Gravity is, what works today</span></a>
+        <a class="next" href="lifecycle.html" rel="next"><small>Next &rarr;</small><strong>Lifecycle</strong><br><span class="note">How one mission goes from issue to pull request</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <a class="to-top" href="#main">Back to top</a>
     </div>
   </main>
 
-  <!-- Unified Footer -->
+  <!--SHELL:FOOTER-->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>Dark Gravity Lab</h4>
-          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
@@ -405,19 +277,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Primary Repositories</h4>
+          <p class="footer-title">Sources</p>
           <ul class="footer-links">
-            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
-            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
-            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
-        <span>Version v0.2.8 &bull; Evidence-based verification</span>
+        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
+        <span>Latest release: v0.2.8</span>
       </div>
     </div>
   </footer>
+  <!--/SHELL:FOOTER-->
 </body>
 </html>
