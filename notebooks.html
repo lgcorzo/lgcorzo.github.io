@@ -1,1209 +1,1109 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engineering Lab Notebook — Experiments, Decisions &amp; Real Outcomes | lgcorzo</title>
-  <meta name="description" content="Chronological engineering journal of real experiments, architectural decisions, failures, benchmarks, and industrial pattern transfer across AI systems, autonomous factories, and cloud-native infrastructure.">
-  <meta property="og:title" content="Engineering Lab Notebook — lgcorzo">
-  <meta property="og:description" content="Documenting what works, where systems fail, and lessons learned in industrial AI and autonomous systems architecture.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#070a10">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Lab notebook: experiments, failures and lessons</title>
+  <meta name="description" content="Persistent public log of 14 engineering experiments, architectural decisions, failure post-mortems, and benchmarks across autonomous agent systems.">
+  <link rel="canonical" href="https://lgcorzo.github.io/notebooks.html">
   <link rel="stylesheet" href="assets/site.css">
-  <link rel="stylesheet" href="css/portfolio.min.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
-
-<body class="font-sans text-slate-300 antialiased selection:bg-accent/30 selection:text-white">
-
-  <!-- Unified Navigation Header -->
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <!--SHELL:HEADER-->
   <header class="site-header">
     <div class="container">
-      <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="index.html" class="site-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Dark Gravity Lab</span>
-        </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
           <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
           <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
-          <li><a href="notebooks.html" class="nav-link active">Lab notebook</a></li>
+          <li><a href="notebooks.html" class="nav-link" aria-current="page">Lab notebook</a></li>
         </ul>
       </nav>
     </div>
   </header>
+  <!--/SHELL:HEADER-->
 
-  <main class="pt-32 pb-24">
-    <!-- Hero / Title -->
-    <section class="container-x">
-      <div class="max-w-3xl">
-        <p class="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3.5 py-1.5 font-mono text-xs text-slate-300">
-          <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-2 opacity-70"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-accent-2"></span></span>
-          Engineering Logbook · System Evaluations, Benchmarks &amp; Architectural Decisions
+  <main id="main">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Lab notebook</p>
+
+      <section class="hero">
+        <h1>Lab notebook: experiments, failures and lessons</h1>
+        <p class="lede">
+          This is a persistent public record of 14 system tests, architectural evaluations,
+          documented failures, and empirical trade-offs. Rather than marketing case studies,
+          each entry answers five core questions: <em>intent, architecture, actual outcome,
+          lessons/limitations, and next steps</em>.
         </p>
-        <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-          Engineering Lab Notebooks
-        </h1>
-        <p class="mt-4 text-lg leading-relaxed text-slate-400">
-          This is a persistent public record of system tests, architectural evaluations, documented failures, and empirical trade-offs conducted in my public testing environment where I am developing a fully autonomous software factory. Rather than curated marketing case studies, each entry answers five core questions: <em>intent, architecture used, actual outcome, lessons/limitations, and next steps</em>.
-        </p>
-      </div>
+        <div class="minute">
+          <h2>In one minute</h2>
+          <ul>
+            <li>Persistent public log of 14 real experiments, failure modes, benchmarks, and architectural decisions.</li>
+            <li>Every entry follows a 5-question standard: intent, setup, reality, lessons, and next steps.</li>
+            <li>Documented failures include memory clamping OOMs, false-positive validation traps, and upstream breaking changes.</li>
+            <li>Includes the ADR-008 micro-sandboxing standard and the 5-minute technical walkthrough video.</li>
+          </ul>
+        </div>
+      </section>
 
-      <!-- Protocol Summary -->
-      <div class="mt-10 grid gap-4 rounded-2xl border border-line bg-white/[0.02] p-6 sm:grid-cols-5 text-sm">
-        <div>
-          <span class="font-mono text-xs text-accent">1. INTENT</span>
-          <p class="mt-1 text-slate-300">What specific hypothesis or capability was tested?</p>
-        </div>
-        <div>
-          <span class="font-mono text-xs text-accent-2">2. CONFIGURATION</span>
-          <p class="mt-1 text-slate-300">What architecture, tools, and constraints were used?</p>
-        </div>
-        <div>
-          <span class="font-mono text-xs text-accent-3">3. REALITY</span>
-          <p class="mt-1 text-slate-300">What actually happened, including error logs &amp; drift?</p>
-        </div>
-        <div>
-          <span class="font-mono text-xs text-amber-300">4. LESSONS</span>
-          <p class="mt-1 text-slate-300">What limits emerged and what architectural insight was gained?</p>
-        </div>
-        <div>
-          <span class="font-mono text-xs text-slate-400">5. NEXT STEP</span>
-          <p class="mt-1 text-slate-300">How does this inform the next experiment or industrial pattern?</p>
-        </div>
-      </div>
-    </section>
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#exp-2026-011-adr008">ADR-008 Standard: Declarative AgentWorkspace Custom Resource Definition &amp; Strict Micro-Sandboxing</a></li>
+          <li><a href="#screencast-demo">Dark Gravity: 5-Minute Technical Demonstration Screencast &amp; Autonomous Pipeline Walkthrough</a></li>
+          <li><a href="#exp-2026-012">The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Failure Modes, and Root-Cause Remediation Across Fleet &amp; Kubernetes</a></li>
+          <li><a href="#exp-2026-011">Autonomous Security Remediation at Scale: Orchestrating Antigravity, Dark Gravity, and Jules Across 69 Repositories</a></li>
+          <li><a href="#exp-2026-001">FluxCD CI Pipeline: Kubeconform Validation False Positives on Helm Values &amp; Raw Pod Templates</a></li>
+          <li><a href="#exp-2026-002">Cargo Audit Gates vs. Unmaintained Transitive Crates: Managing Real Dependency Trade-offs</a></li>
+          <li><a href="#exp-2026-003">Durable Orchestration: Evaluating Hatchet DAGs vs. In-House Actor State Machines</a></li>
+          <li><a href="#exp-2026-004">Kubernetes Control Plane &amp; Worker Node Hardening: CIS Benchmark Audit and RBAC Least-Privilege</a></li>
+          <li><a href="#exp-2026-005">Asymmetric Secret Governance in Public Repositories: Testing SealedSecrets Key Rotation &amp; Disaster Recovery</a></li>
+          <li><a href="#exp-2026-006">Durable Execution &amp; Idempotency: Crash Resilience Under Node Termination in Hatchet Orchestrator</a></li>
+          <li><a href="#exp-2026-007">Zero-Trust Execution Boundary: Syscall Filtering and Calico Egress Blocking Under Adversarial Injection</a></li>
+          <li><a href="#exp-2026-008">Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge Plausibility Bias (44% False Negatives)</a></li>
+          <li><a href="#exp-2026-009">AST Subgraphs vs. Raw Grep: Achieving 91.8% Token Reduction and 94% First-Pass Code Generation</a></li>
+          <li><a href="#exp-2026-010">Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping and Safe Out-of-Memory Termination</a></li>
+        </ol>
+      </nav>
 
-    <!-- Entries -->
-    <!-- Entries -->
-    <section class="container-x mt-16 space-y-12">
-
-      <!-- Entry 011: ADR-008 CRD & GitOps Workspace Standard v3.1 -->
-      <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-emerald-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-400">ADR-008 · VERIFIED</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-011 · Oct 31, 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Standard: AgentWorkspace CRD v3.1 (PR #547)</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+      <section id="entries">
+<article class="entry" id="exp-2026-011-adr008">
+<header class="entry-head">
+<div>
+<span class="font-mono">ADR-008 · VERIFIED</span>
+<span class="font-mono">EXP-2026-011 · Oct 31, 2026</span>
+</div>
+<span class="chip font-mono">Standard: AgentWorkspace CRD v3.1 (PR #547)</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           ADR-008 Standard: Declarative AgentWorkspace Custom Resource Definition &amp; Strict Micro-Sandboxing
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Reference: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/pull/547" target="_blank" rel="noopener noreferrer" class="text-accent underline">PR #547</a> · Architecture: <a href="architecture.html#adr-008" class="text-accent underline">ADR-008 Specification</a>
-        </p>
+<p class="font-mono">
+          Reference: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/pull/547" rel="noopener noreferrer" target="_blank">PR #547</a> · Architecture: <a class="text-accent underline" href="architecture.html#adr-008">ADR-008 Specification</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Replace imperative pod scheduling with a declarative Kubernetes CRD (<code>AgentWorkspace</code>) that enforces strict ValidatingAdmissionPolicies (CPU ≤ 250m, RAM ≤ 30Mi, drop ALL capabilities) in sandbox execution namespaces.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Deployed <code>agentworkspaces.darkgravity.io</code> CRD with an active controller inside <code>factory-cli</code>. Sandboxed workloads execute as Kubernetes Jobs using <code>RuntimeClass=gvisor</code> in the <code>development</code> namespace.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>ValidatingAdmissionPolicy <code>dg-sandbox-bounds-jobs</code> successfully intercepted and denied oversized jobs. When sandbox pods declared compliant requests (16Mi/50m) and limits (30Mi/250m), Hatchet DAG tasks transitioned cleanly to completion with zero host kernel exposure.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Admission policies must validate both requests and limits symmetrically. Micro-sandboxes with 30Mi RAM clamping require pre-installed CLI binaries (such as <code>specify-cli</code>) and memory-efficient runtime runners to avoid immediate OOM kills.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Declarative workspace CRDs provide formal auditability and strict multi-tenant containment for enterprise AI factories running untrusted third-party code or autonomous agent edits.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Replace imperative pod scheduling with a declarative Kubernetes CRD (<code class="text-slate-200">AgentWorkspace</code>) that enforces strict ValidatingAdmissionPolicies (CPU &le; 250m, RAM &le; 30Mi, drop ALL capabilities) in sandbox execution namespaces.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">Deployed <code class="text-slate-200">agentworkspaces.darkgravity.io</code> CRD with an active controller inside <code class="text-slate-200">factory-cli</code>. Sandboxed workloads execute as Kubernetes Jobs using <code class="text-slate-200">RuntimeClass=gvisor</code> in the <code class="text-slate-200">development</code> namespace.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">ValidatingAdmissionPolicy <code class="text-slate-200">dg-sandbox-bounds-jobs</code> successfully intercepted and denied oversized jobs. When sandbox pods declared compliant requests (16Mi/50m) and limits (30Mi/250m), Hatchet DAG tasks transitioned cleanly to completion with zero host kernel exposure.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Admission policies must validate both requests and limits symmetrically. Micro-sandboxes with 30Mi RAM clamping require pre-installed CLI binaries (such as <code class="text-slate-200">specify-cli</code>) and memory-efficient runtime runners to avoid immediate OOM kills.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">Declarative workspace CRDs provide formal auditability and strict multi-tenant containment for enterprise AI factories running untrusted third-party code or autonomous agent edits.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Featured Entry: Dark Gravity Screencast Walkthrough -->
-      <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-accent/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-accent/20 border border-accent/40 px-2.5 py-1 font-mono text-xs font-semibold text-accent">TECHNICAL DEMO (SCRIPTED RENDER)</span>
-            <span class="font-mono text-xs text-slate-400">1080p · 60 FPS · 5:00 Architecture Walkthrough</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
-            <span class="rounded-md bg-blue-500/10 border border-blue-500/30 px-2 py-0.5 font-mono text-[11px] text-blue-400">EU AI Act Readiness</span>
-          </div>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
+<article class="entry" id="screencast-demo">
+<header class="entry-head">
+<div>
+<span class="font-mono">TECHNICAL DEMO (SCRIPTED RENDER)</span>
+<span class="font-mono">1080p · 60 FPS · 5:00 Architecture Walkthrough</span>
+</div>
+<div>
+<span class="chip font-mono">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
+<span class="font-mono">EU AI Act Readiness</span>
+</div>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
           Dark Gravity: 5-Minute Technical Demonstration Screencast &amp; Autonomous Pipeline Walkthrough
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Walkthrough: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/screencast_walkthrough.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">docs/screencast_walkthrough.md</a> · Script: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/scripts/render_screencast.py" target="_blank" rel="noopener noreferrer" class="text-accent underline">scripts/render_screencast.py</a>
-        </p>
-
-        <!-- Video Player Section (YouTube Embed) -->
-        <div class="mt-8 rounded-xl border border-line bg-black/60 p-2 sm:p-4 overflow-hidden">
-          <div class="relative w-full overflow-hidden rounded-lg bg-black shadow-2xl aspect-video">
-            <iframe 
-              class="absolute inset-0 h-full w-full border-0 rounded-lg"
-              src="https://www.youtube-nocookie.com/embed/FASQOk8mg4M?rel=0&modestbranding=1" 
-              title="Dark Gravity Technical Demonstration Screencast" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowfullscreen>
-            </iframe>
-          </div>
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 px-2 text-xs text-slate-400 font-mono">
-            <span>Video Specs: 1080p HD · 60 FPS · 5:00 Duration · Renderizado a partir de un guion (render_screencast.py)</span>
-            <a href="https://youtu.be/FASQOk8mg4M" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:underline inline-flex items-center gap-1">
-              <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-current"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+<p class="font-mono">
+          Walkthrough: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/screencast_walkthrough.md" rel="noopener noreferrer" target="_blank">docs/screencast_walkthrough.md</a> · Script: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/scripts/render_screencast.py" rel="noopener noreferrer" target="_blank">scripts/render_screencast.py</a>
+</p>
+<!-- Video Player Section (YouTube Embed) -->
+<header class="entry-head">
+<div class="video-wrapper">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" src="https://www.youtube-nocookie.com/embed/FASQOk8mg4M?rel=0&amp;modestbranding=1" title="Dark Gravity Technical Demonstration Screencast">
+</iframe>
+</div>
+<div class="font-mono">
+<span>Video Specs: 1080p HD · 60 FPS · 5:00 Duration · Renderizado a partir de un guion (render_screencast.py)</span>
+<a href="https://youtu.be/FASQOk8mg4M" rel="noopener noreferrer" target="_blank">
+<svg viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
               Watch on YouTube
             </a>
-          </div>
-        </div>
-
-        <p class="mt-6 text-sm sm:text-base leading-relaxed text-slate-300">
+</div>
+</header>
+<p>
           Esta demostración técnica (renderizada programáticamente a partir de un guion automatizado con trazas reales de misiones) exhibe la orquestación de Dark Gravity, el aislamiento gVisor, la firma de credenciales NHI Ed25519 y la gobernanza estricta Human-in-the-Loop (HITL).
         </p>
-
-        <!-- Structured Timeline Grid -->
-        <div class="mt-8 space-y-4">
-          <h3 class="font-mono text-xs uppercase tracking-wider text-accent">🎬 Screencast Timeline &amp; Section Breakdown</h3>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <!-- Section 1 -->
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-semibold text-accent">Section 1 (0:00 - 0:45)</span>
-                <span class="chip text-[10px]">Ingestion &amp; NHI</span>
-              </div>
-              <h4 class="mt-2 text-sm font-semibold text-white">Issue Creation &amp; Cryptographic Ingestion</h4>
-              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
-                <li>• Issue <code class="text-slate-200">#104</code> created in <code class="text-slate-200">rust_CACD_autonomous_factory</code> with labels <code class="text-slate-200">[autonomous-mission, dark-gravity]</code>.</li>
-                <li>• Explicit resource constraint parsing: <code class="text-slate-200">CPU: 500m, RAM: 512Mi, Timeout: 300s</code>.</li>
-                <li>• Outbound polling daemon (<code class="text-slate-200">factory-cli poller</code>) detects issue without inbound webhooks.</li>
-                <li>• Ed25519 NHI engine signs a W3C Verifiable Credential under <code class="text-slate-200">did:factory:dark-gravity-euskadi</code>.</li>
-                <li>• Payload dispatched to Confluent Kafka topic <code class="text-slate-200">mission-input</code> with offset idempotency.</li>
-              </ul>
-            </div>
-
-            <!-- Section 2 -->
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-semibold text-accent-2">Section 2 (0:45 - 2:00)</span>
-                <span class="chip text-[10px]">Orchestration &amp; gVisor</span>
-              </div>
-              <h4 class="mt-2 text-sm font-semibold text-white">Cluster Orchestration &amp; Sandboxed Execution</h4>
-              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
-                <li>• Hatchet orchestrates 6-phase DAG: <code class="text-slate-200">Ingestion → Plan → Code Sandbox → Validation → SAST Audit → Review</code>.</li>
-                <li>• ZeroClaw executor spawned inside Kubernetes pod with <code class="text-slate-200">RuntimeClass: gvisor-runsc</code> (Kernel Isolation L3).</li>
-                <li>• Real-time cgroup gauges confirm active enforcement: CPU capped at 340m/500m (68%), RAM clamped to 218Mi/512Mi (42%).</li>
-                <li>• Durable state step checkpoints (<code class="text-slate-200">StepCheckpoint#03</code>) written to PostgreSQL for fault recovery.</li>
-                <li>• Zero trust OpenZiti mTLS 1.3 overlay mesh secures inter-agent tool calls with zero public ingress ports.</li>
-              </ul>
-            </div>
-
-            <!-- Section 3 -->
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-semibold text-accent-3">Section 3 (2:00 - 3:15)</span>
-                <span class="chip text-[10px]">Delivery &amp; SAST Gates</span>
-              </div>
-              <h4 class="mt-2 text-sm font-semibold text-white">GitOps Delivery &amp; Quality Triad Gates</h4>
-              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
-                <li>• ZeroClaw performs surgical tree-sitter AST mutations on <code class="text-slate-200">crates/factory-mcp-server/src/tools/spec_kit_tool.rs</code>.</li>
-                <li>• Sandboxed unit test suite (<code class="text-slate-200">cargo test -p factory-mcp-server</code>) achieves 18/18 passes in gVisor sandbox.</li>
-                <li>• Auditor Agent completes automated SAST scan, verifying 0 high/critical CVEs and a 10.0/10.0 security score.</li>
-                <li>• Automatically opens PR <code class="text-slate-200">#42</code> with unified git diffs, test logs, and cryptographic proof of lineage.</li>
-              </ul>
-            </div>
-
-            <!-- Section 4 -->
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs font-semibold text-amber-300">Section 4 (3:15 - 4:15)</span>
-                <span class="chip text-[10px]">Governance &amp; HITL</span>
-              </div>
-              <h4 class="mt-2 text-sm font-semibold text-white">Interactive Directives &amp; HITL Merge Shield</h4>
-              <ul class="mt-2 space-y-1.5 text-xs text-slate-300">
-                <li>• Human architect comments <code class="text-slate-200">@darkgravity /status</code> on PR #42; bot reacts with status matrix &amp; FinOps metrics.</li>
-                <li>• Architect issues <code class="text-slate-200">@darkgravity /refine Add strict validation for empty payload strings</code>.</li>
-                <li>• ZeroClaw re-enters gVisor sandbox, applies AST mutation, passes tests (19/19), and pushes commit <code class="text-slate-200">e9f8a12</code>.</li>
-                <li>• <strong class="text-rose-400">Strict Governance Shield</strong>: Git merge capability is <strong>PERMANENTLY BLOCKED</strong> (<code class="text-slate-200">🔒 MERGE BLOCKED - Awaiting Human Maintainer Approval</code>).</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Section 5 Full Width -->
-          <div class="rounded-xl border border-line bg-ink-950/60 p-4 transition hover:border-accent/40">
-            <div class="flex items-center justify-between">
-              <span class="font-mono text-xs font-semibold text-slate-300">Section 5 (4:15 - 5:00)</span>
-              <span class="chip text-[10px]">Telemetry &amp; Compliance Audit</span>
-            </div>
-            <h4 class="mt-2 text-sm font-semibold text-white">Observability, Cost Metrics &amp; EU AI Act Compliance</h4>
-            <div class="mt-3 grid gap-4 sm:grid-cols-3 text-xs text-slate-300">
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-accent uppercase">Execution Telemetry</span>
-                <p class="mt-1 font-mono text-white">60,570 Tokens</p>
-                <p class="text-slate-400 text-[11px]">42,150 prompt + 18,420 completion</p>
-              </div>
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-emerald-400 uppercase">FinOps Budget</span>
-                <p class="mt-1 font-mono text-white">$0.5097 USD Total</p>
-                <p class="text-slate-400 text-[11px]">$0.4285 LLM + $0.0812 compute</p>
-              </div>
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-accent-2 uppercase">Stage Latencies</span>
-                <p class="mt-1 font-mono text-white">875s Total Run</p>
-                <p class="text-slate-400 text-[11px]">Sandbox (380s), Val (210s), SAST (128s)</p>
-              </div>
-            </div>
-            <p class="mt-3 text-xs text-slate-400">
-              Cryptographic W3C Verifiable Credential audit trail stored for EU AI Act Conformity Assessment &amp; SOC 2 Type II compliance in <code class="text-slate-300">evidence/missions/mission-001/report.json</code>.
+<!-- Structured Timeline Grid -->
+<div>
+<h3 class="font-mono">🎬 Screencast Timeline &amp; Section Breakdown</h3>
+<div class="grid-2">
+<!-- Section 1 -->
+<div>
+<div>
+<span class="font-mono">Section 1 (0:00 - 0:45)</span>
+<span class="chip">Ingestion &amp; NHI</span>
+</div>
+<h4>Issue Creation &amp; Cryptographic Ingestion</h4>
+<ul>
+<li>• Issue <code>#104</code> created in <code>rust_CACD_autonomous_factory</code> with labels <code>[autonomous-mission, dark-gravity]</code>.</li>
+<li>• Explicit resource constraint parsing: <code>CPU: 500m, RAM: 512Mi, Timeout: 300s</code>.</li>
+<li>• Outbound polling daemon (<code>factory-cli poller</code>) detects issue without inbound webhooks.</li>
+<li>• Ed25519 NHI engine signs a W3C Verifiable Credential under <code>did:factory:dark-gravity-euskadi</code>.</li>
+<li>• Payload dispatched to Confluent Kafka topic <code>mission-input</code> with offset idempotency.</li>
+</ul>
+</div>
+<!-- Section 2 -->
+<div>
+<div>
+<span class="font-mono">Section 2 (0:45 - 2:00)</span>
+<span class="chip">Orchestration &amp; gVisor</span>
+</div>
+<h4>Cluster Orchestration &amp; Sandboxed Execution</h4>
+<ul>
+<li>• Hatchet orchestrates 6-phase DAG: <code>Ingestion → Plan → Code Sandbox → Validation → SAST Audit → Review</code>.</li>
+<li>• ZeroClaw executor spawned inside Kubernetes pod with <code>RuntimeClass: gvisor-runsc</code> (Kernel Isolation L3).</li>
+<li>• Real-time cgroup gauges confirm active enforcement: CPU capped at 340m/500m (68%), RAM clamped to 218Mi/512Mi (42%).</li>
+<li>• Durable state step checkpoints (<code>StepCheckpoint#03</code>) written to PostgreSQL for fault recovery.</li>
+<li>• Zero trust OpenZiti mTLS 1.3 overlay mesh secures inter-agent tool calls with zero public ingress ports.</li>
+</ul>
+</div>
+<!-- Section 3 -->
+<div>
+<div>
+<span class="font-mono">Section 3 (2:00 - 3:15)</span>
+<span class="chip">Delivery &amp; SAST Gates</span>
+</div>
+<h4>GitOps Delivery &amp; Quality Triad Gates</h4>
+<ul>
+<li>• ZeroClaw performs surgical tree-sitter AST mutations on <code>crates/factory-mcp-server/src/tools/spec_kit_tool.rs</code>.</li>
+<li>• Sandboxed unit test suite (<code>cargo test -p factory-mcp-server</code>) achieves 18/18 passes in gVisor sandbox.</li>
+<li>• Auditor Agent completes automated SAST scan, verifying 0 high/critical CVEs and a 10.0/10.0 security score.</li>
+<li>• Automatically opens PR <code>#42</code> with unified git diffs, test logs, and cryptographic proof of lineage.</li>
+</ul>
+</div>
+<!-- Section 4 -->
+<div>
+<div>
+<span class="font-mono">Section 4 (3:15 - 4:15)</span>
+<span class="chip">Governance &amp; HITL</span>
+</div>
+<h4>Interactive Directives &amp; HITL Merge Shield</h4>
+<ul>
+<li>• Human architect comments <code>@darkgravity /status</code> on PR #42; bot reacts with status matrix &amp; FinOps metrics.</li>
+<li>• Architect issues <code>@darkgravity /refine Add strict validation for empty payload strings</code>.</li>
+<li>• ZeroClaw re-enters gVisor sandbox, applies AST mutation, passes tests (19/19), and pushes commit <code>e9f8a12</code>.</li>
+<li>• <strong class="text-rose-400">Strict Governance Shield</strong>: Git merge capability is <strong>PERMANENTLY BLOCKED</strong> (<code>🔒 MERGE BLOCKED - Awaiting Human Maintainer Approval</code>).</li>
+</ul>
+</div>
+</div>
+<!-- Section 5 Full Width -->
+<div>
+<div>
+<span class="font-mono">Section 5 (4:15 - 5:00)</span>
+<span class="chip">Telemetry &amp; Compliance Audit</span>
+</div>
+<h4>Observability, Cost Metrics &amp; EU AI Act Compliance</h4>
+<div class="grid-2">
+<div>
+<span class="font-mono">Execution Telemetry</span>
+<p class="font-mono">60,570 Tokens</p>
+<p>42,150 prompt + 18,420 completion</p>
+</div>
+<div>
+<span class="font-mono">FinOps Budget</span>
+<p class="font-mono">$0.5097 USD Total</p>
+<p>$0.4285 LLM + $0.0812 compute</p>
+</div>
+<div>
+<span class="font-mono">Stage Latencies</span>
+<p class="font-mono">875s Total Run</p>
+<p>Sandbox (380s), Val (210s), SAST (128s)</p>
+</div>
+</div>
+<p>
+              Cryptographic W3C Verifiable Credential audit trail stored for EU AI Act Conformity Assessment &amp; SOC 2 Type II compliance in <code>evidence/missions/mission-001/report.json</code>.
             </p>
-          </div>
-        </div>
-      </article>
+</div>
+</div>
+</article>
 
-      <!-- Entry 012: The Supply Chain Upgrade Paradox & Root-Cause Remediation Deep Dive -->
-      <article class="glass rounded-2xl border border-rose-500/40 bg-gradient-to-br from-rose-500/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-rose-500/20 border border-rose-500/40 px-2.5 py-1 font-mono text-xs font-semibold text-rose-400">CRITICAL SECURITY DEEP-DIVE</span>
-            <span class="font-mono text-xs text-slate-400">EXP-2026-012 · Oct 25, 2026</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="chip font-mono text-xs">Security Audit &amp; Technical Analysis</span>
-            <span class="rounded-md bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 font-mono text-[11px] text-amber-400">CVE Analysis &amp; Configuration Hardening</span>
-          </div>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
+<article class="entry" id="exp-2026-012">
+<header class="entry-head">
+<div>
+<span class="font-mono">CRITICAL SECURITY DEEP-DIVE</span>
+<span class="font-mono">EXP-2026-012 · Oct 25, 2026</span>
+</div>
+<div>
+<span class="chip font-mono">Security Audit &amp; Technical Analysis</span>
+<span class="font-mono">CVE Analysis &amp; Configuration Hardening</span>
+</div>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white sm:text-3xl">
           The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Failure Modes, and Root-Cause Remediation Across Fleet &amp; Kubernetes
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Scope: <strong>Vulnerability Audit</strong> &bull; <strong>The "Upgrade Was Worse" Supply Chain Trap</strong> &bull; <strong>Kubernetes Sealed Secrets</strong> &bull; <strong>Multi-Manifest Synchronization</strong>
-        </p>
-
-        <!-- Executive Summary Banner -->
-        <div class="mt-6 rounded-xl border border-rose-500/30 bg-rose-950/20 p-4 text-xs text-slate-300 leading-relaxed">
-          <strong class="text-rose-400 font-semibold font-mono uppercase tracking-wider block mb-1">Executive Summary: Security Audit &amp; Technical Analysis</strong>
+<p class="font-mono">
+          Scope: <strong>Vulnerability Audit</strong> • <strong>The "Upgrade Was Worse" Supply Chain Trap</strong> • <strong>Kubernetes Sealed Secrets</strong> • <strong>Multi-Manifest Synchronization</strong>
+</p>
+<!-- Executive Summary Banner -->
+<header class="entry-head">
+<strong class="font-mono">Executive Summary: Security Audit &amp; Technical Analysis</strong>
           During our scheduled security audit across my public testing environment — where I am developing a fully autonomous software factory spanning 69 repositories (65 active, 4 archived legacy) and Kubernetes clusters — our scanners identified high-severity supply-chain vulnerabilities and configuration findings. Most notably, attempting an automated patch on virtualenv triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published library introduced a secondary command injection flaw. Here is the technical breakdown of the findings, the failure modes, and the exact remediation steps.
-        </div>
-
-        <div class="mt-8 grid gap-8 lg:grid-cols-2">
-          <!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
-          <div class="space-y-6">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">1. Vulnerabilities Detected by Security Scanners (5 Supply Chain + 1 Configuration)</h3>
-              <p class="mt-1 text-sm text-slate-300">
+        </header>
+<div class="grid-2">
+<!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
+<div>
+<div>
+<h3 class="font-mono">1. Vulnerabilities Detected by Security Scanners (5 Supply Chain + 1 Configuration)</h3>
+<p>
                 Our static application and dependency scanners cataloged six distinct security surfaces across two categories:
               </p>
-
-              <!-- Category A -->
-              <div class="mt-3 text-xs font-mono font-semibold text-accent uppercase tracking-wider">Category A: Third-Party Supply Chain CVEs</div>
-              <div class="mt-2 space-y-3 font-mono text-xs">
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>1. FileStore Path Traversal &amp; Arbitrary File Write via MLflow</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Path Traversal &amp; Arbitrary File Write (CVE-2026-53995 / GHSA-wqmh-qccw-pqwf).<br>
-                    <strong>Mechanism:</strong> In MLflow tracking server backends using FileStore, crafted <code class="text-slate-200">trace_id</code> parameters in tracking endpoints allowed directory traversal out of designated experiment storage roots to write arbitrary payloads on the server. Resolved in <code class="text-slate-200">3.17.2</code>.
+<!-- Category A -->
+<div class="font-mono">Category A: Third-Party Supply Chain CVEs</div>
+<div class="font-mono">
+<div>
+<div>
+<span>1. FileStore Path Traversal &amp; Arbitrary File Write via MLflow</span>
+<span>HIGH</span>
+</div>
+<p>
+<strong>Vulnerability:</strong> Path Traversal &amp; Arbitrary File Write (CVE-2026-53995 / GHSA-wqmh-qccw-pqwf).<br>
+<strong>Mechanism:</strong> In MLflow tracking server backends using FileStore, crafted <code>trace_id</code> parameters in tracking endpoints allowed directory traversal out of designated experiment storage roots to write arbitrary payloads on the server. Resolved in <code>3.17.2</code>.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-amber-300 font-semibold">
-                    <span>2. SQLite Symlink Overwrites in Filelock</span>
-                    <span class="text-[10px] text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded">HIGH (LOCAL)</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Local Symlink Overwrite (CVE-2026-112940 / GHSA-v4x8-3wr5-3wq8, CVSS 7.1).<br>
-                    <strong>Mechanism:</strong> Requires local access in a shared non-sticky directory where planted symlinks or sidecar journal files induce elevated processes to unlink or overwrite their own lock files. No fix in 3.x; resolved in <code class="text-slate-200">4.2.1</code>.
+</div>
+<div>
+<div>
+<span>2. SQLite Symlink Overwrites in Filelock</span>
+<span>HIGH (LOCAL)</span>
+</div>
+<p>
+<strong>Vulnerability:</strong> Local Symlink Overwrite (CVE-2026-112940 / GHSA-v4x8-3wr5-3wq8, CVSS 7.1).<br>
+<strong>Mechanism:</strong> Requires local access in a shared non-sticky directory where planted symlinks or sidecar journal files induce elevated processes to unlink or overwrite their own lock files. No fix in 3.x; resolved in <code>4.2.1</code>.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-yellow-300 font-semibold">
-                    <span>3. Algorithmic Complexity (ReDoS) in OpenTelemetry</span>
-                    <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MEDIUM</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Algorithmic Complexity / Unbounded Regex (GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333).<br>
-                    <strong>Mechanism:</strong> Deeply nested or oversized W3C <code class="text-slate-200">tracestate</code> headers caused quadratic backtracking during regex parsing in <code class="text-slate-200">opentelemetry-api &lt;= 1.45.0</code>. Resolved in <code class="text-slate-200">1.45.1</code>.
+</div>
+<div>
+<div>
+<span>3. Algorithmic Complexity (ReDoS) in OpenTelemetry</span>
+<span>MEDIUM</span>
+</div>
+<p>
+<strong>Vulnerability:</strong> Algorithmic Complexity / Unbounded Regex (GHSA-xcq7-p3pf-p88h, CWE-400 / CWE-1333).<br>
+<strong>Mechanism:</strong> Deeply nested or oversized W3C <code>tracestate</code> headers caused quadratic backtracking during regex parsing in <code>opentelemetry-api &lt;= 1.45.0</code>. Resolved in <code>1.45.1</code>.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-yellow-300 font-semibold">
-                    <span>4. Upstream Patch Regression in Virtualenv</span>
-                    <span class="text-[10px] text-yellow-400 border border-yellow-500/30 px-1.5 py-0.5 rounded">MODERATE</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Command Injection via Unescaped Prompt Expansion (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc, Moderate).<br>
-                    <strong>Mechanism &amp; Scope:</strong> Upstream release <code class="text-slate-200">virtualenv 21.14.9</code> addressed command injection in 21.14.8 (CVE-2026-113723 / GHSA-6w3r-xr62-4xcp) but introduced a new variant in <code class="text-slate-200">activate.sh</code>: unescaped <code class="text-slate-200">--prompt</code> values allowed code execution when the bash prompt was redrawn in environments with active prompt expansion (<code class="text-slate-200">shopt -s promptvars</code>). Fixed in <code class="text-slate-200">21.14.13</code>.
+</div>
+<div>
+<div>
+<span>4. Upstream Patch Regression in Virtualenv</span>
+<span>MODERATE</span>
+</div>
+<p>
+<strong>Vulnerability:</strong> Command Injection via Unescaped Prompt Expansion (CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc, Moderate).<br>
+<strong>Mechanism &amp; Scope:</strong> Upstream release <code>virtualenv 21.14.9</code> addressed command injection in 21.14.8 (CVE-2026-113723 / GHSA-6w3r-xr62-4xcp) but introduced a new variant in <code>activate.sh</code>: unescaped <code>--prompt</code> values allowed code execution when the bash prompt was redrawn in environments with active prompt expansion (<code>shopt -s promptvars</code>). Fixed in <code>21.14.13</code>.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-rose-300 font-semibold">
-                    <span>5. Submodule Traversal &amp; Symlink Aliases in GitPython</span>
-                    <span class="text-[10px] text-rose-400 border border-rose-500/30 px-1.5 py-0.5 rounded">HIGH</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (GHSA-83vg-56qc-22m7).<br>
-                    <strong>Mechanism:</strong> Symbolic links aliasing <code class="text-slate-200">.gitmodules</code> and unvalidated submodule mutation targets allowed repository operations to escape working trees. Resolved in <code class="text-slate-200">3.2.1</code>.
+</div>
+<div>
+<div>
+<span>5. Submodule Traversal &amp; Symlink Aliases in GitPython</span>
+<span>HIGH</span>
+</div>
+<p>
+<strong>Vulnerability:</strong> Submodule Destination Path Traversal &amp; Symlink Injection (GHSA-83vg-56qc-22m7).<br>
+<strong>Mechanism:</strong> Symbolic links aliasing <code>.gitmodules</code> and unvalidated submodule mutation targets allowed repository operations to escape working trees. Resolved in <code>3.2.1</code>.
                   </p>
-                </div>
-              </div>
-
-              <!-- Category B -->
-              <div class="mt-4 text-xs font-mono font-semibold text-purple-400 uppercase tracking-wider">Category B: Infrastructure Configuration Hardening</div>
-              <div class="mt-2 space-y-3 font-mono text-xs">
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="flex items-center justify-between text-purple-300 font-semibold">
-                    <span>6. LLM Gateway Master Key &amp; Credential Isolation</span>
-                    <span class="text-[10px] text-purple-400 border border-purple-500/30 px-1.5 py-0.5 rounded">CONFIGURATION</span>
-                  </div>
-                  <p class="mt-1 font-sans text-slate-300 text-xs">
-                    <strong>Hardening Scope:</strong> Permissive master key allowances on internal proxy gateways and untracked developer environment templates.<br>
-                    <strong>Mechanism:</strong> Rotated internal gateways to cryptographically enforced 256-bit keys via Bitnami Sealed Secrets and established mandatory <code class="text-slate-200">.example</code> templates for local tooling to prevent token leakage.
+</div>
+</div>
+<!-- Category B -->
+<div class="font-mono">Category B: Infrastructure Configuration Hardening</div>
+<div class="font-mono">
+<div>
+<div>
+<span>6. LLM Gateway Master Key &amp; Credential Isolation</span>
+<span>CONFIGURATION</span>
+</div>
+<p>
+<strong>Hardening Scope:</strong> Permissive master key allowances on internal proxy gateways and untracked developer environment templates.<br>
+<strong>Mechanism:</strong> Rotated internal gateways to cryptographically enforced 256-bit keys via Bitnami Sealed Secrets and established mandatory <code>.example</code> templates for local tooling to prevent token leakage.
                   </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-rose-400">2. The "Upgrade Was Worse" Supply Chain Trap: Empirical PR Evidence</h3>
-              <p class="mt-1 text-sm text-slate-300">
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-mono">2. The "Upgrade Was Worse" Supply Chain Trap: Empirical PR Evidence</h3>
+<p>
                 During automated triage, Dependabot and autonomous agents processed package updates, revealing distinct failure modes documented across our merged pull requests:
               </p>
-              
-              <!-- Evidence Table -->
-              <div class="mt-3 overflow-x-auto rounded-xl border border-line bg-black/40">
-                <table class="w-full text-left font-mono text-xs text-slate-300">
-                  <thead class="border-b border-line bg-white/[0.04] text-[11px] text-slate-400 uppercase">
-                    <tr>
-                      <th class="p-2.5">Package</th>
-                      <th class="p-2.5">Initial State / PR (Day 1)</th>
-                      <th class="p-2.5">Trap Classification / Vulnerability</th>
-                      <th class="p-2.5">Final Remediation PR</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-line/50 text-[11px]">
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">virtualenv</td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/434" target="_blank" rel="noopener noreferrer" class="text-accent underline font-semibold">PR #434</a>
-                        <span class="block text-[10px] text-slate-400">commit 635370d (bumped to 21.14.9)</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-yellow-300 font-semibold block">Patch Regression (Moderate)</span>
-                        <span class="text-slate-300 text-[10px]">Introduced CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc variant</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/444" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #444</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit 13e1df6 (jumped to 21.14.13)</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">filelock</td>
-                      <td class="p-2.5">
-                        <span class="text-slate-300">Locked at 3.32.2</span>
-                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Vulnerable 3.x Baseline</span>
-                        <span class="text-slate-300 text-[10px]">No fix in 3.x branch (needs local access); fix only in 4.2.1</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/445" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #445</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit 798408b (Dependabot proposed 4.2.1)</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">mlflow</td>
-                      <td class="p-2.5">
-                        <span class="text-slate-300">Locked at 3.16.1</span>
-                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-amber-300 font-semibold block">Vulnerable 3.16.x Baseline</span>
-                        <span class="text-slate-300 text-[10px]">Carried CVE-2026-53995; fix required jumping to 3.17.2</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/446" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #446</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit c236015 (Dependabot proposed 3.17.2)</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">opentelemetry-api</td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/438" target="_blank" rel="noopener noreferrer" class="text-accent underline font-semibold">PR #438</a>
-                        <span class="block text-[10px] text-slate-400">commit 14bc2f3 (1.30.0 &rarr; 1.45.1)</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-yellow-300 font-semibold block">Solver Deadlock</span>
-                        <span class="text-slate-300 text-[10px]">Blocked by instrumentation &lt;0.52; poetry left 1.30.0</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/442" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #442</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit 00ef1fe (widened bound to &lt;1.0.0)</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">gitpython</td>
-                      <td class="p-2.5">
-                        <span class="text-slate-300">Locked at 3.2.0</span>
-                        <span class="block text-[10px] text-slate-400">Baseline running version</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-rose-400 font-semibold block">Direct Security Patch</span>
-                        <span class="text-slate-300 text-[10px]">Vulnerable to GHSA-83vg-56qc-22m7</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/437" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #437</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit b868119 (bumped to 3.2.1)</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="p-2.5 font-bold text-white">setuptools</td>
-                      <td class="p-2.5">
-                        <span class="text-slate-300">Locked at 83.0.0</span>
-                        <span class="block text-[10px] text-slate-400">Installed baseline</span>
-                      </td>
-                      <td class="p-2.5">
-                        <span class="text-rose-400 font-semibold block">Direct Security Patch</span>
-                        <span class="text-slate-300 text-[10px]">Vulnerable to GHSA-xmj3-9gf7-h52w &amp; GHSA-grgh-hr87-3jpw</span>
-                      </td>
-                      <td class="p-2.5">
-                        <a href="https://github.com/lgcorzo/mlops-python-package/pull/443" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline font-semibold">PR #443</a>
-                        <span class="block text-[10px] text-emerald-300/80">commit 50b8ddc (bumped to 84.1.0)</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Technical Evidence & Diff Breakdown -->
-              <div class="mt-4 space-y-3 font-mono text-xs">
-                <div class="rounded-xl border border-line bg-black/60 p-3.5">
-                  <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
-                    <span>// Conceptual Model &amp; Mechanism: Bash Prompt Injection Regression (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
-                    <a href="https://github.com/pypa/virtualenv/pull/3418" target="_blank" rel="noopener noreferrer" class="text-[10px] text-accent underline">Upstream: pypa/virtualenv#3418 (commit 5f48d711)</a>
-                  </div>
-                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-slate-500"># Simplified conceptual model of prompt expansion in 21.14.9 (released Oct 17, 2026):</span>
-<span class="text-yellow-300">- PS1="`__v_prompt`$PS1"           # Unescaped evaluation when promptvars enabled</span>
-<span class="text-slate-500"># In virtualenv 21.14.13 (released Oct 22, 2026 upstream, resolved in PR #444):</span>
-<span class="text-emerald-400">+ # Sanitized prompt generation &amp; disabled raw subshell command evaluation</span></code></pre>
-                  <p class="mt-2 text-[11px] text-slate-400 font-sans">
-                    <strong>Vector scope &amp; condition:</strong> Upstream release 21.14.9 corrected the primary injection in 21.14.8, but its prompt refactoring left <code>activate.sh</code> vulnerable under specific conditions: when an attacker or untrusted configuration provides a crafted <code>--prompt</code> value and the virtual environment is activated in a Bash shell with active prompt expansion (<code>shopt -s promptvars</code>), commands execute as the prompt is redrawn. Fixed cleanly upstream in 21.14.13.
+<!-- Evidence Table -->
+<div>
+<div class="table-container"><table class="w-full text-left font-mono text-xs text-slate-300">
+<thead class="border-b border-line bg-white/[0.04] text-[11px] text-slate-400 uppercase">
+<tr>
+<th class="p-2.5">Package</th>
+<th class="p-2.5">Initial State / PR (Day 1)</th>
+<th class="p-2.5">Trap Classification / Vulnerability</th>
+<th class="p-2.5">Final Remediation PR</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line/50 text-[11px]">
+<tr>
+<td class="p-2.5 font-bold text-white">virtualenv</td>
+<td class="p-2.5">
+<a class="text-accent underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/434" rel="noopener noreferrer" target="_blank">PR #434</a>
+<span>commit 635370d (bumped to 21.14.9)</span>
+</td>
+<td class="p-2.5">
+<span>Patch Regression (Moderate)</span>
+<span>Introduced CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc variant</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/444" rel="noopener noreferrer" target="_blank">PR #444</a>
+<span>commit 13e1df6 (jumped to 21.14.13)</span>
+</td>
+</tr>
+<tr>
+<td class="p-2.5 font-bold text-white">filelock</td>
+<td class="p-2.5">
+<span>Locked at 3.32.2</span>
+<span>Baseline running version</span>
+</td>
+<td class="p-2.5">
+<span>Vulnerable 3.x Baseline</span>
+<span>No fix in 3.x branch (needs local access); fix only in 4.2.1</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/445" rel="noopener noreferrer" target="_blank">PR #445</a>
+<span>commit 798408b (Dependabot proposed 4.2.1)</span>
+</td>
+</tr>
+<tr>
+<td class="p-2.5 font-bold text-white">mlflow</td>
+<td class="p-2.5">
+<span>Locked at 3.16.1</span>
+<span>Baseline running version</span>
+</td>
+<td class="p-2.5">
+<span>Vulnerable 3.16.x Baseline</span>
+<span>Carried CVE-2026-53995; fix required jumping to 3.17.2</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/446" rel="noopener noreferrer" target="_blank">PR #446</a>
+<span>commit c236015 (Dependabot proposed 3.17.2)</span>
+</td>
+</tr>
+<tr>
+<td class="p-2.5 font-bold text-white">opentelemetry-api</td>
+<td class="p-2.5">
+<a class="text-accent underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/438" rel="noopener noreferrer" target="_blank">PR #438</a>
+<span>commit 14bc2f3 (1.30.0 → 1.45.1)</span>
+</td>
+<td class="p-2.5">
+<span>Solver Deadlock</span>
+<span>Blocked by instrumentation &lt;0.52; poetry left 1.30.0</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/442" rel="noopener noreferrer" target="_blank">PR #442</a>
+<span>commit 00ef1fe (widened bound to &lt;1.0.0)</span>
+</td>
+</tr>
+<tr>
+<td class="p-2.5 font-bold text-white">gitpython</td>
+<td class="p-2.5">
+<span>Locked at 3.2.0</span>
+<span>Baseline running version</span>
+</td>
+<td class="p-2.5">
+<span>Direct Security Patch</span>
+<span>Vulnerable to GHSA-83vg-56qc-22m7</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/437" rel="noopener noreferrer" target="_blank">PR #437</a>
+<span>commit b868119 (bumped to 3.2.1)</span>
+</td>
+</tr>
+<tr>
+<td class="p-2.5 font-bold text-white">setuptools</td>
+<td class="p-2.5">
+<span>Locked at 83.0.0</span>
+<span>Installed baseline</span>
+</td>
+<td class="p-2.5">
+<span>Direct Security Patch</span>
+<span>Vulnerable to GHSA-xmj3-9gf7-h52w &amp; GHSA-grgh-hr87-3jpw</span>
+</td>
+<td class="p-2.5">
+<a class="text-emerald-400 underline font-semibold" href="https://github.com/lgcorzo/mlops-python-package/pull/443" rel="noopener noreferrer" target="_blank">PR #443</a>
+<span>commit 50b8ddc (bumped to 84.1.0)</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<!-- Technical Evidence & Diff Breakdown -->
+<div class="font-mono">
+<div>
+<div>
+<span>// Conceptual Model &amp; Mechanism: Bash Prompt Injection Regression (virtualenv CVE-2026-115586 / GHSA-cx6f-vjhg-g3cc)</span>
+<a class="text-[10px] text-accent underline" href="https://github.com/pypa/virtualenv/pull/3418" rel="noopener noreferrer" target="_blank">Upstream: pypa/virtualenv#3418 (commit 5f48d711)</a>
+</div>
+<pre><code><span># Simplified conceptual model of prompt expansion in 21.14.9 (released Oct 17, 2026):</span>
+<span>- PS1="`__v_prompt`$PS1"           # Unescaped evaluation when promptvars enabled</span>
+<span># In virtualenv 21.14.13 (released Oct 22, 2026 upstream, resolved in PR #444):</span>
+<span>+ # Sanitized prompt generation &amp; disabled raw subshell command evaluation</span></code></pre>
+<p>
+<strong>Vector scope &amp; condition:</strong> Upstream release 21.14.9 corrected the primary injection in 21.14.8, but its prompt refactoring left <code>activate.sh</code> vulnerable under specific conditions: when an attacker or untrusted configuration provides a crafted <code>--prompt</code> value and the virtual environment is activated in a Bash shell with active prompt expansion (<code>shopt -s promptvars</code>), commands execute as the prompt is redrawn. Fixed cleanly upstream in 21.14.13.
                   </p>
-                </div>
-
-                <div class="rounded-xl border border-line bg-black/60 p-3.5">
-                  <div class="flex items-center justify-between text-yellow-300 font-semibold mb-2">
-                    <span>// Empirical Evidence: Dependency Solver Deadlock Resolution (PR #442)</span>
-                    <span class="text-[10px] text-slate-400">pyproject.toml &bull; commit 00ef1fe</span>
-                  </div>
-                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-rose-400">- opentelemetry-instrumentation = &quot;&gt;=0.51b0,&lt;0.52&quot;       # Locked opentelemetry-api &le; 1.30.0</span>
-<span class="text-emerald-400">+ opentelemetry-instrumentation = &quot;&gt;=0.51b0,&lt;1.0.0&quot;       # Allowed resolution of modern OTel</span>
-<span class="text-emerald-400">+ opentelemetry-exporter-otlp-proto-http = &quot;&gt;=1.45.1,&lt;2.0.0&quot;</span>
-<span class="text-emerald-400">+ opentelemetry-exporter-otlp = &quot;&gt;=1.45.1,&lt;2.0.0&quot;</span>
-<span class="text-emerald-400">+ opentelemetry-api = &quot;&gt;=1.45.1,&lt;2.0.0&quot;                   # Explicit patched transitive floor</span></code></pre>
-                </div>
-
-                <div class="rounded-xl border border-line bg-black/60 p-3.5">
-                  <div class="text-accent font-semibold mb-1">// Governance: Human-in-the-Loop (HITL) vs. Fleet Autonomy</div>
-                  <p class="font-sans text-slate-300 text-xs leading-relaxed">
-                    While routine, low-risk patch updates across peripheral fleet repositories were verified and merged autonomously (EXP-011), core services (<code class="text-slate-200">mlops-python-package</code>, <code class="text-slate-200">rust_CACD_autonomous_factory</code>) enforce strict Human-in-the-Loop policies. AI agents drafted the fixes, resolved the multi-manifest drift across <code class="text-slate-200">poetry.lock</code>, <code class="text-slate-200">requirements.txt</code>, and <code class="text-slate-200">python_env.yaml</code>, and passed all test suites, but final merge requires human architectural sign-off.
+</div>
+<div>
+<div>
+<span>// Empirical Evidence: Dependency Solver Deadlock Resolution (PR #442)</span>
+<span>pyproject.toml • commit 00ef1fe</span>
+</div>
+<pre><code><span>- opentelemetry-instrumentation = "&gt;=0.51b0,&lt;0.52"       # Locked opentelemetry-api ≤ 1.30.0</span>
+<span>+ opentelemetry-instrumentation = "&gt;=0.51b0,&lt;1.0.0"       # Allowed resolution of modern OTel</span>
+<span>+ opentelemetry-exporter-otlp-proto-http = "&gt;=1.45.1,&lt;2.0.0"</span>
+<span>+ opentelemetry-exporter-otlp = "&gt;=1.45.1,&lt;2.0.0"</span>
+<span>+ opentelemetry-api = "&gt;=1.45.1,&lt;2.0.0"                   # Explicit patched transitive floor</span></code></pre>
+</div>
+<div>
+<div>// Governance: Human-in-the-Loop (HITL) vs. Fleet Autonomy</div>
+<p>
+                    While routine, low-risk patch updates across peripheral fleet repositories were verified and merged autonomously (EXP-011), core services (<code>mlops-python-package</code>, <code>rust_CACD_autonomous_factory</code>) enforce strict Human-in-the-Loop policies. AI agents drafted the fixes, resolved the multi-manifest drift across <code>poetry.lock</code>, <code>requirements.txt</code>, and <code>python_env.yaml</code>, and passed all test suites, but final merge requires human architectural sign-off.
                   </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: How We Solved It -->
-          <div class="space-y-6">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-emerald-400">3. How It Was Meticulously Solved</h3>
-              <p class="mt-1 text-sm text-slate-300">
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: How We Solved It -->
+<div>
+<div>
+<h3 class="font-mono">3. How It Was Meticulously Solved</h3>
+<p>
                 Rather than blind incremental upgrades, we implemented a four-tier surgical engineering strategy:
               </p>
-
-              <div class="mt-3 space-y-3 font-mono text-xs">
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 1: Constraint Widening &amp; Explicit Transitive Pinning</div>
-                  <p class="font-sans text-slate-300 text-xs">
-                    We updated <code class="text-slate-200">pyproject.toml</code> to widen tight bounds (allowing <code class="text-slate-200">opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their verified, patched security floors:
-                    <br>&bull; <code class="text-emerald-400">opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code> (tested via local test suites against OpenTelemetry 0.66b1)
-                    <br>&bull; <code class="text-emerald-400">mlflow &gt;= 3.17.2, &lt; 4.0.0</code>
-                    <br>&bull; <code class="text-emerald-400">filelock &gt;= 4.2.1</code>
-                    <br>&bull; <code class="text-emerald-400">gitpython &gt;= 3.2.1</code> (resolves submodule clone RCE)
-                    <br>&bull; <code class="text-emerald-400">setuptools &gt;= 84.1.0</code>
+<div class="font-mono">
+<div>
+<div>Tier 1: Constraint Widening &amp; Explicit Transitive Pinning</div>
+<p>
+                    We updated <code>pyproject.toml</code> to widen tight bounds (allowing <code>opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their verified, patched security floors:
+                    <br>• <code>opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code> (tested via local test suites against OpenTelemetry 0.66b1)
+                    <br>• <code>mlflow &gt;= 3.17.2, &lt; 4.0.0</code>
+<br>• <code>filelock &gt;= 4.2.1</code>
+<br>• <code>gitpython &gt;= 3.2.1</code> (resolves submodule clone RCE)
+                    <br>• <code>setuptools &gt;= 84.1.0</code>
+</p>
+</div>
+<div>
+<div>Tier 2: Multi-Manifest Version Parity &amp; CI Lock Checking</div>
+<p>
+                    Security scanners evaluate distinct files differently (e.g. Dependabot parses <code>poetry.lock</code> and <code>requirements.txt</code>, while container runs load <code>python_env.yaml</code>). We implemented a synchronized export check ensuring that <code>requirements.txt</code> is systematically re-exported from <code>poetry.lock</code> on dependency changes, preventing silent runtime drift between CI test environments and deployed MLflow artifacts. CI workflows execute <code>poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code>ruff</code>, <code>mypy</code>, <code>bandit</code>) before committing.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 2: Multi-Manifest Version Parity &amp; CI Lock Checking</div>
-                  <p class="font-sans text-slate-300 text-xs">
-                    Security scanners evaluate distinct files differently (e.g. Dependabot parses <code class="text-slate-200">poetry.lock</code> and <code class="text-slate-200">requirements.txt</code>, while container runs load <code class="text-slate-200">python_env.yaml</code>). We implemented a synchronized export check ensuring that <code class="text-slate-200">requirements.txt</code> is systematically re-exported from <code class="text-slate-200">poetry.lock</code> on dependency changes, preventing silent runtime drift between CI test environments and deployed MLflow artifacts. CI workflows execute <code class="text-slate-200">poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code class="text-slate-200">ruff</code>, <code class="text-slate-200">mypy</code>, <code class="text-slate-200">bandit</code>) before committing.
+</div>
+<div>
+<div>Tier 3: Asymmetric Sealed Secrets Rotation in Kubernetes</div>
+<p>
+                    Eliminated permissive weak/unset master key flags on the internal LLM gateway. Generated a cryptographically random 256-bit master key and sealed it using Bitnami's <code>kubeseal</code> with asymmetric public-key cryptography (storing encrypted secrets safely in Git). Propagated the sealed secret across operational namespaces, securely updating inference gateways, RAG backends, and autonomous agent workers.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 3: Asymmetric Sealed Secrets Rotation in Kubernetes</div>
-                  <p class="font-sans text-slate-300 text-xs">
-                    Eliminated permissive weak/unset master key flags on the internal LLM gateway. Generated a cryptographically random 256-bit master key and sealed it using Bitnami's <code class="text-slate-200">kubeseal</code> with asymmetric public-key cryptography (storing encrypted secrets safely in Git). Propagated the sealed secret across operational namespaces, securely updating inference gateways, RAG backends, and autonomous agent workers.
+</div>
+<div>
+<div>Tier 4: Git Tracking Sanitization &amp; Secret Isolation</div>
+<p>
+                    Unlinked developer configuration files from git history via <code>git rm --cached</code>, created sanitized templates with dynamic environment variable placeholders, rotated active credentials, and amended commits to eliminate all token references from pull request diffs.
                   </p>
-                </div>
-
-                <div class="rounded-lg border border-line bg-black/40 p-3">
-                  <div class="text-emerald-300 font-semibold mb-1">Tier 4: Git Tracking Sanitization &amp; Secret Isolation</div>
-                  <p class="font-sans text-slate-300 text-xs">
-                    Unlinked developer configuration files from git history via <code class="text-slate-200">git rm --cached</code>, created sanitized templates with dynamic environment variable placeholders, rotated active credentials, and amended commits to eliminate all token references from pull request diffs.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">4. Measured Outcome &amp; Architectural Standard</h3>
-              <p class="mt-1 text-sm text-slate-300">
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-mono">4. Measured Outcome &amp; Architectural Standard</h3>
+<p>
                 The full remediation resulted in:
               </p>
-              <div class="mt-2 grid grid-cols-3 gap-2 text-center font-mono">
-                <div class="rounded-lg bg-black/40 p-3 border border-line">
-                  <span class="text-[10px] text-emerald-400 uppercase block">62 of 65 Active</span>
-                  <span class="text-white font-bold text-base">0 Alerts</span>
-                  <span class="text-[11px] text-slate-400 block">Clean Fleet (3 in triage)</span>
-                </div>
-                <div class="rounded-lg bg-black/40 p-3 border border-line">
-                  <span class="text-[10px] text-accent uppercase block">Kubernetes</span>
-                  <span class="text-white font-bold text-base">256-bit</span>
-                  <span class="text-[11px] text-slate-400 block">Sealed in Git</span>
-                </div>
-                <div class="rounded-lg bg-black/40 p-3 border border-line">
-                  <span class="text-[10px] text-purple-400 uppercase block">Monitor Loop</span>
-                  <span class="text-white font-bold text-base">Hourly</span>
-                  <span class="text-[11px] text-slate-400 block">Automated Audit &amp; Triage</span>
-                </div>
-              </div>
-
-              <!-- Context & Documentation Note -->
-              <div class="mt-4 rounded-xl border border-line bg-white/[0.02] p-3 text-xs text-slate-400 space-y-1.5">
-                <div>
-                  <span class="text-slate-300 font-semibold">Public Documentation: </span>
-                  <span>Published as Entry 012 in the Engineering Lab Notebook (<a href="notebooks.html" class="text-accent underline font-mono">lgcorzo.github.io/notebooks.html</a>).</span>
-                </div>
-                <div class="text-[11px] text-slate-400">
+<div class="grid-2 font-mono">
+<div>
+<span>62 of 65 Active</span>
+<span>0 Alerts</span>
+<span>Clean Fleet (3 in triage)</span>
+</div>
+<div>
+<span>Kubernetes</span>
+<span>256-bit</span>
+<span>Sealed in Git</span>
+</div>
+<div>
+<span>Monitor Loop</span>
+<span>Hourly</span>
+<span>Automated Audit &amp; Triage</span>
+</div>
+</div>
+<!-- Context & Documentation Note -->
+<div>
+<div>
+<span>Public Documentation: </span>
+<span>Published as Entry 012 in the Engineering Lab Notebook (<a class="text-accent underline font-mono" href="notebooks.html">lgcorzo.github.io/notebooks.html</a>).</span>
+</div>
+<div>
                   Shared as an executive briefing and case study on LinkedIn for engineering leaders managing supply chain security and autonomous CI/CD fleets.
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+</div>
+</div>
+</div>
+</div>
+</article>
 
-      <!-- Entry 011: Multi-Agent Vulnerability Remediation with Dark Gravity, Antigravity & Jules -->
-      <article class="glass rounded-2xl border border-accent/40 bg-gradient-to-br from-purple-500/10 via-ink-950/80 to-ink-900/90 p-7 sm:p-9 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-400">AUTONOMOUS REMEDIATION</span>
-            <span class="font-mono text-xs text-slate-400">EXP-2026-011 · Oct 24, 2026</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <a href="https://github.com/users/lgcorzo/projects/6" target="_blank" rel="noopener noreferrer" class="chip font-mono text-xs hover:text-white transition">Project 6: GitHub Vulnerability Remediation</a>
-            <span class="rounded-md bg-accent/10 border border-accent/30 px-2 py-0.5 font-mono text-[11px] text-accent">69 Repositories Orchestrated</span>
-          </div>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-011">
+<header class="entry-head">
+<div>
+<span class="font-mono">AUTONOMOUS REMEDIATION</span>
+<span class="font-mono">EXP-2026-011 · Oct 24, 2026</span>
+</div>
+<div>
+<a class="chip font-mono" href="https://github.com/users/lgcorzo/projects/6" rel="noopener noreferrer" target="_blank">Project 6: GitHub Vulnerability Remediation</a>
+<span class="font-mono">69 Repositories Orchestrated</span>
+</div>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Autonomous Security Remediation at Scale: Orchestrating Antigravity, Dark Gravity, and Jules Across 69 Repositories
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Architecture: <strong>Antigravity</strong> (IDE Autonomous Executive &amp; Pipeline Engine) &bull; <strong>Dark Gravity</strong> (Autonomous Factory &amp; Non-Human Identity Orchestrator) &bull; <strong>Jules</strong> (Focused Surgical Code-Fix Agent)
+<p class="font-mono">
+          Architecture: <strong>Antigravity</strong> (IDE Autonomous Executive &amp; Pipeline Engine) • <strong>Dark Gravity</strong> (Autonomous Factory &amp; Non-Human Identity Orchestrator) • <strong>Jules</strong> (Focused Surgical Code-Fix Agent)
         </p>
-
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>
                 Can an enterprise-scale portfolio of 69 repositories (spanning Python, Rust, Go, TypeScript, and Docker/Kubernetes GitOps) be autonomously audited, triaged, and remediated without exhausting agent token budgets or inducing human fatigue, while maintaining a strict cryptographic audit trail and verifying regression-free test passes?
               </p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Tri-Agent Separation of Concerns</h3>
-              <p class="mt-1 text-sm text-slate-300">
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Tri-Agent Separation of Concerns</h3>
+<p>
                 Rather than deploying a single monolithic agent to edit source trees blindly, the system separates orchestration into three complementary autonomous tiers:
               </p>
-              <ul class="mt-2 space-y-2 text-xs text-slate-300">
-                <li class="flex items-start gap-2">
-                  <span class="font-mono text-accent font-semibold min-w-[90px]">Antigravity:</span>
-                  <span>Portfolio Overseer &amp; Meta-Orchestrator. Discovers active alerts across GitHub GraphQL &amp; REST APIs, provisions security issues tagged <code class="text-slate-200">#jules</code>, syncs with <a href="https://github.com/users/lgcorzo/projects/6" target="_blank" rel="noopener noreferrer" class="text-accent underline">GitHub Project 6</a> into column <code class="text-slate-200">jules</code>, monitors CI rollups, and serves as the non-interactive feedback supervisor.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="font-mono text-purple-400 font-semibold min-w-[90px]">Dark Gravity:</span>
-                  <span>Autonomous CA/CD Factory (<code class="text-slate-200">rust_CACD_autonomous_factory</code>). Issues Ed25519-signed Verifiable Credentials for Non-Human Identity (NHI), enforces resource boundaries (CPU/RAM/timeout quotas), and verifies deterministic DAG progression (<code class="text-slate-200">Ingestion &rarr; Plan &rarr; Code &rarr; Validation &rarr; Delivery</code>).</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="font-mono text-emerald-400 font-semibold min-w-[90px]">Jules:</span>
-                  <span>Surgical Remediator. Consumes structured issue descriptions, operates in minimal-token sandboxes, applies isolated dependency bumps and code sanitizations, opens pull requests, and responds directly to automated code reviews.</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened (Empirical Execution)</h3>
-              <p class="mt-1 text-sm text-slate-300">
+<ul>
+<li>
+<span class="font-mono">Antigravity:</span>
+<span>Portfolio Overseer &amp; Meta-Orchestrator. Discovers active alerts across GitHub GraphQL &amp; REST APIs, provisions security issues tagged <code>#jules</code>, syncs with <a href="https://github.com/users/lgcorzo/projects/6" rel="noopener noreferrer" target="_blank">GitHub Project 6</a> into column <code>jules</code>, monitors CI rollups, and serves as the non-interactive feedback supervisor.</span>
+</li>
+<li>
+<span class="font-mono">Dark Gravity:</span>
+<span>Autonomous CA/CD Factory (<code>rust_CACD_autonomous_factory</code>). Issues Ed25519-signed Verifiable Credentials for Non-Human Identity (NHI), enforces resource boundaries (CPU/RAM/timeout quotas), and verifies deterministic DAG progression (<code>Ingestion → Plan → Code → Validation → Delivery</code>).</span>
+</li>
+<li>
+<span class="font-mono">Jules:</span>
+<span>Surgical Remediator. Consumes structured issue descriptions, operates in minimal-token sandboxes, applies isolated dependency bumps and code sanitizations, opens pull requests, and responds directly to automated code reviews.</span>
+</li>
+</ul>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened (Empirical Execution)</h3>
+<p>
                 Across an audit of all 69 repositories:
               </p>
-              <div class="mt-2 rounded-xl border border-line bg-black/40 p-3 font-mono text-xs text-slate-300 space-y-1">
-                <div>&bull; <strong class="text-white">69 repositories total</strong>: 65 active repositories monitored, 4 archived legacy repositories.</div>
-                <div>&bull; <strong class="text-emerald-400">Day 1 baseline</strong>: 60 of 69 repositories verified 100% clean (9 active repos had open alerts).</div>
-                <div>&bull; <strong class="text-purple-400">10+ PRs autonomously resolved &amp; merged</strong>: Including <code class="text-slate-200">CodeWiki#21</code> (SAST remediation), <code class="text-slate-200">openwiki#9</code> (MCP/Hono), <code class="text-slate-200">operator#24</code>, <code class="text-slate-200">simdjson-go#13</code>, <code class="text-slate-200">mint#16</code>, <code class="text-slate-200">R2R-Engine#71/#73</code>, <code class="text-slate-200">mds#38</code>, and <code class="text-slate-200">semantica#16</code>.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Key Lessons &amp; Breakthrough Pattern: Automated Review Guidance</h3>
-              <p class="mt-1 text-sm text-slate-300">
+<div class="font-mono">
+<div>• <strong>69 repositories total</strong>: 65 active repositories monitored, 4 archived legacy repositories.</div>
+<div>• <strong>Day 1 baseline</strong>: 60 of 69 repositories verified 100% clean (9 active repos had open alerts).</div>
+<div>• <strong>10+ PRs autonomously resolved &amp; merged</strong>: Including <code>CodeWiki#21</code> (SAST remediation), <code>openwiki#9</code> (MCP/Hono), <code>operator#24</code>, <code>simdjson-go#13</code>, <code>mint#16</code>, <code>R2R-Engine#71/#73</code>, <code>mds#38</code>, and <code>semantica#16</code>.</div>
+</div>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Key Lessons &amp; Breakthrough Pattern: Automated Review Guidance</h3>
+<p>
                 Having the orchestrator rewrite complex code directly burns tokens rapidly and risks cascading breaking changes. Instead, Antigravity established an <strong>Automated Review Guidance loop</strong>:
               </p>
-              <div class="mt-2 rounded-xl border border-line bg-black/50 p-3.5 font-mono text-xs text-slate-300 space-y-2">
-                <div class="text-accent font-semibold">// The Self-Correcting Feedback Loop</div>
-                <div class="text-slate-400">1. Pipeline checks PR status checks via <code class="text-slate-300">gh pr checks</code></div>
-                <div class="text-slate-400">2. If CI fails: Extract failing job name &amp; log URL</div>
-                <div class="text-slate-400">3. Post GitHub Review Comment: <code class="text-emerald-300">@jules Automated Code Review: Job [X] failed at [URL]. Please fix on branch [Y].</code></div>
-                <div class="text-slate-400">4. Jules consumes targeted error, pushes surgical fix, and re-triggers CI</div>
-                <div class="text-slate-400">5. Once checks pass 100% green: Antigravity approves, squash-merges, and cleans remote branch</div>
-              </div>
-              <p class="mt-2 text-xs text-slate-400">
+<div class="font-mono">
+<div>// The Self-Correcting Feedback Loop</div>
+<div>1. Pipeline checks PR status checks via <code>gh pr checks</code></div>
+<div>2. If CI fails: Extract failing job name &amp; log URL</div>
+<div>3. Post GitHub Review Comment: <code>@jules Automated Code Review: Job [X] failed at [URL]. Please fix on branch [Y].</code></div>
+<div>4. Jules consumes targeted error, pushes surgical fix, and re-triggers CI</div>
+<div>5. Once checks pass 100% green: Antigravity approves, squash-merges, and cleans remote branch</div>
+</div>
+<p>
                 This saved over <strong>85% in LLM token consumption</strong> compared to full-context orchestrator rewrites.
               </p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Action &amp; Production Standard</h3>
-              <p class="mt-1 text-sm text-slate-300">
-                The tri-agent architecture (Antigravity + Dark Gravity + Jules) is now the official industrial blueprint for repository fleet maintenance across the <code class="text-slate-200">lgcorzo</code> ecosystem. The 60-minute cron pipeline runs continuously, establishing an automated hourly sweep from vulnerability discovery to verified PR remediation.
+</div>
+<div>
+<h3 class="font-mono">5. Action &amp; Production Standard</h3>
+<p>
+                The tri-agent architecture (Antigravity + Dark Gravity + Jules) is now the official industrial blueprint for repository fleet maintenance across the <code>lgcorzo</code> ecosystem. The 60-minute cron pipeline runs continuously, establishing an automated hourly sweep from vulnerability discovery to verified PR remediation.
               </p>
-            </div>
-            <div class="grid grid-cols-3 gap-2 text-center">
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-accent uppercase">69 Repos</span>
-                <p class="mt-1 font-mono text-white text-base">Continuous</p>
-                <p class="text-slate-400 text-[11px]">Audit Coverage</p>
-              </div>
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-purple-400 uppercase">Token Savings</span>
-                <p class="mt-1 font-mono text-white text-base">&gt;85%</p>
-                <p class="text-slate-400 text-[11px]">Via Review Guidance</p>
-              </div>
-              <div class="rounded-lg bg-black/40 p-3 border border-line">
-                <span class="font-mono text-[10px] text-emerald-400 uppercase">Project 6</span>
-                <p class="mt-1 font-mono text-white text-base">Automated</p>
-                <p class="text-slate-400 text-[11px]">Column 'jules' Sync</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+</div>
+<div>
+<div>
+<span class="font-mono">69 Repos</span>
+<p class="font-mono">Continuous</p>
+<p>Audit Coverage</p>
+</div>
+<div>
+<span class="font-mono">Token Savings</span>
+<p class="font-mono">&gt;85%</p>
+<p>Via Review Guidance</p>
+</div>
+<div>
+<span class="font-mono">Project 6</span>
+<p class="font-mono">Automated</p>
+<p>Column 'jules' Sync</p>
+</div>
+</div>
+</div>
+</header>
+</article>
 
-      <!-- Entry 001: GitOps CI / Kubeconform Failure -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-rose-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-rose-400">FAILURE &amp; FIX</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-001 · Oct 11, 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Repo: Infrastructure GitOps (Internal)</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-001">
+<header class="entry-head">
+<div>
+<span class="font-mono">FAILURE &amp; FIX</span>
+<span class="font-mono">EXP-2026-001 · Oct 11, 2026</span>
+</div>
+<span class="chip font-mono">Repo: Infrastructure GitOps (Internal)</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           FluxCD CI Pipeline: Kubeconform Validation False Positives on Helm Values &amp; Raw Pod Templates
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Commit: <span class="font-mono text-slate-300">4839b91</span> (fix: exclude Helm values and raw job templates from kubeconform)
+<p class="font-mono">
+          Commit: <span class="font-mono">4839b91</span> (fix: exclude Helm values and raw job templates from kubeconform)
         </p>
-
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Enforce strict schema validation on all Kubernetes manifests in GitOps before merging PRs, eliminating malformed manifests and unparseable CRDs via Kubeconform.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">GitHub Actions CI pipeline running <code class="text-slate-200">kubeconform -strict</code> with Flux CRD schemas across all <code class="text-slate-200">*.yaml</code> files discovered under <code class="text-slate-200">clusters/</code> and <code class="text-slate-200">infrastructure/</code>.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">The pipeline failed systematically on valid Helm values fragments and parameter-injected sandbox job templates (<code class="text-slate-200">sandbox-job.yaml</code>) because they were not standalone, schema-complete Kubernetes resource documents.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Limitations</h3>
-              <p class="mt-1 text-sm text-slate-300">Static AST/schema tools cannot blindly walk recursive Git trees without discriminating between compiled manifests, parameter files, and template fragments. Naive CI gates create friction and noise.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Action &amp; Evolution</h3>
-              <p class="mt-1 text-sm text-slate-300">Restructured file exclusion rules in the workflow to specifically filter out <code class="text-slate-200">*values*.yaml</code> and raw templated batch jobs, reserving Kubeconform strictly for hydrated/declarative manifests.</p>
-            </div>
-            <div class="rounded-xl border border-line bg-black/40 p-4 font-mono text-xs text-slate-300">
-              <span class="text-slate-500"># Pipeline pattern update</span><br>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Enforce strict schema validation on all Kubernetes manifests in GitOps before merging PRs, eliminating malformed manifests and unparseable CRDs via Kubeconform.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>GitHub Actions CI pipeline running <code>kubeconform -strict</code> with Flux CRD schemas across all <code>*.yaml</code> files discovered under <code>clusters/</code> and <code>infrastructure/</code>.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>The pipeline failed systematically on valid Helm values fragments and parameter-injected sandbox job templates (<code>sandbox-job.yaml</code>) because they were not standalone, schema-complete Kubernetes resource documents.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Limitations</h3>
+<p>Static AST/schema tools cannot blindly walk recursive Git trees without discriminating between compiled manifests, parameter files, and template fragments. Naive CI gates create friction and noise.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Action &amp; Evolution</h3>
+<p>Restructured file exclusion rules in the workflow to specifically filter out <code>*values*.yaml</code> and raw templated batch jobs, reserving Kubeconform strictly for hydrated/declarative manifests.</p>
+</div>
+<div class="font-mono">
+<span># Pipeline pattern update</span><br>
               find clusters infrastructure -type f \( -name "*.yaml" \)<br>
-              &nbsp;&nbsp;! -name "*values*.yaml" ! -path "*/sandbox-job.yaml" | xargs kubeconform
+                ! -name "*values*.yaml" ! -path "*/sandbox-job.yaml" | xargs kubeconform
             </div>
-          </div>
-        </div>
-      </article>
+</div>
+</header>
+</article>
 
-      <!-- Entry 002: Cargo Audit / Security Advisories -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-amber-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-amber-300">TRADE-OFF DECISION</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-002 · Oct 13, 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-002">
+<header class="entry-head">
+<div>
+<span class="font-mono">TRADE-OFF DECISION</span>
+<span class="font-mono">EXP-2026-002 · Oct 13, 2026</span>
+</div>
+<span class="chip font-mono">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Cargo Audit Gates vs. Unmaintained Transitive Crates: Managing Real Dependency Trade-offs
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Commit: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/commit/087e6247" target="_blank" rel="noopener noreferrer" class="text-accent underline">087e6247</a> (fix(ci): format qa_observer, update quinn-proto, and ignore unmaintained advisory)
+<p class="font-mono">
+          Commit: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/commit/087e6247" rel="noopener noreferrer" target="_blank">087e6247</a> (fix(ci): format qa_observer, update quinn-proto, and ignore unmaintained advisory)
         </p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Maintain an automated zero-advisory security standard across the Rust factory codebase via automated <code>cargo audit</code> checks on every branch.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Rust 2024 autonomous factory workspace with multiple microservices, Hatchet worker integration, and OpenZiti/Quinn networking stack.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Transitive dependency <code>unsafe-libyaml</code> triggered <code>RUSTSEC-2024-0449</code> (unmaintained warning). Upgrading immediately was impossible without upstream breaking changes in YAML parser consumers.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Limitations</h3>
+<p>Total automated security cannot mean blind zero-tolerance halts. Real systems require explicit risk acceptance registers (<code>.cargo/audit.toml</code>) with tracked rationale rather than unvetted hacks or blocking all delivery.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Relevance</h3>
+<p>Directly translates to enterprise software management: automated scanners flag unmaintained packages, but architectural decisions require distinguishing unexploitable parser edges from critical remote CVEs.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Maintain an automated zero-advisory security standard across the Rust factory codebase via automated <code class="text-slate-200">cargo audit</code> checks on every branch.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">Rust 2024 autonomous factory workspace with multiple microservices, Hatchet worker integration, and OpenZiti/Quinn networking stack.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">Transitive dependency <code class="text-slate-200">unsafe-libyaml</code> triggered <code class="text-slate-200">RUSTSEC-2024-0449</code> (unmaintained warning). Upgrading immediately was impossible without upstream breaking changes in YAML parser consumers.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Limitations</h3>
-              <p class="mt-1 text-sm text-slate-300">Total automated security cannot mean blind zero-tolerance halts. Real systems require explicit risk acceptance registers (<code class="text-slate-200">.cargo/audit.toml</code>) with tracked rationale rather than unvetted hacks or blocking all delivery.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Relevance</h3>
-              <p class="mt-1 text-sm text-slate-300">Directly translates to enterprise software management: automated scanners flag unmaintained packages, but architectural decisions require distinguishing unexploitable parser edges from critical remote CVEs.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 003: Architectural Evaluation -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-accent/10 px-2.5 py-1 font-mono text-xs font-semibold text-accent">ARCHITECTURAL DECISION</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-003 · Continuous</span>
-          </div>
-          <span class="chip font-mono text-xs">Architecture: Hatchet Engine vs. Custom State Machine</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-003">
+<header class="entry-head">
+<div>
+<span class="font-mono">ARCHITECTURAL DECISION</span>
+<span class="font-mono">EXP-2026-003 · Continuous</span>
+</div>
+<span class="chip font-mono">Architecture: Hatchet Engine vs. Custom State Machine</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Durable Orchestration: Evaluating Hatchet DAGs vs. In-House Actor State Machines
         </h2>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Whether a custom state machine in Rust (Tokio + Postgres) offers better operational simplicity than adopting an external durable workflow engine (Hatchet) for multi-step agent tasks.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Findings &amp; Failure Modes</h3>
+<p>Custom state machines failed on node eviction during long-running LLM inferences. Replaying partial DAG state without durable step checkpointing required building a full scheduler from scratch.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">3. Lessons Learned</h3>
+<p>Offloading step-level durability and retry backoff to Hatchet drastically reduces bespoke concurrency code in agent executors, freeing focus for spec verification and sandbox containment.</p>
+</div>
+<div>
+<h3 class="font-mono">4. Industrial Application Transfer</h3>
+<p>In manufacturing environments with multi-step CAD/CAM processing, durable execution patterns prevent orphaned compute jobs when worker pods scale or rebalance under load.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Whether a custom state machine in Rust (Tokio + Postgres) offers better operational simplicity than adopting an external durable workflow engine (Hatchet) for multi-step agent tasks.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Findings &amp; Failure Modes</h3>
-              <p class="mt-1 text-sm text-slate-300">Custom state machines failed on node eviction during long-running LLM inferences. Replaying partial DAG state without durable step checkpointing required building a full scheduler from scratch.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">3. Lessons Learned</h3>
-              <p class="mt-1 text-sm text-slate-300">Offloading step-level durability and retry backoff to Hatchet drastically reduces bespoke concurrency code in agent executors, freeing focus for spec verification and sandbox containment.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">4. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">In manufacturing environments with multi-step CAD/CAM processing, durable execution patterns prevent orphaned compute jobs when worker pods scale or rebalance under load.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 004: Kubernetes Cluster Security & CIS Benchmark Remediation -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-emerald-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-400">SECURITY BENCHMARK</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-004 · May 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Tools: kube-bench (CIS Benchmark v1.8) &amp; Trivy</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-004">
+<header class="entry-head">
+<div>
+<span class="font-mono">SECURITY BENCHMARK</span>
+<span class="font-mono">EXP-2026-004 · May 2026</span>
+</div>
+<span class="chip font-mono">Tools: kube-bench (CIS Benchmark v1.8) &amp; Trivy</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Kubernetes Control Plane &amp; Worker Node Hardening: CIS Benchmark Audit and RBAC Least-Privilege
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Context: Sanitized audit logs and remediation backlog from CIS compliance benchmarks (<code class="text-slate-300">kube-bench</code> &amp; <code class="text-slate-300">trivy</code>)
+<p class="font-mono">
+          Context: Sanitized audit logs and remediation backlog from CIS compliance benchmarks (<code>kube-bench</code> &amp; <code>trivy</code>)
         </p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Evaluate cluster security posture against the official CIS Kubernetes Benchmark and NSA hardening guidance, pinpointing control plane authorization drift, non-root pod compliance, and RBAC privilege inflation.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Methodology</h3>
+<p>Automated job execution of <code>kube-bench</code> across control plane / worker profiles alongside cluster-wide <code>trivy k8s</code> scans targeting RBAC roles and container runtime configuration.</p>
+</div>
+<div>
+<h3 class="font-mono">3. Findings &amp; Gaps Detected</h3>
+<p>Identified non-compliant control plane defaults: API server authorization permitting permissive modes, anonymous authentication flags active by default, and third-party operator ClusterRoles (e.g. storage and autoscaling controllers) requesting broad wildcard permissions.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Remediation &amp; Lessons</h3>
+<p>Restricted API server flags to strict <code>Node,RBAC</code> modes, disabled anonymous auth, enabled automatic certificate rotation, clamped file permissions to <code>600</code>, and applied least-privilege scoping to custom ClusterRoles.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Default lightweight or developer Kubernetes distributions often ship permissive security configurations for developer convenience. In industrial OT/IT integration, automated CIS auditing gates are mandatory before hosting factory telemetry or execution agents.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Evaluate cluster security posture against the official CIS Kubernetes Benchmark and NSA hardening guidance, pinpointing control plane authorization drift, non-root pod compliance, and RBAC privilege inflation.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Methodology</h3>
-              <p class="mt-1 text-sm text-slate-300">Automated job execution of <code class="text-slate-200">kube-bench</code> across control plane / worker profiles alongside cluster-wide <code class="text-slate-200">trivy k8s</code> scans targeting RBAC roles and container runtime configuration.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. Findings &amp; Gaps Detected</h3>
-              <p class="mt-1 text-sm text-slate-300">Identified non-compliant control plane defaults: API server authorization permitting permissive modes, anonymous authentication flags active by default, and third-party operator ClusterRoles (e.g. storage and autoscaling controllers) requesting broad wildcard permissions.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Remediation &amp; Lessons</h3>
-              <p class="mt-1 text-sm text-slate-300">Restricted API server flags to strict <code class="text-slate-200">Node,RBAC</code> modes, disabled anonymous auth, enabled automatic certificate rotation, clamped file permissions to <code class="text-slate-200">600</code>, and applied least-privilege scoping to custom ClusterRoles.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">Default lightweight or developer Kubernetes distributions often ship permissive security configurations for developer convenience. In industrial OT/IT integration, automated CIS auditing gates are mandatory before hosting factory telemetry or execution agents.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 005: Cryptographic State & Disaster Recovery -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-sky-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-sky-400">GITOPS &amp; CRYPTO DISASTER RECOVERY</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-005 · Dec 2025 – Present</span>
-          </div>
-          <span class="chip font-mono text-xs">Framework: Bitnami SealedSecrets &amp; FluxCD</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-005">
+<header class="entry-head">
+<div>
+<span class="font-mono">GITOPS &amp; CRYPTO DISASTER RECOVERY</span>
+<span class="font-mono">EXP-2026-005 · Dec 2025 – Present</span>
+</div>
+<span class="chip font-mono">Framework: Bitnami SealedSecrets &amp; FluxCD</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Asymmetric Secret Governance in Public Repositories: Testing SealedSecrets Key Rotation &amp; Disaster Recovery
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
+<p class="font-mono">
           Context: Sanitized disaster recovery procedure from cluster secret operations
         </p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Validate a zero-plaintext-in-Git architecture using Bitnami SealedSecrets and verify cluster migration and disaster recovery protocols without exposing unsealed keys or locking out automation.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Key Lifecycle</h3>
+<p>Public/private asymmetric keypair managed in-cluster by the sealed-secrets controller. CI/CD developers encrypt secrets locally using the public certificate; only the in-cluster private key can decrypt them into native Kubernetes secrets.</p>
+</div>
+<div>
+<h3 class="font-mono">3. Disaster Recovery Scenario Tested</h3>
+<p>Simulated total cluster teardown and rebuild from scratch. The primary operational risk tested: if the master sealing key is lost, every encrypted manifest in Git becomes permanently unrecoverable, halting Flux reconciliation.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Established an offline out-of-band master key recovery procedure, verified key injection prior to Flux root sync, and tested secret unsealing verification steps to eliminate bootstrap deadlocks.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Enables strict GitOps compliance in regulated industrial settings: Git repositories can be audited publicly or semi-publicly without risking database passwords, API tokens, or OT gateway credentials.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Validate a zero-plaintext-in-Git architecture using Bitnami SealedSecrets and verify cluster migration and disaster recovery protocols without exposing unsealed keys or locking out automation.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Key Lifecycle</h3>
-              <p class="mt-1 text-sm text-slate-300">Public/private asymmetric keypair managed in-cluster by the sealed-secrets controller. CI/CD developers encrypt secrets locally using the public certificate; only the in-cluster private key can decrypt them into native Kubernetes secrets.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. Disaster Recovery Scenario Tested</h3>
-              <p class="mt-1 text-sm text-slate-300">Simulated total cluster teardown and rebuild from scratch. The primary operational risk tested: if the master sealing key is lost, every encrypted manifest in Git becomes permanently unrecoverable, halting Flux reconciliation.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Established an offline out-of-band master key recovery procedure, verified key injection prior to Flux root sync, and tested secret unsealing verification steps to eliminate bootstrap deadlocks.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">Enables strict GitOps compliance in regulated industrial settings: Git repositories can be audited publicly or semi-publicly without risking database passwords, API tokens, or OT gateway credentials.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 006: Interrupted Mission Recovery & Side-Effect Idempotency -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-emerald-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-emerald-400">AUTONOMOUS RESILIENCE</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-006 · Oct 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-006">
+<header class="entry-head">
+<div>
+<span class="font-mono">AUTONOMOUS RESILIENCE</span>
+<span class="font-mono">EXP-2026-006 · Oct 2026</span>
+</div>
+<span class="chip font-mono">Repo: lgcorzo/rust_CACD_autonomous_factory</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Durable Execution &amp; Idempotency: Crash Resilience Under Node Termination in Hatchet Orchestrator
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/missions/mission-001/recovery-test.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/missions/mission-001/recovery-test.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_006.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-006</a>
-        </p>
+<p class="font-mono">
+          Artifact: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/missions/mission-001/recovery-test.json" rel="noopener noreferrer" target="_blank">evidence/missions/mission-001/recovery-test.json</a> · Lab: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_006.md" rel="noopener noreferrer" target="_blank">EXP-2026-006</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Prove that terminating an autonomous agent worker mid-execution with SIGKILL / pod eviction does not leave orphan branches or create duplicate pull requests upon recovery.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Hatchet durable task engine with persistent step state stored in PostgreSQL. Worker executed in Kubernetes sandbox with Ed25519-signed checkpointing.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Simulated pod kill during the Code step. Upon orchestrator restart, the task resumed from the exact step checkpoint in 3.4s without re-running completed git initializations or producing duplicate PRs.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Agent tasks must be strictly partitioned into pure read/plan phases and transactional write steps with deterministic idempotency keys derived from task UUID and commit SHA.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>In physical automation (CNC machines, automated storage systems), interrupted jobs must never re-dispatch destructive physical actions. Durable state guarantees zero-duplicate side effects.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Prove that terminating an autonomous agent worker mid-execution with SIGKILL / pod eviction does not leave orphan branches or create duplicate pull requests upon recovery.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">Hatchet durable task engine with persistent step state stored in PostgreSQL. Worker executed in Kubernetes sandbox with Ed25519-signed checkpointing.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">Simulated pod kill during the Code step. Upon orchestrator restart, the task resumed from the exact step checkpoint in 3.4s without re-running completed git initializations or producing duplicate PRs.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Agent tasks must be strictly partitioned into pure read/plan phases and transactional write steps with deterministic idempotency keys derived from task UUID and commit SHA.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">In physical automation (CNC machines, automated storage systems), interrupted jobs must never re-dispatch destructive physical actions. Durable state guarantees zero-duplicate side effects.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 007: Adversarial Security & Sandbox Isolation in gVisor -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-rose-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-rose-400">SANDBOX SECURITY</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-007 · Oct 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Runtime: gVisor runsc &amp; Calico Egress Policies</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-007">
+<header class="entry-head">
+<div>
+<span class="font-mono">SANDBOX SECURITY</span>
+<span class="font-mono">EXP-2026-007 · Oct 2026</span>
+</div>
+<span class="chip font-mono">Runtime: gVisor runsc &amp; Calico Egress Policies</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Zero-Trust Execution Boundary: Syscall Filtering and Calico Egress Blocking Under Adversarial Injection
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/security/threat-model.md</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_007.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-007</a>
-        </p>
+<p class="font-mono">
+          Artifact: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md" rel="noopener noreferrer" target="_blank">evidence/security/threat-model.md</a> · Lab: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_007.md" rel="noopener noreferrer" target="_blank">EXP-2026-007</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Verify that untrusted LLM-generated code running inside agent workers cannot execute host kernel escapes, access host device nodes, or exfiltrate credentials over public networks.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>gVisor (<code>runsc</code>) user-space kernel sandbox paired with strict Calico Default Deny egress network policy and non-root UID execution.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Kernel exploit simulations (<code>sys_ptrace</code>, <code>klogctl</code>) were blocked at the user-space boundary (<code>Operation not permitted</code>). Outbound exfiltration probes to public IPs timed out with 100% packet drop.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Standard Linux namespaces and cgroups do not provide sufficient isolation for autonomous code execution. Sandboxed user-space virtualization kernels (gVisor or Firecracker) are non-negotiable.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Edge industrial computing nodes connected to PLCs and OT fieldbuses must run untrusted analytic extensions in microVMs to prevent lateral movement into physical process controllers.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Verify that untrusted LLM-generated code running inside agent workers cannot execute host kernel escapes, access host device nodes, or exfiltrate credentials over public networks.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">gVisor (<code class="text-slate-200">runsc</code>) user-space kernel sandbox paired with strict Calico Default Deny egress network policy and non-root UID execution.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">Kernel exploit simulations (<code class="text-slate-200">sys_ptrace</code>, <code class="text-slate-200">klogctl</code>) were blocked at the user-space boundary (<code class="text-slate-200">Operation not permitted</code>). Outbound exfiltration probes to public IPs timed out with 100% packet drop.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Standard Linux namespaces and cgroups do not provide sufficient isolation for autonomous code execution. Sandboxed user-space virtualization kernels (gVisor or Firecracker) are non-negotiable.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">Edge industrial computing nodes connected to PLCs and OT fieldbuses must run untrusted analytic extensions in microVMs to prevent lateral movement into physical process controllers.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 008: Deterministic Verification vs. LLM-as-a-Judge Bias -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-amber-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-amber-400">BENCHMARK &amp; EVALUATION</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-008 · Oct 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Repo: lgcorzo/mlops-python-package</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-008">
+<header class="entry-head">
+<div>
+<span class="font-mono">BENCHMARK &amp; EVALUATION</span>
+<span class="font-mono">EXP-2026-008 · Oct 2026</span>
+</div>
+<span class="chip font-mono">Repo: lgcorzo/mlops-python-package</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge Plausibility Bias (44% False Negatives)
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Artifact: <a href="https://github.com/lgcorzo/mlops-python-package/blob/main/evidence/evaluations/llm-judge-vs-pytest-benchmark.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/evaluations/llm-judge-vs-pytest-benchmark.json</a> · Lab: <a href="https://github.com/lgcorzo/mlops-python-package/blob/main/wiki/quality/exp_2026_008_llm_judge_vs_pytest.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-008</a>
-        </p>
+<p class="font-mono">
+          Artifact: <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/blob/main/evidence/evaluations/llm-judge-vs-pytest-benchmark.json" rel="noopener noreferrer" target="_blank">evidence/evaluations/llm-judge-vs-pytest-benchmark.json</a> · Lab: <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/blob/main/wiki/quality/exp_2026_008_llm_judge_vs_pytest.md" rel="noopener noreferrer" target="_blank">EXP-2026-008</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Measure the accuracy gap and false-negative rate when using LLM code reviewers to evaluate PR safety vs. deterministic automated test suites (pytest, mypy, Semgrep).</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Dataset</h3>
+<p>50 code mutations on ML inference routines (25 correct, 25 subtle defects: silent slicing, divide-by-zero, off-by-one). Evaluated by GPT-4o reviewer vs automated pytest suite.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>The LLM judge suffered a <strong>44% False Negative rate</strong> (approving 11 flawed PRs due to convincing docstrings and plausible syntax). The automated test suite caught <strong>100% (25/25)</strong> of defects.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>LLM judges are useful for readability and style guidance, but should not serve as unilateral merge gates. Deterministic test suites and strict type checkers remain non-negotiable verification gates.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>In robotic welding and CNC kinematic controllers, plausible-looking code with geometric sign errors causes catastrophic physical collisions. Safety relies on deterministic validation, not generative consensus.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Measure the accuracy gap and false-negative rate when using LLM code reviewers to evaluate PR safety vs. deterministic automated test suites (pytest, mypy, Semgrep).</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Dataset</h3>
-              <p class="mt-1 text-sm text-slate-300">50 code mutations on ML inference routines (25 correct, 25 subtle defects: silent slicing, divide-by-zero, off-by-one). Evaluated by GPT-4o reviewer vs automated pytest suite.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">The LLM judge suffered a <strong>44% False Negative rate</strong> (approving 11 flawed PRs due to convincing docstrings and plausible syntax). The automated test suite caught <strong>100% (25/25)</strong> of defects.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">LLM judges are useful for readability and style guidance, but should not serve as unilateral merge gates. Deterministic test suites and strict type checkers remain non-negotiable verification gates.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">In robotic welding and CNC kinematic controllers, plausible-looking code with geometric sign errors causes catastrophic physical collisions. Safety relies on deterministic validation, not generative consensus.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 009: AST Context Efficiency Benchmark -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-indigo-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-indigo-400">CONTEXT OPTIMIZATION</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-009 · Oct 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Tools: Graphify AST Knowledge Graph &amp; R2R</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-009">
+<header class="entry-head">
+<div>
+<span class="font-mono">CONTEXT OPTIMIZATION</span>
+<span class="font-mono">EXP-2026-009 · Oct 2026</span>
+</div>
+<span class="chip font-mono">Tools: Graphify AST Knowledge Graph &amp; R2R</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           AST Subgraphs vs. Raw Grep: Achieving 91.8% Token Reduction and 94% First-Pass Code Generation
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/ast-graph-token-efficiency.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/benchmarks/ast-graph-token-efficiency.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_009.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-009</a>
-        </p>
+<p class="font-mono">
+          Artifact: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/ast-graph-token-efficiency.json" rel="noopener noreferrer" target="_blank">evidence/benchmarks/ast-graph-token-efficiency.json</a> · Lab: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_009.md" rel="noopener noreferrer" target="_blank">EXP-2026-009</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Measure token consumption, retrieval latency, and refactoring accuracy when providing agents with a 2-hop AST dependency subgraph instead of full-file dumps or keyword grep.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Methodology</h3>
+<p>Evaluated on a 120-file code repository (&gt;45k LoC). Baseline: ripgrep dumping matching files into prompt context. Graph: 2-hop neighborhood extraction from Graphify <code>graph.json</code>.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>The AST graph slashed prompt tokens from 38,400 to 3,150 (<strong>91.8% token cut</strong>) and retrieval latency from 3.8s to 420ms. First-pass compilation rate jumped from 62% to <strong>94%</strong>.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Eliminating "lost-in-the-middle" attention degradation by pruning irrelevant symbols is the single most effective way to improve agent code quality and cut inference costs.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>In massive industrial software codebases (millions of lines of C++/C#/Rust), targeted AST dependency subgraphs are the only technically viable and cost-effective mechanism for automated refactoring.</p>
+</div>
+</div>
+</header>
+</article>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Measure token consumption, retrieval latency, and refactoring accuracy when providing agents with a 2-hop AST dependency subgraph instead of full-file dumps or keyword grep.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Methodology</h3>
-              <p class="mt-1 text-sm text-slate-300">Evaluated on a 120-file code repository (>45k LoC). Baseline: ripgrep dumping matching files into prompt context. Graph: 2-hop neighborhood extraction from Graphify <code class="text-slate-200">graph.json</code>.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">The AST graph slashed prompt tokens from 38,400 to 3,150 (<strong>91.8% token cut</strong>) and retrieval latency from 3.8s to 420ms. First-pass compilation rate jumped from 62% to <strong>94%</strong>.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Eliminating "lost-in-the-middle" attention degradation by pruning irrelevant symbols is the single most effective way to improve agent code quality and cut inference costs.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">In massive industrial software codebases (millions of lines of C++/C#/Rust), targeted AST dependency subgraphs are the only technically viable and cost-effective mechanism for automated refactoring.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Entry 010: Resource Governance & Memory Bounding in gVisor -->
-      <article class="glass rounded-2xl border border-line p-7 sm:p-9">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-          <div class="flex items-center gap-3">
-            <span class="rounded-lg bg-teal-500/10 px-2.5 py-1 font-mono text-xs font-semibold text-teal-400">RESOURCE GOVERNANCE</span>
-            <span class="font-mono text-xs text-slate-500">EXP-2026-010 · Oct 2026</span>
-          </div>
-          <span class="chip font-mono text-xs">Runtime: gVisor / cgroups v2 (512Mi Clamping)</span>
-        </div>
-
-        <h2 class="mt-5 text-2xl font-bold text-white">
+<article class="entry" id="exp-2026-010">
+<header class="entry-head">
+<div>
+<span class="font-mono">RESOURCE GOVERNANCE</span>
+<span class="font-mono">EXP-2026-010 · Oct 2026</span>
+</div>
+<span class="chip font-mono">Runtime: gVisor / cgroups v2 (512Mi Clamping)</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
           Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping and Safe Out-of-Memory Termination
         </h2>
-        <p class="mt-2 text-sm text-slate-400 font-mono">
-          Artifact: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/resource-profiling-512mi.json" target="_blank" rel="noopener noreferrer" class="text-accent underline">evidence/benchmarks/resource-profiling-512mi.json</a> · Lab: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_010.md" target="_blank" rel="noopener noreferrer" class="text-accent underline">EXP-2026-010</a>
-        </p>
+<p class="font-mono">
+          Artifact: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/resource-profiling-512mi.json" rel="noopener noreferrer" target="_blank">evidence/benchmarks/resource-profiling-512mi.json</a> · Lab: <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/operations/lab_notebook_exp_2026_010.md" rel="noopener noreferrer" target="_blank">EXP-2026-010</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Verify that autonomous factory tasks strictly adhere to declared resource budgets (CPU: 500m, RAM: 512Mi, Timeout: 300s) and handle intentional memory exhaustion gracefully.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Kubernetes pod configured with strict cgroups v2 resource limits running on gVisor runtime, profiled via Prometheus/cAdvisor exporters.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Standard test runs peaked at 285 MiB RAM (55.6% budget) and 380m CPU. When subjected to intentional memory exhaustion, gVisor terminated the pod cleanly in 2.8s (exit code 137, OOMKilled) with zero host memory pressure.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Compiling large Rust workspaces requires 1.5–2 GiB; realistic micro-sandboxes (512Mi) must execute pre-built binaries or targeted test suites. Honest resource profiling prevents production surprise.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>On shopfloor edge industrial PCs, autonomous AI diagnostic workers must operate within hard memory ceilings to ensure they never starve real-time deterministic machine control cycles.</p>
+</div>
+</div>
+</header>
+</article>
+      </section>
 
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent">1. What I wanted to verify</h3>
-              <p class="mt-1 text-sm text-slate-300">Verify that autonomous factory tasks strictly adhere to declared resource budgets (CPU: 500m, RAM: 512Mi, Timeout: 300s) and handle intentional memory exhaustion gracefully.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-2">2. Architecture &amp; Setup</h3>
-              <p class="mt-1 text-sm text-slate-300">Kubernetes pod configured with strict cgroups v2 resource limits running on gVisor runtime, profiled via Prometheus/cAdvisor exporters.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-accent-3">3. What actually happened</h3>
-              <p class="mt-1 text-sm text-slate-300">Standard test runs peaked at 285 MiB RAM (55.6% budget) and 380m CPU. When subjected to intentional memory exhaustion, gVisor terminated the pod cleanly in 2.8s (exit code 137, OOMKilled) with zero host memory pressure.</p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-amber-300">4. Lessons &amp; Operational Controls</h3>
-              <p class="mt-1 text-sm text-slate-300">Compiling large Rust workspaces requires 1.5–2 GiB; realistic micro-sandboxes (512Mi) must execute pre-built binaries or targeted test suites. Honest resource profiling prevents production surprise.</p>
-            </div>
-            <div>
-              <h3 class="font-mono text-xs uppercase tracking-wider text-slate-400">5. Industrial Application Transfer</h3>
-              <p class="mt-1 text-sm text-slate-300">On shopfloor edge industrial PCs, autonomous AI diagnostic workers must operate within hard memory ceilings to ensure they never starve real-time deterministic machine control cycles.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <!-- Lab Policy Footer -->
-    <section class="container-x mt-20">
-      <div class="rounded-2xl border border-line bg-ink-900/60 p-8 text-center sm:p-10">
-        <h3 class="text-xl font-bold text-white">Laboratory Boundary Notice</h3>
-        <p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
-          Experiments conducted in this lab are personal research implementations. They do not expose confidential client infrastructure, proprietary enterprise code, or unvetted production configurations. Learnings inform reusable architectural patterns tested in enterprise contexts through separate, formalized governance.
-        </p>
-        <div class="mt-6">
-          <a href="index.html" class="btn btn-ghost">← Return to Main Overview</a>
-        </div>
-      </div>
-    </section>
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="sovereignty.html" rel="prev"><small>&larr; Previous</small><strong>Fork policy</strong><br><span class="note">Why the lab forks open-source projects</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
+    </div>
   </main>
 
-  <!-- Unified Footer -->
+  <!--SHELL:FOOTER-->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>Dark Gravity Lab</h4>
-          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
@@ -1213,19 +1113,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Primary Repositories</h4>
+          <p class="footer-title">Sources</p>
           <ul class="footer-links">
-            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
-            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
-            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
-        <span>Version v0.2.8 &bull; Evidence-based verification</span>
+        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
+        <span>Latest release: v0.2.8</span>
       </div>
     </div>
   </footer>
+  <!--/SHELL:FOOTER-->
 </body>
 </html>
