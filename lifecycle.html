@@ -3,231 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mission Lifecycle &amp; Governance — Dark Gravity Autonomous Software Factory</title>
-  <meta name="description" content="Lifecycle execution of the Dark Gravity autonomous software factory: Spec-Driven Development, durable Hatchet DAG phases, gVisor micro-sandboxing, and strict human-in-the-loop governance.">
+  <title>Lifecycle: how one mission goes from issue to pull request</title>
+  <meta name="description" content="Follow one Dark Gravity mission from a labelled issue to a pull request: the steps, the four human decision points, and what happens when something fails.">
   <link rel="canonical" href="https://lgcorzo.github.io/lifecycle.html">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-
-  <!-- Unified Navigation Header -->
+  <!--SHELL:HEADER-->
   <header class="site-header">
     <div class="container">
-      <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="index.html" class="site-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Dark Gravity Lab</span>
-        </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
-          <li><a href="lifecycle.html" class="nav-link active">Lifecycle</a></li>
+          <li><a href="lifecycle.html" class="nav-link" aria-current="page">Lifecycle</a></li>
           <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
         </ul>
       </nav>
     </div>
   </header>
+  <!--/SHELL:HEADER-->
 
   <main id="main">
     <div class="container">
-      <!-- Page Hero -->
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Lifecycle</p>
+
       <section class="hero">
-        <h1>Autonomous Mission Lifecycle</h1>
-        <p class="hero-subtitle">
-          How missions transition from human requirements to verified pull requests: Spec-Driven Development (SDD), durable Hatchet DAG steps, isolated gVisor sandboxes, and human-in-the-loop review.
+        <h1>Lifecycle: how one mission goes from issue to pull request</h1>
+        <p class="lede">
+          This page tells the story of a single mission. For the parts and
+          where they run, see <a href="architecture.html">Architecture</a>.
         </p>
-      </section>
-
-      <!-- Status Taxonomy Standard -->
-      <section>
-        <h2>Status taxonomy</h2>
-        <p>Every operational phase and control across this page carries one of four explicit verification tags:</p>
-        <div class="status-legend">
-          <div class="status-legend-item">
-            <span class="status-tag status-verified">Verified</span>
-            <span>Confirmed by automated CI suites or published evidence files.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-deployed">Deployed</span>
-            <span>Running and active in live cluster environments.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-implemented">Implemented</span>
-            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-designed">Designed</span>
-            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
-          </div>
+        <div class="minute">
+          <h2>In one minute</h2>
+          <ul>
+            <li>A person writes an issue and adds a label. Agents plan, code, test and review.</li>
+            <li>The result is a pull request, never a merge.</li>
+            <li>Four human decision points are defined. Only the last one is visible in code today.</li>
+            <li>Failures are caught by retries, a repeated-diff check and a spend limit.</li>
+          </ul>
         </div>
       </section>
 
-      <!-- Section 1: Agent Personas & Human-in-the-Loop Governance -->
-      <section id="agents-and-hitl">
-        <h2>Who executes missions and who holds authority?</h2>
-        <p>
-          Dark Gravity organizes work across specialized agent personas, bound by strict non-human identity (NHI) credentials and four human-in-the-loop (HITL) checkpoints.
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#story">What happens, step by step?</a></li>
+          <li><a href="#humans">Where do people decide?</a></li>
+          <li><a href="#failure">What happens when something fails?</a></li>
+          <li><a href="#remediation">Can it fix a broken pipeline?</a></li>
+          <li><a href="#limits">What is not proven yet?</a></li>
+        </ol>
+      </nav>
+
+      <section id="story">
+        <h2>What happens, step by step?</h2>
+        <ol class="steps">
+          <li><strong>A person opens an issue</strong>The issue carries a label such as <code>autonomous-mission</code> and says what is wanted and what limits apply.</li>
+          <li><strong>The poller picks it up</strong>It asks the Git host for new labelled issues, signs the request with an Ed25519 key, and publishes it to the Kafka topic <code>mission-input</code>.</li>
+          <li><strong>Plan</strong>The step <code>rustant-plan</code> reads context from R2R and writes a spec, a plan and a task list.</li>
+          <li><strong>Execute</strong>The step <code>zeroclaw-execute</code> starts a sandbox job under gVisor and applies each task.</li>
+          <li><strong>Validate</strong>The step <code>zeroclaw-validate</code> runs the tests and linters in that sandbox.</li>
+          <li><strong>Review</strong>The step <code>rustant-review</code> asks an AI judge to score the diff for security. A score under 8.0 out of 10 rejects it.</li>
+          <li><strong>Deliver</strong>The step <code>factory-deliver</code> pushes a branch, opens a pull or merge request that links the issue, and comments that it is ready for a human reviewer.</li>
+        </ol>
+        <p class="status-line">
+          Status: <span class="status-tag status-deployed">Deployed</span>
+          Source:
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/autonomous_mission.rs"><code>autonomous_mission.rs</code></a>
+          and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/poller_service.rs"><code>poller_service.rs</code></a>.
         </p>
+      </section>
 
-        <div class="grid-2">
-          <div class="card">
-            <h3>Rustant — Product Owner &amp; Planner</h3>
-            <p>
-              Queries semantic memory (R2R GraphRAG), applies constitution rules, executes Spec-Kit workflows, and compiles atomic, dependency-ordered tasks into <code class="font-mono">tasks.md</code>.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
-          </div>
-
-          <div class="card">
-            <h3>ZeroClaw — Developer &amp; Code Surgery</h3>
-            <p>
-              Consumes tasks through the <code class="font-mono">speckit-superpowers-bridge</code>, performs AST code modifications inside gVisor sandboxes, and validates test suites.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
-          </div>
-
-          <div class="card">
-            <h3>DevOps Agent &amp; Jules Remediator</h3>
-            <p>
-              Classifies build failures, matches error patterns, and runs closed-loop automated pipeline remediation without modifying production deployment branch states.
-            </p>
-            <span class="status-tag status-deployed">Deployed</span>
-          </div>
-
-          <div class="card">
-            <h3>DocAgent — AST Living Documentation</h3>
-            <p>
-              Generates architecture descriptions, validates relative path links, and tracks orphan symbol rates (OSR &lt; 5%) to keep wikis synchronised with code.
-            </p>
-            <span class="status-tag status-implemented">Implemented</span>
-          </div>
-        </div>
-
-        <h3>Human-in-the-loop governance checkpoints</h3>
+      <section id="humans">
+        <h2>Where do people decide?</h2>
         <p>
-          Automation handles routine development tasks, while human authority governs strategic direction, architecture, and production merges:
+          The wiki defines four human decision points, called vertices.
+          Automation handles the work between them.
         </p>
-
         <div class="table-container">
           <table>
-            <thead>
-              <tr>
-                <th>Checkpoint</th>
-                <th>Trigger &amp; Responsibility</th>
-                <th>System Enforcement</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <thead><tr><th scope="col">Vertex</th><th scope="col">Who and when</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>1. Strategic Injection</strong></td>
-                <td>Human engineer opens an issue tagged <code class="font-mono">autonomous-mission</code> with scope and operational boundaries.</td>
-                <td><code class="font-mono">GitPlatformPoller</code> verifies labels and signs Ed25519 NHI credentials before dispatching to Kafka.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>2. Plan Scrutiny</strong></td>
-                <td>Engineer can review and refine generated <code class="font-mono">spec.md</code> and <code class="font-mono">plan.md</code> contracts via comment directives.</td>
-                <td>Directives like <code class="font-mono">@darkgravity /refine</code> pause execution until contracts match engineer intent.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>3. Exception Override</strong></td>
-                <td>Circuit breakers fire if diff hashes repeat, tests fail 3 times, or spend exceeds 90% daily budget.</td>
-                <td>Active DAG execution is halted immediately and JIT credentials are revoked pending human diagnosis.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
-              <tr>
-                <td><strong>4. Mandatory Merge Gate</strong></td>
-                <td>All tests and SAST checks pass with green status; pull request is presented for merge.</td>
-                <td><strong>Strict HITL rule</strong>: Automated merging to <code class="font-mono">main</code> is blocked. A human engineer must review and merge manually.</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-              </tr>
+              <tr><td>1. Strategic injection</td><td>The product owner decides what mission to start.</td><td><span class="status-tag status-designed">Designed</span></td></tr>
+              <tr><td>2. Sprint mobilization</td><td>The tech lead releases work for execution.</td><td><span class="status-tag status-designed">Designed</span></td></tr>
+              <tr><td>3. Exception override</td><td>The architect steps in when a safety limit stops a mission.</td><td><span class="status-tag status-designed">Designed</span></td></tr>
+              <tr><td>4. Categorical scrutiny</td><td>A senior reviewer reads and merges the pull request.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
             </tbody>
           </table>
         </div>
+        <p class="note">
+          Vertex 4 is implemented in the sense that the pipeline stops at an
+          open pull request. Source:
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/security/hitl_governance.md"><code>hitl_governance.md</code></a>.
+        </p>
+        <p>
+          Reviewers can also comment on a pull request with directives such
+          as <code>/status</code>, <code>/refine</code> and
+          <code>/validate</code>. The poller reads them in
+          <code>comment_control.rs</code>.
+          <span class="status-tag status-implemented">Implemented</span>
+        </p>
       </section>
 
-      <!-- Section 2: The 5-Phase Mission Workflow -->
-      <section id="workflow-phases">
-        <h2>How do missions advance through durable DAG phases?</h2>
-        <p>
-          The mission pipeline runs on the Hatchet orchestration engine (<code class="font-mono">cacd-mission-dag</code>), checkpointed in PostgreSQL and MinIO S3 to survive node crashes or pod restarts.
-        </p>
-
+      <section id="failure">
+        <h2>What happens when something fails?</h2>
         <div class="grid-2">
           <div class="card">
-            <h3>Phase 1: Ingestion &amp; Planning</h3>
-            <p>
-              Incoming events on Kafka topic <code class="font-mono">mission-input</code> trigger the Hatchet workflow. Rustant fetches relevant architecture context, initializes Spec-Kit, and creates dependency-ordered tasks in <code class="font-mono">tasks.md</code>.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
+            <h3>A worker dies mid-step</h3>
+            <p>Hatchet notices the lost worker and runs the step again
+            on another one. Saved state avoids repeating finished work.</p>
+            <p class="status-line"><span class="status-tag status-verified">Verified</span>
+            <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a>. One killed pod in a sandbox environment.</p>
           </div>
-
           <div class="card">
-            <h3>Phase 2: Code Surgery</h3>
-            <p>
-              ZeroClaw spawns an ephemeral Kubernetes Job with <code class="font-mono">RuntimeClass=gvisor</code>. Sandboxed tools mutate code files, adhering to project coding guidelines and memory bounds.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
+            <h3>The agent loops on the same fix</h3>
+            <p>A circuit breaker hashes each diff and stops when it sees the same change again.</p>
+            <p class="status-line"><span class="status-tag status-implemented">Implemented</span>
+            <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/circuit_breaker.rs"><code>circuit_breaker.rs</code></a></p>
           </div>
-
           <div class="card">
-            <h3>Phase 3: Sandbox Validation</h3>
-            <p>
-              Inside the user-space gVisor kernel, test suites and linters run to verify implementation correctness. No network egress is permitted except to authorized internal registries.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
+            <h3>Spend runs away</h3>
+            <p>The budget guard halts missions at 90% of the daily limit. The default limit is $50.</p>
+            <p class="status-line"><span class="status-tag status-implemented">Implemented</span>
+            <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/agents/finops.rs"><code>finops.rs</code></a></p>
           </div>
-
           <div class="card">
-            <h3>Phase 4: Security Review (SAST Judge)</h3>
-            <p>
-              The code diff is evaluated by an LLM-as-a-Judge security audit tool. The reviewer checks against CWE vulnerabilities, enforcing a pass score threshold &ge; 8.0/10.0 and recording causal lineage.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
-          </div>
-
-          <div class="card">
-            <h3>Phase 5: Delivery &amp; Handoff</h3>
-            <p>
-              The delivery task pushes the branch, creates a formal PR linking the originating issue (<code class="font-mono">Closes #ID</code>), and posts a test evidence summary for human inspection.
-            </p>
-            <span class="status-tag status-verified">Verified</span>
+            <h3>A step is rejected by the sandbox rules</h3>
+            <p>If a job asks for more than 30Mi or 250m, or leaves out requests, the cluster refuses it at creation.</p>
+            <p class="status-line"><span class="status-tag status-deployed">Deployed</span>
+            <a href="notebooks.html#exp-2026-011">Lab note on ADR-008</a></p>
           </div>
         </div>
       </section>
 
-      <!-- Section 3: Closed-Loop Remediation -->
-      <section id="error-remediation">
-        <h2>How are pipeline errors remediated?</h2>
+      <section id="remediation">
+        <h2>Can it fix a broken pipeline?</h2>
         <p>
-          When CI pipelines fail or security scanners detect vulnerabilities, the autonomous factory triggers closed-loop remediation workflows:
+          There is a second entry point. When a CI pipeline fails, a
+          classifier labels the error and the factory can publish a repair
+          mission to the same <code>mission-input</code> topic. The same five
+          steps then run.
         </p>
-
-        <div class="callout">
-          <div class="callout-title">Closed-loop remediation flow</div>
-          <p>
-            Diagnostic log parsing extracts root causes (e.g., dependency deprecations, linter errors). Synthetic remediation missions are dispatched to <code class="font-mono">mission-input</code>. The circuit breaker caps fixes at 3 attempts and monitors AST diff hashes to prevent oscillating edits.
-          </p>
-        </div>
+        <p class="status-line">
+          <span class="status-tag status-implemented">Implemented</span>
+          Source:
+          <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/pipeline_remediation.rs"><code>pipeline_remediation.rs</code></a>
+          and spec <code>005-pipeline-error-remediation</code>. A
+          <code>jules-remediator</code> deployment runs in the cluster, but
+          this page does not claim it executes that workflow.
+        </p>
       </section>
+
+      <section id="limits">
+        <h2>What is not proven yet?</h2>
+        <ul style="margin-left:1.25rem">
+          <li>Vertices 1 to 3 are defined in the wiki and are not enforced by code that was checked.</li>
+          <li>No test shows a mission surviving many hours or many nodes failing.</li>
+          <li>The review score comes from a language model. It is a filter, not a proof of security.</li>
+          <li>The completed run on v0.2.8 is not saved as an evidence file.</li>
+        </ul>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="architecture.html" rel="prev"><small>&larr; Previous</small><strong>Architecture</strong><br><span class="note">How the system is built and where it runs</span></a>
+        <a class="next" href="sovereignty.html" rel="next"><small>Next &rarr;</small><strong>Fork policy</strong><br><span class="note">Why the lab forks open-source projects</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <a class="to-top" href="#main">Back to top</a>
     </div>
   </main>
 
-  <!-- Unified Footer -->
+  <!--SHELL:FOOTER-->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>Dark Gravity Lab</h4>
-          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
@@ -237,19 +200,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Primary Repositories</h4>
+          <p class="footer-title">Sources</p>
           <ul class="footer-links">
-            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
-            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
-            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
-        <span>Version v0.2.8 &bull; Evidence-based verification</span>
+        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
+        <span>Latest release: v0.2.8</span>
       </div>
     </div>
   </footer>
+  <!--/SHELL:FOOTER-->
 </body>
 </html>
