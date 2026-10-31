@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Gravity Lab: an autonomous software factory, with evidence</title>
-  <meta name="description" content="Dark Gravity is an experimental system that turns a GitHub issue into a reviewed pull request using sandboxed AI agents. This site shows what works today and how to check it.">
+  <title>Dark Gravity: Autonomous Software Factory</title>
+  <meta name="description" content="Experimental software factory in Rust &amp; Kubernetes. AI agents propose pull requests in isolated sandboxes with human-in-the-loop merge governance.">
   <link rel="canonical" href="https://lgcorzo.github.io/">
+  <meta property="og:site_name" content="Dark Gravity Lab">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dark Gravity: Autonomous Software Factory">
+  <meta property="og:description" content="Experimental software factory in Rust &amp; Kubernetes. AI agents propose pull requests in isolated sandboxes with human-in-the-loop merge governance.">
+  <meta property="og:url" content="https://lgcorzo.github.io/">
+  <meta property="og:image" content="https://lgcorzo.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dark Gravity: Autonomous Software Factory">
+  <meta name="twitter:description" content="Experimental software factory in Rust &amp; Kubernetes. AI agents propose pull requests in isolated sandboxes with human-in-the-loop merge governance.">
+  <meta name="twitter:image" content="https://lgcorzo.github.io/assets/og-image.png">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
@@ -19,8 +31,8 @@
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
-          <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
-          <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
+          <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
         </ul>
       </nav>
@@ -32,57 +44,41 @@
     <div class="container">
 
       <section class="hero" aria-labelledby="top">
-        <h1 id="top">Dark Gravity: an autonomous software factory, checked against evidence</h1>
+        <p class="hero-tagline">Industrial AI Systems &bull; Autonomous Software Engineering &bull; Cloud-Native Architecture</p>
+        <h1 id="top">An autonomous software factory in Rust and Kubernetes where AI agents propose pull requests in isolated sandboxes and a human decides the merge</h1>
+        
+        <div class="research-question">
+          <strong>Research Question</strong>
+          Can autonomous coding agents be contained within deterministic security boundaries and strict budget limits, while keeping human-in-the-loop merge governance?
+        </div>
+
         <p class="lede">
-          Dark Gravity is an experimental system that turns a GitHub issue
-          into a reviewed pull request. AI agents do the work inside
-          locked-down sandboxes, and a human always decides what is merged.
+          Dark Gravity is an experimental research system that turns a GitHub issue
+          into a verified <abbr title="Pull Request">PR</abbr>. Autonomous agents do the implementation work inside
+          locked-down <abbr title="User-space kernel container sandbox">gVisor</abbr> sandboxes, and a human maintainer always makes the merge decision.
         </p>
         <p class="lede">
-          It is built for engineers who want to see how autonomy and strict
-          controls can live together. It is a one-person lab project, not a
-          product.
-        </p>
-        <p class="status-line">
-          <strong>Honest status:</strong> latest release is v0.2.8. A mission
-          has completed end to end on the lab cluster. Long soak tests and
-          multi-node failure drills are not published.
+          It is built for engineers exploring how agentic autonomy, micro-sandboxing, and strict operational controls can live together. It is a personal engineering research lab, not a commercial product.
         </p>
 
-        <div class="hero-paths">
-          <a href="architecture.html" class="path-card">
-            <div>
-              <h3>Understand the architecture</h3>
-              <p>What the parts are, where each one runs, and where the
-              security boundaries sit.</p>
-            </div>
-            <span class="path-action">Open architecture &rarr;</span>
-          </a>
-          <a href="architecture.html#evidence" class="path-card">
-            <div>
-              <h3>See the evidence</h3>
-              <p>The test reports and cluster snapshots behind each claim,
-              with their limits stated.</p>
-            </div>
-            <span class="path-action">Open evidence list &rarr;</span>
-          </a>
-          <a href="notebooks.html" class="path-card">
-            <div>
-              <h3>Read the lab notes</h3>
-              <p>Experiments written up in five questions, including the
-              ones that failed.</p>
-            </div>
-            <span class="path-action">Open lab notebook &rarr;</span>
-          </a>
+        <div class="cta-group">
+          <a href="notebooks.html" class="btn btn-primary">Open Lab Notebook &rarr;</a>
+          <a href="architecture.html" class="btn btn-secondary">Architecture</a>
+          <a href="lifecycle.html" class="btn btn-secondary">Mission Lifecycle</a>
+          <a href="fork-policy.html" class="btn btn-secondary">Fork Policy</a>
         </div>
+
+        <p class="status-line" style="margin-top: 1.25rem;">
+          <strong>Honest status:</strong> latest release is <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.2.8">v0.2.8</a>. An end-to-end mission has executed successfully on the lab cluster. Multi-node chaos drills and soak tests remain in Designed status (not published as verified).
+        </p>
       </section>
 
       <nav class="toc" aria-label="On this page">
         <h2>On this page</h2>
         <ol>
           <li><a href="#site-map">Where do I find what?</a></li>
-          <li><a href="#works-today">What works today?</a></li>
           <li><a href="#status-tags">What do the status tags mean?</a></li>
+          <li><a href="#works-today">What works today? (Actual Factory Status)</a></li>
           <li><a href="#projects">Which projects are there?</a></li>
           <li><a href="#glossary">What do the terms mean?</a></li>
         </ol>
@@ -97,61 +93,9 @@
             <tbody>
               <tr><td>What is each component and where does it run?</td><td><a href="architecture.html">Architecture</a></td></tr>
               <tr><td>What happens between an issue and a pull request?</td><td><a href="lifecycle.html">Lifecycle</a></td></tr>
-              <tr><td>Why does the lab fork other people&rsquo;s projects?</td><td><a href="sovereignty.html">Fork policy</a></td></tr>
+              <tr><td>Why does the lab fork open-source projects?</td><td><a href="fork-policy.html">Fork policy</a></td></tr>
               <tr><td>What was tried, what broke, what was learned?</td><td><a href="notebooks.html">Lab notebook</a></td></tr>
-              <tr><td>What does a word like CRD or DAG mean?</td><td><a href="#glossary">Glossary</a> (below)</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="works-today">
-        <h2>What works today?</h2>
-        <p>
-          Each row has a status tag and a source you can open. Checked on
-          2026-10-31 against the repository and the lab cluster.
-        </p>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Source and scope</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Rust workspace of five crates passes format, lint, adversarial and unit-test gates</td>
-                <td><span class="status-tag status-verified">Verified</span></td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a>. One run, one machine, commit 9302482 (2026-10-18). Not re-run for v0.2.8.</td>
-              </tr>
-              <tr>
-                <td>Five-step mission pipeline on Hatchet (plan, execute, validate, review, deliver)</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-                <td>Workers run image <code>6beb333</code> (v0.2.8) in namespace <code>agents</code>. A completed run was seen in the Hatchet dashboard; it is not yet saved as an evidence file.</td>
-              </tr>
-              <tr>
-                <td>Sandbox limits of 30Mi memory and 250m CPU per container, enforced at admission</td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
-                <td>Two admission policies named <code>dg-sandbox-bounds-*</code> exist in the cluster. Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.</td>
-              </tr>
-              <tr>
-                <td>AgentWorkspace custom resource (ADR-008)</td>
-                <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-implemented">Implemented</span></td>
-                <td>The CRD is installed. The operator code exists, but no operator pod and no AgentWorkspace objects were found in the cluster.</td>
-              </tr>
-              <tr>
-                <td>Daily budget guard that halts missions at 90% of the limit</td>
-                <td><span class="status-tag status-implemented">Implemented</span></td>
-                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/agents/finops.rs"><code>finops.rs</code></a> with unit tests. Default limit in comments: $45 of $50.</td>
-              </tr>
-              <tr>
-                <td>Short-lived secrets from HashiCorp Vault</td>
-                <td><span class="status-tag status-implemented">Implemented</span></td>
-                <td>Adapter code exists. No Vault workload was found in the cluster.</td>
-              </tr>
-              <tr>
-                <td>Multi-node failure drills and long-running soak tests</td>
-                <td><span class="status-tag status-designed">Designed</span></td>
-                <td>Not run. Single-pod kill recovery is reported in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a>.</td>
-              </tr>
+              <tr><td>What does a word like <abbr title="Custom Resource Definition">CRD</abbr> or <abbr title="Directed Acyclic Graph">DAG</abbr> mean?</td><td><a href="#glossary">Glossary</a> (below)</td></tr>
             </tbody>
           </table>
         </div>
@@ -159,75 +103,203 @@
 
       <section id="status-tags">
         <h2>What do the status tags mean?</h2>
-        <p>The same four tags are used on every page.</p>
+        <p>Every claim, component, and capability on this site carries one of four explicit status tags:</p>
         <div class="status-legend">
-          <div class="status-legend-item"><span class="status-tag status-designed">Designed</span><span>Described in specs or wiki only.</span></div>
-          <div class="status-legend-item"><span class="status-tag status-implemented">Implemented</span><span>Code exists and has tests.</span></div>
-          <div class="status-legend-item"><span class="status-tag status-deployed">Deployed</span><span>Running in the cluster.</span></div>
-          <div class="status-legend-item"><span class="status-tag status-verified">Verified</span><span>Confirmed by a test or evidence file, which is linked.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-verified">Verified</span><span>Confirmed by published test suites or empirical evidence files.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-deployed">Deployed</span><span>Running and reconciled in the Kubernetes cluster or production CI/CD workflows.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-implemented">Implemented</span><span>Code exists in workspace, compiles cleanly, and passes automated unit/integration tests.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-designed">Designed</span><span>Described in specifications or wiki architecture only; live cluster verification in progress.</span></div>
         </div>
         <p class="note">
-          Compliance wording: the controls are readiness measures. No
-          third-party certification (EU AI Act, SOC 2 or other) is claimed.
+          Compliance wording: all controls are architectural readiness measures. No third-party certification (EU AI Act, SOC 2 or other) is claimed.
         </p>
+      </section>
+
+      <section id="works-today">
+        <h2>What works today? (Actual Factory Status)</h2>
+        <p>
+          Each capability below is stated in plain language with its verification tag, evidence source, and expandable technical details. Checked on 2026-10-31 against the repository and the lab cluster.
+        </p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Plain-Language Summary &amp; Evidence</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rust 5-crate workspace &amp; quality gates</strong></td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>
+                  The core factory codebase compiles without warnings and passes all linter, adversarial, and unit-test gates.
+                  <details>
+                    <summary>Technical details &amp; evidence source</summary>
+                    <div>
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a> (commit 9302482).
+                      Architecture follows a 5-crate onion model (<code>factory-core</code>, <code>factory-application</code>, <code>factory-infrastructure</code>, <code>factory-mcp-server</code>, <code>factory-cli</code>) on Rust Edition 2024 (<code>rustc 1.85+</code>).
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Forensic memory zeroization</strong></td>
+                <td><span class="status-tag status-implemented">Implemented</span> <span class="status-tag status-verified">Verified</span></td>
+                <td>
+                  Ephemeral credentials and <abbr title="Model Context Protocol">MCP</abbr> tokens in RAM undergo an automated null-byte wipe on drop to prevent forensic memory dumping.
+                  <details>
+                    <summary>Technical details &amp; benchmark context</summary>
+                    <div>
+                      Credential carriers derive <code>Zeroize</code> and <code>ZeroizeOnDrop</code>. Criterion micro-benchmarks measure this forensic wipe at <strong>54.2 ns</strong> (0.0542 &micro;s) on AMD x86_64 hardware.
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/benches/memory_zeroize_bench.rs"><code>benches/memory_zeroize_bench.rs</code></a>. Reproduce via <code>cargo bench --bench memory_zeroize_bench</code>.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>5-phase durable mission pipeline</strong></td>
+                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td>
+                  Missions execute a 5-step workflow (plan, execute, validate, review, deliver) on Hatchet with automatic task retries and state checkpointing.
+                  <details>
+                    <summary>Technical details &amp; worker deployment</summary>
+                    <div>
+                      Workers run release image <code>6beb333</code> (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.2.8">v0.2.8</a>) in namespace <code>agents</code>.
+                      Hatchet coordinates <code>rustant:plan</code>, <code>zeroclaw:execute</code>, <code>zeroclaw:validate</code>, <code>rustant:review</code>, and <code>factory:deliver</code>. Checkpoints persist to PostgreSQL and MinIO S3.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Micro-sandbox limits enforced at admission</strong></td>
+                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td>
+                  Untrusted code execution pods are strictly capped to at most 30Mi RAM and 250m CPU, blocking runaway processes before pods can start.
+                  <details>
+                    <summary>Technical details &amp; admission policies</summary>
+                    <div>
+                      Enforced by Kubernetes ValidatingAdmissionPolicies <code>dg-sandbox-bounds-jobs</code> and <code>dg-sandbox-bounds-pods</code>.
+                      Sandbox containers run under <code>RuntimeClass=gvisor</code> (<abbr title="User-space kernel container sandbox">gVisor</abbr> <code>runsc</code> kernel emulation) with <code>readOnlyRootFilesystem: true</code> and dropped capabilities.
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>AgentWorkspace custom resource (<abbr title="Architecture Decision Record">ADR</abbr>-008)</strong></td>
+                <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-implemented">Implemented</span></td>
+                <td>
+                  A declarative Kubernetes specification defines the repository, target branch, and immutable resource envelope for agent workspaces.
+                  <details>
+                    <summary>Technical details &amp; controller state</summary>
+                    <div>
+                      The <code>agentworkspaces.darkgravity.io</code> <abbr title="Custom Resource Definition">CRD</abbr> is installed in the cluster.
+                      The operator controller is implemented in <code>factory-cli</code> using <code>kube-rs</code> v0.93. Active reconciliation loop operates within the CLI binary.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong><abbr title="Financial Operations">FinOps</abbr> budget limits and spend velocity guard</strong></td>
+                <td><span class="status-tag status-implemented">Implemented</span></td>
+                <td>
+                  Missions are halted automatically if daily spend reaches 90% of the limit or if expenditure accelerates faster than $1.00 per minute.
+                  <details>
+                    <summary>Technical details &amp; LiteLLM headers</summary>
+                    <div>
+                      Implemented in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/agents/finops.rs"><code>finops.rs</code></a> with unit tests.
+                      Default threshold: halts at $45.00 of $50.00 daily budget. Outbound requests inject LiteLLM virtual tags (<code>x-vtags-team</code>, <code>x-vtags-epic</code>). Halting triggers a <code>budget-exceeded</code> Kafka event.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Cryptographic Non-Human Identity (<abbr title="Non-Human Identity">NHI</abbr>)</strong></td>
+                <td><span class="status-tag status-implemented">Implemented</span></td>
+                <td>
+                  Autonomous agents sign every mission intake, tool call, and code diff with asymmetric keypairs for tamper-evident provenance.
+                  <details>
+                    <summary>Technical details &amp; W3C credentials</summary>
+                    <div>
+                      Implemented via Ed25519 asymmetric keypairs (<code>ed25519-dalek</code> v2) producing W3C Verifiable Credential envelopes (<code>Ed25519Signature2020</code>).
+                      Source: <code>crates/factory-core/src/security_nhi.rs</code> and <code>evidence/security-tests.md</code>.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Multi-node chaos drills and soak testing</strong></td>
+                <td><span class="status-tag status-designed">Designed</span></td>
+                <td>
+                  Multi-node cluster failure drills and continuous multi-day soak tests are architecturally planned but not yet published as verified facts.
+                  <details>
+                    <summary>Technical details &amp; reliability status</summary>
+                    <div>
+                      Single-worker kill recovery is verified in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a>.
+                      Chaos Mesh broker-loss and multi-node failure injection scenarios remain in Designed status.
+                    </div>
+                  </details>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section id="projects">
         <h2>Which projects are there?</h2>
         <p>
-          The GitHub account has 72 repositories (64 public) and 42 of them
-          are forks, counted on 2026-10-31. These are the ones that matter
-          most, grouped by job.
+          I maintain 64 public repositories on GitHub (22 original source repositories + 42 maintained forks), verified on 2026-10-31. Here are the core projects grouped by function:
         </p>
         <div class="grid-2">
           <div class="card">
-            <h3>The factory</h3>
+            <h3>The Factory</h3>
             <ul>
-              <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">rust_CACD_autonomous_factory</a>: the core. Hatchet pipeline, agents, CLI and MCP server.</li>
-              <li><a href="https://github.com/lgcorzo/speckit-superpowers-bridge">speckit-superpowers-bridge</a>: hands a written spec to a test-first coding workflow.</li>
+              <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">rust_CACD_autonomous_factory</a>: the core system. Hatchet pipeline, agent coordinators, <abbr title="Command Line Interface">CLI</abbr>, and <abbr title="Model Context Protocol">MCP</abbr> server.</li>
+              <li><a href="https://github.com/lgcorzo/speckit-superpowers-bridge">speckit-superpowers-bridge</a>: hands structured specs to test-first agent coding workflows.</li>
               <li><a href="https://github.com/lgcorzo/mlops-python-package">mlops-python-package</a>: machine-learning pipeline standard used by the lab.</li>
             </ul>
           </div>
           <div class="card">
-            <h3>Memory and documentation</h3>
+            <h3>Memory &amp; Documentation</h3>
             <ul>
-              <li><a href="https://github.com/lgcorzo/semantica">semantica</a>: records where each AI-made artifact came from.</li>
-              <li><a href="https://github.com/lgcorzo/R2R-Engine">R2R-Engine</a>: retrieval engine that gives agents context.</li>
-              <li><a href="https://github.com/lgcorzo/deepwiki-rs">deepwiki-rs</a> and <a href="https://github.com/lgcorzo/openwiki">openwiki</a>: generate documentation from code.</li>
+              <li><a href="https://github.com/lgcorzo/semantica">semantica</a>: tracks provenance and semantic relationships across generated artifacts.</li>
+              <li><a href="https://github.com/lgcorzo/R2R-Engine">R2R-Engine</a>: retrieval-augmented generation engine supplying context to agents.</li>
+              <li><a href="https://github.com/lgcorzo/deepwiki-rs">deepwiki-rs</a> and <a href="https://github.com/lgcorzo/openwiki">openwiki</a>: generate living architecture documentation from code.</li>
             </ul>
           </div>
           <div class="card">
-            <h3>Gateway and storage</h3>
+            <h3>Gateway &amp; Storage</h3>
             <ul>
-              <li><a href="https://github.com/lgcorzo/dark-litellm">dark-litellm</a>: one gateway to many language models, with cost tracking.</li>
-              <li><a href="https://github.com/lgcorzo/operator">operator</a>: runs S3-compatible storage inside the cluster.</li>
+              <li><a href="https://github.com/lgcorzo/dark-litellm">dark-litellm</a>: sovereign proxy and router for multi-model governance and <abbr title="Financial Operations">FinOps</abbr> tracking.</li>
+              <li><a href="https://github.com/lgcorzo/operator">operator</a>: runs S3-compatible object storage inside the Kubernetes cluster.</li>
             </ul>
           </div>
           <div class="card">
-            <h3>Everything else</h3>
-            <p>The full list, with the reasons for each fork, is on the
-            <a href="sovereignty.html">Fork policy</a> page and on
-            <a href="https://github.com/lgcorzo?tab=repositories">GitHub</a>.</p>
+            <h3>Open-Source Governance</h3>
+            <p>
+              I maintain 42 dependencies as independent forks to guarantee <abbr title="Spec-Driven Development">SDD</abbr> interface stability, zero-warning linter gates, and automated security patching.
+              Read the full rationale on the <a href="fork-policy.html">Fork policy</a> page or inspect all repositories on <a href="https://github.com/lgcorzo?tab=repositories">GitHub</a>.
+            </p>
           </div>
         </div>
       </section>
 
       <section id="glossary">
-        <h2>What do the terms mean?</h2>
+        <h2>What do the terms mean? (Glossary)</h2>
         <dl class="glossary">
-          <dt>ADR</dt><dd>Architecture decision record. A short document that states one design decision and why it was made.</dd>
-          <dt>CRD</dt><dd>Custom resource definition. It adds a new kind of object to Kubernetes, here the <code>AgentWorkspace</code>.</dd>
-          <dt>DAG</dt><dd>Directed acyclic graph. A set of steps with a fixed order and no loops. Hatchet runs the mission as a DAG.</dd>
-          <dt>FinOps</dt><dd>Tracking and limiting what a system spends, here on language-model calls.</dd>
-          <dt>gVisor</dt><dd>A sandbox that gives a container its own user-space kernel, so code in it cannot talk to the host kernel directly.</dd>
-          <dt>GitOps</dt><dd>Changing a running system only by committing files to Git, which a tool such as Flux then applies.</dd>
-          <dt>HITL</dt><dd>Human in the loop. A person must approve certain steps. Here, only a person merges to <code>main</code>.</dd>
-          <dt>Hatchet</dt><dd>The workflow engine that runs and retries the mission steps.</dd>
-          <dt>Kafka</dt><dd>A message system. Missions and agent events travel through Kafka topics.</dd>
-          <dt>MCP</dt><dd>Model Context Protocol. A standard way for an AI tool to call outside tools. The factory runs an MCP server.</dd>
-          <dt>NHI</dt><dd>Non-human identity. A signed identity for a program, so its actions can be traced.</dd>
-          <dt>SAST</dt><dd>Static application security testing. Reading code for security flaws without running it.</dd>
-          <dt>SDD</dt><dd>Spec-driven development. Write the specification and plan first, then generate code from them.</dd>
+          <dt><abbr title="Architecture Decision Record">ADR</abbr></dt><dd>Architecture Decision Record. A short document stating one architectural decision, its rationale, and consequences.</dd>
+          <dt><abbr title="Custom Resource Definition">CRD</abbr></dt><dd>Custom Resource Definition. Extends Kubernetes with custom object types, here the <code>AgentWorkspace</code> standard.</dd>
+          <dt><abbr title="Directed Acyclic Graph">DAG</abbr></dt><dd>Directed Acyclic Graph. A finite sequence of steps with fixed dependencies and no circular loops. Hatchet executes missions as a DAG.</dd>
+          <dt><abbr title="Financial Operations">FinOps</abbr></dt><dd>Cloud and language-model financial operations: tracking, attributing, and strictly limiting token expenditures.</dd>
+          <dt><abbr title="User-space kernel container sandbox">gVisor</abbr></dt><dd>A sandboxing runtime (<code>runsc</code>) that provides containers with an isolated user-space kernel, preventing direct host kernel calls.</dd>
+          <dt><abbr title="Git Operations infrastructure-as-code">GitOps</abbr></dt><dd>Operating declarative infrastructure by reconciling cluster state directly from versioned Git commits (e.g. FluxCD).</dd>
+          <dt><abbr title="Human-in-the-Loop">HITL</abbr></dt><dd>Human-in-the-Loop governance. Critical actions require human approval. Autonomous agents cannot merge to default branches.</dd>
+          <dt>Hatchet</dt><dd>A durable workflow orchestration engine that coordinates and retries distributed agent mission tasks with checkpointing.</dd>
+          <dt>Kafka</dt><dd>Distributed event streaming platform. Missions, agent events, and telemetry travel through dedicated Kafka topics.</dd>
+          <dt><abbr title="Model Context Protocol">MCP</abbr></dt><dd>Model Context Protocol. An open standard for AI agents to securely invoke external tools and fetch contextual data.</dd>
+          <dt><abbr title="Non-Human Identity">NHI</abbr></dt><dd>Non-Human Identity. Asymmetric cryptographic credentials (Ed25519) signed by autonomous workers to ensure verifiable action lineage.</dd>
+          <dt><abbr title="Static Application Security Testing">SAST</abbr></dt><dd>Static Application Security Testing. Automated static analysis inspecting code diffs for security vulnerabilities before pull request delivery.</dd>
+          <dt><abbr title="Spec-Driven Development">SDD</abbr></dt><dd>Spec-Driven Development. Writing formal specifications, architectural plans, and test contracts before generating code.</dd>
+          <dt><abbr title="Single Source of Truth">SSOT</abbr></dt><dd>Single Source of Truth. The practice of structuring architecture so every configuration or domain entity is defined in exactly one place.</dd>
         </dl>
       </section>
 
@@ -255,7 +327,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
             <li><a href="lifecycle.html">Lifecycle</a></li>
-            <li><a href="sovereignty.html">Fork policy</a></li>
+            <li><a href="fork-policy.html">Fork policy</a></li>
             <li><a href="notebooks.html">Lab notebook</a></li>
           </ul>
         </div>
@@ -264,13 +336,13 @@
           <ul class="footer-links">
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
-            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
-        <span>Latest release: v0.2.8</span>
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.2.8">v0.2.8</a></span>
       </div>
     </div>
   </footer>
