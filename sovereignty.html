@@ -3,156 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fork Policy &amp; Code Quality Governance — Dark Gravity Lab</title>
-  <meta name="description" content="Engineering rationale, quality standards, and security controls governing the 42 forked open-source dependencies in the lgcorzo lab.">
+  <title>Fork policy: why the lab forks open-source projects</title>
+  <meta name="description" content="Engineering rationale, quality standards, and the 42 maintained open-source forks supporting the Dark Gravity autonomous factory.">
   <link rel="canonical" href="https://lgcorzo.github.io/sovereignty.html">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-
-  <!-- Unified Navigation Header -->
+  <!--SHELL:HEADER-->
   <header class="site-header">
     <div class="container">
-      <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="index.html" class="site-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Dark Gravity Lab</span>
-        </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
           <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
-          <li><a href="sovereignty.html" class="nav-link active">Fork policy</a></li>
+          <li><a href="sovereignty.html" class="nav-link" aria-current="page">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
         </ul>
       </nav>
     </div>
   </header>
+  <!--/SHELL:HEADER-->
 
   <main id="main">
     <div class="container">
-      <!-- Page Hero -->
-      <section class="hero">
-        <h1>Fork Policy &amp; Code Quality Governance</h1>
-        <p class="hero-subtitle">
-          Across 72 total repositories in the lab (64 public, 8 private), 42 are maintained as independent forks of principal open-source projects. Here is the engineering rationale for maintaining these forks and the quality controls that govern them.
-        </p>
-      </section>
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Fork policy</p>
 
-      <!-- Status Taxonomy Standard -->
-      <section>
-        <h2>Status taxonomy</h2>
-        <p>Every operational tier and governance control across this page carries one of four explicit verification tags:</p>
-        <div class="status-legend">
-          <div class="status-legend-item">
-            <span class="status-tag status-verified">Verified</span>
-            <span>Confirmed by automated CI suites or published evidence files.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-deployed">Deployed</span>
-            <span>Running and active in live cluster environments.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-implemented">Implemented</span>
-            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-designed">Designed</span>
-            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
-          </div>
+      <section class="hero">
+        <h1>Fork policy: why the lab forks open-source projects</h1>
+        <p class="lede">
+          Out of 72 total repositories across the lab (64 public, 8 private),
+          42 are maintained as independent forks. Here is why they are forked,
+          the five rules that govern them, and the full list grouped by purpose.
+        </p>
+        <div class="minute">
+          <h2>In one minute</h2>
+          <ul>
+            <li>Forks protect autonomous agent workflows from unexpected upstream API breaks and schema changes.</li>
+            <li>Security updates are triaged and patched autonomously through GitHub Project 6 and Jules.</li>
+            <li>Every fork enforces five quality gates: branch protection, zero-warning linters, SHA-256 digest pinning, human review on upstream rebases, and CVE scanning.</li>
+            <li>17 of the 42 forks are low-level Go libraries (SIMD acceleration, hashing) needed by the sovereign S3 storage tier.</li>
+          </ul>
         </div>
       </section>
 
-      <!-- Section 1: Rationale -->
-      <section id="rationale">
-        <h2>Why does the lab fork open-source projects?</h2>
-        <p>
-          Maintaining critical dependencies under sovereign forks protects against breaking upstream changes, unpatched security vulnerabilities, and vendor lock-in.
-        </p>
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#why">Why fork instead of using upstream packages directly?</a></li>
+          <li><a href="#rules">What five rules govern every fork?</a></li>
+          <li><a href="#groups">How are the 42 forks categorized?</a></li>
+          <li><a href="#security">How is dependency security verified?</a></li>
+        </ol>
+      </nav>
 
+      <section id="why">
+        <h2>Why fork instead of using upstream packages directly?</h2>
+        <p>
+          An autonomous system running continuous coding tasks cannot afford unexpected upstream churn.
+          Forking critical dependencies provides four concrete engineering advantages:
+        </p>
         <div class="grid-2">
           <div class="card">
-            <h3>Deterministic SDD &amp; Schema Contracts</h3>
+            <h3>1. Deterministic SDD contracts</h3>
             <p>
-              Autonomous agents require strictly typed, deterministic interfaces. In forks like <code class="font-mono">spec-kit</code> and <code class="font-mono">speckit-superpowers-bridge</code>, we lock CLI flags and JSON schemas so agent workflows cannot break unexpectedly from upstream churn.
+              Autonomous agents need deterministic CLI arguments, flags, and JSON schemas. In forks like
+              <code>spec-kit</code> and <code>speckit-superpowers-bridge</code>, command interfaces and output schemas
+              are locked so that agent runs do not break when upstream repositories change behaviour.
             </p>
-            <span class="status-tag status-verified">Verified</span>
+            <p class="status-line">Status: <span class="status-tag status-verified">Verified</span></p>
           </div>
-
           <div class="card">
-            <h3>Automated Vulnerability Patching</h3>
+            <h3>2. Immediate security patching</h3>
             <p>
-              When Dependabot or CodeQL identify CVEs in dependencies, our hourly scanner (GitHub Project 6 + Jules) opens patches immediately. We do not wait weeks for upstream maintainers to merge security updates.
+              When Dependabot or CodeQL identifies a CVE in a dependency, the lab does not wait weeks for
+              an upstream maintainer to merge a fix. The hourly scanner in GitHub Project 6 and Jules opens and tests
+              patches immediately.
             </p>
-            <span class="status-tag status-verified">Verified</span>
+            <p class="status-line">Status: <span class="status-tag status-deployed">Deployed</span></p>
           </div>
-
           <div class="card">
-            <h3>Uniform Engineering Quality Gates</h3>
+            <h3>3. Uniform quality gates</h3>
             <p>
-              Every maintained fork enforces the same CI checks: strict linter configs (<code class="font-mono">ruff</code>, <code class="font-mono">clippy</code>), security audits (<code class="font-mono">pip-audit</code>, <code class="font-mono">cargo audit</code>), and SHA-256 hash-pinned lockfiles.
+              Every maintained fork is brought under the same automated linting and security rules:
+              strict <code>clippy</code> or <code>ruff</code> settings, automated vulnerability audits, and pinned dependency versions.
             </p>
-            <span class="status-tag status-verified">Verified</span>
+            <p class="status-line">Status: <span class="status-tag status-verified">Verified</span></p>
           </div>
-
           <div class="card">
-            <h3>Insulation from License &amp; Registry Shifts</h3>
+            <h3>4. Build hermeticity</h3>
             <p>
-              When upstream vendors change licensing models or deprecate registry tags, our decoupled Go and Python forks compile hermetically to <code class="font-mono">ghcr.io/lgcorzo/*</code> without interruption.
+              Containers and binaries build cleanly from pinned tags and publish to
+              <code>ghcr.io/lgcorzo/*</code>, decoupling internal builds from external registry downtime or license changes.
             </p>
-            <span class="status-tag status-deployed">Deployed</span>
+            <p class="status-line">Status: <span class="status-tag status-deployed">Deployed</span></p>
           </div>
         </div>
       </section>
 
-      <!-- Section 2: Code Quality Governance Rules -->
-      <section id="governance-rules">
-        <h2>What quality rules govern forked repositories?</h2>
+      <section id="rules">
+        <h2>What five rules govern every fork?</h2>
         <p>
-          Each of our 42 forked repositories operates under five non-negotiable engineering rules:
+          Each of the 42 forks must satisfy five strict engineering standards. No fork is exempt.
         </p>
-
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>Rule</th>
-                <th>Standard &amp; Requirement</th>
-                <th>Enforcement Mechanism</th>
-                <th>Status</th>
+                <th scope="col">Rule</th>
+                <th scope="col">Standard</th>
+                <th scope="col">Enforcement mechanism</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>1. Remote &amp; Branch Hygiene</strong></td>
-                <td>Main branches track upstream clean tags. Custom changes are isolated to dedicated feature branches or cleanly rebasing tracking branches.</td>
-                <td>Automated branch protection rules; direct pushes to <code class="font-mono">main</code> are rejected.</td>
+                <td><strong>1. Remote and branch hygiene</strong></td>
+                <td>Upstream clean tags are tracked on dedicated tracking branches. Custom modifications live on isolated branches.</td>
+                <td>Branch protection rules reject direct pushes to <code>main</code>.</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
               </tr>
               <tr>
-                <td><strong>2. Strict Quality Gates</strong></td>
-                <td>Zero-warning policy on linters. Type checking must pass with strict mode enabled.</td>
-                <td>CI blocks PRs on any <code class="font-mono">clippy</code>, <code class="font-mono">ruff</code>, or <code class="font-mono">mypy</code> warning.</td>
+                <td><strong>2. Strict quality gates</strong></td>
+                <td>Zero-warning policy across linters and strict type-checking mode.</td>
+                <td>CI blocks merges on any <code>clippy</code>, <code>ruff</code>, or <code>mypy</code> warning.</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
               </tr>
               <tr>
-                <td><strong>3. Hermetic Builds &amp; Zero-:latest</strong></td>
-                <td>All container images are pinned to immutable SHA-256 digests or exact semver tags. Floating tags like <code class="font-mono">:latest</code> are strictly forbidden.</td>
-                <td>KubeLinter and Trivy IaC scans in CI pipelines enforce digest pinning.</td>
+                <td><strong>3. Hermetic builds &amp; zero <code>:latest</code></strong></td>
+                <td>All images pinned to immutable SHA-256 digests or semver releases. Floating tags are rejected.</td>
+                <td>KubeLinter and Trivy scans in CI enforce digest pinning.</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
               </tr>
               <tr>
-                <td><strong>4. Human Review on Upstream Sync</strong></td>
-                <td>Upstream releases are evaluated for breaking schema changes or added telemetry before rebasing.</td>
-                <td>Synchronisation PRs require manual human review and green integration tests before merge.</td>
+                <td><strong>4. Human review on upstream rebases</strong></td>
+                <td>Upstream sync PRs require automated test passes and manual sign-off before merge.</td>
+                <td>Strict Human-in-the-Loop policy. No agent merges to default branches.</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
               </tr>
               <tr>
-                <td><strong>5. Automated CVE Remediation</strong></td>
-                <td>Vulnerabilities tracked across GitHub Project 6 are triaged and assigned fixes autonomously.</td>
-                <td>Hourly cron triggers scanner and remediation workflows across active repositories.</td>
+                <td><strong>5. Automated CVE triage</strong></td>
+                <td>Vulnerabilities tracked in GitHub Project 6 are reviewed hourly.</td>
+                <td>Hourly cron triggers scanner and Jules remediation workflows.</td>
                 <td><span class="status-tag status-deployed">Deployed</span></td>
               </tr>
             </tbody>
@@ -160,60 +155,189 @@
         </div>
       </section>
 
-      <!-- Section 3: Curated Fork Tiers -->
-      <section id="curated-tiers">
-        <h2>How are forked repositories categorized?</h2>
+      <section id="groups">
+        <h2>How are the 42 forks categorized?</h2>
         <p>
-          Forked repositories are grouped into distinct functional tiers supporting the autonomous factory runtime:
+          The 42 forks fall into five functional groups. Earlier references mentioned &ldquo;38 MinIO forks&rdquo;;
+          in reality, 17 are small Go utility libraries (SIMD acceleration, hashing, streaming parsers) and 10 are storage
+          platform components.
         </p>
 
+        <div class="card" style="margin: 1.5rem 0;">
+          <h3>Agent and spec tooling (4 repositories)</h3>
+          <p>Tools that shape how agents plan and write code.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 25%;">Repository</th>
+                  <th scope="col">Description and role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr><td><a href="https://github.com/lgcorzo/spec-kit"><code>spec-kit</code></a></td><td>💫 Toolkit to help you get started with SDD or any other process!</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/superpowers"><code>superpowers</code></a></td><td>An agentic skills framework &amp; software development methodology that works</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/speckit-superpowers-bridge"><code>speckit-superpowers-bridge</code></a></td><td>Architectural handoff connecting Spec-Driven Development (Spec Kit) with Superpowers TDD execution discipline </td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/openevolve"><code>openevolve</code></a></td><td>Open-source implementation of AlphaEvolve</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin: 1.5rem 0;">
+          <h3>Memory, documentation and gateway (5 repositories)</h3>
+          <p>Provenance, generated docs and model routing.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 25%;">Repository</th>
+                  <th scope="col">Description and role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr><td><a href="https://github.com/lgcorzo/semantica"><code>semantica</code></a></td><td>Graph-native context infrastructure tracking accountable AI artifacts and compliance lineage across factory wo</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/deepwiki-rs"><code>deepwiki-rs</code></a></td><td>High-performance Rust engine generating AST-driven OpenWiki documentation and code context for autonomous agen</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/CodeWiki"><code>CodeWiki</code></a></td><td>[ACL 2026] Open-source framework for holistic, structured repository-level documentation across multilingual c</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/openwiki"><code>openwiki</code></a></td><td>OpenWiki is a CLI that writes and maintains agent documentation for your codebase</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/dark-litellm"><code>dark-litellm</code></a></td><td>The fastest, litest AI Gateway</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin: 1.5rem 0;">
+          <h3>Storage platform (10 repositories)</h3>
+          <p>Self-hosted S3-compatible storage and its tools.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 25%;">Repository</th>
+                  <th scope="col">Description and role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr><td><a href="https://github.com/lgcorzo/operator"><code>operator</code></a></td><td>Hardened Kubernetes Operator automating in-cluster sovereign S3 storage deployment and lifecycle for Dark Grav</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/mc"><code>mc</code></a></td><td>MinIO Client (mc) utility independently maintained for CI/CD bucket mirroring, checkpoint archiving, and S3 pe</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/kes"><code>kes</code></a></td><td>Key Encryption Server providing hardware-backed zero-trust authenticated encryption at rest for sensitive mode</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/directpv"><code>directpv</code></a></td><td>Kubernetes CSI direct-attached NVMe storage driver independently maintained for high-throughput pipeline execu</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/warp"><code>warp</code></a></td><td>S3 IOPS and latency stress-testing tool validating storage SLA gates before Dark Gravity deployments</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/sidekick"><code>sidekick</code></a></td><td>High-performance sidecar load balancer optimizing S3 traffic distribution across sovereign storage pods</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/certgen"><code>certgen</code></a></td><td>Generates self-signed TLS/mTLS X.509 certificates for air-gapped Dark Gravity Kubernetes pods</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/mint"><code>mint</code></a></td><td>Comprehensive S3 API compatibility verification suite executed during Dark Gravity release gates</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/docs"><code>docs</code></a></td><td>Complete operational architecture and API specifications for Dark Gravity&#x27;s hardened S3 storage tier</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/minio-cf"><code>minio-cf</code></a></td><td>Infrastructure-as-code deployment templates for distributed sovereign storage nodes</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin: 1.5rem 0;">
+          <h3>Go libraries (hashing, parsing, I/O) (17 repositories)</h3>
+          <p>Small libraries the storage tools depend on.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 25%;">Repository</th>
+                  <th scope="col">Description and role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr><td><a href="https://github.com/lgcorzo/asm2plan9s"><code>asm2plan9s</code></a></td><td>Translates AMD64 assembly into Plan 9 bytes for Go, enabling custom SIMD crypto compilation in Dark Gravity</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/blake2b-simd"><code>blake2b-simd</code></a></td><td>SIMD-vectorized pure Go BLAKE2b hashing for cryptographic integrity in Dark Gravity pipelines</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/md5-simd"><code>md5-simd</code></a></td><td>AVX-512 &amp; AVX2 hardware-accelerated parallel MD5 engine for high-speed artifact deduplication</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/sha256-simd"><code>sha256-simd</code></a></td><td>AVX-512 &amp; ARM64 SIMD hardware-accelerated SHA256 hashing for tamper-proof artifact verification in Dark Gravit</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/highwayhash"><code>highwayhash</code></a></td><td>Assembly HighwayHash (&gt;10 GB/s/core) enabling instantaneous AST symbol indexing and artifact hashing</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/crc64nvme"><code>crc64nvme</code></a></td><td>CLMUL SIMD-accelerated CRC64 computation verifying NVMe block payloads at line rate in Dark Gravity</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/simdjson-go"><code>simdjson-go</code></a></td><td>AVX-512 SIMD-accelerated JSON parser streaming gigabytes/sec within strict 30 MiB sandbox limits</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/sio"><code>sio</code></a></td><td>Pure Go Data At Rest Encryption (DARE) implementing authenticated encryption for model weights and tokens</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/colorjson"><code>colorjson</code></a></td><td>Zero-overhead syntax-highlighted JSON formatter for Dark Gravity CLI diagnostics and task inspection</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/csvparser"><code>csvparser</code></a></td><td>High-throughput zero-buffer CSV parser processing metric dumps without exceeding sandbox memory bounds</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/dnscache"><code>dnscache</code></a></td><td>Concurrent DNS caching library optimizing outbound GitPlatformPoller queries in Dark Gravity</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/filepath"><code>filepath</code></a></td><td>Flat-key filesystem traversal optimized for S3 prefix walking across sovereign storage buckets</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/multipart-debug"><code>multipart-debug</code></a></td><td>HTTP multipart upload tracing utility for troubleshooting large model weight transfers</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/pkger"><code>pkger</code></a></td><td>Toolchain building reproducible Debian, RPM, and APK packages for sovereign storage binaries</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/selfupdate"><code>selfupdate</code></a></td><td>Secure, atomic self-update engine for sovereign CLI tools without external package manager dependencies</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/xxml"><code>xxml</code></a></td><td>High-performance memory-efficient XML 1.0 parser for parsing AWS S3 response envelopes</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/zipindex"><code>zipindex</code></a></td><td>Compresses and indexes ZIP archives for O(1) random artifact access without full disk extraction</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin: 1.5rem 0;">
+          <h3>Experiments and learning (6 repositories)</h3>
+          <p>Forked to study, not part of the factory.</p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 25%;">Repository</th>
+                  <th scope="col">Description and role</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr><td><a href="https://github.com/lgcorzo/ai-agents-for-beginners"><code>ai-agents-for-beginners</code></a></td><td>10 Lessons to Get Started Building AI Agents</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/TradingAgents"><code>TradingAgents</code></a></td><td>TradingAgents: Multi-Agents LLM Financial Trading Framework</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/mocogpt"><code>mocogpt</code></a></td><td>MocoGPT is an GPT mock server, which can be used to test your GPT API calls</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/dark-rea"><code>dark-rea</code></a></td><td>Reverse engineer anything with agents, from app behavior down to native binaries</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/knowledge-catalog"><code>knowledge-catalog</code></a></td><td>Google Cloud Knowledge Catalog Tools and Samples</td></tr>
+                  <tr><td><a href="https://github.com/lgcorzo/gpu-unlock"><code>gpu-unlock</code></a></td><td>Unlock FP/BF16 instruction issue rate on Nvidia 3000&#x27;s cards to their professional equivalents</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <section id="security">
+        <h2>How is dependency security verified?</h2>
+        <p>
+          Forked code is not trusted blindly. Dependencies undergo continuous automated verification:
+        </p>
         <div class="grid-2">
           <div class="card">
-            <h3>Tier 0: Agent Tooling &amp; SDD</h3>
+            <h3>Automated threat triage</h3>
             <p>
-              Tools governing agent specifications, contract synthesis, and execution bridges: <code class="font-mono">spec-kit</code>, <code class="font-mono">speckit-superpowers-bridge</code>, <code class="font-mono">superpowers</code>, and <code class="font-mono">adk-rust</code>.
+              Project 6 tracks vulnerabilities across all 72 repositories. Dependabot alerts, CodeQL queries, and pip-audit / cargo-audit runs feed into a centralized triage queue.
             </p>
-            <span class="status-tag status-deployed">Deployed</span>
+            <p class="status-line">Evidence: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md"><code>threat-model.md</code></a></p>
           </div>
-
           <div class="card">
-            <h3>Tier 1: Semantic Memory &amp; AST Analysis</h3>
+            <h3>Process micro-isolation</h3>
             <p>
-              Engines providing codebase indexing and knowledge graphs: <code class="font-mono">semantica</code>, <code class="font-mono">deepwiki-rs</code>, <code class="font-mono">CodeWiki</code>, and <code class="font-mono">openwiki</code>.
+              When an agent executes code or tests from a dependency, it runs inside a restricted gVisor sandbox with
+              <code>CAP_DROP_ALL</code>, read-only root filesystems, and strict CPU/memory limits.
             </p>
-            <span class="status-tag status-deployed">Deployed</span>
-          </div>
-
-          <div class="card">
-            <h3>Tier 2: Model Routing &amp; FinOps</h3>
-            <p>
-              Proxies managing model traffic and cost attribution: <code class="font-mono">dark-litellm</code> with Virtual Tagging and daily spend hardstops.
-            </p>
-            <span class="status-tag status-deployed">Deployed</span>
-          </div>
-
-          <div class="card">
-            <h3>Tier 3: Storage &amp; Cryptographic Acceleration</h3>
-            <p>
-              Decoupled object storage and SIMD vector libraries supporting local S3-compatible persistence: MinIO operator, client, and cryptographic acceleration packages.
-            </p>
-            <span class="status-tag status-deployed">Deployed</span>
+            <p class="status-line">Evidence: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security-tests.md"><code>security-tests.md</code></a></p>
           </div>
         </div>
       </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="lifecycle.html" rel="prev"><small>&larr; Previous</small><strong>Lifecycle</strong><br><span class="note">How one mission goes from issue to pull request</span></a>
+        <a class="next" href="notebooks.html" rel="next"><small>Next &rarr;</small><strong>Lab notebook</strong><br><span class="note">Experiments, failures and lessons</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
     </div>
   </main>
 
-  <!-- Unified Footer -->
+  <!--SHELL:FOOTER-->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>Dark Gravity Lab</h4>
-          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
@@ -223,19 +347,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Primary Repositories</h4>
+          <p class="footer-title">Sources</p>
           <ul class="footer-links">
-            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
-            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
-            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
-        <span>Version v0.2.8 &bull; Evidence-based verification</span>
+        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
+        <span>Latest release: v0.2.8</span>
       </div>
     </div>
   </footer>
+  <!--/SHELL:FOOTER-->
 </body>
 </html>
