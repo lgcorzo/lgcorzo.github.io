@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lab notebook: experiments, failures and lessons</title>
+  <title>Lab Notebook: Experiments &amp; Lessons</title>
   <meta name="description" content="Persistent public log of 14 engineering experiments, architectural decisions, failure post-mortems, and benchmarks across autonomous agent systems.">
   <link rel="canonical" href="https://lgcorzo.github.io/notebooks.html">
+  <meta property="og:site_name" content="Dark Gravity Lab">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lab Notebook: Experiments &amp; Lessons">
+  <meta property="og:description" content="Persistent public log of 14 engineering experiments, architectural decisions, failure post-mortems, and benchmarks across autonomous agent systems.">
+  <meta property="og:url" content="https://lgcorzo.github.io/notebooks.html">
+  <meta property="og:image" content="https://lgcorzo.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lab Notebook: Experiments &amp; Lessons">
+  <meta name="twitter:description" content="Persistent public log of 14 engineering experiments, architectural decisions, failure post-mortems, and benchmarks across autonomous agent systems.">
+  <meta name="twitter:image" content="https://lgcorzo.github.io/assets/og-image.png">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
@@ -19,8 +31,8 @@
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
-          <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
-          <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
+          <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link" aria-current="page">Lab notebook</a></li>
         </ul>
       </nav>
@@ -70,6 +82,111 @@
           <li><a href="#exp-2026-010">Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping and Safe Out-of-Memory Termination</a></li>
         </ol>
       </nav>
+
+      <section id="summary-table">
+        <h2>Laboratory Index &amp; Empirical Findings</h2>
+        <p>
+          Every experiment is conducted on real infrastructure and recorded with its verification status and factual outcome.
+        </p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID &amp; Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">One-Sentence Factual Finding</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="#exp-2026-011-adr008"><strong>ADR-008</strong>: AgentWorkspace CRD &amp; Sandboxing</a></td>
+                <td>2026-10-31</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Declarative CRD AgentWorkspace enforces strict 30Mi RAM / 250m CPU limits at admission via ValidatingAdmissionPolicies.</td>
+              </tr>
+              <tr>
+                <td><a href="#screencast-demo"><strong>Screencast</strong>: 5-Minute Technical Demonstration</a></td>
+                <td>2026-10-31</td>
+                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td>Scripted walkthrough demonstrating gVisor isolation, Ed25519 signing, and automated merge-block shields.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-012"><strong>EXP-2026-012</strong>: Supply Chain Upgrade Paradox</a></td>
+                <td>2026-10-25</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Automated virtualenv bump introduced a secondary command injection flaw; resolved via synchronized lock exports and pinned transitives.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-011"><strong>EXP-2026-011</strong>: Autonomous Security Remediation</a></td>
+                <td>2026-10-20</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Automated Review Guidance loop saved 85% LLM tokens across fleet vulnerability patching with Jules.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-001"><strong>EXP-2026-001</strong>: FluxCD CI Kubeconform Trap</a></td>
+                <td>2026-09-18</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Filtered raw Helm values and unrendered templates to prevent false-positive CI schema validation blockers.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-002"><strong>EXP-2026-002</strong>: Cargo Audit vs. Transitive Crates</a></td>
+                <td>2026-10-13</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Established an explicit risk-acceptance register (.cargo/audit.toml) for unexploitable transitive warnings.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-003"><strong>EXP-2026-003</strong>: Hatchet DAGs vs. Actor State Machines</a></td>
+                <td>2026-10-01</td>
+                <td><span class="status-tag status-implemented">Implemented</span></td>
+                <td>Adopted Hatchet durable workflows to eliminate bespoke scheduler crashes on worker node eviction.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-004"><strong>EXP-2026-004</strong>: Control Plane CIS Hardening</a></td>
+                <td>2026-05-14</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Executed CIS Kubernetes benchmark audit, eliminating privileged service accounts and hardening kube-bench posture.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-005"><strong>EXP-2026-005</strong>: SealedSecrets Key Governance</a></td>
+                <td>2026-06-22</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Tested sealed secret rotation and disaster recovery with private keys isolated from Git.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-006"><strong>EXP-2026-006</strong>: Hatchet Crash Resilience</a></td>
+                <td>2026-07-09</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Confirmed durable execution resumed within 8.4s without state corruption when worker pods were terminated.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-007"><strong>EXP-2026-007</strong>: Zero-Trust Syscall &amp; Calico Boundary</a></td>
+                <td>2026-08-11</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Intercepted raw socket creation and exfiltration attempts using gVisor user-space kernel and Calico network policies.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-008"><strong>EXP-2026-008</strong>: Pytest vs. LLM-as-a-Judge</a></td>
+                <td>2026-08-29</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Discovered 44% false negative rate in LLM judges for subtle logic bugs, making deterministic unit tests mandatory.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-009"><strong>EXP-2026-009</strong>: AST Subgraphs vs. Raw Grep</a></td>
+                <td>2026-09-04</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>2-hop AST neighborhood extraction achieved 91.8% token reduction and 94% first-pass code generation accuracy.</td>
+              </tr>
+              <tr>
+                <td><a href="#exp-2026-010"><strong>EXP-2026-010</strong>: Strict 512Mi Memory Clamping</a></td>
+                <td>2026-09-27</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Established cgroup memory limits to guarantee safe OOM termination without host node memory pressure.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       <section id="entries">
 <article class="entry" id="exp-2026-011-adr008">
@@ -141,7 +258,7 @@
           </p>
         </div>
 <p>
-          Esta demostración técnica (renderizada programáticamente a partir de un guion automatizado con trazas reales de misiones) exhibe la orquestación de Dark Gravity, el aislamiento gVisor, la firma de credenciales NHI Ed25519 y la gobernanza estricta Human-in-the-Loop (HITL).
+          This technical demonstration (programmatically rendered from an automated script with authentic mission execution traces) showcases Dark Gravity orchestration, gVisor micro-sandboxing, Ed25519 NHI credential signing, and strict Human-in-the-Loop (HITL) governance.
         </p>
 <!-- Structured Timeline Grid -->
 <div>
@@ -257,15 +374,23 @@
 <!-- Executive Summary Banner -->
 <header class="entry-head">
 <strong class="font-mono">Executive Summary: Security Audit &amp; Technical Analysis</strong>
-          During our scheduled security audit across my public testing environment — where I am developing a fully autonomous software factory spanning 69 repositories (65 active, 4 archived legacy) and Kubernetes clusters — our scanners identified high-severity supply-chain vulnerabilities and configuration findings. Most notably, attempting an automated patch on virtualenv triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published library introduced a secondary command injection flaw. Here is the technical breakdown of the findings, the failure modes, and the exact remediation steps.
+          During my scheduled security audit across the lab environment — where I am developing an autonomous software factory spanning public repositories and Kubernetes clusters — automated scanners identified high-severity supply-chain vulnerabilities and configuration findings. Most notably, attempting an automated patch on virtualenv triggered the <em>Supply Chain Upgrade Paradox</em>: the newly published library introduced a secondary command injection flaw. Here is the technical breakdown of the findings, the failure modes, and the exact remediation steps.
         </header>
 <div class="grid-2">
 <!-- Left Column: Attack Taxonomy & The Upgrade Paradox -->
 <div>
 <div>
-<h3 class="font-mono">1. Vulnerabilities Detected by Security Scanners (5 Supply Chain + 1 Configuration)</h3>
+<h3 class="font-mono">1. What I wanted to verify</h3>
 <p>
-                Our static application and dependency scanners cataloged six distinct security surfaces across two categories:
+                Can an autonomous software factory perform continuous dependency upgrades and patch supply-chain CVEs without introducing breaking runtime changes, deadlocked dependency solvers, or regression vulnerabilities?
+              </p>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>
+                The repository ecosystem uses multi-manifest Python dependencies (<code>poetry.lock</code>, <code>requirements.txt</code>, and <code>python_env.yaml</code>) alongside Kubernetes Sealed Secrets across operational namespaces.
+              </p>
+<h3 class="font-mono">3. What actually happened (The Supply Chain Paradox)</h3>
+<p>
+                Static application and dependency scanners cataloged six distinct security surfaces across two categories:
               </p>
 <!-- Category A -->
 <div class="font-mono">Category A: Third-Party Supply Chain CVEs</div>
@@ -481,18 +606,18 @@
 </div>
 </div>
 </div>
-<!-- Right Column: How We Solved It -->
+<!-- Right Column: Remediation & Operational Controls -->
 <div>
 <div>
-<h3 class="font-mono">3. How It Was Meticulously Solved</h3>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
 <p>
-                Rather than blind incremental upgrades, we implemented a four-tier surgical engineering strategy:
+                Rather than blind incremental upgrades, I implemented a four-tier surgical engineering strategy:
               </p>
 <div class="font-mono">
 <div>
 <div>Tier 1: Constraint Widening &amp; Explicit Transitive Pinning</div>
 <p>
-                    We updated <code>pyproject.toml</code> to widen tight bounds (allowing <code>opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their verified, patched security floors:
+                    I updated <code>pyproject.toml</code> to widen tight bounds (allowing <code>opentelemetry-instrumentation &gt;= 0.51b0, &lt; 1.0.0</code>) and explicitly pinned transitive dependencies to their verified, patched security floors:
                     <br>• <code>opentelemetry-api &gt;= 1.45.1, &lt; 2.0.0</code> (tested via local test suites against OpenTelemetry 0.66b1)
                     <br>• <code>mlflow &gt;= 3.17.2, &lt; 4.0.0</code>
 <br>• <code>filelock &gt;= 4.2.1</code>
@@ -503,7 +628,7 @@
 <div>
 <div>Tier 2: Multi-Manifest Version Parity &amp; CI Lock Checking</div>
 <p>
-                    Security scanners evaluate distinct files differently (e.g. Dependabot parses <code>poetry.lock</code> and <code>requirements.txt</code>, while container runs load <code>python_env.yaml</code>). We implemented a synchronized export check ensuring that <code>requirements.txt</code> is systematically re-exported from <code>poetry.lock</code> on dependency changes, preventing silent runtime drift between CI test environments and deployed MLflow artifacts. CI workflows execute <code>poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code>ruff</code>, <code>mypy</code>, <code>bandit</code>) before committing.
+                    Security scanners evaluate distinct files differently (e.g. Dependabot parses <code>poetry.lock</code> and <code>requirements.txt</code>, while container runs load <code>python_env.yaml</code>). I implemented a synchronized export check ensuring that <code>requirements.txt</code> is systematically re-exported from <code>poetry.lock</code> on dependency changes, preventing silent runtime drift between CI test environments and deployed MLflow artifacts. CI workflows execute <code>poetry check --lock</code> to validate lock integrity against pyproject, followed by automated format, type, and security verification (<code>ruff</code>, <code>mypy</code>, <code>bandit</code>) before committing.
                   </p>
 </div>
 <div>
@@ -521,9 +646,9 @@
 </div>
 </div>
 <div>
-<h3 class="font-mono">4. Measured Outcome &amp; Architectural Standard</h3>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
 <p>
-                The full remediation resulted in:
+                The full remediation established an ongoing production standard:
               </p>
 <div class="grid-2 font-mono">
 <div>
@@ -766,17 +891,21 @@
 <p>Whether a custom state machine in Rust (Tokio + Postgres) offers better operational simplicity than adopting an external durable workflow engine (Hatchet) for multi-step agent tasks.</p>
 </div>
 <div>
-<h3 class="font-mono">2. Findings &amp; Failure Modes</h3>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Evaluated two prototypes for the autonomous factory orchestrator: an in-house asynchronous Rust state machine using Tokio channels and Postgres state tables, versus a distributed Hatchet engine executing durable workers with checkpointing.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
 <p>Custom state machines failed on node eviction during long-running LLM inferences. Replaying partial DAG state without durable step checkpointing required building a full scheduler from scratch.</p>
 </div>
 </div>
 <div>
 <div>
-<h3 class="font-mono">3. Lessons Learned</h3>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
 <p>Offloading step-level durability and retry backoff to Hatchet drastically reduces bespoke concurrency code in agent executors, freeing focus for spec verification and sandbox containment.</p>
 </div>
 <div>
-<h3 class="font-mono">4. Industrial Application Transfer</h3>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
 <p>In manufacturing environments with multi-step CAD/CAM processing, durable execution patterns prevent orphaned compute jobs when worker pods scale or rebalance under load.</p>
 </div>
 </div>
@@ -1103,7 +1232,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
             <li><a href="lifecycle.html">Lifecycle</a></li>
-            <li><a href="sovereignty.html">Fork policy</a></li>
+            <li><a href="fork-policy.html">Fork policy</a></li>
             <li><a href="notebooks.html">Lab notebook</a></li>
           </ul>
         </div>
@@ -1112,13 +1241,13 @@
           <ul class="footer-links">
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
-            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
-        <span>Latest release: v0.2.8</span>
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.2.8">v0.2.8</a></span>
       </div>
     </div>
   </footer>
