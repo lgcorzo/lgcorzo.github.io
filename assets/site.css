@@ -87,6 +87,16 @@
 
     --focus-ring: #0891b2;
   }
+  .btn-primary {
+    background: #0284c7 !important;
+    border-color: #0284c7 !important;
+    color: #ffffff !important;
+  }
+  .btn-primary:hover {
+    background: #0369a1 !important;
+    border-color: #0369a1 !important;
+    color: #ffffff !important;
+  }
 }
 
 /* Base Reset & Typography */
@@ -545,6 +555,11 @@ tr:last-child td {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.footer-bottom a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* Reduced Motion */
