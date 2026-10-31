@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Architecture: how Dark Gravity is built and where it runs</title>
-  <meta name="description" content="The five Rust crates, the five-step mission pipeline, the ADR-008 workspace standard, where each part runs in Kubernetes, and the security boundaries, with evidence links.">
+  <title>Architecture: Dark Gravity System Design</title>
+  <meta name="description" content="Five Rust crates, 5-step Hatchet pipeline, ADR-008 workspace CRD, gVisor sandboxes, and Kubernetes cluster topology verified against repository facts.">
   <link rel="canonical" href="https://lgcorzo.github.io/architecture.html">
+  <meta property="og:site_name" content="Dark Gravity Lab">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Architecture: Dark Gravity System Design">
+  <meta property="og:description" content="Five Rust crates, 5-step Hatchet pipeline, ADR-008 workspace CRD, gVisor sandboxes, and Kubernetes cluster topology verified against repository facts.">
+  <meta property="og:url" content="https://lgcorzo.github.io/architecture.html">
+  <meta property="og:image" content="https://lgcorzo.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Architecture: Dark Gravity System Design">
+  <meta name="twitter:description" content="Five Rust crates, 5-step Hatchet pipeline, ADR-008 workspace CRD, gVisor sandboxes, and Kubernetes cluster topology verified against repository facts.">
+  <meta name="twitter:image" content="https://lgcorzo.github.io/assets/og-image.png">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
@@ -19,8 +31,8 @@
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="architecture.html" class="nav-link" aria-current="page">Architecture</a></li>
-          <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
-          <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
+          <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
           <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
         </ul>
       </nav>
@@ -272,7 +284,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
             <li><a href="lifecycle.html">Lifecycle</a></li>
-            <li><a href="sovereignty.html">Fork policy</a></li>
+            <li><a href="fork-policy.html">Fork policy</a></li>
             <li><a href="notebooks.html">Lab notebook</a></li>
           </ul>
         </div>
@@ -281,13 +293,13 @@
           <ul class="footer-links">
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
             <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
-            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
-        <span>Latest release: v0.2.8</span>
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.2.8">v0.2.8</a></span>
       </div>
     </div>
   </footer>
