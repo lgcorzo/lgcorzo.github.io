@@ -515,11 +515,11 @@
                     <span>// Empirical Evidence: Dependency Solver Deadlock Resolution (PR #442)</span>
                     <span class="text-[10px] text-slate-400">pyproject.toml &bull; commit 00ef1fe</span>
                   </div>
-                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-rose-400">- opentelemetry-instrumentation = ">=0.51b0,<0.52"       # Locked opentelemetry-api <= 1.30.0</span>
-<span class="text-emerald-400">+ opentelemetry-instrumentation = ">=0.51b0,<1.0.0"       # Allowed resolution of modern OTel</span>
-<span class="text-emerald-400">+ opentelemetry-exporter-otlp-proto-http = ">=1.45.1,<2.0.0"</span>
-<span class="text-emerald-400">+ opentelemetry-exporter-otlp = ">=1.45.1,<2.0.0"</span>
-<span class="text-emerald-400">+ opentelemetry-api = ">=1.45.1,<2.0.0"                   # Explicit patched transitive floor</span></code></pre>
+                  <pre class="overflow-x-auto text-[11px] text-slate-300 leading-tight"><code><span class="text-rose-400">- opentelemetry-instrumentation = &quot;&gt;=0.51b0,&lt;0.52&quot;       # Locked opentelemetry-api &le; 1.30.0</span>
+<span class="text-emerald-400">+ opentelemetry-instrumentation = &quot;&gt;=0.51b0,&lt;1.0.0&quot;       # Allowed resolution of modern OTel</span>
+<span class="text-emerald-400">+ opentelemetry-exporter-otlp-proto-http = &quot;&gt;=1.45.1,&lt;2.0.0&quot;</span>
+<span class="text-emerald-400">+ opentelemetry-exporter-otlp = &quot;&gt;=1.45.1,&lt;2.0.0&quot;</span>
+<span class="text-emerald-400">+ opentelemetry-api = &quot;&gt;=1.45.1,&lt;2.0.0&quot;                   # Explicit patched transitive floor</span></code></pre>
                 </div>
 
                 <div class="rounded-xl border border-line bg-black/60 p-3.5">
