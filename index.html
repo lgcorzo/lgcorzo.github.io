@@ -1,413 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>lgcorzo — Public Lab for AI Systems Engineering | Industrial AI, MLOps, LLMOps &amp; Autonomous Systems</title>
-  <meta name="description" content="A public engineering lab notebook by Dr. Luis Galo Corzo: experiments, architectural decisions, failures and lessons learned on agentic architectures, autonomous software engineering, cloud-native infrastructure and industrial AI.">
-  <meta property="og:title" content="lgcorzo — Public Lab for AI Systems Engineering">
-  <meta property="og:description" content="Experiments, architectural decisions and lessons learned at the intersection of industrial AI, agentic architectures and autonomous software engineering.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#070a10">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2322d3ee' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
-  <link rel="stylesheet" href="css/portfolio.min.css">
+  <title>Dark Gravity Lab — Autonomous Software Factory &amp; Systems Engineering</title>
+  <meta name="description" content="Engineering lab notebook for Dark Gravity: an empirical, evidence-based autonomous software factory implementing Spec-Driven Development, zero-trust isolation, and formal human-in-the-loop governance.">
+  <link rel="canonical" href="https://lgcorzo.github.io/">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-<body class="font-sans text-slate-300 antialiased selection:bg-accent/30 selection:text-white">
-
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-ink-950">Skip to content</a>
-
-  <!-- ==================== NAVIGATION ==================== -->
-  <header class="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink-950/70 backdrop-blur-xl">
-    <nav class="container-x flex h-16 items-center justify-between" aria-label="Primary">
-      <a href="#top" class="flex items-center gap-2.5 font-semibold text-white">
-        <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent to-accent-2 text-ink-950">
-          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </span>
-        <span class="tracking-tight">lgcorzo</span>
-      </a>
-
-      <ul class="hidden items-center gap-1 md:flex" id="nav-links">
-        <li><a class="nav-link rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="#about">About</a></li>
-        <li><a class="nav-link rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="notebooks.html">Lab Notebook</a></li>
-        <li><a class="nav-link rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="#dark-gravity">Dark Gravity</a></li>
-        <li><a class="nav-link rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="#projects">Projects</a></li>
-        <li><a class="rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="architecture.html">Architecture</a></li>
-        <li><a class="rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="lifecycle.html">Lifecycle</a></li>
-        <li><a class="rounded-lg px-3 py-2 text-sm text-slate-400 transition hover:text-white" href="sovereignty.html">Fork Policy</a></li>
-      </ul>
-
-      <div class="hidden items-center gap-2 md:flex">
-        <a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer" class="btn btn-ghost !py-2">GitHub</a>
-        <a href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer" class="btn btn-primary !py-2">LinkedIn</a>
-      </div>
-
-      <button id="menu-btn" class="grid h-10 w-10 place-items-center rounded-lg border border-line md:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-    </nav>
-
-    <div id="mobile-menu" class="hidden border-t border-line bg-ink-950/95 md:hidden">
-      <ul class="container-x flex flex-col gap-1 py-4 text-sm">
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#about">About</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#dark-gravity">Dark Gravity</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="#projects">Projects</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="architecture.html">Architecture</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="lifecycle.html">Lifecycle</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="sovereignty.html">Fork Policy</a></li>
-        <li><a class="block rounded-lg px-3 py-2.5 hover:bg-white/5" href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      </ul>
+  <!-- Unified Navigation Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary Navigation">
+        <a href="index.html" class="site-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <span>Dark Gravity Lab</span>
+        </a>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+          <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
+          <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
+          <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main id="main">
+    <div class="container">
+      <!-- Two-sentence project summary & status -->
+      <section class="hero">
+        <h1>Dark Gravity Autonomous Software Factory</h1>
+        <p class="hero-subtitle">
+          Dark Gravity is a Rust-based autonomous engineering platform for zero-trust and security-critical software factories, coordinating multi-agent workflows under formal human-in-the-loop governance. Today it runs as a 5-crate Rust workspace (v0.2.8) integrated with Kubernetes CRDs, Hatchet durable DAGs, and gVisor sandboxing; core DAG phases and admission controls are deployed and verified, while multi-node chaos testing remains designed.
+        </p>
 
-    <!-- ==================== HERO ==================== -->
-    <section id="top" class="relative isolate overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
-      <div class="container-x grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr]">
-        <div>
-          <p class="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3.5 py-1.5 font-mono text-xs text-slate-300">
-            <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-3 opacity-70"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-accent-3"></span></span>
-            Public engineering lab · Industrial AI · Experiments, decisions &amp; lessons learned
-          </p>
-          <h1 class="mt-6 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl">
-            Industrial AI Engineering.<br>
-            <span class="text-gradient">AI Systems Architecture &amp; Autonomous Systems.</span>
-          </h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
-            Exploring and engineering AI systems at the intersection of <strong class="font-semibold text-slate-200">industrial applications</strong>, <strong class="font-semibold text-slate-200">agentic architectures</strong>, <strong class="font-semibold text-slate-200">cloud-native infrastructure</strong> and <strong class="font-semibold text-slate-200">autonomous software engineering</strong>. I document experiments, architectural decisions, implementation details and lessons learned, focusing on what works, where systems fail, and which patterns can be applied to real industrial environments.
-          </p>
-
-          <div class="mt-9 flex flex-wrap gap-3">
-            <a href="notebooks.html" class="btn btn-primary">Open Lab Notebook
-              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-            <a href="#about" class="btn btn-ghost">Research Lines</a>
-            <a href="#dark-gravity" class="btn btn-ghost">Dark Gravity Lab</a>
-            <a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub</a>
-          </div>
-        </div>
-
-        <!-- Terminal-style highlight card -->
-        <div class="reveal relative">
-          <div class="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-accent/20 via-accent-2/10 to-accent-3/20 blur-2xl"></div>
-          <div class="glass animate-float overflow-hidden shadow-2xl shadow-black/40">
-            <div class="flex items-center gap-2 border-b border-line px-4 py-3">
-              <span class="h-3 w-3 rounded-full bg-rose-400/80"></span><span class="h-3 w-3 rounded-full bg-amber-400/80"></span><span class="h-3 w-3 rounded-full bg-emerald-400/80"></span>
-              <span class="ml-3 font-mono text-xs text-slate-500">dark-gravity — experiment.log (illustrative)</span>
-            </div>
-            <pre class="overflow-x-auto p-5 font-mono text-[12.5px] leading-relaxed text-slate-300"><code><span class="text-slate-500">$</span> gh issue create <span class="text-accent-2">--label</span> autonomous-mission
-<span class="text-accent-3">✔</span> mission signed <span class="text-slate-500">(Ed25519 · NHI)</span>
-<span class="text-accent-3">✔</span> plan      <span class="text-slate-500">rustant · spec-kit contract</span>
-<span class="text-accent-3">✔</span> code      <span class="text-slate-500">zeroclaw · gVisor ≤ 30&nbsp;MiB</span>
-<span class="text-accent-3">✔</span> validate  <span class="text-slate-500">tests + SAST in sandbox</span>
-<span class="text-accent-3">✔</span> review    <span class="text-slate-500">LLM-judge score 8.6 / 10</span>
-<span class="text-amber-300">⏸</span> awaiting <span class="text-white">human approval</span>…
-<span class="text-slate-500">$</span> <span class="inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-accent"></span></code></pre>
-          </div>
-        </div>
-      </div>
-
-      <!-- Key metrics -->
-      <div class="container-x mt-16">
-        <dl class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <div class="glass reveal p-5"><dt class="text-xs uppercase tracking-wider text-slate-500">Experience</dt><dd class="mt-1 text-2xl font-bold text-white">Industrial AI Engineering</dd></div>
-          <div class="glass reveal p-5"><dt class="text-xs uppercase tracking-wider text-slate-500">Experimentation</dt><dd class="mt-1 text-2xl font-bold text-white">Agents &amp; Autonomous Eng.</dd></div>
-          <div class="glass reveal p-5"><dt class="text-xs uppercase tracking-wider text-slate-500">Application</dt><dd class="mt-1 text-2xl font-bold text-white">Knowledge → Industry</dd></div>
-          <div class="glass reveal p-5"><dt class="text-xs uppercase tracking-wider text-slate-500">Public Repositories</dt><dd class="mt-1 text-3xl font-bold text-white" id="stat-repos">60+</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- ==================== ABOUT ==================== -->
-    <section id="about" class="scroll-mt-20 py-20 sm:py-24">
-      <div class="container-x">
-        <div class="reveal max-w-2xl">
-          <p class="section-eyebrow">About Dr. Luis Galo Corzo</p>
-          <h2 class="section-title">A long-running technical notebook</h2>
-          <p class="section-lead">
-            Ph.D. in Engineering with 15+ years in industrial systems and years of hands-on MLOps, LLMOps and enterprise AI work. This site is not a product pitch and does not claim that autonomous engineering is solved. It is a personal lab: I build, test, break and document ideas, then evaluate which architectural patterns are worth carrying into industrial contexts.
-          </p>
-        </div>
-        <div class="mt-12 grid gap-5 md:grid-cols-3">
-          <article class="glass card-hover reveal p-6">
-            <div class="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-accent/10 text-accent">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>
-            </div>
-            <p class="font-mono text-xs text-accent">EXPERIENCE</p>
-            <h3 class="mt-1 text-lg font-semibold text-white">Industrial AI Engineering</h3>
-            <p class="mt-2 text-sm leading-relaxed text-slate-400">Experience building AI solutions for real industrial problems, backed by MLOps and LLMOps practice: versioned data, model lineage, evaluation and CI gates.</p>
-          </article>
-          <article class="glass card-hover reveal p-6">
-            <div class="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-accent-2/10 text-accent-2">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
-            </div>
-            <p class="font-mono text-xs text-accent-2">EXPERIMENTATION</p>
-            <h3 class="mt-1 text-lg font-semibold text-white">AI Systems Architecture &amp; Autonomous Engineering</h3>
-            <p class="mt-2 text-sm leading-relaxed text-slate-400">Experiments with agents, autonomous software factories, orchestration, Kubernetes, security and knowledge systems.</p>
-          </article>
-          <article class="glass card-hover reveal p-6">
-            <div class="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-accent-3/10 text-accent-3">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8 8 9 4.6-1 8-4 8-9V6l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
-            </div>
-            <p class="font-mono text-xs text-accent-3">APPLICATION</p>
-            <h3 class="mt-1 text-lg font-semibold text-white">Engineering Knowledge into Industrial AI</h3>
-            <p class="mt-2 text-sm leading-relaxed text-slate-400">Evaluating which architectural patterns are useful, which fail, and which deserve to be assessed for enterprise environments.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== LAB NOTEBOOK ==================== -->
-    <section id="lab" class="scroll-mt-20 border-t border-line py-20 sm:py-24">
-      <div class="container-x">
-        <div class="reveal max-w-3xl">
-          <p class="section-eyebrow">Engineering diary</p>
-          <h2 class="section-title">Lab notebook: how experiments are documented</h2>
-          <div class="mt-4"><a href="notebooks.html" class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline">View real experiment entries in notebooks.html &rarr;</a></div>
-          <p class="section-lead">Every entry leaves a permanent trail: code, architectural decision, result and lesson. A failed experiment can be more valuable than a successful one if it exposes a real architectural problem.</p>
-        </div>
-
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent">EXPERIMENT</p><h3 class="mt-2 font-semibold text-white">Run an autonomous mission on Kubernetes</h3><p class="mt-2 text-sm text-slate-400">Shows what really works.</p></article>
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent-2">ARCHITECTURAL DECISION</p><h3 class="mt-2 font-semibold text-white">Hatchet vs. a custom state machine</h3><p class="mt-2 text-sm text-slate-400">Explains the technical reasoning.</p></article>
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent-3">DOCUMENTED FAILURE</p><h3 class="mt-2 font-semibold text-white">An agent generates code that fails the tests</h3><p class="mt-2 text-sm text-slate-400">Shows learning and limits.</p></article>
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent">COMPARISON</p><h3 class="mt-2 font-semibold text-white">gVisor vs. other isolation strategies</h3><p class="mt-2 text-sm text-slate-400">Makes the trade-offs visible.</p></article>
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent-2">EVOLUTION</p><h3 class="mt-2 font-semibold text-white">How the architecture changes after 20 missions</h3><p class="mt-2 text-sm text-slate-400">Demonstrates accumulated learning.</p></article>
-          <article class="glass card-hover reveal p-6"><p class="font-mono text-xs text-accent-3">INDUSTRIAL TRANSFER</p><h3 class="mt-2 font-semibold text-white">Which orchestration pattern could suit enterprise systems</h3><p class="mt-2 text-sm text-slate-400">Connects the lab with industrial experience.</p></article>
-        </div>
-
-        <div class="reveal glass mt-10 p-7">
-          <h3 class="text-lg font-semibold text-white">Every entry answers five questions</h3>
-          <ol class="mt-3 list-decimal space-y-1 pl-5 text-sm text-slate-400">
-            <li>What did I want to verify?</li>
-            <li>Which architecture and configuration did I use?</li>
-            <li>What actually happened?</li>
-            <li>What did I learn and which limitations did I find?</li>
-            <li>What would I do differently in the next experiment?</li>
-          </ol>
-        </div>
-
-        <div class="mt-14 reveal max-w-3xl">
-          <h3 class="text-2xl font-bold text-white">From lab to industry, without mixing environments</h3>
-          <p class="mt-2 text-slate-400">Learnings are kept in three clearly separated categories.</p>
-        </div>
-        <div class="mt-6 grid gap-5 md:grid-cols-3">
-          <div class="glass reveal p-6"><p class="font-mono text-xs text-accent">A · PERSONAL EXPERIMENT</p><p class="mt-2 text-sm text-slate-400">Code, models, agents, orchestration, storage and deployments under my own control. Free to iterate.</p></div>
-          <div class="glass reveal p-6"><p class="font-mono text-xs text-accent-2">B · REUSABLE PATTERN</p><p class="mt-2 text-sm text-slate-400">The general lesson: state persistence, agent evaluation, permissions, traceability, recovery, context management.</p></div>
-          <div class="glass reveal p-6"><p class="font-mono text-xs text-accent-3">C · ENTERPRISE APPLICATION</p><p class="mt-2 text-sm text-slate-400">Assessed against real requirements, security and architecture constraints through the corresponding internal process.</p></div>
-        </div>
-        <p class="mt-6 text-sm leading-relaxed text-slate-500">No internal configurations, proprietary code, customer data, credentials, identifiable incidents or confidential architecture details are published here. A pattern that works in the lab is not assumed ready for production: the lab reduces uncertainty, enterprise adoption requires its own evaluation.</p>
-      </div>
-    </section>
-
-    <!-- ==================== DARK GRAVITY SPOTLIGHT ==================== -->
-    <section id="dark-gravity" class="relative scroll-mt-20 overflow-hidden border-y border-line bg-ink-900/60 py-20 sm:py-28">
-      <div class="pointer-events-none absolute -right-40 top-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl"></div>
-      <div class="pointer-events-none absolute -left-40 bottom-10 h-96 w-96 rounded-full bg-accent-2/10 blur-3xl"></div>
-
-      <div class="container-x relative">
-        <!-- Intro -->
-        <div class="reveal max-w-3xl">
-          <p class="section-eyebrow">Autonomous engineering lab</p>
-          <h2 class="section-title text-4xl sm:text-5xl">Dark Gravity &mdash; <span class="text-gradient">a lab for autonomous engineering</span></h2>
-          <p class="section-lead">
-            The main project for experimenting with automating the development cycle: specification, planning, code generation, validation, isolation and delivery. It publishes architectural decisions, runs, limitations and negative results. See the repository README for what is implemented, what is deployed, what is still experimental and what is pending.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a class="btn btn-primary" href="architecture.html">Explore the architecture</a>
-            <a class="btn btn-ghost" href="sovereignty.html">Fork policy</a>
-            <a class="btn btn-ghost" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
-          </div>
-        </div>
-
-        <!-- In plain words -->
-        <div class="reveal mt-12 grid gap-4 md:grid-cols-3">
-          <div class="glass p-5"><p class="font-mono text-xs text-accent">THE QUESTION</p><p class="mt-2 text-sm leading-relaxed text-slate-400">How far can the software lifecycle be automated when agents hold credentials, run untrusted code and act with limited oversight?</p></div>
-          <div class="glass p-5"><p class="font-mono text-xs text-accent-2">THE EXPERIMENT</p><p class="mt-2 text-sm leading-relaxed text-slate-400">Narrow agent roles, disposable sandboxes, short-lived credentials and a durable workflow, tested mission by mission.</p></div>
-          <div class="glass p-5"><p class="font-mono text-xs text-accent-3">THE LEARNING</p><p class="mt-2 text-sm leading-relaxed text-slate-400">What works, where it fails and which patterns are worth evaluating elsewhere. A human gate stays before every merge.</p></div>
-        </div>
-
-        <!-- Actual Operational Status Matrix -->
-        <div class="reveal glass mt-12 p-7 sm:p-8">
-          <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- Three primary navigation paths -->
+        <div class="hero-paths">
+          <a href="architecture.html" class="path-card">
             <div>
-              <p class="font-mono text-xs uppercase tracking-wider text-accent">Engineering Transparency · Actual Factory Status</p>
-              <h3 class="mt-1 text-xl font-bold text-white">What is Implemented, Deployed, Verified &amp; Designed</h3>
+              <h3>Understand the architecture</h3>
+              <p>Explore the 5-crate onion model, Hatchet DAG, gVisor sandboxes, and ADR-008 workspace CRD standard.</p>
             </div>
-            <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-accent hover:underline">evidence/verified_status.json ↗</a>
+            <span class="path-action">View architecture &rarr;</span>
+          </a>
+
+          <a href="architecture.html#evidence" class="path-card">
+            <div>
+              <h3>See the evidence</h3>
+              <p>Inspect empirical test results, baseline cluster snapshots, Criterion benchmarks, and verification logs.</p>
+            </div>
+            <span class="path-action">Inspect evidence ledger &rarr;</span>
+          </a>
+
+          <a href="notebooks.html" class="path-card">
+            <div>
+              <h3>Read the lab notes</h3>
+              <p>Follow technical experiments, failover drill outcomes, and architectural retrospectives formatted in five questions.</p>
+            </div>
+            <span class="path-action">Open lab notebook &rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Status Legend Standard -->
+      <section>
+        <h2>Status taxonomy</h2>
+        <p>Every architectural claim, feature, and component across this site carries one of four explicit verification tags:</p>
+        <div class="status-legend">
+          <div class="status-legend-item">
+            <span class="status-tag status-verified">Verified</span>
+            <span>Confirmed by automated CI suites or published evidence files.</span>
           </div>
-          <p class="mt-2 text-sm text-slate-400">
-            Rather than claiming autonomous software engineering is a finished product, Dark Gravity tracks every subsystem across four explicit verification states:
+          <div class="status-legend-item">
+            <span class="status-tag status-deployed">Deployed</span>
+            <span>Running and active in live cluster environments.</span>
+          </div>
+          <div class="status-legend-item">
+            <span class="status-tag status-implemented">Implemented</span>
+            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
+          </div>
+          <div class="status-legend-item">
+            <span class="status-tag status-designed">Designed</span>
+            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Curated Projects Section -->
+      <section id="projects">
+        <h2>Curated project ecosystem</h2>
+        <p>
+          The lab maintains 72 repositories (64 public, 8 private) across autonomous software engineering, infrastructure automation, and cognitive agent stacks. Below are the core active projects grouped by operational domain.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Autonomous Factory &amp; Orchestration</h3>
+            <p>Core platforms for agentic software generation, durable DAG execution, and contract-driven verification.</p>
+            <ul style="list-style: none; margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>
+                <strong><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">rust_CACD_autonomous_factory</a></strong>
+                <span class="status-tag status-verified">Verified</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Main factory workspace: 5 crates, Hatchet 6-phase DAG, ADR-008 CRD operator, gVisor micro-sandboxing.</p>
+              </li>
+              <li>
+                <strong><a href="https://github.com/lgcorzo/speckit-superpowers-bridge">speckit-superpowers-bridge</a></strong>
+                <span class="status-tag status-verified">Verified</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Execution bridge linking Spec-Kit design contracts directly to Superpowers test-driven development tools.</p>
+              </li>
+              <li>
+                <strong><a href="https://github.com/lgcorzo/spec-kit">spec-kit</a></strong>
+                <span class="status-tag status-deployed">Deployed</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Hardened fork of Spec-Kit CLI ensuring deterministic schema generation and constitution gating.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Cognitive Memory &amp; LLM Routing</h3>
+            <p>Knowledge graph memory, AST structural indexing, and sovereign LLM routing with FinOps telemetry.</p>
+            <ul style="list-style: none; margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>
+                <strong><a href="https://github.com/lgcorzo/dark-litellm">dark-litellm</a></strong>
+                <span class="status-tag status-deployed">Deployed</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Hardened LLM gateway proxy injecting Virtual Tags (Vtags) and enforcing 90% budget hardstops.</p>
+              </li>
+              <li>
+                <strong><a href="https://github.com/lgcorzo/semantica">semantica</a></strong>
+                <span class="status-tag status-deployed">Deployed</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Semantic memory engine providing causal provenance tracking across multi-agent mission lifecycles.</p>
+              </li>
+              <li>
+                <strong><a href="https://github.com/lgcorzo/openwiki">openwiki</a></strong>
+                <span class="status-tag status-implemented">Implemented</span>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Decoupled documentation engine presenting AST architecture graphs derived via deepwiki-rs.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Full repository catalog</div>
+          <p>
+            Looking for all 72 repositories, fork policies, and code quality governance rules? Read our detailed policy on why and how we fork upstream dependencies.
           </p>
-          <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
-              <span class="font-mono text-xs font-semibold text-emerald-400">1. IMPLEMENTED (RUST 2024)</span>
-              <p class="mt-2 text-xs leading-relaxed text-slate-300">5-crate Onion workspace (<code class="text-slate-200">factory-core</code> to <code class="text-slate-200">factory-cli</code>), Ed25519 NHI signing, <code class="text-slate-200">zeroize</code> memory wipe (54.2 ns Criterion micro-benchmark), 4-Vertex HITL &amp; <code class="text-slate-200">CircuitBreakerGuard</code>.</p>
-            </div>
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
-              <span class="font-mono text-xs font-semibold text-accent">2. DEPLOYED (CLUSTER &amp; CI)</span>
-              <p class="mt-2 text-xs leading-relaxed text-slate-300">10-namespace K8s topology via FluxCD, Hatchet DAG + Kafka KRaft bus, CloudNativePG + sovereign <code class="text-slate-200">@lgcorzo</code> MinIO S3, <code class="text-slate-200">dark-litellm</code>, <code class="text-slate-200">R2R</code>, <code class="text-slate-200">semantica</code>, and the hourly Project 6 vulnerability monitor.</p>
-            </div>
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
-              <span class="font-mono text-xs font-semibold text-accent-2">3. VERIFIED (QUALITY GATES)</span>
-              <p class="mt-2 text-xs leading-relaxed text-slate-300">Enforced <code class="text-slate-200">clippy -D warnings</code>, <code class="text-slate-200">ruff</code>, multi-OS <code class="text-slate-200">pytest</code> / <code class="text-slate-200">cargo test</code>, custom <code class="text-slate-200">codeql.yml</code> static analysis, and SHA-256 hash-pinned security audit lockfiles across active repos.</p>
-            </div>
-            <div class="rounded-xl border border-line bg-ink-950/60 p-4">
-              <span class="font-mono text-xs font-semibold text-amber-300">4. DESIGNED / IN VALIDATION</span>
-              <p class="mt-2 text-xs leading-relaxed text-slate-300">Multi-node chaos/failover drills, automated <code class="text-slate-200">DocAgent</code> R&amp;D grant telemetry export, and technical readiness controls aligned with EU AI Act Art. 12/14 &amp; SOC 2 Type II (no third-party certification claimed).</p>
-            </div>
-          </div>
+          <p style="margin-top: 0.5rem;">
+            <a href="sovereignty.html" style="font-weight: 600;">Read fork policy &amp; view complete repository matrix &rarr;</a>
+          </p>
         </div>
+      </section>
 
-        <!-- Interactive pipeline story -->
-        <div class="mt-16">
-          <div class="reveal">
-            <h3 class="text-2xl font-bold text-white">How a mission flows</h3>
-            <p class="mt-2 text-slate-400">Six durable phases. Select a step to see what happens and which component is responsible.</p>
-          </div>
-
-          <div class="reveal mt-8 grid gap-6 lg:grid-cols-[320px_1fr]">
-            <div id="pipeline-steps" class="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0" role="tablist" aria-label="Mission phases"></div>
-            <div id="pipeline-panel" class="glass relative min-h-[300px] overflow-hidden p-7 sm:p-9" role="tabpanel" aria-live="polite"></div>
-          </div>
-        </div>
-
-        <!-- Components & tech stack -->
-        <div class="mt-20">
-          <div class="reveal max-w-2xl">
-            <h3 class="text-2xl font-bold text-white">Core components &amp; tech stack</h3>
-            <p class="mt-2 text-slate-400">Ten isolated Kubernetes namespaces, grouped into four layers.</p>
-          </div>
-          <div id="stack-grid" class="mt-8 grid gap-5 md:grid-cols-2"></div>
-        </div>
-
-        <!-- Differentiators -->
-        <div class="mt-20">
-          <div class="reveal max-w-2xl">
-            <h3 class="text-2xl font-bold text-white">Design choices under test</h3>
-          </div>
-          <div id="highlights-grid" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
-        </div>
-
-        <!-- Human control -->
-        <div class="reveal glass mt-20 overflow-hidden">
-          <div class="grid gap-0 md:grid-cols-2">
-            <div class="p-8 sm:p-10">
-              <p class="section-eyebrow">Human in the loop</p>
-              <h3 class="mt-3 text-2xl font-bold text-white">The factory proposes. You decide.</h3>
-              <p class="mt-3 text-sm leading-relaxed text-slate-400">Agents open pull requests and attach test evidence. Merging is a manual human action &mdash; enforced by branch protection, not by convention. You can steer a live mission straight from a PR comment.</p>
-              <div class="mt-6 flex flex-wrap gap-2">
-                <a class="btn btn-ghost !py-2 !text-xs" href="architecture.html#security-lifecycle">Zero-trust lifecycle</a>
-                <a class="btn btn-ghost !py-2 !text-xs" href="architecture.html#k8s-namespaces">10 namespaces</a>
-              </div>
-            </div>
-            <div class="border-t border-line bg-ink-950/60 p-6 font-mono text-[12.5px] leading-relaxed md:border-l md:border-t-0">
-              <p class="text-slate-500"># Directives on any pull request</p>
-              <p class="mt-3"><span class="text-accent">@darkgravity</span> <span class="text-white">/status</span> <span class="text-slate-500">— live DAG &amp; sandbox health</span></p>
-              <p><span class="text-accent">@darkgravity</span> <span class="text-white">/interact</span> <span class="text-slate-500">&lt;question&gt; — ask the planner</span></p>
-              <p><span class="text-accent">@darkgravity</span> <span class="text-white">/refine</span> <span class="text-slate-500">&lt;change&gt; — surgical edit</span></p>
-              <p><span class="text-accent">@darkgravity</span> <span class="text-white">/validate</span> <span class="text-slate-500">— full tests + SAST</span></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== PROJECTS ==================== -->
-    <section id="projects" class="scroll-mt-20 py-20 sm:py-28">
-      <div class="container-x">
-        <div class="reveal flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div class="max-w-3xl">
-            <p class="section-eyebrow">Repositories</p>
-            <h2 class="section-title">Projects, curated</h2>
-            <p class="section-lead">Repositories grouped by function: Dark Gravity (autonomous engineering lab), infrastructure &amp; GitOps (do ideas survive deployment, limits and recovery?), and LLMOps, agents &amp; knowledge systems (RAG, multi-agent orchestration, evaluation, observability). Every card links straight to the code.</p>
-            <p class="mt-3 text-sm leading-relaxed text-slate-400">
-              <strong class="text-slate-300">Why we fork &amp; maintain principal projects (41 forks / 71 total repos):</strong> Principal open-source dependencies—including SDD &amp; agent toolchains (<code class="text-slate-300">spec-kit</code>, <code class="text-slate-300">superpowers</code>, <code class="text-slate-300">speckit-superpowers-bridge</code>, <code class="text-slate-300">adk-rust</code>), cognitive memory &amp; AST engines (<code class="text-slate-300">semantica</code>, <code class="text-slate-300">deepwiki-rs</code>, <code class="text-slate-300">CodeWiki</code>, <code class="text-slate-300">openwiki</code>, <code class="text-slate-300">dark-litellm</code>), and the 38-repo MinIO S3/SIMD stack—are forked and maintained under our own strict code quality rules: deterministic CLI/schema contracts, SHA-256 hash-pinned lockfiles, custom CodeQL &amp; <code class="text-slate-300">pip-audit</code>/<code class="text-slate-300">cargo audit</code> gates, and an hourly autonomous remediation pipeline (GitHub Project 6 + Jules). Read the full rationale in the <a href="sovereignty.html" class="text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent">Fork Policy &amp; Code Quality Governance</a>.
+      <!-- Key Engineering Guarantees -->
+      <section>
+        <h2>Core technical guarantees</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Micro-sandboxing (gVisor)</h3>
+            <p>
+              All untrusted code generation and compilation runs inside user-space kernel sandboxes (<code class="font-mono">RuntimeClass=gvisor</code>). In sandbox namespaces, admission policies enforce memory clamping to 30&nbsp;MiB and CPU limits to 250m.
             </p>
           </div>
-          <label class="relative block w-full lg:w-80">
-            <span class="sr-only">Search projects</span>
-            <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="repo-search" type="search" placeholder="Search by name, tech, topic…" class="w-full rounded-xl border border-line bg-white/[0.04] py-3 pl-10 pr-4 text-sm text-white placeholder:text-slate-500 focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/20">
-          </label>
-        </div>
-
-        <div id="filter-bar" class="reveal mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Project categories"></div>
-        <p id="repo-count" class="mt-5 font-mono text-xs text-slate-500" aria-live="polite"></p>
-
-        <div id="repo-grid" class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
-
-        <div class="mt-10 flex justify-center">
-          <button id="show-more" class="btn btn-ghost hidden">Show more projects</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== CTA ==================== -->
-    <section class="pb-24">
-      <div class="container-x">
-        <div class="reveal relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-accent/15 via-ink-800 to-accent-2/15 p-10 text-center sm:p-14">
-          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Follow the experiments.</h2>
-          <p class="mx-auto mt-3 max-w-xl text-slate-400">The best quality signal is not that Dark Gravity looks perfect, but that anyone can follow how it evolved, why decisions were made and what was learned by testing them.</p>
-          <div class="mt-7 flex flex-wrap justify-center gap-3">
-            <a class="btn btn-primary" href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
-            <a class="btn btn-ghost" href="architecture.html">Inspect Architecture</a>
+          <div class="card">
+            <h3>Human-in-the-loop requirement</h3>
+            <p>
+              Agents produce clean PRs and link originating issues, but automated direct merges to default branches are blocked by policy. A human engineer must always review, verify CI evidence, and merge manually.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="border-t border-line bg-ink-950/80">
-    <div class="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-      <div>
-        <p class="font-semibold text-white">Dr. Luis Galo Corzo</p>
-        <p class="mt-3 max-w-xs text-sm leading-relaxed text-slate-500">Industrial AI Engineering | AI Systems Architecture | MLOps, LLMOps &amp; Autonomous Systems. Personal lab; views and experiments are my own.</p>
+  <!-- Unified Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Dark Gravity Lab</h4>
+          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="lifecycle.html">Lifecycle</a></li>
+            <li><a href="sovereignty.html">Fork policy</a></li>
+            <li><a href="notebooks.html">Lab notebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Primary Repositories</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
+            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
+            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Explore</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-slate-500">
-          <li><a class="hover:text-accent" href="notebooks.html">Lab Notebooks</a></li>
-          <li><a class="hover:text-accent" href="#dark-gravity">Dark Gravity</a></li>
-          <li><a class="hover:text-accent" href="#projects">Projects</a></li>
-          <li><a class="hover:text-accent" href="architecture.html">Architecture</a></li>
-          <li><a class="hover:text-accent" href="lifecycle.html">Project Lifecycle</a></li>
-          <li><a class="hover:text-accent" href="sovereignty.html">Fork policy</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Connect</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-slate-500">
-          <li><a class="hover:text-accent" href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-          <li><a class="hover:text-accent" href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Resources</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-slate-500">
-          <li><a class="hover:text-accent" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory" target="_blank" rel="noopener noreferrer">Factory source</a></li>
-          <li><a class="hover:text-accent" href="https://github.com/lgcorzo/docs" target="_blank" rel="noopener noreferrer">Sovereign docs</a></li>
-          <li><a class="hover:text-accent" href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer">NotebookLM knowledge base</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-line">
-      <div class="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs text-slate-600 sm:flex-row">
-        <span>&copy; 2026 Luis Galo Corzo. All rights reserved.</span>
-        <span class="font-mono">Dark Gravity CA/CD · V7.2 / V7.3</span>
+      <div class="footer-bottom">
+        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
+        <span>Version v0.2.8 &bull; Evidence-based verification</span>
       </div>
     </div>
   </footer>
-
-  <script src="js/repos-data.js" defer></script>
-  <script src="js/portfolio.js" defer></script>
 </body>
 </html>

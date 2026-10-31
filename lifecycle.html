@@ -3,1016 +3,253 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mission Lifecycle Notes — Spec-Driven Development, Hatchet DAG & C4 | lgcorzo lab</title>
-  <meta name="description" content="End-to-end lifecycle of the Dark Gravity CA/CD autonomous software factory: from Jira, GitHub, or GitLab issues through Spec-Kit SDD, durable Hatchet DAG execution in gVisor sandboxes, to R2R GraphRAG AST living memory and automated C4 architecture documentation.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: 'dark',
-      themeVariables: {
-        darkMode: true,
-        background: '#0d121f',
-        primaryColor: '#101726',
-        primaryTextColor: '#f8fafc',
-        primaryBorderColor: '#00f0ff',
-        lineColor: '#00f0ff',
-        secondaryColor: '#162036',
-        tertiaryColor: '#05070c'
-      }
-    });
-  </script>
-  <style>
-    .lifecycle-step-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.85rem;
-    }
-    .badge-step-1 { background: rgba(0, 240, 255, 0.12); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.3); }
-    .badge-step-2 { background: rgba(168, 85, 247, 0.12); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.3); }
-    .badge-step-3 { background: rgba(16, 185, 129, 0.12); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-step-4 { background: rgba(245, 158, 11, 0.12); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-step-5 { background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-    .badge-step-6 { background: rgba(236, 72, 153, 0.12); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
-
-    .hitl-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .hitl-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    .hitl-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--border-glow);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), var(--shadow-glow);
-    }
-    .hitl-vertex {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent-cyan);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .diagram-wrapper {
-      background: #080d1a;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      margin: 2.5rem 0;
-      overflow-x: auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
-
-    .code-snippet-box {
-      background: var(--bg-code);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.25rem 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      overflow-x: auto;
-      line-height: 1.6;
-      margin: 1.25rem 0;
-    }
-
-    .spec-kit-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    .spec-step-card {
-      background: rgba(13, 18, 31, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      border-left: 3px solid var(--accent-cyan);
-    }
-    .spec-step-cmd {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 0.35rem;
-    }
-
-    .c4-level-badge {
-      display: inline-block;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      background: rgba(168, 85, 247, 0.15);
-      color: var(--accent-purple);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      margin-bottom: 0.5rem;
-    }
-
-    .tabs-nav {
-      display: flex;
-      gap: 0.5rem;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 1.5rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-    }
-    .tab-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      padding: 0.6rem 1.25rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: var(--font-sans);
-      white-space: nowrap;
-    }
-    .tab-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-    }
-    .tab-btn.active {
-      background: rgba(0, 240, 255, 0.12);
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <title>Mission Lifecycle &amp; Governance — Dark Gravity Autonomous Software Factory</title>
+  <meta name="description" content="Lifecycle execution of the Dark Gravity autonomous software factory: Spec-Driven Development, durable Hatchet DAG phases, gVisor micro-sandboxing, and strict human-in-the-loop governance.">
+  <link rel="canonical" href="https://lgcorzo.github.io/lifecycle.html">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo">
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <span>DARK GRAVITY</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="architecture.html" class="nav-link">Architecture</a></li>
-        <li><a href="lifecycle.html" class="nav-link active">Project Lifecycle</a></li>
-        <li><a href="sovereignty.html" class="nav-link">Sovereignty Policy</a></li>
-        <li><a href="index.html#projects" class="nav-link">Ecosystem</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
+  <!-- Unified Navigation Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary Navigation">
+        <a href="index.html" class="site-brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <span>Dark Gravity Lab</span>
         </a>
-        <a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer" class="btn btn-purple">
-          NotebookLM KB
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <header class="hero" style="padding-bottom: 3.5rem;">
-    <div class="hero-glow"></div>
-    <div class="hero-container">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        <span>Lab Notes • Mission lifecycle of the Dark Gravity experiment</span>
-      </div>
-      <h1 class="hero-title">
-        The Autonomous Project Lifecycle: <br/>
-        <span class="gradient-text">From Backlog Issue to Living C4 Architecture</span>
-      </h1>
-      <p class="hero-subtitle">
-        The lifecycle I am experimenting with: issue ingestion by outbound polling, Spec-Driven Development with Spec-Kit, durable Hatchet DAGs in gVisor sandboxes, and generated C4 documentation. It describes the intended design and what I am testing; limitations and failed runs belong in the lab notebook.
-      </p>
-      <div class="hero-cta">
-        <a href="#lifecycle-flow" class="btn btn-primary">
-          Explore 6-Phase Pipeline
-        </a>
-        <a href="#sdd-speckit" class="btn btn-outline">
-          Spec-Kit SDD Protocol
-        </a>
-        <a href="#c4-documentation" class="btn btn-purple">
-          Living C4 &amp; OpenWiki
-        </a>
-      </div>
-
-      <!-- Hero Metrics Grid -->
-      <div class="hero-metrics">
-        <div class="metric-card">
-          <div class="metric-value">30–60s</div>
-          <div class="metric-label">Outbound Polling (0 Webhooks)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">7 Steps</div>
-          <div class="metric-label">Spec-Kit SDD Governance</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">≤ 30 MiB</div>
-          <div class="metric-label">gVisor Sandbox RAM Target</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">Zeroize</div>
-          <div class="metric-label">Secret RAM Zeroization</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">≥ 8.0/10</div>
-          <div class="metric-label">LLM Judge Threshold (configured)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">&lt; 5%</div>
-          <div class="metric-label">Orphan Symbol Rate (OSR gate target)</div>
-        </div>
-      </div>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+          <li><a href="lifecycle.html" class="nav-link active">Lifecycle</a></li>
+          <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
+          <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <!-- Section 1: Multi-Agent Workforce & HITL Governance Vertices -->
-  <section class="section" style="padding-top: 2rem;">
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-tag">Autonomous Workforce &amp; Human Sovereignty</span>
-        <h2 class="section-title">4 Specialized Agent Personas &amp; 4 HITL Governance Vertices</h2>
-        <p class="section-description">
-          Dark Gravity combines specialized agent bounded contexts with strict human oversight. Autonomous agents formulate specs and surgically write code, but a human keeps the final decision over budgets and merges.
+  <main id="main">
+    <div class="container">
+      <!-- Page Hero -->
+      <section class="hero">
+        <h1>Autonomous Mission Lifecycle</h1>
+        <p class="hero-subtitle">
+          How missions transition from human requirements to verified pull requests: Spec-Driven Development (SDD), durable Hatchet DAG steps, isolated gVisor sandboxes, and human-in-the-loop review.
         </p>
-      </div>
+      </section>
 
-      <!-- Agent Personas Grid -->
-      <div class="grid-2">
-        <div class="feature-card">
-          <div class="card-icon icon-cyan">🤖</div>
-          <span class="lifecycle-step-badge badge-step-1">Intelligence Context</span>
-          <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">Rustant — Product Owner &amp; Planner Agent</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-            Governs the intelligence domain. Queries R2R GraphRAG to synthesize architectural context, executes the 7-step Spec-Kit planning pipeline, formulates atomic tasks with parallel markers, and performs early SAST security reviews.
-          </p>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <span class="chip">Hatchet: rustant:plan</span>
-            <span class="chip">Spec-Kit CLI</span>
-            <span class="chip">R2R GraphRAG</span>
-            <span class="chip">crates/factory-application</span>
+      <!-- Status Taxonomy Standard -->
+      <section>
+        <h2>Status taxonomy</h2>
+        <p>Every operational phase and control across this page carries one of four explicit verification tags:</p>
+        <div class="status-legend">
+          <div class="status-legend-item">
+            <span class="status-tag status-verified">Verified</span>
+            <span>Confirmed by automated CI suites or published evidence files.</span>
+          </div>
+          <div class="status-legend-item">
+            <span class="status-tag status-deployed">Deployed</span>
+            <span>Running and active in live cluster environments.</span>
+          </div>
+          <div class="status-legend-item">
+            <span class="status-tag status-implemented">Implemented</span>
+            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
+          </div>
+          <div class="status-legend-item">
+            <span class="status-tag status-designed">Designed</span>
+            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
           </div>
         </div>
+      </section>
 
-        <div class="feature-card">
-          <div class="card-icon icon-purple">⚡</div>
-          <span class="lifecycle-step-badge badge-step-2">Execution Context</span>
-          <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">ZeroClaw — Developer &amp; Code Surgery Agent</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-            Governs code implementation inside ephemeral gVisor micro-sandboxes. Applies Tree-sitter AST mutations via native ADK-Rust (avoiding subprocess latency), runs cargo test suites, and enforces forensic memory zeroization.
-          </p>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <span class="chip">Hatchet: zeroclaw:execute</span>
-            <span class="chip">ADK-Rust AST Surgery</span>
-            <span class="chip">gVisor runsc</span>
-            <span class="chip">RAM ≤ 30 MiB</span>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="card-icon icon-emerald">🛡️</div>
-          <span class="lifecycle-step-badge badge-step-3">Remediation Context</span>
-          <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">DevOps Agent — Self-Healing &amp; Sentry Triage</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-            Governs the Aethelgard auto-remediation loop and production crash triage. Polls Sentry REST APIs every 15 minutes, maps exception stack traces via R2R GraphRAG, and auto-dispatches hotfix DAGs for verified anomalies.
-          </p>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <span class="chip">Aethelgard 3-Retry Loop</span>
-            <span class="chip">Deadlock SHA-256 Trip</span>
-            <span class="chip">Sentry Closed-Loop</span>
-            <span class="chip">KEDA Autoscaling</span>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="card-icon" style="background: rgba(236,72,153,0.1); color: #f472b6; border: 1px solid rgba(236,72,153,0.25);">📚</div>
-          <span class="lifecycle-step-badge badge-step-6">Infrastructure &amp; Memory Context</span>
-          <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">DocAgent — C4 Models &amp; OpenWiki Living Memory</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-            Governs living corporate memory. Following PR merges, triggers deepwiki-rs Tree-sitter AST delta indexing, syncs dependency graphs to pgvector, auto-renders C4 Level 1–3 Mermaid diagrams, and validates the &lt; 5% OSR quality gate.
-          </p>
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <span class="chip">Superpowers Engine</span>
-            <span class="chip">deepwiki-rs AST Parser</span>
-            <span class="chip">C4 Model Generator</span>
-            <span class="chip">OSR Gate &lt; 5%</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- The 4 HITL Governance Vertices -->
-      <div style="margin-top: 3.5rem;">
-        <h3 style="font-size: 1.6rem; font-weight: 700; text-align: center; margin-bottom: 0.75rem;">
-          The 4 Human-in-the-Loop (HITL) Checkpoints
-        </h3>
-        <p style="color: var(--text-secondary); text-align: center; max-width: 780px; margin: 0 auto;">
-          Branch protection and review gates are designed to prevent agents from merging code on their own. The human steers intent and keeps the veto.
+      <!-- Section 1: Agent Personas & Human-in-the-Loop Governance -->
+      <section id="agents-and-hitl">
+        <h2>Who executes missions and who holds authority?</h2>
+        <p>
+          Dark Gravity organizes work across specialized agent personas, bound by strict non-human identity (NHI) credentials and four human-in-the-loop (HITL) checkpoints.
         </p>
 
-        <div class="hitl-grid">
-          <div class="hitl-card">
-            <div class="hitl-vertex">HITL Vertex 1</div>
-            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">Strategic Injection</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55;">
-              <strong>Human Product Owner:</strong> Authors high-level business Epics or issues in Jira, GitHub, or GitLab, tagged with <code style="color: var(--accent-cyan);">autonomous-mission</code>. The human defines <em>why</em> and <em>what value</em> is required.
+        <div class="grid-2">
+          <div class="card">
+            <h3>Rustant — Product Owner &amp; Planner</h3>
+            <p>
+              Queries semantic memory (R2R GraphRAG), applies constitution rules, executes Spec-Kit workflows, and compiles atomic, dependency-ordered tasks into <code class="font-mono">tasks.md</code>.
             </p>
+            <span class="status-tag status-verified">Verified</span>
           </div>
 
-          <div class="hitl-card">
-            <div class="hitl-vertex">HITL Vertex 2</div>
-            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">Sprint Mobilization</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55;">
-              <strong>Human Tech Lead:</strong> Reviews the generated Spec-Kit artifacts (<code style="color: #cbd5e1;">spec.md</code>, <code style="color: #cbd5e1;">plan.md</code>, <code style="color: #cbd5e1;">tasks.md</code>) and approves the sprint. Prevents runaway token and compute spending.
+          <div class="card">
+            <h3>ZeroClaw — Developer &amp; Code Surgery</h3>
+            <p>
+              Consumes tasks through the <code class="font-mono">speckit-superpowers-bridge</code>, performs AST code modifications inside gVisor sandboxes, and validates test suites.
             </p>
+            <span class="status-tag status-verified">Verified</span>
           </div>
 
-          <div class="hitl-card">
-            <div class="hitl-vertex">HITL Vertex 3</div>
-            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">Exception Override</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55;">
-              <strong>Human System Architect:</strong> Ideally no intervention during active loops. Alerts fire only if Aethelgard hits the 3-retry limit or a spend velocity trip trips to <code style="color: var(--accent-rose);">Agent-Stuck</code>. The architect untangles the edge case.
+          <div class="card">
+            <h3>DevOps Agent &amp; Jules Remediator</h3>
+            <p>
+              Classifies build failures, matches error patterns, and runs closed-loop automated pipeline remediation without modifying production deployment branch states.
             </p>
+            <span class="status-tag status-deployed">Deployed</span>
           </div>
 
-          <div class="hitl-card">
-            <div class="hitl-vertex">HITL Vertex 4</div>
-            <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">Categorical Scrutiny</h4>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.55;">
-              <strong>Human Senior Reviewer:</strong> Conducts final code review on remote Pull/Merge Requests. <em>Agents are physically forbidden from auto-merging.</em> Human validates architecture and business logic before manual merge.
+          <div class="card">
+            <h3>DocAgent — AST Living Documentation</h3>
+            <p>
+              Generates architecture descriptions, validates relative path links, and tracks orphan symbol rates (OSR &lt; 5%) to keep wikis synchronised with code.
             </p>
+            <span class="status-tag status-implemented">Implemented</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Section 2: End-to-End Sequence Diagram -->
-  <section id="lifecycle-flow" class="section" style="background: rgba(13, 18, 31, 0.4);">
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-tag">End-to-End Execution Flow</span>
-        <h2 class="section-title">The Complete 6-Phase Autonomous Mission Pipeline</h2>
-        <p class="section-description">
-          Trace a feature from initial issue discovery through mathematical specification, durable Hatchet sub-workflows, sandboxed code surgery, and post-merge living knowledge graphs.
+        <h3>Human-in-the-loop governance checkpoints</h3>
+        <p>
+          Automation handles routine development tasks, while human authority governs strategic direction, architecture, and production merges:
         </p>
-      </div>
 
-      <div class="diagram-wrapper">
-        <div class="mermaid">
-sequenceDiagram
-    autonumber
-    actor HumanPO as Human PO (Vertex 1)
-    participant Git as Git Platform (Jira/GitHub/GitLab)
-    participant Poller as GitPlatformPoller (Outbound 30-60s)
-    participant Kafka as Confluent Kafka (mission-input)
-    participant Hatchet as Hatchet DAG Engine
-    participant Rustant as Rustant (PO Agent)
-    participant R2R as R2R GraphRAG & pgvector
-    participant Bridge as Superspec Bridge
-    participant ZeroClaw as ZeroClaw (Dev Agent)
-    participant Sandbox as gVisor Sandbox (RAM <= 30MiB)
-    actor TechLead as Senior Reviewer (Vertex 4)
-    participant DocAgent as DocAgent (Superpowers)
-    participant DeepWiki as deepwiki-rs & OpenWiki
-
-    Note over HumanPO,Git: Phase 1: Ingestion & NHI Security
-    HumanPO->>Git: Creates Issue tagged "autonomous-mission"
-    Poller->>Git: Outbound HTTPS Polling (No Webhooks)
-    Git-->>Poller: Returns Issue + Resource Constraints
-    Poller->>Poller: Signs W3C Ed25519 VC (did:factory:dark-gravity)
-    Poller->>Kafka: Publishes MissionInput payload
-    Kafka->>Hatchet: Triggers "develop-task" 6-Phase DAG
-
-    Note over Hatchet,R2R: Phase 2: Spec-Driven Development (SDD)
-    Hatchet->>Rustant: Dispatches rustant:plan
-    Rustant->>R2R: Queries AST & semantic codebase graph
-    Rustant->>Rustant: Executes Spec-Kit (/specify, /clarify, /plan, /tasks)
-    Rustant->>Git: Commits specs/NNN-feature/ (spec, plan, tasks)
-
-    Note over Hatchet,Sandbox: Phase 3 & 4: Durable Execution & Aethelgard Loop
-    Hatchet->>Bridge: Bridges tasks.md into durable sub-steps
-    Bridge->>ZeroClaw: Dispatches atomic task (T001 -> T002...)
-    ZeroClaw->>Sandbox: Provisions gVisor runsc container (RAM <= 30 MiB)
-    ZeroClaw->>Sandbox: Executes ADK-Rust AST surgery & cargo test
-    Sandbox->>Sandbox: Zeroizes in-memory secrets on completion
-    ZeroClaw->>Hatchet: Checkpoints BridgeState to MinIO S3 & Postgres
-    Note over ZeroClaw,Hatchet: SAST LLM Judge evaluates score >= 8.0/10
-
-    Note over Hatchet,TechLead: Phase 5: GitOps Delivery & HITL Gate
-    Hatchet->>Git: Opens Remote PR targeting main (Closes #ID)
-    Note over Git,TechLead: Interactive comments (@darkgravity /refine, /status)
-    TechLead->>Git: Manual Human Review & Merge (Vertex 4)
-
-    Note over Git,DeepWiki: Phase 6: Living Knowledge & C4 Diagrams
-    Git->>DeepWiki: Post-merge triggers deepwiki-rs AST scan
-    DeepWiki->>R2R: Upserts depends_on delta edges to pgvector
-    DeepWiki->>DocAgent: Wakes DocAgent with Superpowers engine
-    DocAgent->>DocAgent: Verifies Orphan Symbol Rate (OSR Gate < 5%)
-    DocAgent->>Git: Auto-renders C4 Diagrams & commits OKF Wiki
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Checkpoint</th>
+                <th>Trigger &amp; Responsibility</th>
+                <th>System Enforcement</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Strategic Injection</strong></td>
+                <td>Human engineer opens an issue tagged <code class="font-mono">autonomous-mission</code> with scope and operational boundaries.</td>
+                <td><code class="font-mono">GitPlatformPoller</code> verifies labels and signs Ed25519 NHI credentials before dispatching to Kafka.</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+              </tr>
+              <tr>
+                <td><strong>2. Plan Scrutiny</strong></td>
+                <td>Engineer can review and refine generated <code class="font-mono">spec.md</code> and <code class="font-mono">plan.md</code> contracts via comment directives.</td>
+                <td>Directives like <code class="font-mono">@darkgravity /refine</code> pause execution until contracts match engineer intent.</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+              </tr>
+              <tr>
+                <td><strong>3. Exception Override</strong></td>
+                <td>Circuit breakers fire if diff hashes repeat, tests fail 3 times, or spend exceeds 90% daily budget.</td>
+                <td>Active DAG execution is halted immediately and JIT credentials are revoked pending human diagnosis.</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+              </tr>
+              <tr>
+                <td><strong>4. Mandatory Merge Gate</strong></td>
+                <td>All tests and SAST checks pass with green status; pull request is presented for merge.</td>
+                <td><strong>Strict HITL rule</strong>: Automated merging to <code class="font-mono">main</code> is blocked. A human engineer must review and merge manually.</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Section 3: Phase-by-Phase Deep Dive -->
-  <section class="section">
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-tag">Deep Architectural Breakdown</span>
-        <h2 class="section-title">The Six Specialized Stages of Dark Gravity</h2>
-        <p class="section-description">
-          Each phase implements hardened security primitives, bounded contexts, and deterministic contracts. Explore the technical mechanics behind each operational stage.
+      <!-- Section 2: The 5-Phase Mission Workflow -->
+      <section id="workflow-phases">
+        <h2>How do missions advance through durable DAG phases?</h2>
+        <p>
+          The mission pipeline runs on the Hatchet orchestration engine (<code class="font-mono">cacd-mission-dag</code>), checkpointed in PostgreSQL and MinIO S3 to survive node crashes or pod restarts.
         </p>
-      </div>
 
-      <!-- Navigation Tabs for the 6 Phases -->
-      <div class="tabs-nav" id="phase-tabs">
-        <button class="tab-btn active" onclick="switchPhaseTab('phase1')">1. Ingestion &amp; NHI</button>
-        <button class="tab-btn" onclick="switchPhaseTab('phase2')">2. SDD &amp; Spec-Kit</button>
-        <button class="tab-btn" onclick="switchPhaseTab('phase3')">3. Durable Hatchet DAG</button>
-        <button class="tab-btn" onclick="switchPhaseTab('phase4')">4. Aethelgard &amp; Sandboxing</button>
-        <button class="tab-btn" onclick="switchPhaseTab('phase5')">5. GitOps &amp; Directives</button>
-        <button class="tab-btn" onclick="switchPhaseTab('phase6')">6. C4 Models &amp; Living Memory</button>
-      </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Phase 1: Ingestion &amp; Planning</h3>
+            <p>
+              Incoming events on Kafka topic <code class="font-mono">mission-input</code> trigger the Hatchet workflow. Rustant fetches relevant architecture context, initializes Spec-Kit, and creates dependency-ordered tasks in <code class="font-mono">tasks.md</code>.
+            </p>
+            <span class="status-tag status-verified">Verified</span>
+          </div>
 
-      <!-- Phase 1 Content -->
-      <div id="phase1" class="tab-content active">
-        <div class="feature-card" style="border-left: 4px solid var(--accent-cyan);">
-          <span class="lifecycle-step-badge badge-step-1">Phase 1: Ingestion &amp; Cryptographic Identity</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            Air-Gapped Outbound Polling &amp; W3C Non-Human Identity (NHI) Signing
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            To achieve a zero-trust, air-gapped perimeter, Dark Gravity firmly rejects all open inbound webhooks. Inbound HTTP ports create external attack surfaces and dependency on external proxy tunnels (such as ngrok or Cloudflare Tunnels). Instead, the native Rust <code style="color: var(--accent-cyan);">GitPlatformPoller</code> daemon (<code style="color: #cbd5e1;">factory-cli poller</code>) queries Jira, GitHub, and GitLab APIs via outbound HTTPS requests every 30 to 60 seconds.
-          </p>
+          <div class="card">
+            <h3>Phase 2: Code Surgery</h3>
+            <p>
+              ZeroClaw spawns an ephemeral Kubernetes Job with <code class="font-mono">RuntimeClass=gvisor</code>. Sandboxed tools mutate code files, adhering to project coding guidelines and memory bounds.
+            </p>
+            <span class="status-tag status-verified">Verified</span>
+          </div>
 
-          <div class="grid-2" style="margin-top: 1.5rem;">
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Cryptographic Ingestion Workflow</h4>
-              <ul style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; list-style: square; padding-left: 1.25rem;">
-                <li><strong>Target Discovery:</strong> Scans for issues carrying the mandatory <code style="color: var(--accent-cyan);">autonomous-mission</code> or <code style="color: var(--accent-cyan);">dark-gravity</code> label.</li>
-                <li><strong>Resource Constraint Extraction:</strong> Parses hardware directives like <code style="color: #cbd5e1;">[RESOURCE_LIMIT: RAM &lt;= 30Mi, CPU &lt;= 250m]</code> directly from issue descriptions.</li>
-                <li><strong>Ed25519 W3C VC Generation:</strong> Signs mission provenance with an Ed25519 keypair from HashiCorp Vault representing Non-Human Identity (<code style="color: #cbd5e1;">did:factory:dark-gravity-euskadi</code>).</li>
-                <li><strong>Kafka Event Bus:</strong> Serializes payload to <code style="color: #cbd5e1;">MissionInput</code> and publishes to the <code style="color: var(--accent-cyan);">mission-input</code> topic in Confluent Kafka.</li>
-              </ul>
-            </div>
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Verifiable Credential Token (JWS)</h4>
-              <div class="code-snippet-box">
-{
-  "@context": ["https://www.w3.org/2018/credentials/v1"],
-  "id": "urn:uuid:8b3401fa-9df2-43ce-9a3b-741c09ab7d21",
-  "type": ["VerifiableCredential", "AutonomousMissionClaim"],
-  "issuer": "did:factory:dark-gravity-euskadi",
-  "issuanceDate": "2026-10-12T12:00:00Z",
-  "credentialSubject": {
-    "issue_id": "GH-156",
-    "repository": "lgcorzo/rust_CACD_autonomous_factory",
-    "resource_caps": { "ram_mib": 30, "cpu_m": 250 },
-    "vault_jit_ttl_secs": 300
-  },
-  "proof": { "type": "Ed25519Signature2020", "jws": "eyJhbGciOiJFZERTQ..." }
-}
-              </div>
-            </div>
+          <div class="card">
+            <h3>Phase 3: Sandbox Validation</h3>
+            <p>
+              Inside the user-space gVisor kernel, test suites and linters run to verify implementation correctness. No network egress is permitted except to authorized internal registries.
+            </p>
+            <span class="status-tag status-verified">Verified</span>
+          </div>
+
+          <div class="card">
+            <h3>Phase 4: Security Review (SAST Judge)</h3>
+            <p>
+              The code diff is evaluated by an LLM-as-a-Judge security audit tool. The reviewer checks against CWE vulnerabilities, enforcing a pass score threshold &ge; 8.0/10.0 and recording causal lineage.
+            </p>
+            <span class="status-tag status-verified">Verified</span>
+          </div>
+
+          <div class="card">
+            <h3>Phase 5: Delivery &amp; Handoff</h3>
+            <p>
+              The delivery task pushes the branch, creates a formal PR linking the originating issue (<code class="font-mono">Closes #ID</code>), and posts a test evidence summary for human inspection.
+            </p>
+            <span class="status-tag status-verified">Verified</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Phase 2 Content -->
-      <div id="phase2" class="tab-content">
-        <div class="feature-card" style="border-left: 4px solid var(--accent-purple);">
-          <span class="lifecycle-step-badge badge-step-2">Phase 2: Spec-Driven Development</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            The 7-Step Spec-Kit Slash-Command Pipeline &amp; Causal Governance
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            Dark Gravity completely replaces free-form LLM code generation with Spec-Driven Development (SDD). Before a single byte of code is written in a sandbox, the Product Owner Agent (<code style="color: var(--accent-purple);">Rustant</code>) queries R2R GraphRAG for architectural context and runs a deterministic Spec-Kit pipeline through the <code style="color: #cbd5e1;">spec_kit_tool</code> MCP endpoint.
-          </p>
-
-          <div class="spec-kit-steps">
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">1. /speckit-constitution</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Enforces sovereign principles: Zero Trust, mTLS 1.3, gVisor resource caps, and anti-loop safeguards.</p>
-            </div>
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">2. /speckit-specify</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Combines R2R context with issue intent to create <code style="color: #cbd5e1;">spec.md</code>: defining <em>what</em> and <em>why</em> without stack pollution.</p>
-            </div>
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">3. /speckit-clarify</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Runs up to 5 automated Q&amp;A cycles against edge cases before architecture begins, eliminating requirements ambiguity.</p>
-            </div>
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">4. /speckit-plan</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Outputs technical blueprints (<code style="color: #cbd5e1;">plan.md</code>, <code style="color: #cbd5e1;">research.md</code>, <code style="color: #cbd5e1;">contracts/</code>), pinning crates and interfaces.</p>
-            </div>
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">5. /speckit-tasks</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Decomposes plan into atomic, dependency-ordered tasks (<code style="color: #cbd5e1;">tasks.md</code>) with <code style="color: var(--accent-cyan);">[P]</code> parallel flags.</p>
-            </div>
-            <div class="spec-step-card">
-              <div class="spec-step-cmd">6. /speckit-taskstoissues</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Converts tasks into tracked backlog sub-issues with injected hardware clamping markers.</p>
-            </div>
-            <div class="spec-step-card" style="border-left-color: var(--accent-rose);">
-              <div class="spec-step-cmd" style="color: var(--accent-rose);">7. Semantica-AGI Conflict Check</div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem;">Validates generated plan against organizational ontology to catch architectural contradictions before sandbox ignition.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phase 3 Content -->
-      <div id="phase3" class="tab-content">
-        <div class="feature-card" style="border-left: 4px solid var(--accent-emerald);">
-          <span class="lifecycle-step-badge badge-step-3">Phase 3: Durable Orchestration</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            Superspec Bridging, Hatchet Long-Term DAG &amp; Crash Checkpoints
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            The <code style="color: var(--accent-emerald);">speckit-superpowers-bridge</code> (Superspec) parses Spec-Kit <code style="color: #cbd5e1;">tasks.md</code> into structured domain entities and maps them into Hatchet's durable <code style="color: #cbd5e1;">develop-task</code> sub-workflows. Hatchet provides at-least-once, durable execution semantics; how well this holds up in the lab is one of the things being tested.
-          </p>
-
-          <div class="grid-2">
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">S3 Checkpoint State Recovery</h4>
-              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                As the Developer Agent completes each atomic task (e.g. <code style="color: #cbd5e1;">T001</code>, <code style="color: #cbd5e1;">T002</code>), execution snapshots (<code style="color: #cbd5e1;">BridgeState</code>) are flushed to MinIO S3 in the <code style="color: #cbd5e1;">dg-factory-checkpoints</code> bucket and CloudNativePG PostgreSQL. If a worker pod crashes or is terminated due to memory bounds, Hatchet restarts execution <em>exactly</em> at the first pending task without repeating completed AST code surgery or wasting LLM tokens.
-              </p>
-            </div>
-            <div>
-              <div class="code-snippet-box">
-// Hatchet develop-task checkpoint representation
-pub struct StepCheckpoint {
-    pub mission_id: String,
-    pub step_index: u32,
-    pub task_id: String,        // e.g. "T002"
-    pub diff_sha256: String,     // AST mutation hash
-    pub memory_state_bytes: u64,
-    pub tokens_spent: u32,
-    pub status: StepStatus,     // Completed | InProgress | Blocked
-    pub s3_snapshot_uri: String, // s3://dg-factory-checkpoints/...
-}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phase 4 Content -->
-      <div id="phase4" class="tab-content">
-        <div class="feature-card" style="border-left: 4px solid var(--accent-amber);">
-          <span class="lifecycle-step-badge badge-step-4">Phase 4: Sandboxing &amp; Validation</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            gVisor Micro-Sandboxing, AST Surgery &amp; Aethelgard Circuit Breaker
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            Execution occurs exclusively in ephemeral <strong>gVisor (<code style="color: #cbd5e1;">runsc</code>)</strong> user-space sandboxes configured with target limits of <strong>RAM &le; 30 MiB</strong> and <strong>CPU &le; 250m</strong>. AST code mutations are executed via native ADK-Rust, followed by test and security gates.
-          </p>
-
-          <div class="grid-3">
-            <div style="background: rgba(13, 18, 31, 0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 1rem; font-weight: 600; color: var(--accent-cyan); margin-bottom: 0.35rem;">1. ADK-Rust AST Surgery</h4>
-              <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
-                Tree-sitter AST search-and-replace algorithm applies localized mutations directly to Rust files without external subprocess overhead or regex hallucinations.
-              </p>
-            </div>
-            <div style="background: rgba(13, 18, 31, 0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 1rem; font-weight: 600; color: var(--accent-emerald); margin-bottom: 0.35rem;">2. In-Memory Secret Zeroization</h4>
-              <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
-                All JIT tokens and credentials derive <code style="color: #cbd5e1;">#[derive(Zeroize, ZeroizeOnDrop)]</code>, so they are overwritten in memory when dropped. Timing figures from micro-benchmarks are not treated as production guarantees.
-              </p>
-            </div>
-            <div style="background: rgba(13, 18, 31, 0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 1rem; font-weight: 600; color: var(--accent-rose); margin-bottom: 0.35rem;">3. SAST LLM-as-a-Judge</h4>
-              <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
-                Heterogeneous frontier models score patches. Scores &lt; 8.0/10 or detected vulnerabilities trigger the Aethelgard loop (max 3 retries) or freeze to <code style="color: var(--accent-rose);">Agent-Stuck</code>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phase 5 Content -->
-      <div id="phase5" class="tab-content">
-        <div class="feature-card" style="border-left: 4px solid #60a5fa;">
-          <span class="lifecycle-step-badge badge-step-5">Phase 5: Delivery &amp; Directives</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            GitOps Atomic Delivery &amp; Interactive Pull Request Steering
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            Approved patches are committed atomically via REST APIs directly to feature branches (<code style="color: #cbd5e1;">specs/NNN-&lt;feature&gt;</code>) and open Pull/Merge Requests targeting <code style="color: #cbd5e1;">main</code>. Human developers interactively steer the bot on PR threads via command directives.
-          </p>
-
-          <div class="grid-2">
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Interactive Directives (<code style="color: var(--accent-cyan);">@darkgravity</code>)</h4>
-              <ul style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; list-style: none; padding-left: 0;">
-                <li><code style="color: var(--accent-cyan);">@darkgravity /status</code> — Queries factory health, DAG step, and token spend.</li>
-                <li><code style="color: var(--accent-cyan);">@darkgravity /refine &lt;prompt&gt;</code> — Triggers ZeroClaw to apply localized AST edits.</li>
-                <li><code style="color: var(--accent-cyan);">@darkgravity /spec &lt;prompt&gt;</code> — Instructs Rustant to re-evaluate Spec-Kit spec.md.</li>
-                <li><code style="color: var(--accent-cyan);">@darkgravity /validate</code> — Reruns cargo test suite and SAST security check.</li>
-                <li><code style="color: var(--accent-cyan);">@darkgravity /retry</code> — Restarts the Aethelgard remediation loop.</li>
-              </ul>
-            </div>
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Low-Noise PR Protocol</h4>
-              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                The poller places an immediate "eyes" (👀) reaction upon comment detection to acknowledge receipt without posting spam comments. It strictly ignores self-authored bot accounts to prevent infinite loops, and posts a single comprehensive summary when the directive finishes.
-              </p>
-              <div style="margin-top: 1rem; padding: 0.75rem 1rem; border-radius: var(--radius-sm); background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.2);">
-                <strong style="color: var(--accent-cyan);">Strict Manual Merge Policy:</strong> Agents are physically forbidden from merging to <code style="color: #cbd5e1;">main</code>. Merge authority rests solely with the human Senior Reviewer (HITL Vertex 4).
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Phase 6 Content -->
-      <div id="phase6" class="tab-content">
-        <div class="feature-card" style="border-left: 4px solid #f472b6;">
-          <span class="lifecycle-step-badge badge-step-6">Phase 6: Living Knowledge &amp; C4</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem;">
-            Tree-sitter AST GraphRAG, Living C4 Models &amp; Open Knowledge Format (OKF)
-          </h3>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.25rem;">
-            When a PR is merged into <code style="color: #cbd5e1;">main</code>, the autonomous lifecycle doesn't end: it automatically updates living corporate memory. The <code style="color: var(--accent-cyan);">deepwiki-rs</code> daemon parses AST diffs, updates R2R GraphRAG in pgvector, and dispatches the Documentation Agent (<code style="color: #f472b6;">DocAgent</code>) using the Superpowers framework to regenerate C4 architecture diagrams and OpenWiki documentation.
-          </p>
-
-          <div class="grid-2">
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">DocAgent Superpowers Pipeline</h4>
-              <ol style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; padding-left: 1.25rem;">
-                <li><code style="color: #cbd5e1;">writing-plans</code>: Decomposes wiki updates into 2–5 min atomic tasks.</li>
-                <li><code style="color: #cbd5e1;">dispatching-parallel-agents</code>: Spawns isolated subagents per wiki page.</li>
-                <li><code style="color: #cbd5e1;">subagent-driven-development</code>: Loads only targeted R2R sub-graphs.</li>
-                <li><code style="color: #cbd5e1;">verification-before-completion</code>: Enforces <strong>OSR &lt; 5%</strong> gate.</li>
-                <li><code style="color: #cbd5e1;">requesting-code-review</code>: Validates C4 Mermaid syntax and Markdown.</li>
-                <li><code style="color: #cbd5e1;">finishing-a-development-branch</code>: Commits pages and packages EU R&amp;D grants.</li>
-              </ol>
-            </div>
-            <div>
-              <h4 style="font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem;">Google Open Knowledge Format (OKF)</h4>
-              <div class="code-snippet-box">
----
-type: architecture_node
-mission_id: "GH-156-outbound-polling"
-title: "Zero-Trust Outbound Ingestion Daemon"
-date: "2026-10-12T12:00:00Z"
-status: verified
-tags: ["poller", "nhi", "ed25519", "kafka"]
-last_verified_commit: "9f3c8a1b"
-source_path: "crates/factory-infrastructure/src/poller.rs"
----
-# Outbound Ingestion Daemon
-[[architecture/overview]] | [[security/zero-trust]]
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Section 4: Living C4 Architecture Diagrams -->
-  <section id="c4-documentation" class="section" style="background: rgba(8, 11, 18, 0.7);">
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-tag">Living Documentation Standard</span>
-        <h2 class="section-title">Automated C4 Architecture Models (Levels 1–3)</h2>
-        <p class="section-description">
-          The C4 model (Context, Container, Component, Code) provides four progressive levels of architectural abstraction. Dark Gravity's <code style="color: var(--accent-cyan);">DocAgent</code> queries <code style="color: #cbd5e1;">depends_on</code> edges in R2R GraphRAG to generate and maintain these diagrams automatically in Mermaid syntax.
+      <!-- Section 3: Closed-Loop Remediation -->
+      <section id="error-remediation">
+        <h2>How are pipeline errors remediated?</h2>
+        <p>
+          When CI pipelines fail or security scanners detect vulnerabilities, the autonomous factory triggers closed-loop remediation workflows:
         </p>
-      </div>
 
-      <!-- C4 Tab Switcher -->
-      <div class="tabs-nav" id="c4-tabs">
-        <button class="tab-btn active" onclick="switchC4Tab('c4-l1')">C4 Level 1: System Context</button>
-        <button class="tab-btn" onclick="switchC4Tab('c4-l2')">C4 Level 2: Container Topology</button>
-        <button class="tab-btn" onclick="switchC4Tab('c4-l3')">C4 Level 3: Component Architecture</button>
-      </div>
-
-      <!-- C4 Level 1: System Context -->
-      <div id="c4-l1" class="tab-content active">
-        <div class="diagram-wrapper">
-          <div class="c4-level-badge">C4 Model • Level 1: System Context</div>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
-            Shows the Dark Gravity software factory as a black-box system, surrounded by human users, external source control systems, identity providers, and telemetry sinks.
+        <div class="callout">
+          <div class="callout-title">Closed-loop remediation flow</div>
+          <p>
+            Diagnostic log parsing extracts root causes (e.g., dependency deprecations, linter errors). Synthetic remediation missions are dispatched to <code class="font-mono">mission-input</code>. The circuit breaker caps fixes at 3 attempts and monitors AST diff hashes to prevent oscillating edits.
           </p>
-          <div class="mermaid">
-graph TD
-    classDef person fill:#0284c7,stroke:#38bdf8,stroke-width:2px,color:#fff;
-    classDef system fill:#1e293b,stroke:#00f0ff,stroke-width:2px,color:#fff;
-    classDef external fill:#1e1b4b,stroke:#818cf8,stroke-width:1px,color:#cbd5e1;
-
-    PO["Human Product Owner<br/>(Business Strategy & Epics)"]:::person
-    LEAD["Human Tech Lead & Senior Reviewer<br/>(Sprint & PR Merge Scrutiny)"]:::person
-
-    subgraph FACTORY["Dark Gravity CA/CD Autonomous Software Factory"]
-        DG["Autonomous Agent Factory<br/>[Rust, Hatchet, gVisor, R2R]<br/>Consumes issues, verifies code, updates living docs"]:::system
-    end
-
-    GIT["Git Platforms<br/>[Jira, GitHub, GitLab]<br/>Outbound polling & remote PRs"]:::external
-    VAULT["HashiCorp Vault<br/>[Ed25519 NHI & 5-min JIT Tokens]"]:::external
-    SENTRY["Sentry Crash Monitor<br/>[Production Telemetry & Stacktraces]"]:::external
-    COMPLIANCE["EU R&D Grant Registry<br/>[Hazitek & SPRI Grant Telemetry]"]:::external
-
-    PO -->|"1. Submits Epics with autonomous-mission"| GIT
-    DG -->|"2. Outbound HTTPS polling (30-60s)"| GIT
-    DG -->|"3. Ephemeral credentials request"| VAULT
-    DG -->|"4. Polls errors (every 15 min)"| SENTRY
-    DG -->|"5. Opens Remote Pull Requests"| GIT
-    LEAD -->|"6. Reviews and manually merges PRs"| GIT
-    DG -->|"7. Packages audit telemetry & reports"| COMPLIANCE
-          </div>
         </div>
-      </div>
-
-      <!-- C4 Level 2: Container Topology -->
-      <div id="c4-l2" class="tab-content">
-        <div class="diagram-wrapper">
-          <div class="c4-level-badge">C4 Model • Level 2: Container Topology</div>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
-            Expands the factory into its high-level runtime containers: the 5-crate Rust workspace, Hatchet DAG engine, Kafka event mesh, pgvector R2R memory, MinIO storage, and gVisor sandboxes.
-          </p>
-          <div class="mermaid">
-graph TB
-    classDef rust fill:#0f172a,stroke:#f97316,stroke-width:2px,color:#fff;
-    classDef k8s fill:#111827,stroke:#00f0ff,stroke-width:2px,color:#fff;
-    classDef storage fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#fff;
-    classDef darknet fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
-
-    subgraph K8S_CLUSTER["Kubernetes Control Plane & Namespaces"]
-
-        subgraph NS_AGENTS["ns / agents"]
-            CLI["factory-cli daemon<br/>[Rust Binary Entrypoint]"]:::rust
-            APP["factory-application<br/>[Rustant & ZeroClaw Workers]"]:::rust
-        end
-
-        subgraph NS_ORCH["ns / orchestrators"]
-            HATCHET["Hatchet Workflow Engine<br/>[Durable 6-Phase DAG]"]:::k8s
-        end
-
-        subgraph NS_EVENTS["ns / confluent"]
-            KAFKA["Apache Kafka (KRaft)<br/>[mission-input & agent-thought]"]:::k8s
-        end
-
-        subgraph NS_SANDBOX["ns / development"]
-            GVISOR["gVisor runsc Micro-Sandbox<br/>[RAM <= 30MiB, CPU <= 250m]"]:::k8s
-        end
-
-        subgraph NS_STORAGE["ns / storage & knowledge"]
-            PG["CloudNativePG Postgres 16<br/>[Hatchet State & DAG Ledger]"]:::storage
-            PGV["pgvector R2R GraphRAG<br/>[AST Embeddings & Dependency Graph]"]:::storage
-            MINIO["MinIO Sovereign S3<br/>[dg-factory-checkpoints & Artifacts]"]:::storage
-        end
-
-        subgraph NS_OVERLAY["ns / openziti"]
-            ZITI["OpenZiti mTLS 1.3 Overlay<br/>[Zero-Inbound Dark Mesh]"]:::darknet
-        end
-
-    end
-
-    CLI -->|"Publishes Ingested Tasks"| KAFKA
-    KAFKA -->|"Triggers Workflow"| HATCHET
-    HATCHET -->|"Dispatches Durable Steps"| APP
-    APP -->|"Spawns Ephemeral Execution"| GVISOR
-    APP -->|"Snapshots Step State"| MINIO
-    HATCHET -->|"Persists Run State"| PG
-    APP -->|"Semantic Code Retrieval"| PGV
-    APP -.->|"Encrypted Traffic"| ZITI
-          </div>
-        </div>
-      </div>
-
-      <!-- C4 Level 3: Component Architecture -->
-      <div id="c4-l3" class="tab-content">
-        <div class="diagram-wrapper">
-          <div class="c4-level-badge">C4 Model • Level 3: Component Architecture</div>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
-            Zooms into the internal components of <code style="color: var(--accent-cyan);">factory-application</code>, <code style="color: var(--accent-cyan);">factory-infrastructure</code>, and <code style="color: var(--accent-cyan);">deepwiki-rs</code>.
-          </p>
-          <div class="mermaid">
-graph LR
-    classDef comp fill:#111827,stroke:#00f0ff,stroke-width:1px,color:#fff;
-    classDef helper fill:#1e1b4b,stroke:#a855f7,stroke-width:1px,color:#cbd5e1;
-
-    subgraph INFRA["crates/factory-infrastructure"]
-        POLLER["GitPlatformPoller<br/>(30-60s Outbound Polling)"]:::comp
-        VAULT_CLI["VaultClient<br/>(Ed25519 JIT Tokens)"]:::comp
-        KAFKA_PROD["KafkaProducer<br/>(Transactional Events)"]:::comp
-        R2R_CLI["R2rClient<br/>(Knowledge Graph Interface)"]:::comp
-    end
-
-    subgraph APPLICATION["crates/factory-application"]
-        DAG["HatchetMissionWorkflow<br/>(6-Phase Orchestrator)"]:::comp
-        RUSTANT["RustantAgent<br/>(Spec-Kit Planner)"]:::comp
-        BRIDGE["SuperspecBridge<br/>(tasks.md to DAG Mapper)"]:::comp
-        ZEROCLAW["ZeroClawAgent<br/>(ADK-Rust AST Surgery)"]:::comp
-        AETHELGARD["AethelgardLoop<br/>(3-Retry & Deadlock Breaker)"]:::comp
-        DOCS["DocAgent<br/>(Superpowers Engine)"]:::comp
-    end
-
-    subgraph KNOWLEDGE["deepwiki-rs AST Engine"]
-        TS["Tree-sitter Parser<br/>(Rust AST Delta Extractor)"]:::helper
-        GRAPH["SymbolGraphEngine<br/>(depends_on Edge Calculator)"]:::helper
-    end
-
-    POLLER --> VAULT_CLI
-    POLLER --> KAFKA_PROD
-    KAFKA_PROD --> DAG
-    DAG --> RUSTANT
-    RUSTANT --> R2R_CLI
-    RUSTANT --> BRIDGE
-    BRIDGE --> ZEROCLAW
-    ZEROCLAW --> AETHELGARD
-    DAG --> DOCS
-    DOCS --> TS
-    TS --> GRAPH
-          </div>
-        </div>
-      </div>
-
+      </section>
     </div>
-  </section>
+  </main>
 
-  <!-- Section 5: Quality Gates Summary Matrix -->
-  <section class="section">
-    <div class="section-container">
-      <div class="section-header">
-        <span class="section-tag">Governance &amp; Verification</span>
-        <h2 class="section-title">Factory Lifecycle Quality Gates Matrix</h2>
-        <p class="section-description">
-          A side-by-side comparative summary of each lifecycle phase, its core technology stack, isolation boundary, and gating success criteria.
-        </p>
-      </div>
-
-      <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle);">
-          <thead>
-            <tr style="background: rgba(255, 255, 255, 0.04); border-bottom: 2px solid var(--border-subtle); color: #fff;">
-              <th style="padding: 1rem 1.25rem;">Phase</th>
-              <th style="padding: 1rem 1.25rem;">Core Mechanism</th>
-              <th style="padding: 1rem 1.25rem;">Security &amp; Isolation</th>
-              <th style="padding: 1rem 1.25rem;">Quality &amp; Progression Gate</th>
-            </tr>
-          </thead>
-          <tbody style="color: var(--text-secondary);">
-            <tr style="border-bottom: 1px solid var(--border-subtle);">
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-cyan);">1. Ingestion</td>
-              <td style="padding: 1rem 1.25rem;">Outbound HTTPS Polling (30–60s) via <code style="color: #cbd5e1;">GitPlatformPoller</code></td>
-              <td style="padding: 1rem 1.25rem;">No public inbound ports (design goal); W3C Ed25519 VC signing (<code style="color: #cbd5e1;">did:factory</code>)</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> Tagged <code style="color: #cbd5e1;">autonomous-mission</code> &amp; resource limit block extracted</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border-subtle);">
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-purple);">2. Planning</td>
-              <td style="padding: 1rem 1.25rem;">7-step Spec-Kit pipeline (<code style="color: #cbd5e1;">/speckit-*</code>) + R2R GraphRAG</td>
-              <td style="padding: 1rem 1.25rem;">Semantica-AGI ontological conflict check; mTLS 1.3</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> <code style="color: #cbd5e1;">spec.md</code>, <code style="color: #cbd5e1;">plan.md</code>, <code style="color: #cbd5e1;">tasks.md</code> committed to <code style="color: #cbd5e1;">specs/NNN-*</code></td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border-subtle);">
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-emerald);">3. Execution</td>
-              <td style="padding: 1rem 1.25rem;">Superspec Bridge + ADK-Rust AST surgery</td>
-              <td style="padding: 1rem 1.25rem;">gVisor (<code style="color: #cbd5e1;">runsc</code>) sandboxes (target RAM &le; 30 MiB, CPU &le; 250m)</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> Task executed with MinIO S3 <code style="color: #cbd5e1;">BridgeState</code> checkpoint</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border-subtle);">
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: var(--accent-amber);">4. Validation</td>
-              <td style="padding: 1rem 1.25rem;">Logical tests + SAST LLM-as-a-Judge (<code style="color: #cbd5e1;">security_review</code>)</td>
-              <td style="padding: 1rem 1.25rem;">Heterogeneous model routing via LiteLLM; secret zeroization on drop</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> all tests pass + review score &ge; 8.0/10.0 (max 3 retries)</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border-subtle);">
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: #60a5fa;">5. Delivery</td>
-              <td style="padding: 1rem 1.25rem;">Remote feature branch creation &amp; atomic PR/MR opening</td>
-              <td style="padding: 1rem 1.25rem;">Outbound API egress only; low-noise 👀 reactions</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> PR opened linking <code style="color: #cbd5e1;">Closes #ID</code>; <strong>manual human merge (Vertex 4)</strong></td>
-            </tr>
-            <tr>
-              <td style="padding: 1rem 1.25rem; font-weight: 700; color: #f472b6;">6. Memory</td>
-              <td style="padding: 1rem 1.25rem;"><code style="color: #cbd5e1;">deepwiki-rs</code> AST delta scan + <code style="color: #cbd5e1;">DocAgent</code> Superpowers</td>
-              <td style="padding: 1rem 1.25rem;">Google OKF YAML frontmatter; MinIO audit packaging</td>
-              <td style="padding: 1rem 1.25rem;"><span style="color: var(--accent-emerald);">✔ Pass:</span> <strong>OSR &lt; 5% gate verified</strong>; C4 diagrams &amp; Hazitek/SPRI reports filed</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-col" style="flex: 2;">
-        <div class="footer-logo">
-          <div class="brand-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </div>
-          <span style="font-weight: 700; font-size: 1.1rem; color: #fff;">DARK GRAVITY</span>
+  <!-- Unified Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Dark Gravity Lab</h4>
+          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
         </div>
-        <p class="footer-desc" style="max-width: 360px;">
-          Next-generation autonomous agentic software factory built with Rust, Hatchet, and zero-trust hardware sandboxes. Engineered by Luis Galo Corzo.
-        </p>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="lifecycle.html">Lifecycle</a></li>
+            <li><a href="sovereignty.html">Fork policy</a></li>
+            <li><a href="notebooks.html">Lab notebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Primary Repositories</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
+            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
+            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+          </ul>
+        </div>
       </div>
-
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="architecture.html">10 Namespaces &amp; Topology</a></li>
-          <li><a href="lifecycle.html">Autonomous Lifecycle</a></li>
-          <li><a href="sovereignty.html">Sovereignty Policy</a></li>
-          <li><a href="index.html#projects">Curated Projects</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
+        <span>Version v0.2.8 &bull; Evidence-based verification</span>
       </div>
-
-      <div class="footer-col">
-        <h4>Architecture</h4>
-        <ul class="footer-links">
-          <li><a href="architecture.html#k8s-namespaces">Kubernetes Mesh</a></li>
-          <li><a href="architecture.html#openziti-mesh">OpenZiti Dark Overlay</a></li>
-          <li><a href="architecture.html#security-lifecycle">Zero-Trust Pipeline</a></li>
-          <li><a href="architecture.html#low-resource">Low-Resource Engine</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul class="footer-links">
-          <li><a href="https://github.com/lgcorzo" target="_blank" rel="noopener noreferrer">GitHub Profile</a></li>
-          <li><a href="https://www.linkedin.com/in/lgcorzo/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
-          <li><a href="https://notebook.google.com/notebook/116d5f03-2fb0-4fa7-bd7c-1c9849920abc" target="_blank" rel="noopener noreferrer">NotebookLM Knowledge Base</a></li>
-          <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory" target="_blank" rel="noopener noreferrer">Factory Core Repository</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span>&copy; 2026 Dark Gravity Engineering. Designed and Maintained by Luis Galo Corzo.</span>
-      <span>Autonomous CA/CD Software Factory V7.2 / V7.3</span>
     </div>
   </footer>
-
-  <!-- Tab Switching Script -->
-  <script>
-    function switchPhaseTab(phaseId) {
-      document.querySelectorAll('#phase-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('#phase-tabs ~ .tab-content').forEach(content => content.classList.remove('active'));
-      event.target.classList.add('active');
-      const target = document.getElementById(phaseId);
-      if (target) target.classList.add('active');
-    }
-
-    function switchC4Tab(c4Id) {
-      document.querySelectorAll('#c4-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('#c4-tabs ~ .tab-content').forEach(content => content.classList.remove('active'));
-      event.target.classList.add('active');
-      const target = document.getElementById(c4Id);
-      if (target) target.classList.add('active');
-    }
-  </script>
-
 </body>
 </html>
