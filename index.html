@@ -3,25 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Gravity Lab — Autonomous Software Factory &amp; Systems Engineering</title>
-  <meta name="description" content="Engineering lab notebook for Dark Gravity: an empirical, evidence-based autonomous software factory implementing Spec-Driven Development, zero-trust isolation, and formal human-in-the-loop governance.">
+  <title>Dark Gravity Lab: an autonomous software factory, with evidence</title>
+  <meta name="description" content="Dark Gravity is an experimental system that turns a GitHub issue into a reviewed pull request using sandboxed AI agents. This site shows what works today and how to check it.">
   <link rel="canonical" href="https://lgcorzo.github.io/">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
-
-  <!-- Unified Navigation Header -->
+  <!--SHELL:HEADER-->
   <header class="site-header">
     <div class="container">
-      <nav class="site-nav" aria-label="Primary Navigation">
-        <a href="index.html" class="site-brand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Dark Gravity Lab</span>
-        </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
-          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
           <li><a href="lifecycle.html" class="nav-link">Lifecycle</a></li>
           <li><a href="sovereignty.html" class="nav-link">Fork policy</a></li>
@@ -30,163 +26,231 @@
       </nav>
     </div>
   </header>
+  <!--/SHELL:HEADER-->
 
   <main id="main">
     <div class="container">
-      <!-- Two-sentence project summary & status -->
-      <section class="hero">
-        <h1>Dark Gravity Autonomous Software Factory</h1>
-        <p class="hero-subtitle">
-          Dark Gravity is a Rust-based autonomous engineering platform for zero-trust and security-critical software factories, coordinating multi-agent workflows under formal human-in-the-loop governance. Today it runs as a 5-crate Rust workspace (v0.2.8) integrated with Kubernetes CRDs, Hatchet durable DAGs, and gVisor sandboxing; core DAG phases and admission controls are deployed and verified, while multi-node chaos testing remains designed.
+
+      <section class="hero" aria-labelledby="top">
+        <h1 id="top">Dark Gravity: an autonomous software factory, checked against evidence</h1>
+        <p class="lede">
+          Dark Gravity is an experimental system that turns a GitHub issue
+          into a reviewed pull request. AI agents do the work inside
+          locked-down sandboxes, and a human always decides what is merged.
+        </p>
+        <p class="lede">
+          It is built for engineers who want to see how autonomy and strict
+          controls can live together. It is a one-person lab project, not a
+          product.
+        </p>
+        <p class="status-line">
+          <strong>Honest status:</strong> latest release is v0.2.8. A mission
+          has completed end to end on the lab cluster. Long soak tests and
+          multi-node failure drills are not published.
         </p>
 
-        <!-- Three primary navigation paths -->
         <div class="hero-paths">
           <a href="architecture.html" class="path-card">
             <div>
               <h3>Understand the architecture</h3>
-              <p>Explore the 5-crate onion model, Hatchet DAG, gVisor sandboxes, and ADR-008 workspace CRD standard.</p>
+              <p>What the parts are, where each one runs, and where the
+              security boundaries sit.</p>
             </div>
-            <span class="path-action">View architecture &rarr;</span>
+            <span class="path-action">Open architecture &rarr;</span>
           </a>
-
           <a href="architecture.html#evidence" class="path-card">
             <div>
               <h3>See the evidence</h3>
-              <p>Inspect empirical test results, baseline cluster snapshots, Criterion benchmarks, and verification logs.</p>
+              <p>The test reports and cluster snapshots behind each claim,
+              with their limits stated.</p>
             </div>
-            <span class="path-action">Inspect evidence ledger &rarr;</span>
+            <span class="path-action">Open evidence list &rarr;</span>
           </a>
-
           <a href="notebooks.html" class="path-card">
             <div>
               <h3>Read the lab notes</h3>
-              <p>Follow technical experiments, failover drill outcomes, and architectural retrospectives formatted in five questions.</p>
+              <p>Experiments written up in five questions, including the
+              ones that failed.</p>
             </div>
             <span class="path-action">Open lab notebook &rarr;</span>
           </a>
         </div>
       </section>
 
-      <!-- Status Legend Standard -->
-      <section>
-        <h2>Status taxonomy</h2>
-        <p>Every architectural claim, feature, and component across this site carries one of four explicit verification tags:</p>
-        <div class="status-legend">
-          <div class="status-legend-item">
-            <span class="status-tag status-verified">Verified</span>
-            <span>Confirmed by automated CI suites or published evidence files.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-deployed">Deployed</span>
-            <span>Running and active in live cluster environments.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-implemented">Implemented</span>
-            <span>Code written, unit-tested, and tracked in the Rust workspace.</span>
-          </div>
-          <div class="status-legend-item">
-            <span class="status-tag status-designed">Designed</span>
-            <span>Documented in ADRs, specs, or wiki; full validation pending.</span>
-          </div>
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#site-map">Where do I find what?</a></li>
+          <li><a href="#works-today">What works today?</a></li>
+          <li><a href="#status-tags">What do the status tags mean?</a></li>
+          <li><a href="#projects">Which projects are there?</a></li>
+          <li><a href="#glossary">What do the terms mean?</a></li>
+        </ol>
+      </nav>
+
+      <section id="site-map">
+        <h2>Where do I find what?</h2>
+        <p>Read the pages in this order, or jump straight to your question.</p>
+        <div class="table-container">
+          <table>
+            <thead><tr><th scope="col">Your question</th><th scope="col">Go to</th></tr></thead>
+            <tbody>
+              <tr><td>What is each component and where does it run?</td><td><a href="architecture.html">Architecture</a></td></tr>
+              <tr><td>What happens between an issue and a pull request?</td><td><a href="lifecycle.html">Lifecycle</a></td></tr>
+              <tr><td>Why does the lab fork other people&rsquo;s projects?</td><td><a href="sovereignty.html">Fork policy</a></td></tr>
+              <tr><td>What was tried, what broke, what was learned?</td><td><a href="notebooks.html">Lab notebook</a></td></tr>
+              <tr><td>What does a word like CRD or DAG mean?</td><td><a href="#glossary">Glossary</a> (below)</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <!-- Curated Projects Section -->
-      <section id="projects">
-        <h2>Curated project ecosystem</h2>
+      <section id="works-today">
+        <h2>What works today?</h2>
         <p>
-          The lab maintains 72 repositories (64 public, 8 private) across autonomous software engineering, infrastructure automation, and cognitive agent stacks. Below are the core active projects grouped by operational domain.
+          Each row has a status tag and a source you can open. Checked on
+          2026-10-31 against the repository and the lab cluster.
         </p>
-
-        <div class="grid-2">
-          <div class="card">
-            <h3>Autonomous Factory &amp; Orchestration</h3>
-            <p>Core platforms for agentic software generation, durable DAG execution, and contract-driven verification.</p>
-            <ul style="list-style: none; margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
-              <li>
-                <strong><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">rust_CACD_autonomous_factory</a></strong>
-                <span class="status-tag status-verified">Verified</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Main factory workspace: 5 crates, Hatchet 6-phase DAG, ADR-008 CRD operator, gVisor micro-sandboxing.</p>
-              </li>
-              <li>
-                <strong><a href="https://github.com/lgcorzo/speckit-superpowers-bridge">speckit-superpowers-bridge</a></strong>
-                <span class="status-tag status-verified">Verified</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Execution bridge linking Spec-Kit design contracts directly to Superpowers test-driven development tools.</p>
-              </li>
-              <li>
-                <strong><a href="https://github.com/lgcorzo/spec-kit">spec-kit</a></strong>
-                <span class="status-tag status-deployed">Deployed</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hardened fork of Spec-Kit CLI ensuring deterministic schema generation and constitution gating.</p>
-              </li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Cognitive Memory &amp; LLM Routing</h3>
-            <p>Knowledge graph memory, AST structural indexing, and sovereign LLM routing with FinOps telemetry.</p>
-            <ul style="list-style: none; margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
-              <li>
-                <strong><a href="https://github.com/lgcorzo/dark-litellm">dark-litellm</a></strong>
-                <span class="status-tag status-deployed">Deployed</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Hardened LLM gateway proxy injecting Virtual Tags (Vtags) and enforcing 90% budget hardstops.</p>
-              </li>
-              <li>
-                <strong><a href="https://github.com/lgcorzo/semantica">semantica</a></strong>
-                <span class="status-tag status-deployed">Deployed</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Semantic memory engine providing causal provenance tracking across multi-agent mission lifecycles.</p>
-              </li>
-              <li>
-                <strong><a href="https://github.com/lgcorzo/openwiki">openwiki</a></strong>
-                <span class="status-tag status-implemented">Implemented</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Decoupled documentation engine presenting AST architecture graphs derived via deepwiki-rs.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="callout">
-          <div class="callout-title">Full repository catalog</div>
-          <p>
-            Looking for all 72 repositories, fork policies, and code quality governance rules? Read our detailed policy on why and how we fork upstream dependencies.
-          </p>
-          <p style="margin-top: 0.5rem;">
-            <a href="sovereignty.html" style="font-weight: 600;">Read fork policy &amp; view complete repository matrix &rarr;</a>
-          </p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th scope="col">Capability</th><th scope="col">Status</th><th scope="col">Source and scope</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rust workspace of five crates passes format, lint, adversarial and unit-test gates</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a>. One run, one machine, commit 9302482 (2026-10-18). Not re-run for v0.2.8.</td>
+              </tr>
+              <tr>
+                <td>Five-step mission pipeline on Hatchet (plan, execute, validate, review, deliver)</td>
+                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td>Workers run image <code>6beb333</code> (v0.2.8) in namespace <code>agents</code>. A completed run was seen in the Hatchet dashboard; it is not yet saved as an evidence file.</td>
+              </tr>
+              <tr>
+                <td>Sandbox limits of 30Mi memory and 250m CPU per container, enforced at admission</td>
+                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td>Two admission policies named <code>dg-sandbox-bounds-*</code> exist in the cluster. Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.</td>
+              </tr>
+              <tr>
+                <td>AgentWorkspace custom resource (ADR-008)</td>
+                <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-implemented">Implemented</span></td>
+                <td>The CRD is installed. The operator code exists, but no operator pod and no AgentWorkspace objects were found in the cluster.</td>
+              </tr>
+              <tr>
+                <td>Daily budget guard that halts missions at 90% of the limit</td>
+                <td><span class="status-tag status-implemented">Implemented</span></td>
+                <td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/agents/finops.rs"><code>finops.rs</code></a> with unit tests. Default limit in comments: $45 of $50.</td>
+              </tr>
+              <tr>
+                <td>Short-lived secrets from HashiCorp Vault</td>
+                <td><span class="status-tag status-implemented">Implemented</span></td>
+                <td>Adapter code exists. No Vault workload was found in the cluster.</td>
+              </tr>
+              <tr>
+                <td>Multi-node failure drills and long-running soak tests</td>
+                <td><span class="status-tag status-designed">Designed</span></td>
+                <td>Not run. Single-pod kill recovery is reported in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a>.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <!-- Key Engineering Guarantees -->
-      <section>
-        <h2>Core technical guarantees</h2>
+      <section id="status-tags">
+        <h2>What do the status tags mean?</h2>
+        <p>The same four tags are used on every page.</p>
+        <div class="status-legend">
+          <div class="status-legend-item"><span class="status-tag status-designed">Designed</span><span>Described in specs or wiki only.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-implemented">Implemented</span><span>Code exists and has tests.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-deployed">Deployed</span><span>Running in the cluster.</span></div>
+          <div class="status-legend-item"><span class="status-tag status-verified">Verified</span><span>Confirmed by a test or evidence file, which is linked.</span></div>
+        </div>
+        <p class="note">
+          Compliance wording: the controls are readiness measures. No
+          third-party certification (EU AI Act, SOC 2 or other) is claimed.
+        </p>
+      </section>
+
+      <section id="projects">
+        <h2>Which projects are there?</h2>
+        <p>
+          The GitHub account has 72 repositories (64 public) and 42 of them
+          are forks, counted on 2026-10-31. These are the ones that matter
+          most, grouped by job.
+        </p>
         <div class="grid-2">
           <div class="card">
-            <h3>Micro-sandboxing (gVisor)</h3>
-            <p>
-              All untrusted code generation and compilation runs inside user-space kernel sandboxes (<code class="font-mono">RuntimeClass=gvisor</code>). In sandbox namespaces, admission policies enforce memory clamping to 30&nbsp;MiB and CPU limits to 250m.
-            </p>
+            <h3>The factory</h3>
+            <ul>
+              <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">rust_CACD_autonomous_factory</a>: the core. Hatchet pipeline, agents, CLI and MCP server.</li>
+              <li><a href="https://github.com/lgcorzo/speckit-superpowers-bridge">speckit-superpowers-bridge</a>: hands a written spec to a test-first coding workflow.</li>
+              <li><a href="https://github.com/lgcorzo/mlops-python-package">mlops-python-package</a>: machine-learning pipeline standard used by the lab.</li>
+            </ul>
           </div>
           <div class="card">
-            <h3>Human-in-the-loop requirement</h3>
-            <p>
-              Agents produce clean PRs and link originating issues, but automated direct merges to default branches are blocked by policy. A human engineer must always review, verify CI evidence, and merge manually.
-            </p>
+            <h3>Memory and documentation</h3>
+            <ul>
+              <li><a href="https://github.com/lgcorzo/semantica">semantica</a>: records where each AI-made artifact came from.</li>
+              <li><a href="https://github.com/lgcorzo/R2R-Engine">R2R-Engine</a>: retrieval engine that gives agents context.</li>
+              <li><a href="https://github.com/lgcorzo/deepwiki-rs">deepwiki-rs</a> and <a href="https://github.com/lgcorzo/openwiki">openwiki</a>: generate documentation from code.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Gateway and storage</h3>
+            <ul>
+              <li><a href="https://github.com/lgcorzo/dark-litellm">dark-litellm</a>: one gateway to many language models, with cost tracking.</li>
+              <li><a href="https://github.com/lgcorzo/operator">operator</a>: runs S3-compatible storage inside the cluster.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Everything else</h3>
+            <p>The full list, with the reasons for each fork, is on the
+            <a href="sovereignty.html">Fork policy</a> page and on
+            <a href="https://github.com/lgcorzo?tab=repositories">GitHub</a>.</p>
           </div>
         </div>
       </section>
+
+      <section id="glossary">
+        <h2>What do the terms mean?</h2>
+        <dl class="glossary">
+          <dt>ADR</dt><dd>Architecture decision record. A short document that states one design decision and why it was made.</dd>
+          <dt>CRD</dt><dd>Custom resource definition. It adds a new kind of object to Kubernetes, here the <code>AgentWorkspace</code>.</dd>
+          <dt>DAG</dt><dd>Directed acyclic graph. A set of steps with a fixed order and no loops. Hatchet runs the mission as a DAG.</dd>
+          <dt>FinOps</dt><dd>Tracking and limiting what a system spends, here on language-model calls.</dd>
+          <dt>gVisor</dt><dd>A sandbox that gives a container its own user-space kernel, so code in it cannot talk to the host kernel directly.</dd>
+          <dt>GitOps</dt><dd>Changing a running system only by committing files to Git, which a tool such as Flux then applies.</dd>
+          <dt>HITL</dt><dd>Human in the loop. A person must approve certain steps. Here, only a person merges to <code>main</code>.</dd>
+          <dt>Hatchet</dt><dd>The workflow engine that runs and retries the mission steps.</dd>
+          <dt>Kafka</dt><dd>A message system. Missions and agent events travel through Kafka topics.</dd>
+          <dt>MCP</dt><dd>Model Context Protocol. A standard way for an AI tool to call outside tools. The factory runs an MCP server.</dd>
+          <dt>NHI</dt><dd>Non-human identity. A signed identity for a program, so its actions can be traced.</dd>
+          <dt>SAST</dt><dd>Static application security testing. Reading code for security flaws without running it.</dd>
+          <dt>SDD</dt><dd>Spec-driven development. Write the specification and plan first, then generate code from them.</dd>
+        </dl>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="next" href="architecture.html" rel="next"><small>Next &rarr;</small><strong>Architecture</strong><br><span class="note">How the system is built and where it runs</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
     </div>
   </main>
 
-  <!-- Unified Footer -->
+  <!--SHELL:FOOTER-->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4>Dark Gravity Lab</h4>
-          <p>Public engineering research on autonomous systems, cloud-native sandboxing, and verifiable agentic workflows.</p>
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
         </div>
         <div class="footer-col">
-          <h4>Navigation</h4>
+          <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="architecture.html">Architecture</a></li>
@@ -196,19 +260,20 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Primary Repositories</h4>
+          <p class="footer-title">Sources</p>
           <ul class="footer-links">
-            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Autonomous Factory</a></li>
-            <li><a href="https://github.com/lgcorzo/dark-litellm">Dark LiteLLM</a></li>
-            <li><a href="https://github.com/lgcorzo/semantica">Semantica Engine</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All repositories</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Dr. Luis Galo Corzo &bull; Public Engineering Lab</span>
-        <span>Version v0.2.8 &bull; Evidence-based verification</span>
+        <span>Luis Galo Corzo, personal lab. No third-party certification is claimed.</span>
+        <span>Latest release: v0.2.8</span>
       </div>
     </div>
   </footer>
+  <!--/SHELL:FOOTER-->
 </body>
 </html>
