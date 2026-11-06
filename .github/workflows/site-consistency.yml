@@ -1,0 +1,36 @@
+name: Site Consistency & Canonical Claims Check
+
+on:
+  push:
+    branches:
+      - main
+      - "011-**"
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public-claims:
+    name: Verify Canonical Public Claims & Internal Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pytest
+        run: python3 -m pip install --upgrade pip pytest
+
+      - name: Run Deterministic Canonical Claims Checker
+        run: python3 scripts/check_public_claims.py
+
+      - name: Run Public Claims Regression Suite
+        run: pytest -q tests/test_public_claims.py
