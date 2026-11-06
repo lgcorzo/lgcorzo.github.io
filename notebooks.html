@@ -287,7 +287,7 @@
 </div>
 <h4>Cluster Orchestration &amp; Sandboxed Execution</h4>
 <ul>
-<li>• Hatchet orchestrates 6-phase DAG: <code>Ingestion → Plan → Code Sandbox → Validation → SAST Audit → Review</code>.</li>
+<li>• Hatchet orchestrates a 6-phase end-to-end flow (Kafka ingestion + 5 Hatchet DAG phases): <code>Ingestion → Plan → Code Sandbox → Validation → SAST Audit → Review</code>.</li>
 <li>• ZeroClaw executor spawned inside Kubernetes pod with <code>RuntimeClass: gvisor-runsc</code> (Kernel Isolation L3).</li>
 <li>• Real-time cgroup gauges confirm active enforcement: CPU capped at 340m/500m (68%), RAM clamped to 218Mi/512Mi (42%).</li>
 <li>• Durable state step checkpoints (<code>StepCheckpoint#03</code>) written to PostgreSQL for fault recovery.</li>
@@ -348,7 +348,7 @@
 </div>
 </div>
 <p>
-              Cryptographic W3C Verifiable Credential audit trail stored for EU AI Act Conformity Assessment &amp; SOC 2 Type II compliance in <code>evidence/missions/mission-001/report.json</code>.
+              Cryptographic W3C Verifiable Credential audit trail stored for EU AI Act Conformity Assessment &amp; SOC 2 Type II architectural readiness (no third-party certification claimed) in <code>evidence/missions/mission-001/report.json</code>.
             </p>
 </div>
 </div>
@@ -733,7 +733,7 @@
                 Across an audit of all 69 repositories:
               </p>
 <div class="font-mono">
-<div>• <strong>69 repositories total</strong>: 65 active repositories monitored, 4 archived legacy repositories.</div>
+<div>• <strong>69 repositories total (64 public: 22 original + 42 forks, plus 5 private/archived)</strong>: 65 active repositories monitored, 4 archived legacy repositories.</div>
 <div>• <strong>Day 1 baseline</strong>: 60 of 69 repositories verified 100% clean (9 active repos had open alerts).</div>
 <div>• <strong>10+ PRs autonomously resolved &amp; merged</strong>: Including <code>CodeWiki#21</code> (SAST remediation), <code>openwiki#9</code> (MCP/Hono), <code>operator#24</code>, <code>simdjson-go#13</code>, <code>mint#16</code>, <code>R2R-Engine#71/#73</code>, <code>mds#38</code>, and <code>semantica#16</code>.</div>
 </div>

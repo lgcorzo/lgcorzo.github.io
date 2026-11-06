@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "as_of_date": "2026-11-06",
+  "source_repository": {
+    "repository": "lgcorzo/rust_CACD_autonomous_factory",
+    "branch": "011-verified-autonomous-execution",
+    "audit_directory": "docs/audit"
+  },
+  "repository_statistics": {
+    "public_repositories_total": 64,
+    "original_repositories": 22,
+    "maintained_forks": 42,
+    "fork_category_counts": {
+      "agent_and_spec_tooling": 4,
+      "memory_documentation_and_gateway": 5,
+      "storage_platform": 10,
+      "go_libraries": 17,
+      "experiments_and_learning": 6
+    },
+    "historical_portfolio_total_with_private_and_archived": 69,
+    "definition": "64 public GitHub repositories (22 original source repositories + 42 maintained open-source forks). Historical EXP-2026-011/012 audits also included 5 private/archived repositories (69 total)."
+  },
+  "canonical_facts": [
+    {
+      "fact_id": "FACT-WORKSPACE-CRATES",
+      "category": "architecture",
+      "claim": "The Rust workspace consists of 5 crates (factory-core, factory-application, factory-infrastructure, factory-mcp-server, factory-cli) on Rust Edition 2024.",
+      "verification_status": "verified",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/Cargo.toml",
+      "required_pages": ["index.html", "architecture.html"]
+    },
+    {
+      "fact_id": "FACT-MISSION-DAG-PHASES",
+      "category": "lifecycle",
+      "claim": "The Hatchet mission workflow executes 5 durable steps (rustant-plan, zeroclaw-execute, zeroclaw-validate, rustant-review, factory-deliver) triggered after Kafka mission-input ingestion.",
+      "verification_status": "deployed",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/autonomous_mission.rs",
+      "required_pages": ["index.html", "architecture.html", "lifecycle.html", "notebooks.html"]
+    },
+    {
+      "fact_id": "FACT-SANDBOX-ISOLATION",
+      "category": "security",
+      "claim": "Untrusted execution routes through SandboxDriver and Kubernetes Jobs in factory-sandboxes/development using RuntimeClass=gvisor (runsc), PodSecurity restricted, and fail-closed admission.",
+      "verification_status": "deployed",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/GITOPS_RUNTIME_VERIFICATION.md",
+      "required_pages": ["index.html", "architecture.html", "lifecycle.html", "fork-policy.html"]
+    },
+    {
+      "fact_id": "FACT-HITL-VERTICES",
+      "category": "governance",
+      "claim": "Four human-in-the-loop (HITL) decision vertices are defined; Vertex 4 (manual PR review and merge) is enforced in code while Vertices 1-3 remain in Designed status.",
+      "verification_status": "implemented",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/security/hitl_governance.md",
+      "required_pages": ["index.html", "lifecycle.html"]
+    },
+    {
+      "fact_id": "FACT-COMPLIANCE-QUALIFICATION",
+      "category": "governance",
+      "claim": "All EU AI Act and SOC 2 controls are architectural readiness measures; no third-party certification is claimed.",
+      "verification_status": "implemented",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/README.md",
+      "required_pages": ["index.html", "notebooks.html"]
+    }
+  ]
+}
