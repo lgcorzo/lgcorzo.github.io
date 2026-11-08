@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-11-06",
+  "as_of_date": "2026-11-08",
   "source_repository": {
     "repository": "lgcorzo/rust_CACD_autonomous_factory",
-    "branch": "011-verified-autonomous-execution",
+    "branch": "012-secure-gvisor-execution",
     "audit_directory": "docs/audit"
   },
   "repository_statistics": {
@@ -40,9 +40,9 @@
     {
       "fact_id": "FACT-SANDBOX-ISOLATION",
       "category": "security",
-      "claim": "Untrusted execution routes through SandboxDriver and Kubernetes Jobs in factory-sandboxes/development using RuntimeClass=gvisor (runsc), PodSecurity restricted, and fail-closed admission.",
-      "verification_status": "deployed",
-      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/GITOPS_RUNTIME_VERIFICATION.md",
+      "claim": "Untrusted execution routes through SandboxDriver and Kubernetes Jobs in factory-sandboxes/development using RuntimeClass=gvisor (runsc), PodSecurity restricted, and fail-closed zero-trust admission across all environments.",
+      "verification_status": "verified",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-mcp-server/src/sandbox.rs",
       "required_pages": ["index.html", "architecture.html", "lifecycle.html", "fork-policy.html"]
     },
     {
