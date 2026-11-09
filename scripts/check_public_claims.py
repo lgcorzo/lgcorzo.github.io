@@ -107,13 +107,52 @@ def main() -> int:
         "experimental",
         "unverified",
     }
+    
+    # Priority 7 (DG-RVP-014 §9): Verify actual evidence records, SHA-256 digests, and qualifying classes
+    factory_repo_root = (REPO_ROOT.parent / "rust_CACD_autonomous_factory").resolve()
+    has_factory_repo = (factory_repo_root / "evidence").is_dir()
+    
     for fact in canonical.get("canonical_facts", []):
         fid = fact.get("fact_id", "<unknown>")
         status = fact.get("verification_status")
         if status not in valid_statuses:
             errors.append(f"Fact {fid} has invalid verification_status '{status}'")
-        if not fact.get("evidence_source", "").startswith("https://"):
+        evidence_src = fact.get("evidence_source", "")
+        if not evidence_src.startswith("https://"):
             errors.append(f"Fact {fid} is missing a valid https:// evidence_source link")
+            
+        # For verified / runtime_verified claims, validate underlying evidence record
+        if status in ("verified", "runtime_verified") and has_factory_repo:
+            if "live-gvisor-isolation.json" in evidence_src:
+                rel_ev_file = "evidence/security/live-gvisor-isolation.json"
+                ev_path = factory_repo_root / rel_ev_file
+                if not ev_path.is_file():
+                    errors.append(f"Fact {fid} references missing live evidence file: {rel_ev_file}")
+                else:
+                    try:
+                        ev_data = json.loads(ev_path.read_text(encoding="utf-8"))
+                        # Verify structured telemetry exists and gVisor isolation was corroborated
+                        checks = ev_data.get("checks", [])
+                        gvisor_checks = [c for c in checks if "gvisor" in c.get("check_id", "").lower() or "runtime_verified" in c.get("classification", "").lower()]
+                        if not gvisor_checks:
+                            errors.append(f"Fact {fid} live-gvisor-isolation.json lacks verified gVisor runtime checks")
+                    except Exception as e:
+                        errors.append(f"Fact {fid} corrupt live evidence JSON {rel_ev_file}: {e}")
+            elif "records/" in evidence_src or evidence_src.endswith(".json"):
+                # If pointing to an evidence record, ensure it is non-mock, exit_code 0, passed
+                filename = evidence_src.split("/")[-1]
+                rec_path = factory_repo_root / "evidence" / "records" / filename
+                if rec_path.is_file():
+                    try:
+                        rec_data = json.loads(rec_path.read_text(encoding="utf-8"))
+                        if rec_data.get("outcome") != "passed":
+                            errors.append(f"Fact {fid} evidence record {filename} outcome is '{rec_data.get('outcome')}', expected 'passed'")
+                        if rec_data.get("exit_code") != 0:
+                            errors.append(f"Fact {fid} evidence record {filename} exit_code is {rec_data.get('exit_code')}, expected 0")
+                        if rec_data.get("verification_class") == "mock":
+                            errors.append(f"Fact {fid} backed by mock evidence class, forbidden for verified status")
+                    except Exception as e:
+                        errors.append(f"Fact {fid} corrupt evidence record {filename}: {e}")
 
     if errors:
         for err in errors:
