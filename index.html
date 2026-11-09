@@ -69,7 +69,7 @@
         </div>
 
         <p class="status-line" style="margin-top: 1.25rem;">
-          <strong>Honest status:</strong> latest release is <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>. An end-to-end mission has executed successfully on the lab cluster. Multi-node chaos drills and soak tests remain in Designed status (not published as verified).
+          <strong>Honest status:</strong> latest release is <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>. An end-to-end mission (<code>real-mission-e7-001-1794258497</code> / Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) has executed and succeeded across all 5 Hatchet steps on the lab cluster. Multi-node chaos drills and soak tests remain in Designed status (not published as verified).
         </p>
       </section>
 
@@ -118,7 +118,7 @@
       <section id="works-today">
         <h2>What works today? (Actual Factory Status)</h2>
         <p>
-          Each capability below is stated in plain language with its verification tag, evidence source, and expandable technical details. Checked on 2026-10-31 against the repository and the lab cluster.
+          Each capability below is stated in plain language with its verification tag, evidence source, and expandable technical details. Checked on 2026-11-09 against the repository (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>) and the lab cluster.
         </p>
         <div class="table-container">
           <table>
@@ -134,7 +134,7 @@
                   <details>
                     <summary>Technical details &amp; evidence source</summary>
                     <div>
-                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a> (commit 9302482).
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a> (release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>, commit <code>7ab32fa</code>).
                       Architecture follows a 5-crate onion model (<code>factory-core</code>, <code>factory-application</code>, <code>factory-infrastructure</code>, <code>factory-mcp-server</code>, <code>factory-cli</code>) on Rust Edition 2024 (<code>rustc 1.85+</code>).
                     </div>
                   </details>
@@ -156,29 +156,29 @@
               </tr>
               <tr>
                 <td><strong>5-phase durable mission pipeline</strong></td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-verified">Verified</span></td>
                 <td>
                   Missions execute a 5-step workflow (plan, execute, validate, review, deliver) on Hatchet with automatic task retries and state checkpointing.
                   <details>
                     <summary>Technical details &amp; worker deployment</summary>
                     <div>
                       Workers run release image <code>7ab32fa</code> (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>) in namespace <code>agents</code>.
-                      Hatchet coordinates <code>rustant:plan</code>, <code>zeroclaw:execute</code>, <code>zeroclaw:validate</code>, <code>rustant:review</code>, and <code>factory:deliver</code>. Checkpoints persist to PostgreSQL and MinIO S3.
+                      Hatchet coordinates <code>rustant-plan</code>, <code>zeroclaw-execute</code>, <code>zeroclaw-validate</code>, <code>rustant-review</code>, and <code>factory-deliver</code>. Live run <code>darkgravitymission-dev-lgcorzo-1794258497071</code> (<code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) succeeded across all 5 steps in <code>3m 47s</code>; recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a>.
                     </div>
                   </details>
                 </td>
               </tr>
               <tr>
                 <td><strong>Micro-sandbox limits enforced at admission</strong></td>
-                <td><span class="status-tag status-deployed">Deployed</span></td>
+                <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-verified">Verified</span></td>
                 <td>
-                  Untrusted code execution pods are strictly capped to at most 30Mi RAM and 250m CPU, blocking runaway processes before pods can start.
+                  Untrusted code execution pods run inside <code>factory-sandboxes</code> (512Mi RAM / 500m CPU, <code>PodSecurity=restricted</code>) and <code>development</code> (30Mi RAM / 250m CPU), blocking unisolated or runaway processes.
                   <details>
                     <summary>Technical details &amp; admission policies</summary>
                     <div>
-                      Enforced by Kubernetes ValidatingAdmissionPolicies <code>dg-sandbox-bounds-jobs</code> and <code>dg-sandbox-bounds-pods</code>.
-                      Sandbox containers run under <code>RuntimeClass=gvisor</code> (<abbr title="User-space kernel container sandbox">gVisor</abbr> <code>runsc</code> kernel emulation) with <code>readOnlyRootFilesystem: true</code> and dropped capabilities.
-                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.
+                      Enforced by Kubernetes <code>PodSecurity: restricted</code> in <code>factory-sandboxes</code> and ValidatingAdmissionPolicies <code>dg-sandbox-bounds-jobs</code> and <code>dg-sandbox-bounds-pods</code> in <code>development</code>.
+                      Sandbox containers run under <code>RuntimeClass=gvisor</code> (<abbr title="User-space kernel container sandbox">gVisor</abbr> <code>runsc</code> kernel emulation, <code>io.containerd.runsc.v1</code>) with <code>readOnlyRootFilesystem: true</code> and dropped capabilities (verified via pod <code>sandbox-job-a68ab421-mmzwz</code>, <code>exit_code: 0</code>).
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.
                     </div>
                   </details>
                 </td>
@@ -247,7 +247,7 @@
       <section id="projects">
         <h2>Which projects are there?</h2>
         <p>
-          I maintain 64 public repositories on GitHub (22 original source repositories + 42 maintained forks), verified on 2026-10-31. Here are the core projects grouped by function:
+          I maintain 64 public repositories on GitHub (22 original source repositories + 42 maintained forks), verified on 2026-11-09. Here are the core projects grouped by function:
         </p>
         <div class="grid-2">
           <div class="card">
