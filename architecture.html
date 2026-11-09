@@ -120,9 +120,9 @@
           <li><strong><code>factory-deliver</code></strong>Opens a pull request that links the issue. A human reviews and merges.</li>
         </ol>
         <p class="status-line">
-          Status: <span class="status-tag status-deployed">Deployed</span>
+          Status: <span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-verified">Verified</span>
           Task names: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/autonomous_mission.rs"><code>autonomous_mission.rs</code></a>.
-          A full run was seen in the Hatchet dashboard on v0.2.8; no evidence file records it yet.
+          A full end-to-end run on <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> (<code>darkgravitymission-dev-lgcorzo-1794258497071</code> / Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) succeeded across all 5 steps in <code>3m 47s</code> and is recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a>.
         </p>
         <p class="note">
           Kafka naming: the poller and worker use <code>mission-input</code>.
@@ -187,17 +187,17 @@
         <h2>Where does each part run?</h2>
         <p>
           The lab cluster runs on MicroK8s. This table lists what was seen
-          running on 2026-10-31. Names come from the cluster, not from the
+          running on 2026-11-09 (reconciled via Flux CD at <code>gitops_internal_lgcorzo@2716e548</code>). Names come from the cluster, not from the
           design documents.
         </p>
         <div class="table-container">
           <table>
             <thead><tr><th scope="col">Namespace</th><th scope="col">What runs there</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image v0.3.3).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> / <code>7ab32fa</code>).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>orchestrators</code></td><td>The Hatchet engine and KEDA autoscaler.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>confluent</code></td><td>Kafka brokers and KRaft controller, managed by the Confluent operator.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
-              <tr><td><code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class, under the 30Mi/250m policy.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>factory-sandboxes</code> &amp; <code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class (<code>io.containerd.runsc.v1</code>), under <code>PodSecurity=restricted</code>, default-deny egress, and 512Mi/500m (or 30Mi/250m) bounds.</td><td><span class="status-tag status-verified">Verified</span></td></tr>
               <tr><td><code>llm-apps</code></td><td>LiteLLM, R2R, Semantica, MLflow, Ollama, OpenWebUI and document tools.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>storage</code></td><td>PostgreSQL (CloudNativePG, 3 instances), MinIO, Redis, RabbitMQ.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>security</code></td><td>Keycloak for sign-in.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
@@ -248,10 +248,12 @@
           <table>
             <thead><tr><th scope="col">File</th><th scope="col">What it covers</th><th scope="col">Limit</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>verified_status.json</code></a></td><td>Format, lint, adversarial and unit-test gates passed.</td><td>One run on 2026-10-18.</td></tr>
-              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/baseline.md"><code>baseline.md</code></a></td><td>Workloads, custom resources and permissions in the cluster.</td><td>Snapshot of 2026-10-01. Namespaces and images have changed.</td></tr>
-              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a></td><td>Killed worker recovery and a failing-test scenario.</td><td>Sandbox environment, 2026-10-15. No soak test.</td></tr>
-              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security-tests.md"><code>security-tests.md</code></a></td><td>Secret redaction and sandbox limits.</td><td>2026-10-15, before the ADR-008 limits.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>verified_status.json</code></a></td><td>Format, lint, adversarial, unit-test, live gVisor, and Hatchet E2E mission gates passed.</td><td>Verified on 2026-11-09 for release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> (<code>7ab32fa</code>).</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>live-gvisor-isolation.json</code></a></td><td>Live MicroK8s gVisor (<code>runsc</code>) positive/negative isolation probes and end-to-end Hatchet mission attestation (<code>sandbox-job-a68ab421-mmzwz</code>).</td><td>Verified on 2026-11-09 on <code>server.internal.lgcorzo</code>.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a></td><td>Full DG-RVP-013 closure report: fail-closed execution policy, gVisor runtime verification, and 5-step Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>.</td><td>Single-cluster verification on 2026-11-09.</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/baseline.md"><code>baseline.md</code></a></td><td>Workloads, custom resources and permissions in the cluster.</td><td>Historical snapshot of 2026-10-01; superseded by <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/GITOPS_RUNTIME_VERIFICATION.md"><code>GITOPS_RUNTIME_VERIFICATION.md</code></a> (2026-11-09).</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/reliability-tests.md"><code>reliability-tests.md</code></a></td><td>Killed worker recovery and a failing-test scenario.</td><td>Historical snapshot of 2026-10-15; updated in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/WORKFLOW_RELIABILITY.md"><code>WORKFLOW_RELIABILITY.md</code></a> (2026-11-09).</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security-tests.md"><code>security-tests.md</code></a></td><td>Secret redaction and sandbox limits.</td><td>Historical snapshot of 2026-10-15; updated in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/SECURITY_TEST_PLAN.md"><code>SECURITY_TEST_PLAN.md</code></a> (2026-11-09).</td></tr>
               <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/threat-model.md"><code>threat-model.md</code></a></td><td>Threats and planned controls.</td><td>A design document, not a test result.</td></tr>
             </tbody>
           </table>
