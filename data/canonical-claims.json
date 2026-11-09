@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-11-08",
+  "as_of_date": "2026-11-09",
   "source_repository": {
     "repository": "lgcorzo/rust_CACD_autonomous_factory",
-    "branch": "012-secure-gvisor-execution",
+    "branch": "013-verified-autonomous-execution-closure",
     "audit_directory": "docs/audit"
   },
   "repository_statistics": {
