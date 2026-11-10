@@ -172,13 +172,13 @@
                 <td><strong>Micro-sandbox limits enforced at admission</strong></td>
                 <td><span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-verified">Verified</span></td>
                 <td>
-                  Untrusted code execution pods run inside <code>factory-sandboxes</code> (512Mi RAM / 500m CPU, <code>PodSecurity=restricted</code>) and <code>development</code> (30Mi RAM / 250m CPU), blocking unisolated or runaway processes.
+                  Untrusted code execution pods run inside <code>factory-sandboxes</code> (512Mi RAM / 500m CPU, <code>PodSecurity=restricted</code>) under gVisor isolation, blocking unisolated or runaway processes.
                   <details>
                     <summary>Technical details &amp; admission policies</summary>
                     <div>
-                      Enforced by Kubernetes <code>PodSecurity: restricted</code> in <code>factory-sandboxes</code> and ValidatingAdmissionPolicies <code>dg-sandbox-bounds-jobs</code> and <code>dg-sandbox-bounds-pods</code> in <code>development</code>.
+                      Enforced by Kubernetes <code>PodSecurity: restricted</code> and resource limits in <code>factory-sandboxes</code> (and ValidatingAdmissionPolicies <code>dg-sandbox-bounds-jobs</code> and <code>dg-sandbox-bounds-pods</code>).
                       Sandbox containers run under <code>RuntimeClass=gvisor</code> (<abbr title="User-space kernel container sandbox">gVisor</abbr> <code>runsc</code> kernel emulation, <code>io.containerd.runsc.v1</code>) with <code>readOnlyRootFilesystem: true</code> and dropped capabilities (verified via pod <code>sandbox-job-a68ab421-mmzwz</code>, <code>exit_code: 0</code>).
-                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a>, <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/benchmarks/resource-profiling-512mi.json"><code>resource-profiling-512mi.json</code></a>, and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/deploy/policies/validating-admission-policies.yaml"><code>deploy/policies/</code></a>.
                     </div>
                   </details>
                 </td>

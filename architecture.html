@@ -155,11 +155,11 @@
           <div class="card">
             <h3>The sandbox bound</h3>
             <p>
-              In the <code>development</code> namespace every container must
-              declare requests and limits, with memory at most 30Mi and CPU
-              at most 250m. Ephemeral containers are refused. The bound
-              covers the workload, not gVisor&rsquo;s own overhead, which the
-              ADR says is still to be measured.
+              In the sandbox namespaces every container must
+              declare requests and limits, with memory at most 512Mi and CPU
+              at most 500m. Ephemeral containers are refused. The bound
+              covers the workload, not gVisor&rsquo;s own overhead, which is
+              measured as 35Mi RAM / 100m CPU pod fixed overhead in RuntimeClass.
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@
               <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a> / <code>7ce46c2d</code>).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>orchestrators</code></td><td>The Hatchet engine and KEDA autoscaler.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>confluent</code></td><td>Kafka brokers and KRaft controller, managed by the Confluent operator.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
-              <tr><td><code>factory-sandboxes</code> &amp; <code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class (<code>io.containerd.runsc.v1</code>), under <code>PodSecurity=restricted</code>, default-deny egress, and 512Mi/500m (or 30Mi/250m) bounds.</td><td><span class="status-tag status-verified">Verified</span></td></tr>
+              <tr><td><code>factory-sandboxes</code> &amp; <code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class (<code>io.containerd.runsc.v1</code>), under <code>PodSecurity=restricted</code>, default-deny egress, and 512Mi/500m bounds.</td><td><span class="status-tag status-verified">Verified</span></td></tr>
               <tr><td><code>llm-apps</code></td><td>LiteLLM, R2R, Semantica, MLflow, Ollama, OpenWebUI and document tools.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>storage</code></td><td>PostgreSQL (CloudNativePG, 3 instances), MinIO, Redis, RabbitMQ.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>security</code></td><td>Keycloak for sign-in.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
@@ -221,7 +221,7 @@
             <thead><tr><th scope="col">Boundary</th><th scope="col">How it works</th><th scope="col">Status</th></tr></thead>
             <tbody>
               <tr><td>Sandbox</td><td>Generated code runs under gVisor (runtime class <code>gvisor</code>, handler <code>runsc</code>). Firecracker was considered and not chosen, because gVisor starts faster and fits Kubernetes.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
-              <tr><td>Resource limits</td><td>30Mi and 250m per container, checked when the job is created.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td>Resource limits</td><td>512Mi and 500m per container, checked when the job is created.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td>Identity</td><td>Missions are signed with Ed25519 keys as W3C verifiable credentials.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
               <tr><td>Secrets</td><td>Vault tokens that last five minutes, wiped from memory on drop.</td><td><span class="status-tag status-implemented">Implemented</span></td></tr>
               <tr><td>Network</td><td>OpenZiti overlay. The controller and router run; the claim of zero inbound ports is not verified here.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
