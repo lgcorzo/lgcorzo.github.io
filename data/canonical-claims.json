@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-11-09",
+  "as_of_date": "2026-11-10",
   "source_repository": {
     "repository": "lgcorzo/rust_CACD_autonomous_factory",
     "branch": "main",
-    "release_tag": "v0.3.3",
-    "commit_sha": "7ab32fa66b770761d559a55eb4ed01b3752eac16",
+    "release_tag": "v0.3.4",
+    "commit_sha": "281223f1",
     "audit_directory": "docs/audit"
   },
   "repository_statistics": {
@@ -34,9 +34,9 @@
     {
       "fact_id": "FACT-MISSION-DAG-PHASES",
       "category": "lifecycle",
-      "claim": "The Hatchet mission workflow executes 5 durable steps (rustant-plan, zeroclaw-execute, zeroclaw-validate, rustant-review, factory-deliver) triggered after Kafka mission-input ingestion, runtime-verified on v0.3.3 via Hatchet run e32a4202-2a30-44a4-b1dd-ef23f620e481 (darkgravitymission-dev-lgcorzo-1794258497071).",
+      "claim": "The Hatchet mission workflow executes 5 durable steps (rustant-plan, zeroclaw-execute, zeroclaw-validate, rustant-review, factory-deliver) triggered after Kafka mission-input ingestion, runtime-verified on v0.3.4 via Hatchet run e07c7bc1-3164-4460-99c1-3473cd842150 (diag-mission-1794303600-1794303618).",
       "verification_status": "verified",
-      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json",
+      "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/PROVENANCE_DG_RVP_016.md",
       "required_pages": ["index.html", "architecture.html", "lifecycle.html", "notebooks.html"]
     },
     {

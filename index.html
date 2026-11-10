@@ -69,7 +69,7 @@
         </div>
 
         <p class="status-line" style="margin-top: 1.25rem;">
-          <strong>Honest status:</strong> latest release is <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>. An end-to-end mission (<code>real-mission-e7-001-1794258497</code> / Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) has executed and succeeded across all 5 Hatchet steps on the lab cluster. Multi-node chaos drills and soak tests remain in Designed status (not published as verified).
+          <strong>Honest status:</strong> latest release is <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a>. An end-to-end mission (<code>real-mission-e7-001-1794296036</code> / Hatchet run <code>766277c0-ad06-41e0-9e36-9134736d7464</code>) has executed and succeeded across all 5 Hatchet steps on the lab cluster. Multi-node chaos drills and soak tests remain in Designed status (not published as verified).
         </p>
       </section>
 
@@ -118,7 +118,7 @@
       <section id="works-today">
         <h2>What works today? (Actual Factory Status)</h2>
         <p>
-          Each capability below is stated in plain language with its verification tag, evidence source, and expandable technical details. Checked on 2026-11-09 against the repository (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>) and the lab cluster.
+          Each capability below is stated in plain language with its verification tag, evidence source, and expandable technical details. Checked on 2026-11-10 against the repository (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a>) and the lab cluster.
         </p>
         <div class="table-container">
           <table>
@@ -134,7 +134,7 @@
                   <details>
                     <summary>Technical details &amp; evidence source</summary>
                     <div>
-                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>evidence/verified_status.json</code></a> (release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>, commit <code>7ab32fa</code>).
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/PROVENANCE_DG_RVP_016.md"><code>docs/audit/PROVENANCE_DG_RVP_016.md</code></a> (release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a>, commit <code>281223f1</code>).
                       Architecture follows a 5-crate onion model (<code>factory-core</code>, <code>factory-application</code>, <code>factory-infrastructure</code>, <code>factory-mcp-server</code>, <code>factory-cli</code>) on Rust Edition 2024 (<code>rustc 1.85+</code>).
                     </div>
                   </details>
@@ -149,7 +149,7 @@
                     <summary>Technical details &amp; benchmark context</summary>
                     <div>
                       Credential carriers derive <code>Zeroize</code> and <code>ZeroizeOnDrop</code>. Criterion micro-benchmarks measure this forensic wipe at <strong>54.2 ns</strong> (0.0542 &micro;s) on AMD x86_64 hardware.
-                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/benches/memory_zeroize_bench.rs"><code>benches/memory_zeroize_bench.rs</code></a>. Reproduce via <code>cargo bench --bench memory_zeroize_bench</code>.
+                      Source: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/benches/zeroize_benchmark.rs"><code>crates/factory-core/benches/zeroize_benchmark.rs</code></a>. Reproduce via <code>cargo bench -p factory-core --bench zeroize_benchmark</code>.
                     </div>
                   </details>
                 </td>
@@ -162,8 +162,8 @@
                   <details>
                     <summary>Technical details &amp; worker deployment</summary>
                     <div>
-                      Workers run release image <code>7ab32fa</code> (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a>) in namespace <code>agents</code>.
-                      Hatchet coordinates <code>rustant-plan</code>, <code>zeroclaw-execute</code>, <code>zeroclaw-validate</code>, <code>rustant-review</code>, and <code>factory-deliver</code>. Live run <code>darkgravitymission-dev-lgcorzo-1794258497071</code> (<code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) succeeded across all 5 steps in <code>3m 47s</code>; recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a>.
+                      Workers run release image <code>7ce46c2d</code> (<a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a>) in namespace <code>agents</code>.
+                      Hatchet coordinates <code>rustant-plan</code>, <code>zeroclaw-execute</code>, <code>zeroclaw-validate</code>, <code>rustant-review</code>, and <code>factory-deliver</code>. Live run <code>diag-mission-1794303600-1794303618</code> (<code>e07c7bc1-3164-4460-99c1-3473cd842150</code>) succeeded across all 5 steps in <code>3m 03s</code>; recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/PROVENANCE_DG_RVP_016.md"><code>PROVENANCE_DG_RVP_016.md</code></a>.
                     </div>
                   </details>
                 </td>
@@ -342,7 +342,7 @@
       </div>
       <div class="footer-bottom">
         <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
-        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a></span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
       </div>
     </div>
   </footer>

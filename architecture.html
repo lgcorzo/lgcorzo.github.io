@@ -122,7 +122,7 @@
         <p class="status-line">
           Status: <span class="status-tag status-deployed">Deployed</span> <span class="status-tag status-verified">Verified</span>
           Task names: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-application/src/workflows/autonomous_mission.rs"><code>autonomous_mission.rs</code></a>.
-          A full end-to-end run on <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> (<code>darkgravitymission-dev-lgcorzo-1794258497071</code> / Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>) succeeded across all 5 steps in <code>3m 47s</code> and is recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>evidence/security/live-gvisor-isolation.json</code></a> and <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a>.
+          A full end-to-end run on <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a> (<code>diag-mission-1794303600-1794303618</code> / Hatchet run <code>e07c7bc1-3164-4460-99c1-3473cd842150</code>) succeeded across all 5 steps in <code>3m 03s</code> and is recorded in <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/PROVENANCE_DG_RVP_016.md"><code>PROVENANCE_DG_RVP_016.md</code></a>.
         </p>
         <p class="note">
           Kafka naming: the poller and worker use <code>mission-input</code>.
@@ -194,7 +194,7 @@
           <table>
             <thead><tr><th scope="col">Namespace</th><th scope="col">What runs there</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> / <code>7ab32fa</code>).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
+              <tr><td><code>agents</code></td><td>Factory worker, deep-research worker, Git poller and MCP server (image <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a> / <code>7ce46c2d</code>).</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>orchestrators</code></td><td>The Hatchet engine and KEDA autoscaler.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>confluent</code></td><td>Kafka brokers and KRaft controller, managed by the Confluent operator.</td><td><span class="status-tag status-deployed">Deployed</span></td></tr>
               <tr><td><code>factory-sandboxes</code> &amp; <code>development</code></td><td>Sandbox jobs on the <code>gvisor</code> runtime class (<code>io.containerd.runsc.v1</code>), under <code>PodSecurity=restricted</code>, default-deny egress, and 512Mi/500m (or 30Mi/250m) bounds.</td><td><span class="status-tag status-verified">Verified</span></td></tr>
@@ -248,7 +248,7 @@
           <table>
             <thead><tr><th scope="col">File</th><th scope="col">What it covers</th><th scope="col">Limit</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/verified_status.json"><code>verified_status.json</code></a></td><td>Format, lint, adversarial, unit-test, live gVisor, and Hatchet E2E mission gates passed.</td><td>Verified on 2026-11-09 for release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a> (<code>7ab32fa</code>).</td></tr>
+              <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/PROVENANCE_DG_RVP_016.md"><code>PROVENANCE_DG_RVP_016.md</code></a></td><td>Format, lint, adversarial, unit-test, live gVisor, and Hatchet E2E mission gates passed.</td><td>Verified on 2026-11-10 for release <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a> (<code>281223f1</code>).</td></tr>
               <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/security/live-gvisor-isolation.json"><code>live-gvisor-isolation.json</code></a></td><td>Live MicroK8s gVisor (<code>runsc</code>) positive/negative isolation probes and end-to-end Hatchet mission attestation (<code>sandbox-job-a68ab421-mmzwz</code>).</td><td>Verified on 2026-11-09 on <code>server.internal.lgcorzo</code>.</td></tr>
               <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/REMEDIATION_REPORT_013.md"><code>REMEDIATION_REPORT_013.md</code></a></td><td>Full DG-RVP-013 closure report: fail-closed execution policy, gVisor runtime verification, and 5-step Hatchet run <code>e32a4202-2a30-44a4-b1dd-ef23f620e481</code>.</td><td>Single-cluster verification on 2026-11-09.</td></tr>
               <tr><td><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/evidence/baseline.md"><code>baseline.md</code></a></td><td>Workloads, custom resources and permissions in the cluster.</td><td>Historical snapshot of 2026-10-01; superseded by <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/docs/audit/GITOPS_RUNTIME_VERIFICATION.md"><code>GITOPS_RUNTIME_VERIFICATION.md</code></a> (2026-11-09).</td></tr>
@@ -301,7 +301,7 @@
       </div>
       <div class="footer-bottom">
         <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
-        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.3">v0.3.3</a></span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
       </div>
     </div>
   </footer>
