@@ -103,7 +103,7 @@
                 <td><a href="#exp-2026-011-adr008"><strong>ADR-008</strong>: AgentWorkspace CRD &amp; Sandboxing</a></td>
                 <td>2026-10-31</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
-                <td>Declarative CRD AgentWorkspace enforces strict 30Mi RAM / 250m CPU limits at admission via ValidatingAdmissionPolicies.</td>
+                <td>Declarative CRD AgentWorkspace enforces strict 512Mi RAM / 500m CPU limits at admission via ValidatingAdmissionPolicies.</td>
               </tr>
               <tr>
                 <td><a href="#screencast-demo"><strong>Screencast</strong>: 5-Minute Technical Demonstration</a></td>
@@ -207,21 +207,21 @@
 <div>
 <div>
 <h3 class="font-mono">1. What I wanted to verify</h3>
-<p>Replace imperative pod scheduling with a declarative Kubernetes CRD (<code>AgentWorkspace</code>) that enforces strict ValidatingAdmissionPolicies (CPU ≤ 250m, RAM ≤ 30Mi, drop ALL capabilities) in sandbox execution namespaces.</p>
+<p>Replace imperative pod scheduling with a declarative Kubernetes CRD (<code>AgentWorkspace</code>) that enforces strict ValidatingAdmissionPolicies (CPU ≤ 500m, RAM ≤ 512Mi, drop ALL capabilities) in sandbox execution namespaces.</p>
 </div>
 <div>
 <h3 class="font-mono">2. Architecture &amp; Setup</h3>
-<p>Deployed <code>agentworkspaces.darkgravity.io</code> CRD with an active controller inside <code>factory-cli</code>. Sandboxed workloads execute as Kubernetes Jobs using <code>RuntimeClass=gvisor</code> in the <code>development</code> namespace.</p>
+<p>Deployed <code>agentworkspaces.darkgravity.io</code> CRD with an active controller inside <code>factory-cli</code>. Sandboxed workloads execute as Kubernetes Jobs using <code>RuntimeClass=gvisor</code> in the <code>development</code> and <code>factory-sandboxes</code> namespaces.</p>
 </div>
 <div>
 <h3 class="font-mono">3. What actually happened</h3>
-<p>ValidatingAdmissionPolicy <code>dg-sandbox-bounds-jobs</code> successfully intercepted and denied oversized jobs. When sandbox pods declared compliant requests (16Mi/50m) and limits (30Mi/250m), Hatchet DAG tasks transitioned cleanly to completion with zero host kernel exposure.</p>
+<p>ValidatingAdmissionPolicy <code>dg-sandbox-bounds-jobs</code> successfully intercepted and denied oversized jobs. When sandbox pods declared compliant requests (64Mi/100m) and limits (512Mi/500m), Hatchet DAG tasks transitioned cleanly to completion with zero host kernel exposure.</p>
 </div>
 </div>
 <div>
 <div>
 <h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
-<p>Admission policies must validate both requests and limits symmetrically. Micro-sandboxes with 30Mi RAM clamping require pre-installed CLI binaries (such as <code>specify-cli</code>) and memory-efficient runtime runners to avoid immediate OOM kills.</p>
+<p>Admission policies must validate both requests and limits symmetrically. Sandboxes with 512Mi RAM clamping require pre-installed CLI binaries (such as <code>specify-cli</code>) and memory-efficient runtime runners to avoid immediate OOM kills.</p>
 </div>
 <div>
 <h3 class="font-mono">5. Industrial Application Transfer</h3>
