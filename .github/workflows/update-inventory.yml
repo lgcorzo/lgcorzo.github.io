@@ -1,0 +1,64 @@
+name: Update Public Repository Inventory
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Generate public-only inventory
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          from datetime import datetime, timezone
+
+          req = urllib.request.Request(
+              "https://api.github.com/users/lgcorzo/repos?type=public&per_page=100",
+              headers={"Accept": "application/vnd.github+json", "User-Agent": "lgcorzo-portal-inventory"},
+          )
+          with urllib.request.urlopen(req, timeout=30) as resp:
+              repos = json.loads(resp.read().decode("utf-8"))
+
+          public_repos = [r for r in repos if not r.get("private", False)]
+          summary = {
+              "generated_at": datetime.now(timezone.utc).isoformat(),
+              "public_total": len(public_repos),
+              "public_forks": sum(1 for r in public_repos if r.get("fork")),
+              "public_archived": sum(1 for r in public_repos if r.get("archived")),
+              "public_active": sum(1 for r in public_repos if not r.get("archived")),
+              "repositories": [
+                  {
+                      "name": r["name"],
+                      "html_url": r["html_url"],
+                      "language": r.get("language"),
+                      "fork": r.get("fork", False),
+                      "archived": r.get("archived", False),
+                      "pushed_at": r.get("pushed_at"),
+                  }
+                  for r in sorted(public_repos, key=lambda x: x["name"].lower())
+              ],
+          }
+          with open("inventory.json", "w", encoding="utf-8") as f:
+              json.dump(summary, f, indent=2)
+              f.write("\n")
+          PY
+
+      - name: Commit updated inventory if changed
+        run: |
+          if [ -n "$(git status --porcelain inventory.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add inventory.json
+            git commit -m "chore: update public repository inventory"
+            git push
+          fi
