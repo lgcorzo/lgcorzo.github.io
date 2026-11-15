@@ -480,32 +480,12 @@ const GITHUB_REPOS = [
     "category_label": "SIMD & Hardened Crypto"
   },
   {
-    "name": "Asynchronous-Optimization",
-    "description": "asynchronous-optimization",
-    "url": "https://github.com/lgcorzo/Asynchronous-Optimization",
-    "stars": 1,
-    "forks": 0,
-    "language": "Python",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
     "name": "FinRobot",
     "description": "FinRobot: An Open-Source AI Agent Platform for Financial Analysis using LLMs \ud83d\ude80 \ud83d\ude80 \ud83d\ude80 ",
     "url": "https://github.com/lgcorzo/FinRobot",
     "stars": 1,
     "forks": 0,
     "language": "Jupyter Notebook",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
-    "name": "la_consulta_de_marta",
-    "description": "Clinical psychology web platform and digital consult for Marta M\u00f3stoles, maintained under Dark Gravity continuous delivery.",
-    "url": "https://github.com/lgcorzo/la_consulta_de_marta",
-    "stars": 1,
-    "forks": 0,
-    "language": "TypeScript",
     "category": "apps",
     "category_label": "Ecosystem & Apps"
   },
@@ -556,16 +536,6 @@ const GITHUB_REPOS = [
     "stars": 0,
     "forks": 0,
     "language": "Jupyter Notebook",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
-    "name": "cod_fish_classification_app",
-    "description": "",
-    "url": "https://github.com/lgcorzo/cod_fish_classification_app",
-    "stars": 0,
-    "forks": 0,
-    "language": "C#",
     "category": "apps",
     "category_label": "Ecosystem & Apps"
   },
@@ -696,16 +666,6 @@ const GITHUB_REPOS = [
     "stars": 0,
     "forks": 0,
     "language": "Python",
-    "category": "apps",
-    "category_label": "Ecosystem & Apps"
-  },
-  {
-    "name": "vscode_developer",
-    "description": "",
-    "url": "https://github.com/lgcorzo/vscode_developer",
-    "stars": 0,
-    "forks": 0,
-    "language": "Dockerfile",
     "category": "apps",
     "category_label": "Ecosystem & Apps"
   }
