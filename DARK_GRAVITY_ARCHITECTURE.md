@@ -161,9 +161,9 @@ All LLM inference calls route through the **`dark-litellm` Gateway**, which inje
 
 ---
 
-### 6. Regulatory Readiness & Architectural Alignment
+### 6. Auditability & Traceability (Long-Term Regulatory Objective)
 
-Dark Gravity is architected to provide verifiable technical controls aligned with major European and global engineering standards *(note: these controls represent technical readiness and architectural alignment, not formal third-party regulatory certification)* [3, 65, 66]:
+Dark Gravity is designed to facilitate technical auditing and end-to-end traceability. Alignment with frameworks such as the EU AI Act, SOC 2 Type II, and ISO/IEC 25059 is the **long-term roadmap objective**—no formal regulatory compliance or third-party certification is claimed [3, 65, 66]:
 
 | Regulatory / Quality Framework | Target Technical Requirement | Dark Gravity Architectural Control & Evidence |
 | :--- | :--- | :--- |
