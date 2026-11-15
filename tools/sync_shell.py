@@ -25,6 +25,7 @@ def header(cur):
         cur_attr = ' aria-current="page"' if f == cur else ''
         title_attr = f' title="{t}"' if t else ''
         lines.append(f'          <li><a href="{f}" class="nav-link"{cur_attr}{title_attr}>{l}</a></li>')
+    lines.append('          <li><a href="https://github.com/lgcorzo" class="nav-link" title="GitHub profile and ecosystem overview (@lgcorzo)">GitHub Overview</a></li>')
     items = "\n".join(lines)
     return f'''
   <header class="site-header">
@@ -68,7 +69,7 @@ def footer():
       </div>
       <div class="footer-bottom">
         <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
-        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.0">v0.3.0</a></span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
       </div>
     </div>
   </footer>
