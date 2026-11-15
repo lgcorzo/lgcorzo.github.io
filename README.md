@@ -2,7 +2,7 @@
 
 This repository (`lgcorzo.github.io`) serves as the public engineering lab portal, interactive architecture showcase, and ecosystem index for [Dr. Luis Galo Corzo (`@lgcorzo`)](https://github.com/lgcorzo).
 
-Across **71 total repositories** (**67 active**, **4 archived**; **63 public**, **8 private internal infrastructure/factory repositories**), the ecosystem is organized around the **Dark Gravity Continuous Agentic / Continuous Deployment (CA/CD) Autonomous Software Factory** and its sovereign infrastructure, cognitive memory, and Spec-Driven Development (SDD) toolchains.
+Across **66 public repositories**, the ecosystem is organized around the **Dark Gravity Continuous Agentic / Continuous Deployment (CA/CD) Autonomous Software Factory** and its sovereign infrastructure, cognitive memory, and Spec-Driven Development (SDD) toolchains.
 
 ---
 
@@ -21,7 +21,7 @@ To maintain strict engineering transparency, every subsystem in the **Dark Gravi
 
 ## 🛡️ 2. Why Principal Open-Source Projects Are Forked & Maintained Under Our Code Quality Rules
 
-Out of the 71 repositories in the `@lgcorzo` lab, **41 are strategic forks** of principal open-source projects spanning **Spec-Driven Development (SDD)**, **Agentic Frameworks**, **GraphRAG & Semantic Memory**, **AST Documentation**, and **High-Performance S3 Storage / SIMD Cryptography**.
+Out of the public repositories in the `@lgcorzo` lab, **42 are strategic forks** (plus 14 independently maintained upstream mirrors) of principal open-source projects spanning **Spec-Driven Development (SDD)**, **Agentic Frameworks**, **GraphRAG & Semantic Memory**, **AST Documentation**, and **High-Performance S3 Storage / SIMD Cryptography**.
 
 ### Why We Fork Principal Upstream Projects
 Relying directly on unpinned upstream repositories or public container registries (`docker.io`, `quay.io`, PyPI/Crates rolling branches) introduces four critical risks to an autonomous software factory:
@@ -33,7 +33,7 @@ Relying directly on unpinned upstream repositories or public container registrie
 ### How Forked Projects Are Maintained Under `@lgcorzo` Code Quality & Security Rules
 Every principal fork in this ecosystem is decoupled from blind upstream rebases and governed by five mandatory engineering rules:
 1. **Strict Static Analysis, Type Safety & Formatting Triad**:
-   - **Rust Repositories** (`rust_CACD_autonomous_factory`, `Jules_remediator`, `fastapi-autogen-team`, `deepwiki-rs`, `adk-rust`): Enforced `cargo clippy --all-targets -- -D warnings`, `rustfmt --check`, and workspace unit/integration test suites.
+   - **Rust Repositories** (`rust_CACD_autonomous_factory`, `fastapi-autogen-team`, `deepwiki-rs`, `adk-rust`): Enforced `cargo clippy --all-targets -- -D warnings`, `rustfmt --check`, and workspace unit/integration test suites.
    - **Python Repositories** (`mlops-python-package`, `llmops-python-package`, `spec-kit`, `semantica`, `dark-litellm`, `CodeWiki`, `openwiki`): Enforced `ruff` linting/formatting, strict typing (`mypy` / `pyright`), and `pytest` regression suites across Python 3.11–3.14 matrices.
 2. **Deterministic Dependency Pinning & Cryptographic Lockfiles**:
    - Vulnerable transitive packages (e.g., `pygments`, `aiohttp`, `cryptography`, `authlib`, `pytest`, `undici`, `lodash`, `axios`) are explicitly patched and locked via `poetry.lock`, `uv.lock`, `Cargo.lock`, or SHA-256 hash-pinned `security-audit-requirements.txt` manifests verified in CI.
@@ -56,11 +56,10 @@ Core orchestrators, autonomous remediation agents, Spec-Driven Development toolk
 | Repository | Language | Governance Role | Description & Maintenance Focus |
 | :--- | :--- | :--- | :--- |
 | [**rust_CACD_autonomous_factory**](https://github.com/lgcorzo/rust_CACD_autonomous_factory) | Rust | Original Core (HITL Protected) | Dark Gravity CA/CD Core: 5-crate Rust 2024 workspace, Hatchet 6-phase DAG orchestrator, Ed25519 NHI credentials & gVisor sandboxes. |
-| **Jules_remediator** *(Private Factory)* | Rust | Original Core (DDD + MLOps) | Autonomous Kubernetes error remediation factory listening to FluxCD alerts, logging MLflow experiments, and triggering Jules SDK fixes. |
 | [**fastapi-autogen-team**](https://github.com/lgcorzo/fastapi-autogen-team) | Rust | Original Core (HITL Protected) | High-throughput Axum & Rig microservice exposing OpenAI-compatible streaming endpoints for multi-agent squads. |
 | [**mlops-python-package**](https://github.com/lgcorzo/mlops-python-package) | Python | Original Core (HITL + OpenWiki) | Industrial MLOps Standard: Reproducible ML pipelines, DVC data versioning, MLflow tracking, SHAP explainability, and SHA-256 pinned security audit lockfiles. |
 | [**llmops-python-package**](https://github.com/lgcorzo/llmops-python-package) | Python | Original Core (OpenWiki + OKF) | Enterprise LLMOps Standard: ISO/IEC/IEEE 42010 agent observability, prompt lineage, deterministic evaluation gates, and OpenWiki AST docs. |
-| **gitops_internal_lgcorzo** *(Private Infra)* | Shell / K8s | Original Core Infra | Cluster infrastructure, SealedSecrets, OpenZiti dark networking, FluxCD GitOps manifests, and the hourly Project 6 autonomous vulnerability monitor. |
+| [**cod_fish_classification_keras_model**](https://github.com/lgcorzo/cod_fish_classification_keras_model) | Python | Original Research / CV | Industrial computer vision pipeline for conveyor-belt fish species classification (`HYSE`, `SEI`, `TORSK`, `LASK`) and length estimation using Faster R-CNN (VGG-16 / Keras). |
 | [**spec-kit**](https://github.com/lgcorzo/spec-kit) | Python | Hardened Fork (`github/spec-kit`) | Specification-Driven Development (SDD) toolkit and `specify` CLI; maintained with custom CodeQL gates, `pip-audit` enforcement, and multi-OS pytest matrices. |
 | [**superpowers**](https://github.com/lgcorzo/superpowers) | Shell | Hardened Fork (`obra/superpowers`) | Agentic software engineering methodology (TDD, git worktrees, subagent dispatch, systematic debugging, verification-before-completion). |
 | [**speckit-superpowers-bridge**](https://github.com/lgcorzo/speckit-superpowers-bridge) | Shell | Hardened Fork (`lihan3238/...`) | Thin protocol bridge combining Spec Kit (`spec.md`, `plan.md`, `tasks.md` WHAT contracts) with Superpowers (`executing-plans` HOW discipline) and guard rules. |
@@ -129,5 +128,4 @@ Web applications, financial multi-agent frameworks, GPU tooling, educational cou
 | [**TradingAgents**](https://github.com/lgcorzo/TradingAgents) | Python | Hardened Fork (`TauricResearch/TradingAgents`) | Multi-agent LLM financial trading framework with market simulation and risk management personas. |
 | [**gpu-unlock**](https://github.com/lgcorzo/gpu-unlock) | Shell / C | Hardware Utility | Low-level GPU configuration and compute capability utility for local lab hardware acceleration. |
 | [**GEN_AI_Course**](https://github.com/lgcorzo/GEN_AI_Course) | Jupyter / Python | Educational | Practical notebooks and architectural labs on Generative AI, RAG pipelines, and LLM systems engineering. |
-| [**mds**](https://github.com/lgcorzo/mds) | Python | NLP Research | Multi-document summarization and clinical/scientific NLP pipeline experimentation. |
-| **la_consulta_de_marta** *(Private Web)* | HTML / JS | Healthcare Web | Psychology consultation web portal engineered with strict accessibility, UX/CRO, and automated reflection publishing skills. |
+| [**mds**](https://github.com/lgcorzo/mds) | Go | Directory Service | Maintained fork of `minio/mds` providing directory service primitives for distributed object storage. |

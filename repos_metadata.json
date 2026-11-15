@@ -341,28 +341,6 @@
     "url": "https://github.com/lgcorzo/fastapi-autogen-team"
   },
   {
-    "description": "Dark Gravity Auto-Remediator: Autonomous Kubernetes error remediation engine listening to FluxCD alerts, driving Jules SDK fixes, and auditing to MLflow.",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "Jules_remediator",
-    "primaryLanguage": {
-      "name": "Rust"
-    },
-    "stargazerCount": 1,
-    "url": "https://github.com/lgcorzo/Jules_remediator"
-  },
-  {
-    "description": "Dark Gravity GitOps Layer: FluxCD v2 declarative manifests, SealedSecrets, and network zero-trust policies orchestrating Dark Gravity Kubernetes clusters.",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "gitops_internal_lgcorzo",
-    "primaryLanguage": {
-      "name": "Shell"
-    },
-    "stargazerCount": 1,
-    "url": "https://github.com/lgcorzo/gitops_internal_lgcorzo"
-  },
-  {
     "description": "Dark Gravity Founder Profile: Architectural portfolio, sovereign infrastructure, and autonomous agent factories engineered by Luis Galo Corzo.",
     "forkCount": 0,
     "isFork": false,
@@ -647,17 +625,6 @@
     "url": "https://github.com/lgcorzo/R2R-Engine"
   },
   {
-    "description": "Clinical psychology web platform and digital consult for Marta M\u00f3stoles, maintained under Dark Gravity continuous delivery.",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "la_consulta_de_marta",
-    "primaryLanguage": {
-      "name": "TypeScript"
-    },
-    "stargazerCount": 1,
-    "url": "https://github.com/lgcorzo/la_consulta_de_marta"
-  },
-  {
     "description": "Rust Agent Development Kit (ADK-Rust): Build AI agents in Rust with modular components for models, tools, memory, realtime voice, and more. ADK-Rust is a flexible framework for developing AI agents with simplicity and power. Model-agnostic, deployment-agnostic, optimized for frontier AI models. Includes support for real-time voice agents.",
     "forkCount": 0,
     "isFork": true,
@@ -724,17 +691,6 @@
     "url": "https://github.com/lgcorzo/spec-kit"
   },
   {
-    "description": "asynchronous-optimization",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "Asynchronous-Optimization",
-    "primaryLanguage": {
-      "name": "Python"
-    },
-    "stargazerCount": 1,
-    "url": "https://github.com/lgcorzo/Asynchronous-Optimization"
-  },
-  {
     "description": "Dark Gravity Doc Worker: Autonomous agent extracting AST codebase knowledge graphs and generating ISO/OpenWiki architecture documentation.",
     "forkCount": 0,
     "isFork": false,
@@ -744,28 +700,6 @@
     },
     "stargazerCount": 1,
     "url": "https://github.com/lgcorzo/Documentation_agent"
-  },
-  {
-    "description": "",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "vscode_developer",
-    "primaryLanguage": {
-      "name": "Dockerfile"
-    },
-    "stargazerCount": 0,
-    "url": "https://github.com/lgcorzo/vscode_developer"
-  },
-  {
-    "description": "",
-    "forkCount": 0,
-    "isFork": false,
-    "name": "cod_fish_classification_app",
-    "primaryLanguage": {
-      "name": "C#"
-    },
-    "stargazerCount": 0,
-    "url": "https://github.com/lgcorzo/cod_fish_classification_app"
   },
   {
     "description": "Practical notebooks and architectural labs on Generative AI, RAG pipelines, and LLM systems engineering.",

@@ -44,7 +44,7 @@ Dark Gravity integrates into enterprise software factories through three non-inv
 
 1. **Outbound Polling for Work Items (`GitPlatformPoller`)**: The `factory-cli poller` daemon periodically queries GitHub/GitLab APIs (every 30–60 seconds) for Issues or Work Items tagged with `autonomous-mission` or `dark-gravity` [11–13]. It extracts operational boundaries (e.g., `Resource limits: CPU: 500m, RAM: 512Mi, Timeout: 300s` or sandbox clamps `RAM <= 30Mi`), signs the mission payload with an **Ed25519 Verifiable Credential**, and publishes it to the local Kafka bus (`mission-input`) [11, 14].
 2. **Interactive Pull Request Directives**: Developers interact with active Pull Requests (PRs) or Merge Requests (MRs) via comment mentions (e.g., `@darkgravity /status`, `/interact`, `/refine`, `/validate`) [15]. The poller acknowledges directives with an "eyes" reaction (👀) and posts a structured reply upon execution completion, suppressing self-author bot loops [16, 17].
-3. **GitOps Delivery & Closed-Loop Remediation**: Code changes are pushed to isolated remote feature branches, opening formal PRs/MRs linked to the originating issue (`Closes #ID`) [18, 19]. Infrastructure deployment is handled out-of-band by **FluxCD** using a pull-based reconciliation model [20, 21], while cluster and repository alerts are continuously remediated via `Jules_remediator` and the **GitHub Project 6** vulnerability pipeline [3, 22, 23].
+3. **GitOps Delivery & Closed-Loop Remediation**: Code changes are pushed to isolated remote feature branches, opening formal PRs/MRs linked to the originating issue (`Closes #ID`) [18, 19]. Infrastructure deployment is handled out-of-band by **FluxCD** using a pull-based reconciliation model [20, 21], while cluster and repository alerts are continuously remediated via the internal remediation service and the **GitHub Project 6** vulnerability pipeline [3, 22, 23].
 
 ---
 
@@ -98,7 +98,7 @@ Dark Gravity operates on an **"On-The-Loop" / Human-in-the-Loop (HITL)** supervi
 
 ### 4. Strategic Forking of Principal Open-Source Projects & Code Quality Governance
 
-A defining architectural principle of the `@lgcorzo` lab is that **principal open-source dependencies required by the autonomous factory are forked and maintained under our own strict code quality, security, and release governance** (41 forked repositories out of 71 total).
+A defining architectural principle of the `@lgcorzo` lab is that **principal open-source dependencies required by the autonomous factory are forked and maintained under our own strict code quality, security, and release governance** (42 forked repositories plus 14 independently maintained upstream mirrors across 66 public repositories).
 
 #### Why We Fork Principal Projects
 Autonomous software factories cannot depend on unpinned upstream rolling branches without inheriting systemic fragility:

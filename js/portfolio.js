@@ -118,7 +118,6 @@
 
   const MLOPS = new Set([
     'mlops-python-package', 'llmops-python-package', 'devops_job_shop_scheduling',
-    'Asynchronous-Optimization', 'cod_fish_classification_app',
     'cod_fish_classification_keras_model', 'knowledge-catalog',
   ]);
   const AI = new Set([
@@ -152,8 +151,6 @@
   const HIDDEN = new Set([
     'lgcorzo',
     'Documentation_agent',
-    'gitops_internal_lgcorzo',
-    'Jules_remediator',
     'Microk8s_lgcorzo',
   ]);
 
