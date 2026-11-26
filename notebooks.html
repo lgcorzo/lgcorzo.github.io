@@ -67,6 +67,7 @@
       <nav class="toc" aria-label="On this page">
         <h2>On this page</h2>
         <ol>
+          <li><a href="#exp-2026-013">End-to-End Autonomous Mission &amp; Hatchet-Orchestrated R2R GraphRAG Memory (Mission #476)</a></li>
           <li><a href="#exp-2026-011-adr008">ADR-008 Standard: Declarative AgentWorkspace Custom Resource Definition &amp; Strict Micro-Sandboxing</a></li>
           <li><a href="#screencast-demo">Dark Gravity: 5-Minute Technical Demonstration Screencast &amp; Autonomous Pipeline Walkthrough</a></li>
           <li><a href="#exp-2026-012">The Supply Chain Upgrade Paradox: Deconstructing Critical Vulnerabilities, Failure Modes, and Root-Cause Remediation Across Fleet &amp; Kubernetes</a></li>
@@ -100,6 +101,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td><a href="#exp-2026-013"><strong>EXP-2026-013</strong>: Autonomous Mission &amp; R2R GraphRAG</a></td>
+                <td>2026-11-26</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Mission #476 merged PR #477; Hatchet orchestrated R2R ingestion, graph sync, and Leiden clustering (180 entities, 232 relationships, 17 communities) with live MCP <code>retrieve_context</code> verification.</td>
+              </tr>
               <tr>
                 <td><a href="#exp-2026-011-adr008"><strong>ADR-008</strong>: AgentWorkspace CRD &amp; Sandboxing</a></td>
                 <td>2026-10-31</td>
@@ -190,6 +197,48 @@
       </section>
 
       <section id="entries">
+<article class="entry" id="exp-2026-013">
+<header class="entry-head">
+<div>
+<span class="font-mono">EXP-2026-013 · VERIFIED</span>
+<span class="font-mono">Nov 26, 2026</span>
+</div>
+<span class="chip font-mono">Mission #476 · PR #477 · R2R GraphRAG</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
+          End-to-End Autonomous Mission &amp; Hatchet-Orchestrated R2R GraphRAG Memory (Mission #476)
+        </h2>
+<p class="font-mono">
+          Evidence: <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/issues/476" rel="noopener noreferrer" target="_blank">Mission #476</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/pull/477" rel="noopener noreferrer" target="_blank">PR #477 (<code>a3736dbe</code>)</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/pull/842" rel="noopener noreferrer" target="_blank">Factory PR #842</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/gitops_internal_lgcorzo/pull/267" rel="noopener noreferrer" target="_blank">GitOps PR #267</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Verify that an autonomous mission runs end-to-end across all five Hatchet stages (<code>rustant-plan</code>, <code>zeroclaw-execute</code>, <code>zeroclaw-validate</code>, <code>rustant-review</code>, <code>factory-deliver</code>), merges a real PR with ISO 42010 / OKF <code>openwiki/</code> documentation, triggers post-merge <code>index_code</code> via <code>factory-poller</code>, orchestrates R2R ingestion, graph extraction, entity deduplication, Leiden clustering, and community summarization through Hatchet, and serves both semantic chunks and Knowledge Graph context via live MCP <code>retrieve_context</code>.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Production Kubernetes cluster running <code>dark-gravity-factory:a1d61aeaa20b6522c415b071a02218cfdce01744</code> (<code>factory-poller</code>, <code>factory-mcp-server</code>, 2x <code>factory-worker</code>) alongside patched R2R (<code>r2r_r2r-worker</code>, <code>r2r-graph-clustering</code>, Ollama <code>qwen2.5:7b</code> + <code>nomic-embed-text</code>, Postgres/pgvector). R2R's Hatchet workflow patch (<code>r2r-patches-cm.yaml</code>) assigns documents to per-repository collections via <code>metadata["collection_id"]</code>, syncs extracted entities into collection graphs, and spawns Leiden clustering and community summarization.</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Mission <code>lgcorzo/mlops-python-package#476</code> completed all 5 Hatchet stages and merged PR #477 at <code>a3736dbe67dc6175de2e6f0c0015f64bda785f4e</code> (<code>openwiki/Home.md</code>, <code>openwiki/AST_Architecture.md</code>, <code>evidence/missions/lgcorzo-mlops-python-package-476.md</code>). <code>factory-poller</code> detected the new <code>main</code> SHA, ingested 19 vector chunks (<code>224c2294-2bcb-5b43-bb14-5314dd99a0fd</code>) with zero duplicate calls on subsequent polls, and completed 87 Hatchet tasks with zero R2R failures. R2R Postgres reached <code>graph_sync_status = 'success'</code> and <code>graph_cluster_status = 'success'</code> across all repository collections: <code>lgcorzo-mlops-python-package</code> (180 entities, 232 relationships, 17 communities), <code>lgcorzo-rust_CACD_autonomous_factory</code> (107 entities, 102 relationships, 6 communities), <code>lgcorzo-fastapi-autogen-team</code> (94 entities, 86 relationships, 2 communities), and <code>Default</code> (381 entities, 420 relationships, 25 communities). Live <code>POST /v3/retrieval/search</code> returned 5 chunks + 5 entities + 5 relationships + 5 communities, and live MCP <code>retrieve_context</code> returned HTTP 200 (7,082 chars) with <code>openwiki/</code> chunks and <code>## Knowledge Graph Context</code>.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>FastAPI <code>0.156.2</code> rejects multipart <code>Optional[Json[list[UUID]]]</code> form fields with HTTP 422 when sent as text; omitting <code>collection_ids</code> from the multipart body and assigning via <code>metadata["collection_id"]</code> plus post-ingest <code>POST /v3/collections/{cid}/documents/{did}</code> eliminated all 422s. Additionally, <code>concurrent_request_limit = 2</code> serializes R2R graph extraction, sequential entity deduplication, and community summarization cleanly on local Ollama without GPU/CPU contention.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Post-merge-only R2R indexing coupled with Hatchet-orchestrated Leiden graph clustering ensures every autonomous agent in a software factory queries verified, HITL-approved architecture, AST topology, and community summaries rather than unreviewed PR noise.</p>
+</div>
+</div>
+</header>
+</article>
+
 <article class="entry" id="exp-2026-011-adr008">
 <header class="entry-head">
 <div>
