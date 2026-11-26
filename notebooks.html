@@ -102,6 +102,12 @@
             </thead>
             <tbody>
               <tr>
+                <td><a href="#exp-2026-014"><strong>EXP-2026-014</strong>: Autonomous Swarm Mode &amp; R2R Read/Write Split</a></td>
+                <td>2026-11-26</td>
+                <td><span class="status-tag status-verified">Verified</span></td>
+                <td>Mission #478 executed 3 <code>[P]</code> lanes in parallel (<code>swarm_mode=true, peak_parallel_lanes=3</code>), merged PR #479, and indexed <code>376b77ad</code> into R2R (5 docs in <code>lgcorzo-mlops-python-package</code>) with 3x RO <code>r2r-reader</code> replicas.</td>
+              </tr>
+              <tr>
                 <td><a href="#exp-2026-013"><strong>EXP-2026-013</strong>: Autonomous Mission &amp; R2R GraphRAG</a></td>
                 <td>2026-11-26</td>
                 <td><span class="status-tag status-verified">Verified</span></td>
@@ -197,6 +203,48 @@
       </section>
 
       <section id="entries">
+<article class="entry" id="exp-2026-014">
+<header class="entry-head">
+<div>
+<span class="font-mono">EXP-2026-014 · VERIFIED</span>
+<span class="font-mono">Nov 26, 2026</span>
+</div>
+<span class="chip font-mono">Mission #478 · PR #479 · Swarm Mode</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
+          Parallel Autonomous Swarm Mode Execution &amp; Contention-Free R2R GraphRAG (Mission #478)
+        </h2>
+<p class="font-mono">
+          Evidence: <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/issues/478" rel="noopener noreferrer" target="_blank">Mission #478</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/mlops-python-package/pull/479" rel="noopener noreferrer" target="_blank">PR #479 (<code>376b77ad</code>)</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/pull/873" rel="noopener noreferrer" target="_blank">Factory PR #873</a> · <a class="text-accent underline" href="https://github.com/lgcorzo/gitops_internal_lgcorzo/pull/285" rel="noopener noreferrer" target="_blank">GitOps PR #285</a>
+</p>
+<header class="entry-head">
+<div>
+<div>
+<h3 class="font-mono">1. What I wanted to verify</h3>
+<p>Verify that Dark Gravity's Swarm Mode (<code>008-enable-swarm-mode</code>) executes multiple independent <code>[P]</code> tasks concurrently inside isolated <code>git worktree</code> lanes and gVisor sandboxes, consolidates them through the new <code>fan-in-synthesize</code> Hatchet barrier, passes CI/CD and security review to merge a real PR, and triggers Stage 5 post-merge R2R ingestion into Postgres/pgvector without read/write lock contention against 3x read-only <code>r2r-reader</code> replicas.</p>
+</div>
+<div>
+<h3 class="font-mono">2. Architecture &amp; Setup</h3>
+<p>Production Kubernetes cluster running <code>dark-gravity-factory:450948886fc55b68f009f43cd143d34a080868da</code> (<code>factory-poller</code>, <code>factory-mcp-server</code> exposing 18 skills on <code>/mcp/skills-manifest</code>, 2x <code>factory-worker</code>, <code>factory-operator</code>), 6-partition Kafka <code>agent-thought</code> + 3-partition <code>budget-exceeded</code>, LiteLLM with Redis priority queueing &amp; A2A PEP, CloudNativePG <code>mlflow-db</code> scaled to 4 instances (1 primary RW + 3 streaming RO replicas), KEDA-autoscaled <code>r2r-reader</code> (3–6 replicas), and hardened <code>semantica</code> with MinIO cold archival (<code>semantica-provenance</code> &amp; <code>dg-factory-checkpoints</code>).</p>
+</div>
+<div>
+<h3 class="font-mono">3. What actually happened</h3>
+<p>Mission <code>lgcorzo/mlops-python-package#478</code> (3 parallel <code>[P]</code> Python utility modules + unit tests) was ingested by <code>factory-poller</code>, dispatched via Kafka <code>mission-input</code> to Hatchet, planned by <code>rustant-plan</code>, and executed by <code>zeroclaw-execute</code> with <code>swarm_mode=true, peak_parallel_lanes=3</code> inside isolated gVisor sandboxes. After <code>fan-in-synthesize</code>, <code>zeroclaw-validate</code>, and <code>rustant-review</code>, <code>factory-deliver</code> opened PR #479; after formatting alignment (<code>ruff format --check</code>, 5/5 local <code>pytest</code>), all 4 CI checks passed and PR #479 squash-merged to <code>main</code> at <code>376b77ad</code>. <code>factory-poller</code> Stage 5 automatically detected the new <code>main</code> SHA and indexed it into R2R (<code>collection_id: 9b6d0d6e-dd50-4e77-bf2a-1a1625877335</code>, <code>document_id: 45201759-c0c4-5bb9-b0a4-784497d50df4</code>, Hatchet <code>task_id: e3e2e119-eb9f-453e-901e-d8bae01c6b8a</code>), bringing <code>lgcorzo-mlops-python-package</code> to 5 documents in R2R Postgres alongside 3/3 Ready <code>r2r-reader</code> pods.</p>
+</div>
+</div>
+<div>
+<div>
+<h3 class="font-mono">4. Lessons &amp; Operational Controls</h3>
+<p>Separating <code>R2R_READ_URL</code> (<code>r2r-reader</code> against <code>mlflow-db-ro</code>) from <code>R2R_URL</code> (primary <code>r2r</code> against <code>mlflow-db-rw</code>) with a read-only startup shim prevents DDL lock errors on standby replicas, while <code>rustls::crypto::ring::default_provider().install_default()</code> is required at CLI startup for <code>kube</code> 5.0 leader election in <code>factory-operator</code>.</p>
+</div>
+<div>
+<h3 class="font-mono">5. Industrial Application Transfer</h3>
+<p>Parallel <code>[P]</code> Fan-Out with quarantined per-lane S3 checkpoints, AST-aware Fan-In synthesis, dual-profile <code>ValidatingAdmissionPolicy</code> bounds, and read/write-split GraphRAG memory enables multi-agent throughput without sacrificing deterministic auditability or cluster stability.</p>
+</div>
+</div>
+</header>
+</article>
+
 <article class="entry" id="exp-2026-013">
 <header class="entry-head">
 <div>
