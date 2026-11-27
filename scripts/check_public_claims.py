@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Deterministic consistency checker for lgcorzo.github.io public claims (T040).
+"""Deterministic consistency checker for lgcorzo.github.io public claims (T040 / T032).
 
-Compares data/canonical-claims.json against index.html, architecture.html,
-lifecycle.html, notebooks.html, fork-policy.html, and sovereignty.html.
+Compares data/canonical-claims.json against public portal pages, verifies statistics,
+5-step Hatchet mission consistency, compliance wording, and evidence records.
 Requires zero external network calls or privileged tokens.
 """
 
@@ -17,6 +17,9 @@ CANONICAL_PATH = REPO_ROOT / "data" / "canonical-claims.json"
 
 REQUIRED_PAGES = [
     "index.html",
+    "start-here.html",
+    "start-here/index.html",
+    "ai-agents/index.html",
     "architecture.html",
     "lifecycle.html",
     "notebooks.html",
@@ -56,16 +59,22 @@ def main() -> int:
         else:
             pages[page_name] = p.read_text(encoding="utf-8")
 
+    optional_metrics = REPO_ROOT / "metrics.html"
+    if optional_metrics.is_file():
+        pages["metrics.html"] = optional_metrics.read_text(encoding="utf-8")
+
     if errors:
         for err in errors:
             print(f"ERROR: {err}", file=sys.stderr)
         return 1
 
-    # 1. Verify repository statistics consistency across index.html, fork-policy.html, notebooks.html
-    if f"{public_total} public repositories" not in pages["index.html"]:
-        errors.append(f"index.html missing canonical '{public_total} public repositories' count")
-    if f"{fork_count} maintained" not in pages["index.html"]:
-        errors.append(f"index.html missing canonical '{fork_count} maintained' forks count")
+    # 1. Verify repository statistics consistency across portal & fork pages
+    for portal_page in ("index.html", "start-here.html", "start-here/index.html", "ai-agents/index.html"):
+        if f"{public_total} public repositories" not in pages[portal_page]:
+            errors.append(f"{portal_page} missing canonical '{public_total} public repositories' count")
+        if f"{fork_count} maintained" not in pages[portal_page]:
+            errors.append(f"{portal_page} missing canonical '{fork_count} maintained' forks count")
+
     if f"Out of {public_total} public repositories across the lab, {fork_count} are maintained" not in pages["fork-policy.html"]:
         errors.append(
             f"fork-policy.html missing canonical '{public_total} public repositories / {fork_count} forks' statement"
@@ -76,8 +85,9 @@ def main() -> int:
         )
 
     # 2. Verify Hatchet 5-step lifecycle consistency across pages
-    if "5-phase durable mission pipeline" not in pages["index.html"]:
-        errors.append("index.html missing canonical '5-phase durable mission pipeline'")
+    for mission_page in ("index.html", "start-here.html", "start-here/index.html", "ai-agents/index.html"):
+        if "5-phase durable mission pipeline" not in pages[mission_page]:
+            errors.append(f"{mission_page} missing canonical '5-phase durable mission pipeline'")
     if "five Hatchet steps" not in pages["architecture.html"]:
         errors.append("architecture.html missing canonical 'five Hatchet steps'")
     if "same five\n          steps" not in pages["lifecycle.html"] and "five steps" not in pages["lifecycle.html"]:
@@ -88,8 +98,9 @@ def main() -> int:
         )
 
     # 3. Verify compliance / certification qualification consistency
-    if "No third-party certification (EU AI Act, SOC 2 or other) is claimed." not in pages["index.html"]:
-        errors.append("index.html missing mandatory compliance qualification statement")
+    for compliance_page in ("index.html", "start-here.html", "start-here/index.html", "ai-agents/index.html"):
+        if "No third-party certification (EU AI Act, SOC 2 or other) is claimed." not in pages[compliance_page]:
+            errors.append(f"{compliance_page} missing mandatory compliance qualification statement")
     for name, content in pages.items():
         if "SOC 2 Type II compliance in" in content:
             errors.append(
@@ -107,11 +118,10 @@ def main() -> int:
         "experimental",
         "unverified",
     }
-    
-    # Priority 7 (DG-RVP-014 §9): Verify actual evidence records, SHA-256 digests, and qualifying classes
+
     factory_repo_root = (REPO_ROOT.parent / "rust_CACD_autonomous_factory").resolve()
     has_factory_repo = (factory_repo_root / "evidence").is_dir()
-    
+
     for fact in canonical.get("canonical_facts", []):
         fid = fact.get("fact_id", "<unknown>")
         status = fact.get("verification_status")
@@ -120,8 +130,7 @@ def main() -> int:
         evidence_src = fact.get("evidence_source", "")
         if not evidence_src.startswith("https://"):
             errors.append(f"Fact {fid} is missing a valid https:// evidence_source link")
-            
-        # For verified / runtime_verified claims, validate underlying evidence record
+
         if status in ("verified", "runtime_verified") and has_factory_repo:
             if "live-gvisor-isolation.json" in evidence_src:
                 rel_ev_file = "evidence/security/live-gvisor-isolation.json"
@@ -131,15 +140,17 @@ def main() -> int:
                 else:
                     try:
                         ev_data = json.loads(ev_path.read_text(encoding="utf-8"))
-                        # Verify structured telemetry exists and gVisor isolation was corroborated
                         checks = ev_data.get("checks", [])
-                        gvisor_checks = [c for c in checks if "gvisor" in c.get("check_id", "").lower() or "runtime_verified" in c.get("classification", "").lower()]
+                        gvisor_checks = [
+                            c for c in checks
+                            if "gvisor" in c.get("check_id", "").lower()
+                            or "runtime_verified" in c.get("classification", "").lower()
+                        ]
                         if not gvisor_checks:
                             errors.append(f"Fact {fid} live-gvisor-isolation.json lacks verified gVisor runtime checks")
                     except Exception as e:
                         errors.append(f"Fact {fid} corrupt live evidence JSON {rel_ev_file}: {e}")
             elif "records/" in evidence_src or evidence_src.endswith(".json"):
-                # If pointing to an evidence record, ensure it is non-mock, exit_code 0, passed
                 filename = evidence_src.split("/")[-1]
                 rec_path = factory_repo_root / "evidence" / "records" / filename
                 if rec_path.is_file():
@@ -160,7 +171,7 @@ def main() -> int:
         return 1
 
     print(
-        f"OK: Verified {len(canonical.get('canonical_facts', []))} canonical facts and repository statistics across {len(REQUIRED_PAGES)} pages."
+        f"OK: Verified {len(canonical.get('canonical_facts', []))} canonical facts and repository statistics across {len(pages)} pages."
     )
     return 0
 

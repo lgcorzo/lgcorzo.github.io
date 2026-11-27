@@ -1,0 +1,2602 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-27T11:17:49Z",
+  "ontology_namespace": "https://lgcorzo.github.io/ontology/dark-gravity#",
+  "@context": {
+    "dg": "https://lgcorzo.github.io/ontology/dark-gravity#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "id": "@id",
+    "entity_type": "@type"
+  },
+  "summary": {
+    "node_count": 60,
+    "edge_count": 170,
+    "counts_by_type": {
+      "Repository": 17,
+      "Agent": 9,
+      "Service": 14,
+      "Experiment": 14,
+      "ArchitectureDecision": 2,
+      "ResearchHypothesis": 4
+    }
+  },
+  "nodes": [
+    {
+      "id": "ADR-001",
+      "entity_type": "ArchitectureDecision",
+      "label": "ADR-001: gVisor (runsc) Sandbox Execution & Forensic Zeroize Memory Bounds",
+      "summary": "Status: accepted. Source: rust_CACD_autonomous_factory/crates/factory-core/src/security.rs.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "updated_at": "2026-10-15T00:00:00Z",
+      "properties": {
+        "adr_status": "accepted",
+        "date": "2026-10-15",
+        "source_path": "rust_CACD_autonomous_factory/crates/factory-core/src/security.rs",
+        "governs": [
+          "repo:rust_CACD_autonomous_factory",
+          "svc:gvisor",
+          "svc:vault",
+          "agent:zeroclaw"
+        ]
+      }
+    },
+    {
+      "id": "ADR-008",
+      "entity_type": "ArchitectureDecision",
+      "label": "ADR-008: Adoption of Google AX Declarative Patterns, CRD Scope, and SSOT Reconciliation Contract (v3.1)",
+      "summary": "ADR-008 v3 (accepted) plus v3.1 amendment (proposed) resolving workspace\u2194mission cardinality, spec mutability, and the scope of the 30Mi/250m resource bound.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "updated_at": "2026-11-12T00:00:00Z",
+      "properties": {
+        "adr_status": "accepted",
+        "date": "2026-11-12",
+        "source_path": "rust_CACD_autonomous_factory/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+        "governs": [
+          "repo:rust_CACD_autonomous_factory",
+          "repo:internal-gitops-control-plane",
+          "svc:hatchet",
+          "svc:gvisor"
+        ]
+      }
+    },
+    {
+      "id": "EXP-2026-001",
+      "entity_type": "Experiment",
+      "label": "FluxCD CI Pipeline: Kubeconform Validation False Positives",
+      "summary": "Filtering raw Helm values and unrendered templates eliminates false-positive schema validation failures in GitOps CI while keeping rendered manifests strictly validated.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-001",
+      "updated_at": "2026-09-18T00:00:00Z",
+      "properties": {
+        "date": "2026-09-18",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ3"
+        ],
+        "key_metrics": {
+          "false_positive_ci_blocks": 0,
+          "rendered_kustomize_validation": "passed"
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-002",
+      "entity_type": "Experiment",
+      "label": "Cargo Audit Gates vs. Unmaintained Transitive Crates",
+      "summary": "Explicit risk-acceptance registries (`.cargo/audit.toml`) prevent unexploitable transitive Rust advisories from halting delivery without disabling CVE gates.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-002",
+      "updated_at": "2026-10-13T00:00:00Z",
+      "properties": {
+        "date": "2026-10-13",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ3",
+          "RQ4"
+        ],
+        "key_metrics": {
+          "risk_register": ".cargo/audit.toml",
+          "unexploitable_gate_bypass": false
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-003",
+      "entity_type": "Experiment",
+      "label": "Durable Orchestration: Hatchet DAGs vs. In-House Actor State Machines",
+      "summary": "Adopting Hatchet durable workflows backed by PostgreSQL eliminates bespoke scheduler crashes during worker node eviction.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-003",
+      "updated_at": "2026-10-01T00:00:00Z",
+      "properties": {
+        "date": "2026-10-01",
+        "outcome": "baseline",
+        "related_rqs": [
+          "RQ1",
+          "RQ4"
+        ],
+        "key_metrics": {
+          "orchestrator": "Hatchet + CloudNativePG",
+          "status": "implemented_production"
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-004",
+      "entity_type": "Experiment",
+      "label": "Kubernetes Control Plane & Worker Node Hardening",
+      "summary": "Systematic CIS Kubernetes benchmark auditing eliminates privileged service accounts and enforces least-privilege RBAC across namespaces.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-004",
+      "updated_at": "2026-05-14T00:00:00Z",
+      "properties": {
+        "date": "2026-05-14",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ3"
+        ],
+        "key_metrics": {
+          "audit_scope": "control-plane + worker-nodes",
+          "privileged_sa_eliminated": true
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-005",
+      "entity_type": "Experiment",
+      "label": "Asymmetric Secret Governance: SealedSecrets Key Rotation & DR",
+      "summary": "Strict-scoped Bitnami SealedSecrets allow safe public/private GitOps declarative secrets without storing private decryption keys in Git.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-005",
+      "updated_at": "2026-06-22T00:00:00Z",
+      "properties": {
+        "date": "2026-06-22",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ2",
+          "RQ3"
+        ],
+        "key_metrics": {
+          "scope": "strict",
+          "git_plaintext_secrets": 0
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-006",
+      "entity_type": "Experiment",
+      "label": "Durable Execution & Idempotency Under Node Termination",
+      "summary": "Hatchet step checkpointing resumes killed workflows automatically without corrupting repository state.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+      "updated_at": "2026-07-09T00:00:00Z",
+      "properties": {
+        "date": "2026-07-09",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ1",
+          "RQ3"
+        ],
+        "key_metrics": {
+          "resume_latency_seconds": 8.4,
+          "state_corruption": false
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-007",
+      "entity_type": "Experiment",
+      "label": "Zero-Trust Execution Boundary: Syscall Filtering & Calico Egress Blocking",
+      "summary": "Combining gVisor user-space syscall interception with default-deny NetworkPolicies blocks raw sockets and unauthorized exfiltration attempts.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-007",
+      "updated_at": "2026-08-11T00:00:00Z",
+      "properties": {
+        "date": "2026-08-11",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ3"
+        ],
+        "key_metrics": {
+          "raw_socket_blocked": true,
+          "egress_exfiltration_blocked": true
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-008",
+      "entity_type": "Experiment",
+      "label": "Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge",
+      "summary": "Relying solely on LLM judges misses subtle logic defects, whereas mandatory deterministic test execution eliminates silent logic regressions.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-008",
+      "updated_at": "2026-08-29T00:00:00Z",
+      "properties": {
+        "date": "2026-08-29",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ4"
+        ],
+        "key_metrics": {
+          "llm_judge_false_negative_rate_pct": 44.0,
+          "deterministic_suite_required": true
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-009",
+      "entity_type": "Experiment",
+      "label": "AST Subgraphs vs. Raw Grep",
+      "summary": "2-hop Tree-sitter AST neighborhood extraction reduces prompt context size while increasing first-pass code generation accuracy.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-009",
+      "updated_at": "2026-09-04T00:00:00Z",
+      "properties": {
+        "date": "2026-09-04",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ4"
+        ],
+        "key_metrics": {
+          "token_reduction_pct": 91.8,
+          "first_pass_accuracy_pct": 94.0
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-010",
+      "entity_type": "Experiment",
+      "label": "Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping",
+      "summary": "Explicit cgroup memory limits (`512Mi` compilation profile, `30Mi` micro-sandbox) prevent noisy-neighbor OOM exhaustion on host nodes.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-010",
+      "updated_at": "2026-09-27T00:00:00Z",
+      "properties": {
+        "date": "2026-09-27",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ3",
+          "RQ4"
+        ],
+        "key_metrics": {
+          "compilation_ram_limit": "512Mi",
+          "micro_sandbox_ram_limit": "30Mi",
+          "host_oom_incidents": 0
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-011",
+      "entity_type": "Experiment",
+      "label": "Autonomous Security Remediation at Scale",
+      "summary": "Separating meta-orchestration, credentialed factory controls, and surgical code-fix loops enables automated CVE remediation with sharp LLM token savings across the historical 69-repo portfolio (`64` public = `22` original + `42` maintained forks, plus `5` private/archived). A...",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "updated_at": "2026-10-20T00:00:00Z",
+      "properties": {
+        "date": "2026-10-20",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ1",
+          "RQ2",
+          "RQ3"
+        ],
+        "key_metrics": {
+          "historical_repos_audited": 69,
+          "public_repos_total": 64,
+          "token_savings_pct": 85.0,
+          "merged_remediation_prs": 10
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-012",
+      "entity_type": "Experiment",
+      "label": "Supply Chain Upgrade Paradox Across Fleet & Cluster",
+      "summary": "Synchronized lockfile exports and hash-pinned transitives prevent secondary vulnerabilities introduced by naive package bumps while reducing active Trivy cluster findings (`429 -> 396` CRITICAL, `3,660 -> 2,973` HIGH, `720` fixed).",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "updated_at": "2026-10-25T00:00:00Z",
+      "properties": {
+        "date": "2026-10-25",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ1",
+          "RQ3"
+        ],
+        "key_metrics": {
+          "trivy_critical_before": 429,
+          "trivy_critical_after": 396,
+          "trivy_high_before": 3660,
+          "trivy_high_after": 2973,
+          "vulnerabilities_fixed": 720
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-013",
+      "entity_type": "Experiment",
+      "label": "End-to-End Autonomous Mission & Hatchet-Orchestrated R2R GraphRAG (`Mission #476`)",
+      "summary": "Post-merge-only R2R v3 GraphRAG ingestion orchestrated via Hatchet produces zero duplicate ingestions, reliable Leiden community graphs, and grounded MCP retrieval.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "updated_at": "2026-11-26T00:00:00Z",
+      "properties": {
+        "date": "2026-11-26",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ1",
+          "RQ2",
+          "RQ4"
+        ],
+        "key_metrics": {
+          "mission_id": 476,
+          "pr_number": 477,
+          "cycle_time_seconds": 177,
+          "hatchet_r2r_tasks_completed": 87,
+          "hatchet_r2r_tasks_failed": 0,
+          "mlops_entities": 180,
+          "mlops_relationships": 232,
+          "mlops_communities": 17
+        }
+      }
+    },
+    {
+      "id": "EXP-2026-014",
+      "entity_type": "Experiment",
+      "label": "Parallel Autonomous Swarm Mode & Contention-Free R2R GraphRAG (`Mission #478`)",
+      "summary": "Parallel `[P]` execution across isolated gVisor lanes with `fan-in-synthesize` and read/write-split `r2r-reader` RO replicas increases throughput without Postgres/pgvector lock contention.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "updated_at": "2026-11-26T00:00:00Z",
+      "properties": {
+        "date": "2026-11-26",
+        "outcome": "passed",
+        "related_rqs": [
+          "RQ1",
+          "RQ4"
+        ],
+        "key_metrics": {
+          "mission_id": 478,
+          "pr_number": 479,
+          "swarm_mode": true,
+          "peak_parallel_lanes": 3,
+          "r2r_reader_replicas": 3,
+          "mlops_collection_docs": 5
+        }
+      }
+    },
+    {
+      "id": "RQ1",
+      "entity_type": "ResearchHypothesis",
+      "label": "RQ1: Can autonomous agents safely reduce Mean Time to Recovery (`MTTR`) under strict HITL gates?",
+      "summary": "Contract-driven agent pipelines backed by durable Hatchet checkpoints, R2R GraphRAG context, and Review Guidance loops reduce remediation cycle time and MTTR without sacrificing CI verification or Vertex 4 human approval.",
+      "verification_status": "experimental",
+      "canonical_url": "https://lgcorzo.github.io/RESEARCH.md#rq1",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "question": "Can autonomous agents safely reduce Mean Time to Recovery (`MTTR`) under strict HITL gates?",
+        "evaluation_status": "partially_supported",
+        "target_metrics": [
+          "development.mttr_hours",
+          "development.cycle_time_hours",
+          "security.mean_remediation_time_hours",
+          "agents.agent_success_rate_pct"
+        ],
+        "linked_experiments": [
+          "EXP-2026-003",
+          "EXP-2026-006",
+          "EXP-2026-011",
+          "EXP-2026-012",
+          "EXP-2026-013",
+          "EXP-2026-014"
+        ]
+      }
+    },
+    {
+      "id": "RQ2",
+      "entity_type": "ResearchHypothesis",
+      "label": "RQ2: Can cryptographic Non-Human Identities (NHI) and Verifiable Credentials improve governance and traceability?",
+      "summary": "Binding agent missions to Ed25519 W3C Verifiable Credentials (`Ed25519Signature2020`), 300 s Vault JIT tokens (`54.2 ns` `ZeroizeOnDrop`), LiteLLM `X-Vtag-*` FinOps headers, and causal Semantica lineage yields tamper-evident attribution across multi-repo PRs.",
+      "verification_status": "experimental",
+      "canonical_url": "https://lgcorzo.github.io/RESEARCH.md#rq2",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "question": "Can cryptographic Non-Human Identities (NHI) and Verifiable Credentials improve governance and traceability?",
+        "evaluation_status": "evidence_collecting",
+        "target_metrics": [
+          "agents.hitl_approval_rate_pct",
+          "agents.agent_success_rate_pct",
+          "development.lead_time_hours"
+        ],
+        "linked_experiments": [
+          "EXP-2026-005",
+          "EXP-2026-011",
+          "EXP-2026-013"
+        ]
+      }
+    },
+    {
+      "id": "RQ3",
+      "entity_type": "ResearchHypothesis",
+      "label": "RQ3: Can declarative GitOps, admission policies, and kernel sandboxing act as an enforceable security boundary?",
+      "summary": "Combining FluxCD v2 declarative reconciliation, OpenZiti mTLS 1.3, default-deny NetworkPolicies, `ValidatingAdmissionPolicy` resource clamps (`<= 30 Mi` / `250m` micro-sandbox, `<= 512 Mi` / `500m` compilation), and `gVisor (runsc)` prevents privilege escalation and fleet reg...",
+      "verification_status": "experimental",
+      "canonical_url": "https://lgcorzo.github.io/RESEARCH.md#rq3",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "question": "Can declarative GitOps, admission policies, and kernel sandboxing act as an enforceable security boundary?",
+        "evaluation_status": "partially_supported",
+        "target_metrics": [
+          "security.vulnerabilities_found_count",
+          "security.vulnerabilities_fixed_count",
+          "quality.escaped_defects_count"
+        ],
+        "linked_experiments": [
+          "EXP-2026-001",
+          "EXP-2026-002",
+          "EXP-2026-004",
+          "EXP-2026-005",
+          "EXP-2026-006",
+          "EXP-2026-007",
+          "EXP-2026-010",
+          "EXP-2026-011",
+          "EXP-2026-012"
+        ]
+      }
+    },
+    {
+      "id": "RQ4",
+      "entity_type": "ResearchHypothesis",
+      "label": "RQ4: Can structured, AST- and GraphRAG-grounded agentic workflows outperform ad-hoc workflows on reliability and token efficiency?",
+      "summary": "Pairing AST neighborhood extraction (`OSR < 5%`), deterministic test verification (replacing pure LLM judges), R2R Leiden GraphRAG with `r2r-reader` RO replicas, and parallel Swarm `[P]` execution yields higher first-pass accuracy and lower token overhead per merged PR.",
+      "verification_status": "experimental",
+      "canonical_url": "https://lgcorzo.github.io/RESEARCH.md#rq4",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "question": "Can structured, AST- and GraphRAG-grounded agentic workflows outperform ad-hoc workflows on reliability and token efficiency?",
+        "evaluation_status": "partially_supported",
+        "target_metrics": [
+          "agents.autonomous_completion_rate_pct",
+          "quality.pr_acceptance_rate_pct",
+          "quality.defect_density_per_kloc",
+          "development.deployment_frequency_per_week"
+        ],
+        "linked_experiments": [
+          "EXP-2026-002",
+          "EXP-2026-003",
+          "EXP-2026-008",
+          "EXP-2026-009",
+          "EXP-2026-010",
+          "EXP-2026-013",
+          "EXP-2026-014"
+        ]
+      }
+    },
+    {
+      "id": "agent:aethelgard",
+      "entity_type": "Agent",
+      "label": "Aethelgard",
+      "summary": "Role: reviewer. Phases: sast-llm-judge-gate. Auth: LiteLLM Frontier Route.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "reviewer",
+        "execution_phases": [
+          "sast-llm-judge-gate"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "LiteLLM Frontier Route",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:auditor",
+      "entity_type": "Agent",
+      "label": "AuditorAgent",
+      "summary": "Role: security_auditor. Phases: rustant-review, post-mortem. Auth: Ed25519 W3C-VC + X-Vtag-Team.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "security_auditor",
+        "execution_phases": [
+          "rustant-review",
+          "post-mortem"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 W3C-VC + X-Vtag-Team",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:doc-agent",
+      "entity_type": "Agent",
+      "label": "DocumentationAgent",
+      "summary": "Role: documenter. Phases: factory-deliver, stage-4-okf-wiki. Auth: Ed25519 W3C-VC.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "documenter",
+        "execution_phases": [
+          "factory-deliver",
+          "stage-4-okf-wiki"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 W3C-VC",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:finops",
+      "entity_type": "Agent",
+      "label": "FinOpsAgent",
+      "summary": "Role: finops. Phases: cross-cutting-budget-guard. Auth: LiteLLM X-Vtag-* + FinOpsStopStore.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "finops",
+        "execution_phases": [
+          "cross-cutting-budget-guard"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "LiteLLM X-Vtag-* + FinOpsStopStore",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:git-platform-poller",
+      "entity_type": "Agent",
+      "label": "GitPlatformPoller",
+      "summary": "Role: poller. Phases: outbound-30s-poll, stage-5-index-code. Auth: Ed25519 Signed Mission Payload.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "poller",
+        "execution_phases": [
+          "outbound-30s-poll",
+          "stage-5-index-code"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 Signed Mission Payload",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:incident-remediator",
+      "entity_type": "Agent",
+      "label": "Internal Incident Remediation Service",
+      "summary": "Role: remediator. Phases: fluxcd-alert-remediation. Auth: Kubernetes RBAC + SealedSecrets.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "remediator",
+        "execution_phases": [
+          "fluxcd-alert-remediation"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Kubernetes RBAC + SealedSecrets",
+        "home_repo": "repo:internal-incident-remediation-service"
+      }
+    },
+    {
+      "id": "agent:qa-observer",
+      "entity_type": "Agent",
+      "label": "QAObserverAgent",
+      "summary": "Role: qa_observer. Phases: zeroclaw-validate, sentry-closed-loop-15m. Auth: Ed25519 W3C-VC + Sentry Token.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "qa_observer",
+        "execution_phases": [
+          "zeroclaw-validate",
+          "sentry-closed-loop-15m"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 W3C-VC + Sentry Token",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:rustant",
+      "entity_type": "Agent",
+      "label": "RustantAgent",
+      "summary": "Role: planner. Phases: rustant-plan, rustant-review. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "planner",
+        "execution_phases": [
+          "rustant-plan",
+          "rustant-review"
+        ],
+        "sandbox_profile": "hardened_k8s_pod",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop)",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "agent:zeroclaw",
+      "entity_type": "Agent",
+      "label": "ZeroClawAgent",
+      "summary": "Role: developer. Phases: zeroclaw-execute, zeroclaw-validate. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "role": "developer",
+        "execution_phases": [
+          "zeroclaw-execute",
+          "zeroclaw-validate"
+        ],
+        "sandbox_profile": "gvisor_runsc",
+        "hitl_constrained": true,
+        "nhi_auth_method": "Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop)",
+        "home_repo": "repo:rust_CACD_autonomous_factory"
+      }
+    },
+    {
+      "id": "repo:R2R-Engine",
+      "entity_type": "Repository",
+      "label": "R2R-Engine",
+      "summary": "Sovereign hybrid vector (pgvector) + Leiden GraphRAG corporate memory engine patched for deterministic Hatchet collection graph sync.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/R2R-Engine",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "SciPhi-AI/R2R",
+        "primary_language": "Python",
+        "direct_injection_target": false,
+        "has_agents_md": false,
+        "has_architecture_md": false,
+        "has_repositories_md": false,
+        "has_manifest_md": false
+      }
+    },
+    {
+      "id": "repo:dark-litellm",
+      "entity_type": "Repository",
+      "label": "dark-litellm",
+      "summary": "Hardened sovereign LLM gateway and priority router enforcing X-Vtag-* FinOps telemetry, RedisPriorityScheduler, and A2A policy enforcement.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/dark-litellm",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "BerriAI/litellm",
+        "primary_language": "Python",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:deepwiki-rs",
+      "entity_type": "Repository",
+      "label": "deepwiki-rs",
+      "summary": "Tree-sitter Rust AST analyzer and Orphan Symbol Rate (OSR < 5%) verifier generating grounded OKF architectural maps.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/deepwiki-rs",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "sopaco/deepwiki-rs",
+        "primary_language": "Rust",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:fastapi-autogen-team",
+      "entity_type": "Repository",
+      "label": "fastapi-autogen-team",
+      "summary": "Native Rust (Axum + Rig) multi-agent streaming SSE microservice serving OpenAI-compatible multi-agent squads integrated with R2R.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/fastapi-autogen-team",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "owned_domain",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Rust",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:internal-gitops-control-plane",
+      "entity_type": "Repository",
+      "label": "Internal GitOps Control Plane",
+      "summary": "Private FluxCD v2 GitOps control plane managing the 10-namespace Kubernetes topology, SealedSecrets, OpenZiti mesh, and NetworkPolicies (anonymized per DOC-011).",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "private_gitops",
+        "visibility": "private",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "YAML",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:internal-incident-remediation-service",
+      "entity_type": "Repository",
+      "label": "Internal Incident Remediation Service",
+      "summary": "Private Kubernetes incident remediation daemon listening to FluxCD alerts, classifying errors, logging MLflow runs, and generating patch PRs (anonymized per DOC-011).",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "private_gitops",
+        "visibility": "private",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Python",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:kes",
+      "entity_type": "Repository",
+      "label": "kes",
+      "summary": "Archived Key Encryption Server reference fork locked permanently to FROZEN_READONLY and cataloged read-only without mutations.",
+      "verification_status": "implemented",
+      "canonical_url": "https://github.com/lgcorzo/kes",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "FROZEN_READONLY",
+        "upstream_repo": "minio/kes",
+        "primary_language": "Go",
+        "direct_injection_target": false,
+        "has_agents_md": false,
+        "has_architecture_md": false,
+        "has_repositories_md": false,
+        "has_manifest_md": false
+      }
+    },
+    {
+      "id": "repo:lgcorzo",
+      "entity_type": "Repository",
+      "label": "lgcorzo",
+      "summary": "GitHub profile entry repository routing human reviewers and external agents to Dark Gravity's unified portal, auditor pack, and ecosystem topology.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/lgcorzo",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "public_portal",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Markdown",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:lgcorzo.github.io",
+      "entity_type": "Repository",
+      "label": "lgcorzo.github.io",
+      "summary": "Canonical public Dark Gravity engineering hub hosting /start-here, /ai-agents, Lab Notebooks, RESEARCH.md, EXPERIMENTS.md, /docs/auditor/, Knowledge Graph, metrics, and read-only Rust dark-gravity-mcp.",
+      "verification_status": "verified",
+      "canonical_url": "https://lgcorzo.github.io/",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "public_portal",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "HTML/Python/Rust",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:llmops-python-package",
+      "entity_type": "Repository",
+      "label": "llmops-python-package",
+      "summary": "Domain-driven LLMOps platform aligned with ISO/IEC/IEEE 42010 & 15289 standards, prompt evaluations, Hatchet DSLs, MCP registries, and OpenWiki living documentation.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/llmops-python-package",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "owned_domain",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Python",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:minio",
+      "entity_type": "Repository",
+      "label": "minio",
+      "summary": "Sovereign S3-compatible object storage fork built hermetically to GHCR storing checkpoints, provenance bundles, and R2R documents.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/minio",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "minio/minio",
+        "primary_language": "Go",
+        "direct_injection_target": false,
+        "has_agents_md": false,
+        "has_architecture_md": false,
+        "has_repositories_md": false,
+        "has_manifest_md": false
+      }
+    },
+    {
+      "id": "repo:mlops-python-package",
+      "entity_type": "Repository",
+      "label": "mlops-python-package",
+      "summary": "First-party MLOps standard package (DVC, MLflow, Hydra, SHAP, CycloneDX SBOM, OpenWiki) serving as continuous validation target for autonomous missions (#476, #478).",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/mlops-python-package",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "owned_domain",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Python",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:rust_CACD_autonomous_factory",
+      "entity_type": "Repository",
+      "label": "rust_CACD_autonomous_factory",
+      "summary": "Core 5-crate Rust 2024 CA/CD orchestrator, AgentWorkspace operator, Hatchet DAG runner, gVisor SandboxDriver, and runtime MCP server.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "core_factory",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Rust",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:semantica",
+      "entity_type": "Repository",
+      "label": "semantica",
+      "summary": "Semantic domain ontology and causal provenance engine consuming Kafka agent-thought streams and detecting cross-lane conflicts.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/semantica",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "Hawksight-AI/semantica",
+        "primary_language": "Python",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:spec-kit",
+      "entity_type": "Repository",
+      "label": "spec-kit",
+      "summary": "Sovereign fork of GitHub Spec-Kit powering Dark Gravity's WHAT contract workflows (/speckit-specify, /speckit-plan, /speckit-tasks).",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/spec-kit",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "github/spec-kit",
+        "primary_language": "Python",
+        "direct_injection_target": false,
+        "has_agents_md": false,
+        "has_architecture_md": false,
+        "has_repositories_md": false,
+        "has_manifest_md": false
+      }
+    },
+    {
+      "id": "repo:speckit-superpowers-bridge",
+      "entity_type": "Repository",
+      "label": "speckit-superpowers-bridge",
+      "summary": "Contract handoff bridge uniting Spec-Kit (WHAT: constitution, spec, plan, tasks) with Superpowers execution discipline (HOW: TDD, subagents, verification gates) and guard-command enforcement.",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/speckit-superpowers-bridge",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "orchestration_bridge",
+        "visibility": "public",
+        "is_fork": false,
+        "fork_profile": null,
+        "upstream_repo": null,
+        "primary_language": "Shell/Markdown",
+        "direct_injection_target": true,
+        "has_agents_md": true,
+        "has_architecture_md": true,
+        "has_repositories_md": true,
+        "has_manifest_md": true
+      }
+    },
+    {
+      "id": "repo:superpowers",
+      "entity_type": "Repository",
+      "label": "superpowers",
+      "summary": "Sovereign fork of the Superpowers agentic discipline harness powering HOW workflows (TDD, subagents, debugging, verification gates).",
+      "verification_status": "verified",
+      "canonical_url": "https://github.com/lgcorzo/superpowers",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "tier": "maintained_fork",
+        "visibility": "public",
+        "is_fork": true,
+        "fork_profile": "MAINTAINED_FORK_PROFILE",
+        "upstream_repo": "obra/superpowers",
+        "primary_language": "Shell/Markdown",
+        "direct_injection_target": false,
+        "has_agents_md": false,
+        "has_architecture_md": false,
+        "has_repositories_md": false,
+        "has_manifest_md": false
+      }
+    },
+    {
+      "id": "svc:dark-gravity-mcp",
+      "entity_type": "Service",
+      "label": "Dark Gravity Read-Only MCP Server",
+      "summary": "Namespace `agents` (mcp_knowledge): Strictly Read-Only + DOC-011 Public Cache + RunAsNonRoot Distroless.",
+      "verification_status": "implemented",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "mcp_knowledge",
+        "cluster_namespace": "agents",
+        "upstream_repo": "repo:lgcorzo.github.io",
+        "security_boundary": "Strictly Read-Only + DOC-011 Public Cache + RunAsNonRoot Distroless"
+      }
+    },
+    {
+      "id": "svc:gvisor",
+      "entity_type": "Service",
+      "label": "gVisor (runsc) Sandbox Runtime",
+      "summary": "Namespace `development` (sandbox_runtime): Restricted PodSecurity + ValidatingAdmissionPolicy + Deny-All Egress (TESTED pending AUD-010).",
+      "verification_status": "tested",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "sandbox_runtime",
+        "cluster_namespace": "development",
+        "upstream_repo": null,
+        "security_boundary": "Restricted PodSecurity + ValidatingAdmissionPolicy + Deny-All Egress (TESTED pending AUD-010)"
+      }
+    },
+    {
+      "id": "svc:hatchet",
+      "entity_type": "Service",
+      "label": "Hatchet Engine",
+      "summary": "Namespace `orchestrators` (orchestrator): Calico Default-Deny NetworkPolicy + CloudNativePG SSOT.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "orchestrator",
+        "cluster_namespace": "orchestrators",
+        "upstream_repo": null,
+        "security_boundary": "Calico Default-Deny NetworkPolicy + CloudNativePG SSOT"
+      }
+    },
+    {
+      "id": "svc:kafka",
+      "entity_type": "Service",
+      "label": "Apache Kafka (KRaft)",
+      "summary": "Namespace `confluent` (event_bus): Cluster-internal Event Bus + Default-Deny Egress.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "event_bus",
+        "cluster_namespace": "confluent",
+        "upstream_repo": null,
+        "security_boundary": "Cluster-internal Event Bus + Default-Deny Egress"
+      }
+    },
+    {
+      "id": "svc:keda",
+      "entity_type": "Service",
+      "label": "KEDA Autoscaler",
+      "summary": "Namespace `orchestrators` (orchestrator): Kafka Lag & QPS Metric Autoscaling.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "orchestrator",
+        "cluster_namespace": "orchestrators",
+        "upstream_repo": null,
+        "security_boundary": "Kafka Lag & QPS Metric Autoscaling"
+      }
+    },
+    {
+      "id": "svc:keycloak",
+      "entity_type": "Service",
+      "label": "Keycloak IAM (OIDC)",
+      "summary": "Namespace `security` (identity): Native OIDC + OAuth2-Proxy Identity Boundary.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "identity",
+        "cluster_namespace": "security",
+        "upstream_repo": null,
+        "security_boundary": "Native OIDC + OAuth2-Proxy Identity Boundary"
+      }
+    },
+    {
+      "id": "svc:litellm",
+      "entity_type": "Service",
+      "label": "Dark-LiteLLM Gateway",
+      "summary": "Namespace `llm-apps` (llm_gateway): Keycloak OIDC + RedisPriorityScheduler + X-Vtag PEP.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "llm_gateway",
+        "cluster_namespace": "llm-apps",
+        "upstream_repo": "repo:dark-litellm",
+        "security_boundary": "Keycloak OIDC + RedisPriorityScheduler + X-Vtag PEP"
+      }
+    },
+    {
+      "id": "svc:minio",
+      "entity_type": "Service",
+      "label": "Sovereign MinIO S3 & Operator",
+      "summary": "Namespace `storage` (object_storage): SealedSecrets + Calico NetworkPolicy.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "object_storage",
+        "cluster_namespace": "storage",
+        "upstream_repo": "repo:minio",
+        "security_boundary": "SealedSecrets + Calico NetworkPolicy"
+      }
+    },
+    {
+      "id": "svc:mlflow",
+      "entity_type": "Service",
+      "label": "MLflow & CloudNativePG mlflow-db",
+      "summary": "Namespace `llm-apps` (database): 1 RW + 3 RO CNPG Cluster + SealedSecrets.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "database",
+        "cluster_namespace": "llm-apps",
+        "upstream_repo": null,
+        "security_boundary": "1 RW + 3 RO CNPG Cluster + SealedSecrets"
+      }
+    },
+    {
+      "id": "svc:openziti",
+      "entity_type": "Service",
+      "label": "OpenZiti Zero-Trust Overlay",
+      "summary": "Namespace `openziti` (zero_trust_network): mTLS 1.3 Dark Mesh + Zero Inbound Public Ports.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "zero_trust_network",
+        "cluster_namespace": "openziti",
+        "upstream_repo": null,
+        "security_boundary": "mTLS 1.3 Dark Mesh + Zero Inbound Public Ports"
+      }
+    },
+    {
+      "id": "svc:r2r",
+      "entity_type": "Service",
+      "label": "R2R-Engine (v3 GraphRAG)",
+      "summary": "Namespace `llm-apps` (knowledge_rag): OpenZiti mTLS + CloudNativePG pgvector.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "knowledge_rag",
+        "cluster_namespace": "llm-apps",
+        "upstream_repo": "repo:R2R-Engine",
+        "security_boundary": "OpenZiti mTLS + CloudNativePG pgvector"
+      }
+    },
+    {
+      "id": "svc:r2r-reader",
+      "entity_type": "Service",
+      "label": "r2r-reader (KEDA Read Pool)",
+      "summary": "Namespace `llm-apps` (knowledge_rag): agents-only Ingress NetworkPolicy + Read-Only CNPG Replica.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "knowledge_rag",
+        "cluster_namespace": "llm-apps",
+        "upstream_repo": "repo:R2R-Engine",
+        "security_boundary": "agents-only Ingress NetworkPolicy + Read-Only CNPG Replica"
+      }
+    },
+    {
+      "id": "svc:semantica",
+      "entity_type": "Service",
+      "label": "Semantica-AGI",
+      "summary": "Namespace `llm-apps` (knowledge_graph): Kafka agent-thought Stream + MinIO Provenance S3.",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "knowledge_graph",
+        "cluster_namespace": "llm-apps",
+        "upstream_repo": "repo:semantica",
+        "security_boundary": "Kafka agent-thought Stream + MinIO Provenance S3"
+      }
+    },
+    {
+      "id": "svc:vault",
+      "entity_type": "Service",
+      "label": "HashiCorp Vault JIT",
+      "summary": "Namespace `security` (secrets): 300s Ephemeral JIT Tokens + ZeroizeOnDrop (54.2 ns).",
+      "verification_status": "deployed",
+      "canonical_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "updated_at": "2026-11-27T11:17:49Z",
+      "properties": {
+        "category": "secrets",
+        "cluster_namespace": "security",
+        "upstream_repo": null,
+        "security_boundary": "300s Ephemeral JIT Tokens + ZeroizeOnDrop (54.2 ns)"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:ADR-001--GOVERNS_COMPONENT--agent:zeroclaw",
+      "source": "ADR-001",
+      "target": "agent:zeroclaw",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-001--GOVERNS_COMPONENT--repo:rust_CACD_autonomous_factory",
+      "source": "ADR-001",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-001--GOVERNS_COMPONENT--svc:gvisor",
+      "source": "ADR-001",
+      "target": "svc:gvisor",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-001--GOVERNS_COMPONENT--svc:vault",
+      "source": "ADR-001",
+      "target": "svc:vault",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-008--GOVERNS_COMPONENT--repo:internal-gitops-control-plane",
+      "source": "ADR-008",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-008--GOVERNS_COMPONENT--repo:rust_CACD_autonomous_factory",
+      "source": "ADR-008",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-008--GOVERNS_COMPONENT--svc:gvisor",
+      "source": "ADR-008",
+      "target": "svc:gvisor",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:ADR-008--GOVERNS_COMPONENT--svc:hatchet",
+      "source": "ADR-008",
+      "target": "svc:hatchet",
+      "relation": "GOVERNS_COMPONENT",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-001--MEASURES--RQ3",
+      "source": "EXP-2026-001",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-001",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-001--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-001",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-001",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-002--MEASURES--RQ3",
+      "source": "EXP-2026-002",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-002",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-002--MEASURES--RQ4",
+      "source": "EXP-2026-002",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-002",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-002--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-002",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-002",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-002--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-002",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-002",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-003--MEASURES--RQ1",
+      "source": "EXP-2026-003",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-003",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-003--MEASURES--RQ4",
+      "source": "EXP-2026-003",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-003",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-003--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-003",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-003",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-003--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-003",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-003",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-004--MEASURES--RQ3",
+      "source": "EXP-2026-004",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-004",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-004--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-004",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-004",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-005--MEASURES--RQ2",
+      "source": "EXP-2026-005",
+      "target": "RQ2",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-005",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-005--MEASURES--RQ3",
+      "source": "EXP-2026-005",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-005",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-005--VALIDATES_HYPOTHESIS--RQ2",
+      "source": "EXP-2026-005",
+      "target": "RQ2",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-005",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-005--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-005",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-005",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-006--MEASURES--RQ1",
+      "source": "EXP-2026-006",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-006--MEASURES--RQ3",
+      "source": "EXP-2026-006",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-006--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-006",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-006--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-006",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-007--MEASURES--RQ3",
+      "source": "EXP-2026-007",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-007",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-007--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-007",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-007",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-008--MEASURES--RQ4",
+      "source": "EXP-2026-008",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-008",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-008--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-008",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-008",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-009--MEASURES--RQ4",
+      "source": "EXP-2026-009",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-009",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-009--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-009",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-009",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-010--MEASURES--RQ3",
+      "source": "EXP-2026-010",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-010",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-010--MEASURES--RQ4",
+      "source": "EXP-2026-010",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-010",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-010--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-010",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-010",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-010--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-010",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-010",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--MEASURES--RQ1",
+      "source": "EXP-2026-011",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--MEASURES--RQ2",
+      "source": "EXP-2026-011",
+      "target": "RQ2",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--MEASURES--RQ3",
+      "source": "EXP-2026-011",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-011",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ2",
+      "source": "EXP-2026-011",
+      "target": "RQ2",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-011",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-012--MEASURES--RQ1",
+      "source": "EXP-2026-012",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-012--MEASURES--RQ3",
+      "source": "EXP-2026-012",
+      "target": "RQ3",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-012--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-012",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-012--VALIDATES_HYPOTHESIS--RQ3",
+      "source": "EXP-2026-012",
+      "target": "RQ3",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--MEASURES--RQ1",
+      "source": "EXP-2026-013",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--MEASURES--RQ2",
+      "source": "EXP-2026-013",
+      "target": "RQ2",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--MEASURES--RQ4",
+      "source": "EXP-2026-013",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-013",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ2",
+      "source": "EXP-2026-013",
+      "target": "RQ2",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-013",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-014--MEASURES--RQ1",
+      "source": "EXP-2026-014",
+      "target": "RQ1",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-014--MEASURES--RQ4",
+      "source": "EXP-2026-014",
+      "target": "RQ4",
+      "relation": "MEASURES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-014--VALIDATES_HYPOTHESIS--RQ1",
+      "source": "EXP-2026-014",
+      "target": "RQ1",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:EXP-2026-014--VALIDATES_HYPOTHESIS--RQ4",
+      "source": "EXP-2026-014",
+      "target": "RQ4",
+      "relation": "VALIDATES_HYPOTHESIS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:agent:auditor--AUDITS--EXP-2026-012",
+      "source": "agent:auditor",
+      "target": "EXP-2026-012",
+      "relation": "AUDITS",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:agent:auditor--AUDITS--repo:rust_CACD_autonomous_factory",
+      "source": "agent:auditor",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "AUDITS",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/executive-summary.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:agent:auditor--AUDITS--svc:gvisor",
+      "source": "agent:auditor",
+      "target": "svc:gvisor",
+      "relation": "AUDITS",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/architecture.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:agent:auditor--PRODUCES_EVIDENCE--EXP-2026-011",
+      "source": "agent:auditor",
+      "target": "EXP-2026-011",
+      "relation": "PRODUCES_EVIDENCE",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-011",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:agent:zeroclaw--PRODUCES_EVIDENCE--EXP-2026-013",
+      "source": "agent:zeroclaw",
+      "target": "EXP-2026-013",
+      "relation": "PRODUCES_EVIDENCE",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--DEPENDS_ON--svc:hatchet",
+      "source": "repo:R2R-Engine",
+      "target": "svc:hatchet",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/R2R-Engine",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--DEPENDS_ON--svc:r2r",
+      "source": "repo:R2R-Engine",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/R2R-Engine",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--FORKED_FROM--svc:hatchet",
+      "source": "repo:R2R-Engine",
+      "target": "svc:hatchet",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/R2R-Engine",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--FORKED_FROM--svc:r2r",
+      "source": "repo:R2R-Engine",
+      "target": "svc:r2r",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/R2R-Engine",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--OWNS_SERVICE--svc:r2r",
+      "source": "repo:R2R-Engine",
+      "target": "svc:r2r",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:R2R-Engine--OWNS_SERVICE--svc:r2r-reader",
+      "source": "repo:R2R-Engine",
+      "target": "svc:r2r-reader",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:dark-litellm--DEPENDS_ON--svc:litellm",
+      "source": "repo:dark-litellm",
+      "target": "svc:litellm",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/dark-litellm",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:dark-litellm--FORKED_FROM--svc:litellm",
+      "source": "repo:dark-litellm",
+      "target": "svc:litellm",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/dark-litellm",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:dark-litellm--OWNS_SERVICE--svc:litellm",
+      "source": "repo:dark-litellm",
+      "target": "svc:litellm",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:deepwiki-rs--DEPENDS_ON--svc:r2r",
+      "source": "repo:deepwiki-rs",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/deepwiki-rs",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:deepwiki-rs--FORKED_FROM--svc:r2r",
+      "source": "repo:deepwiki-rs",
+      "target": "svc:r2r",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/deepwiki-rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:fastapi-autogen-team--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:fastapi-autogen-team",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/fastapi-autogen-team",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:fastapi-autogen-team--DEPENDS_ON--svc:litellm",
+      "source": "repo:fastapi-autogen-team",
+      "target": "svc:litellm",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/fastapi-autogen-team",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:fastapi-autogen-team--DEPENDS_ON--svc:r2r",
+      "source": "repo:fastapi-autogen-team",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/fastapi-autogen-team",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:hatchet",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:hatchet",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:kafka",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:kafka",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:keycloak",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:keycloak",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:minio",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:minio",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:openziti",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:openziti",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:vault",
+      "source": "repo:internal-gitops-control-plane",
+      "target": "svc:vault",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-incident-remediation-service--DEPENDS_ON--repo:internal-gitops-control-plane",
+      "source": "repo:internal-incident-remediation-service",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-incident-remediation-service--DEPENDS_ON--svc:litellm",
+      "source": "repo:internal-incident-remediation-service",
+      "target": "svc:litellm",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-incident-remediation-service--DEPENDS_ON--svc:mlflow",
+      "source": "repo:internal-incident-remediation-service",
+      "target": "svc:mlflow",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:internal-incident-remediation-service--EXECUTES_AGENT--agent:incident-remediator",
+      "source": "repo:internal-incident-remediation-service",
+      "target": "agent:incident-remediator",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo--DEPENDS_ON--repo:lgcorzo.github.io",
+      "source": "repo:lgcorzo",
+      "target": "repo:lgcorzo.github.io",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/lgcorzo",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:lgcorzo",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/lgcorzo",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:lgcorzo.github.io",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--DEPENDS_ON--svc:dark-gravity-mcp",
+      "source": "repo:lgcorzo.github.io",
+      "target": "svc:dark-gravity-mcp",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--DEPENDS_ON--svc:r2r",
+      "source": "repo:lgcorzo.github.io",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://lgcorzo.github.io/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ1",
+      "source": "repo:lgcorzo.github.io",
+      "target": "RQ1",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://lgcorzo.github.io/RESEARCH.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ2",
+      "source": "repo:lgcorzo.github.io",
+      "target": "RQ2",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://lgcorzo.github.io/RESEARCH.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ3",
+      "source": "repo:lgcorzo.github.io",
+      "target": "RQ3",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://lgcorzo.github.io/RESEARCH.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ4",
+      "source": "repo:lgcorzo.github.io",
+      "target": "RQ4",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://lgcorzo.github.io/RESEARCH.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:lgcorzo.github.io--OWNS_SERVICE--svc:dark-gravity-mcp",
+      "source": "repo:lgcorzo.github.io",
+      "target": "svc:dark-gravity-mcp",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:llmops-python-package--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:llmops-python-package",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/llmops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:llmops-python-package--DEPENDS_ON--svc:hatchet",
+      "source": "repo:llmops-python-package",
+      "target": "svc:hatchet",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/llmops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:llmops-python-package--DEPENDS_ON--svc:litellm",
+      "source": "repo:llmops-python-package",
+      "target": "svc:litellm",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/llmops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:llmops-python-package--DEPENDS_ON--svc:r2r",
+      "source": "repo:llmops-python-package",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/llmops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:minio--DEPENDS_ON--svc:minio",
+      "source": "repo:minio",
+      "target": "svc:minio",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/minio",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:minio--FORKED_FROM--svc:minio",
+      "source": "repo:minio",
+      "target": "svc:minio",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/minio",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:minio--OWNS_SERVICE--svc:minio",
+      "source": "repo:minio",
+      "target": "svc:minio",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:mlops-python-package--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:mlops-python-package",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/mlops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:mlops-python-package--DEPENDS_ON--svc:mlflow",
+      "source": "repo:mlops-python-package",
+      "target": "svc:mlflow",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/mlops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:mlops-python-package--DEPENDS_ON--svc:r2r",
+      "source": "repo:mlops-python-package",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/mlops-python-package",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:mlops-python-package--PRODUCES_EVIDENCE--EXP-2026-013",
+      "source": "repo:mlops-python-package",
+      "target": "EXP-2026-013",
+      "relation": "PRODUCES_EVIDENCE",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:mlops-python-package--PRODUCES_EVIDENCE--EXP-2026-014",
+      "source": "repo:mlops-python-package",
+      "target": "EXP-2026-014",
+      "relation": "PRODUCES_EVIDENCE",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--repo:internal-gitops-control-plane",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--repo:speckit-superpowers-bridge",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "repo:speckit-superpowers-bridge",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:gvisor",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:gvisor",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:hatchet",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:hatchet",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:kafka",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:kafka",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:litellm",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:litellm",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:r2r",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:r2r",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:semantica",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:semantica",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:vault",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "svc:vault",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:aethelgard",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:aethelgard",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:auditor",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:auditor",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:doc-agent",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:doc-agent",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:finops",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:finops",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:git-platform-poller",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:git-platform-poller",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:qa-observer",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:qa-observer",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:rustant",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:rustant",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:zeroclaw",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "agent:zeroclaw",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--IMPLEMENTS--ADR-001",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "ADR-001",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:rust_CACD_autonomous_factory--IMPLEMENTS--ADR-008",
+      "source": "repo:rust_CACD_autonomous_factory",
+      "target": "ADR-008",
+      "relation": "IMPLEMENTS",
+      "evidence_url": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:semantica--DEPENDS_ON--svc:kafka",
+      "source": "repo:semantica",
+      "target": "svc:kafka",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:semantica--DEPENDS_ON--svc:minio",
+      "source": "repo:semantica",
+      "target": "svc:minio",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:semantica--DEPENDS_ON--svc:semantica",
+      "source": "repo:semantica",
+      "target": "svc:semantica",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:semantica--FORKED_FROM--svc:kafka",
+      "source": "repo:semantica",
+      "target": "svc:kafka",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:semantica--FORKED_FROM--svc:minio",
+      "source": "repo:semantica",
+      "target": "svc:minio",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:semantica--FORKED_FROM--svc:semantica",
+      "source": "repo:semantica",
+      "target": "svc:semantica",
+      "relation": "FORKED_FROM",
+      "evidence_url": "https://github.com/lgcorzo/semantica",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:repo:semantica--OWNS_SERVICE--svc:semantica",
+      "source": "repo:semantica",
+      "target": "svc:semantica",
+      "relation": "OWNS_SERVICE",
+      "evidence_url": "https://lgcorzo.github.io/data/ecosystem-registry.json",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:rust_CACD_autonomous_factory",
+      "source": "repo:speckit-superpowers-bridge",
+      "target": "repo:rust_CACD_autonomous_factory",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/speckit-superpowers-bridge",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:spec-kit",
+      "source": "repo:speckit-superpowers-bridge",
+      "target": "repo:spec-kit",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/speckit-superpowers-bridge",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:superpowers",
+      "source": "repo:speckit-superpowers-bridge",
+      "target": "repo:superpowers",
+      "relation": "DEPENDS_ON",
+      "evidence_url": "https://github.com/lgcorzo/speckit-superpowers-bridge",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:dark-gravity-mcp",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--ADR-001",
+      "source": "svc:dark-gravity-mcp",
+      "target": "ADR-001",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--ADR-008",
+      "source": "svc:dark-gravity-mcp",
+      "target": "ADR-008",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--RQ1",
+      "source": "svc:dark-gravity-mcp",
+      "target": "RQ1",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--RQ2",
+      "source": "svc:dark-gravity-mcp",
+      "target": "RQ2",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--RQ3",
+      "source": "svc:dark-gravity-mcp",
+      "target": "RQ3",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:dark-gravity-mcp--INDEXES--RQ4",
+      "source": "svc:dark-gravity-mcp",
+      "target": "RQ4",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/ai-agents/",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:gvisor--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:gvisor",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:hatchet",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:aethelgard",
+      "source": "svc:hatchet",
+      "target": "agent:aethelgard",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:auditor",
+      "source": "svc:hatchet",
+      "target": "agent:auditor",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:doc-agent",
+      "source": "svc:hatchet",
+      "target": "agent:doc-agent",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:finops",
+      "source": "svc:hatchet",
+      "target": "agent:finops",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:git-platform-poller",
+      "source": "svc:hatchet",
+      "target": "agent:git-platform-poller",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:incident-remediator",
+      "source": "svc:hatchet",
+      "target": "agent:incident-remediator",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:qa-observer",
+      "source": "svc:hatchet",
+      "target": "agent:qa-observer",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:rustant",
+      "source": "svc:hatchet",
+      "target": "agent:rustant",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:hatchet--EXECUTES_AGENT--agent:zeroclaw",
+      "source": "svc:hatchet",
+      "target": "agent:zeroclaw",
+      "relation": "EXECUTES_AGENT",
+      "evidence_url": "https://lgcorzo.github.io/architecture.html",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:kafka--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:kafka",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:keda--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:keda",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:keycloak--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:keycloak",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:litellm--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:litellm",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:minio--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:minio",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:mlflow--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:mlflow",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:openziti--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:openziti",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:r2r--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:r2r",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:r2r--INDEXES--EXP-2026-013",
+      "source": "svc:r2r",
+      "target": "EXP-2026-013",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:svc:r2r--INDEXES--repo:mlops-python-package",
+      "source": "svc:r2r",
+      "target": "repo:mlops-python-package",
+      "relation": "INDEXES",
+      "evidence_url": "https://lgcorzo.github.io/notebooks.html#exp-2026-014",
+      "confidence": "verified"
+    },
+    {
+      "id": "edge:svc:r2r-reader--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:r2r-reader",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:semantica--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:semantica",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    },
+    {
+      "id": "edge:svc:vault--DEPLOYED_BY--repo:internal-gitops-control-plane",
+      "source": "svc:vault",
+      "target": "repo:internal-gitops-control-plane",
+      "relation": "DEPLOYED_BY",
+      "evidence_url": "https://lgcorzo.github.io/docs/auditor/ecosystem.md",
+      "confidence": "documented"
+    }
+  ]
+}

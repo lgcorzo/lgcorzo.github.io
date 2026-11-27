@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform Metrics: Dark Gravity KPI Dashboard</title>
+  <meta name="description" content="Permanent 13-KPI dashboard across Development, Quality, Security, and Agents with explicit UNMEASURED baseline_pending labeling and verified evidence sources.">
+  <link rel="canonical" href="https://lgcorzo.github.io/metrics.html">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <!--SHELL:HEADER-->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="start-here/index.html" class="nav-link" title="5-minute onboarding across repos, RQs, metrics & MCP">Start Here</a></li>
+          <li><a href="ai-agents/index.html" class="nav-link" title="Quick-entry portal for external AI coding agents">AI Agents</a></li>
+          <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+          <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
+          <li><a href="metrics.html" class="nav-link" aria-current="page" title="Development, Quality, Security &amp; Agents KPIs">Metrics</a></li>
+          <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
+          <li><a href="https://github.com/lgcorzo" class="nav-link" title="GitHub profile and ecosystem overview (@lgcorzo)">GitHub Overview</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--/SHELL:HEADER-->
+
+  <main id="main">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Metrics</p>
+
+      <section class="hero" aria-labelledby="top">
+        <p class="hero-tagline">Epistemic Telemetry &bull; Four KPI Domains &bull; Zero Fabricated Numbers</p>
+        <h1 id="top">Dark Gravity Platform Metrics Dashboard</h1>
+        <p class="lede">
+          Live snapshot rendered from <a href="data/metrics.json"><code>data/metrics.json</code></a> covering Development, Quality, Security, and Agents (13 canonical KPIs). Metrics lacking multi-run fleet telemetry remain explicitly marked <code>UNMEASURED</code> (<code>baseline_pending</code>).
+        </p>
+        <p class="note">
+          Security qualification: <code>FR-008</code> / <code>CTRL-02</code> (<code>gVisor runsc</code> live exit) remains labeled <strong><code>TESTED</code></strong> while host CRI shim finding <code>AUD-010</code> is open. No third-party certification is claimed.
+        </p>
+      </section>
+
+      <section id="metrics-app" aria-label="KPI Domains">
+        <div id="metrics-summary" class="status-line">Loading snapshot from <code>data/metrics.json</code>...</div>
+        <div id="metrics-domains"></div>
+
+        <noscript>
+          <h2>Static Fallback Snapshot (JavaScript Disabled)</h2>
+          <p class="note">
+            Showing canonical schema baseline from <code>docs/auditor/metrics.md</code> and <code>data/metrics.json</code>:
+            <code>development.cycle_time_hours = 0.049</code> (2m57s single-run Mission #476),
+            <code>security.vulnerabilities_found_count = 3369</code>,
+            <code>security.vulnerabilities_fixed_count = 720</code>; remaining 10 multi-run aggregate KPIs are <code>UNMEASURED (baseline_pending)</code>.
+          </p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th scope="col">Metric ID</th><th scope="col">Domain</th><th scope="col">Value</th><th scope="col">Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>development.lead_time_hours</code></td><td><code>development</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>development.cycle_time_hours</code></td><td><code>development</code></td><td><code>0.049 h</code></td><td><code>partial</code></td></tr>
+                <tr><td><code>development.mttr_hours</code></td><td><code>development</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>development.deployment_frequency_per_week</code></td><td><code>development</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>quality.defect_density_per_kloc</code></td><td><code>quality</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>quality.escaped_defects_count</code></td><td><code>quality</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>quality.pr_acceptance_rate_pct</code></td><td><code>quality</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>security.vulnerabilities_found_count</code></td><td><code>security</code></td><td><code>3369</code></td><td><code>partial</code></td></tr>
+                <tr><td><code>security.vulnerabilities_fixed_count</code></td><td><code>security</code></td><td><code>720</code></td><td><code>partial</code></td></tr>
+                <tr><td><code>security.mean_remediation_time_hours</code></td><td><code>security</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>agents.agent_success_rate_pct</code></td><td><code>agents</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>agents.hitl_approval_rate_pct</code></td><td><code>agents</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+                <tr><td><code>agents.autonomous_completion_rate_pct</code></td><td><code>agents</code></td><td><code>UNMEASURED</code></td><td><code>baseline_pending</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </noscript>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="fork-policy.html" rel="prev"><small>&larr; Previous</small><strong>Fork policy</strong><br><span class="note">Why the lab forks open-source projects</span></a>
+        <a class="next" href="notebooks.html" rel="next"><small>Next &rarr;</small><strong>Lab notebook</strong><br><span class="note">Experiments, failures and lessons</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
+    </div>
+  </main>
+
+  <!--SHELL:FOOTER-->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="start-here/index.html">Start Here</a></li>
+            <li><a href="ai-agents/index.html">AI Agents</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="lifecycle.html">Lifecycle</a></li>
+            <li><a href="fork-policy.html">Fork policy</a></li>
+            <li><a href="metrics.html">Metrics</a></li>
+            <li><a href="notebooks.html">Lab notebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Sources</p>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
+      </div>
+    </div>
+  </footer>
+  <!--/SHELL:FOOTER-->
+  <script src="js/metrics-dashboard.js" defer></script>
+</body>
+</html>

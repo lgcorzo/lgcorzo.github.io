@@ -30,9 +30,12 @@
         <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
         <ul class="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="start-here/index.html" class="nav-link" title="5-minute onboarding across repos, RQs, metrics & MCP">Start Here</a></li>
+          <li><a href="ai-agents/index.html" class="nav-link" title="Quick-entry portal for external AI coding agents">AI Agents</a></li>
           <li><a href="architecture.html" class="nav-link">Architecture</a></li>
           <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
           <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
+          <li><a href="metrics.html" class="nav-link" title="Development, Quality, Security &amp; Agents KPIs">Metrics</a></li>
           <li><a href="notebooks.html" class="nav-link" aria-current="page">Lab notebook</a></li>
           <li><a href="https://github.com/lgcorzo" class="nav-link" title="GitHub profile and ecosystem overview (@lgcorzo)">GitHub Overview</a></li>
         </ul>
@@ -67,6 +70,7 @@
       <nav class="toc" aria-label="On this page">
         <h2>On this page</h2>
         <ol>
+          <li><a href="#feature-009-verification">Agent Knowledge Management Remediation (<code>009</code>) Verification Summary</a></li>
           <li><a href="#exp-2026-013">End-to-End Autonomous Mission &amp; Hatchet-Orchestrated R2R GraphRAG Memory (Mission #476)</a></li>
           <li><a href="#exp-2026-011-adr008">ADR-008 Standard: Declarative AgentWorkspace Custom Resource Definition &amp; Strict Micro-Sandboxing</a></li>
           <li><a href="#screencast-demo">Dark Gravity: 5-Minute Technical Demonstration Screencast &amp; Autonomous Pipeline Walkthrough</a></li>
@@ -203,6 +207,33 @@
       </section>
 
       <section id="entries">
+<article class="entry" id="feature-009-verification">
+<header class="entry-head">
+<div>
+<span class="font-mono">009-AGENT-KNOWLEDGE · VERIFIED</span>
+<span class="font-mono">Nov 27, 2026</span>
+</div>
+<span class="chip font-mono">SC-001–SC-004 · Knowledge Graph &amp; Rust MCP</span>
+</header>
+<h2 class="mt-5 text-2xl font-bold text-white">
+          Ecosystem Agent Knowledge Management Remediation (<code>009</code>): Single-Pass Onboarding, Triple-Format KG &amp; Read-Only Rust MCP
+        </h2>
+<p class="font-mono">
+          Entry Surfaces: <a class="text-accent underline" href="start-here/">Unified Portal (<code>/start-here</code>)</a> &middot; <a class="text-accent underline" href="ai-agents/">Agent Entry (<code>/ai-agents</code>)</a> &middot; <a class="text-accent underline" href="docs/auditor/executive-summary.md">Auditor Pack</a> &middot; <a class="text-accent underline" href="metrics.html">Platform Metrics</a> &middot; <a class="text-accent underline" href="knowledge_graph.json">Knowledge Graph JSON</a>
+        </p>
+<div>
+<div>
+<h3 class="font-mono">Verification Outcomes (<code>SC-001</code>&ndash;<code>SC-004</code>)</h3>
+<ul>
+<li><strong>Multi-Repo Entry &amp; <code>DOC-011</code> Gate (<code>SC-002</code>, <code>SC-003</code>)</strong>: Deployed <code>DARK_GRAVITY_MANIFEST.md</code> (&lt; 1,200 tokens), lowercase <code>AGENTS.md</code>, <code>ARCHITECTURE.md</code>, and <code>REPOSITORIES.md</code> across all 12 ecosystem repositories while preserving <code>MAINTAINED_FORK_PROFILE</code> and <code>lgcorzo/kes</code> <code>FROZEN_READONLY</code> (verified via <code>verify_ecosystem_knowledge.py</code> with <code>0</code> drift or <code>DOC-011</code> errors).</li>
+<li><strong>Unified Portal, <code>RESEARCH.md</code> &amp; <code>EXPERIMENTS.md</code> (<code>SC-001</code>, <code>SC-004</code>)</strong>: Published <code>/start-here</code>, <code>/ai-agents</code>, explicit <code>RQ1</code>&ndash;<code>RQ4</code> research questions, 14 structured experiment logs (<code>EXP-2026-001</code>..<code>014</code>), 5 YAML-frontmatter AI Auditor docs, and 13 KPI entries with strict <code>UNMEASURED</code> (<code>baseline_pending</code>) enforcement.</li>
+<li><strong>Triple-Format Knowledge Graph</strong>: Generated <code>knowledge_graph.{json,graphml,rdf}</code> (<code>60</code> nodes, <code>170</code> edges, uppercase <code>dg:&lt;RELATION&gt;</code> predicates) in <code>~1.6 s</code> with verified node/edge equivalence across JSON-LD, GraphML 1.0, and RDF/XML.</li>
+<li><strong>Read-Only Rust MCP &amp; R2R v3 RAG</strong>: Built static distroless <code>dark-gravity-mcp</code> (<code>8.3 MiB</code>, 6 tools + 7 <code>dark-gravity://</code> resources, <code>&lt; 100 ms</code> p95 cached calls, <code>3/3</code> Rust tests passing) and verified 8-category R2R v3 GraphRAG sync (<code>40</code> documents in <code>dark-gravity-knowledge-base</code> via <code>raw_text</code> multipart).</li>
+</ul>
+</div>
+</div>
+</article>
+
 <article class="entry" id="exp-2026-014">
 <header class="entry-head">
 <div>
@@ -1307,7 +1338,7 @@
 
       <!--SHELL:PAGER-->
       <nav class="pager" aria-label="Reading order">
-        <a class="prev" href="fork-policy.html" rel="prev"><small>&larr; Previous</small><strong>Fork policy</strong><br><span class="note">Why the lab forks open-source projects</span></a>
+        <a class="prev" href="metrics.html" rel="prev"><small>&larr; Previous</small><strong>Metrics</strong><br><span class="note">Permanent 13-KPI dashboard across 4 factory domains</span></a>
       </nav>
       <!--/SHELL:PAGER-->
       <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
@@ -1328,9 +1359,12 @@
           <p class="footer-title">Pages</p>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
+            <li><a href="start-here/index.html">Start Here</a></li>
+            <li><a href="ai-agents/index.html">AI Agents</a></li>
             <li><a href="architecture.html">Architecture</a></li>
             <li><a href="lifecycle.html">Lifecycle</a></li>
             <li><a href="fork-policy.html">Fork policy</a></li>
+            <li><a href="metrics.html">Metrics</a></li>
             <li><a href="notebooks.html">Lab notebook</a></li>
           </ul>
         </div>
