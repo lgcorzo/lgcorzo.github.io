@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lgcorzo.github.io/data/schemas/ecosystem-registry.schema.json",
+  "title": "Dark Gravity Ecosystem Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "as_of_date",
+    "statistics_ref",
+    "repository_statistics",
+    "portal_urls",
+    "repositories",
+    "agents",
+    "services",
+    "adrs"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "as_of_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "statistics_ref": { "type": "string", "minLength": 1 },
+    "repository_statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_repositories_total",
+        "original_repositories",
+        "maintained_forks",
+        "historical_portfolio_total_with_private_and_archived",
+        "spec_004_total",
+        "spec_004_public",
+        "spec_004_private"
+      ],
+      "properties": {
+        "public_repositories_total": { "type": "integer", "minimum": 1 },
+        "original_repositories": { "type": "integer", "minimum": 1 },
+        "maintained_forks": { "type": "integer", "minimum": 0 },
+        "historical_portfolio_total_with_private_and_archived": { "type": "integer", "minimum": 1 },
+        "spec_004_total": { "type": "integer", "minimum": 1 },
+        "spec_004_public": { "type": "integer", "minimum": 1 },
+        "spec_004_private": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "portal_urls": {
+      "type": "object",
+      "required": [
+        "start_here",
+        "ai_agents",
+        "auditor_pack",
+        "metrics",
+        "knowledge_graph_json"
+      ],
+      "properties": {
+        "start_here": { "type": "string", "pattern": "^https://" },
+        "ai_agents": { "type": "string", "pattern": "^https://" },
+        "auditor_pack": { "type": "string", "pattern": "^https://" },
+        "metrics": { "type": "string", "pattern": "^https://" },
+        "knowledge_graph_json": { "type": "string", "pattern": "^https://" }
+      }
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "owner",
+          "tier",
+          "visibility",
+          "is_fork",
+          "fork_profile",
+          "upstream_repo",
+          "primary_language",
+          "role",
+          "has_agents_md",
+          "has_architecture_md",
+          "has_repositories_md",
+          "has_manifest_md",
+          "direct_injection_target",
+          "dependencies"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^repo:[a-zA-Z0-9._-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "core_factory",
+              "orchestration_bridge",
+              "owned_domain",
+              "public_portal",
+              "maintained_fork",
+              "private_gitops"
+            ]
+          },
+          "visibility": { "type": "string", "enum": ["public", "private"] },
+          "is_fork": { "type": "boolean" },
+          "archived": { "type": "boolean" },
+          "fork_profile": {
+            "type": ["string", "null"],
+            "enum": ["MAINTAINED_FORK_PROFILE", "FROZEN_READONLY", null]
+          },
+          "upstream_repo": { "type": ["string", "null"] },
+          "primary_language": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "canonical_url": { "type": ["string", "null"] },
+          "has_agents_md": { "type": "boolean" },
+          "has_architecture_md": { "type": "boolean" },
+          "has_repositories_md": { "type": "boolean" },
+          "has_manifest_md": { "type": "boolean" },
+          "direct_injection_target": { "type": "boolean" },
+          "dependencies": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "role",
+          "execution_phases",
+          "sandbox_profile",
+          "hitl_constrained",
+          "nhi_auth_method",
+          "home_repo"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^agent:[a-z0-9-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "role": {
+            "type": "string",
+            "enum": [
+              "planner",
+              "developer",
+              "validator",
+              "reviewer",
+              "security_auditor",
+              "finops",
+              "remediator",
+              "qa_observer",
+              "documenter",
+              "poller"
+            ]
+          },
+          "is_core_trait_impl": { "type": "boolean" },
+          "execution_phases": { "type": "array", "items": { "type": "string" } },
+          "sandbox_profile": {
+            "type": "string",
+            "enum": ["gvisor_runsc", "hardened_k8s_pod", "host_control_plane_readonly"]
+          },
+          "hitl_constrained": { "type": "boolean" },
+          "nhi_auth_method": { "type": "string" },
+          "home_repo": { "type": "string", "pattern": "^repo:[a-zA-Z0-9._-]+$" }
+        }
+      }
+    },
+    "services": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "cluster_namespace",
+          "upstream_repo",
+          "security_boundary"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^svc:[a-z0-9-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "category": {
+            "type": "string",
+            "enum": [
+              "orchestrator",
+              "event_bus",
+              "llm_gateway",
+              "knowledge_rag",
+              "knowledge_graph",
+              "zero_trust_network",
+              "object_storage",
+              "secrets",
+              "observability",
+              "sandbox_runtime",
+              "database",
+              "identity",
+              "mcp_knowledge"
+            ]
+          },
+          "cluster_namespace": { "type": "string", "minLength": 1 },
+          "upstream_repo": { "type": ["string", "null"] },
+          "security_boundary": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "adrs": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "status", "date", "source_path", "governs"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ADR-\\d{3,}$" },
+          "title": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["proposed", "accepted", "superseded", "deprecated"]
+          },
+          "date": { "type": ["string", "null"] },
+          "source_path": { "type": "string", "minLength": 1 },
+          "governs": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

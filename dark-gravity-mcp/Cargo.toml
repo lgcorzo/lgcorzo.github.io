@@ -1,0 +1,9 @@
+[package]
+name = "dark-gravity-mcp"
+version = "0.1.0"
+edition = "2024"
+description = "Read-only Model Context Protocol (MCP) server for Dark Gravity ecosystem knowledge, architecture, ADRs, research, experiments, and platform metrics."
+license = "MIT"
+repository = "https://github.com/lgcorzo/lgcorzo.github.io"
+
+# Dependencies (rmcp, tokio, serde, serde_json, reqwest, axum) will be added in Sprint 4 (T045-T048).
