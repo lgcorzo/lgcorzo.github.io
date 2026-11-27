@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lgcorzo.github.io/data/schemas/metrics.schema.json",
+  "title": "Dark Gravity Platform Metrics Snapshot",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "window", "collection_sources", "domains"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "generated_at": { "type": "string" },
+    "window": { "type": "string", "minLength": 1 },
+    "collection_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "domains": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["development", "quality", "security", "agents"],
+      "properties": {
+        "development": { "$ref": "#/definitions/kpiList" },
+        "quality": { "$ref": "#/definitions/kpiList" },
+        "security": { "$ref": "#/definitions/kpiList" },
+        "agents": { "$ref": "#/definitions/kpiList" }
+      }
+    }
+  },
+  "definitions": {
+    "kpiList": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "metric_id",
+          "name",
+          "value",
+          "unit",
+          "window",
+          "measurement_status",
+          "collection_method",
+          "evidence_source",
+          "notes"
+        ],
+        "properties": {
+          "metric_id": { "type": "string", "pattern": "^(development|quality|security|agents)\\.[a-z0-9_]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "value": { "type": ["number", "string", "null"] },
+          "unit": { "type": "string", "enum": ["hours", "minutes", "per_week", "percent", "count", "ratio", "per_kloc"] },
+          "window": { "type": "string" },
+          "measurement_status": { "type": "string", "enum": ["verified", "partial", "baseline_pending"] },
+          "collection_method": {
+            "type": "string",
+            "enum": ["github_api", "evidence_records", "cluster_telemetry_snapshot", "manual_audit"]
+          },
+          "evidence_source": { "type": "string", "minLength": 1 },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

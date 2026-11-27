@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lgcorzo.github.io/data/schemas/knowledge-graph.schema.json",
+  "title": "Dark Gravity Official Knowledge Graph",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_at",
+    "ontology_namespace",
+    "@context",
+    "summary",
+    "nodes",
+    "edges"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "generated_at": { "type": "string" },
+    "ontology_namespace": {
+      "type": "string",
+      "const": "https://lgcorzo.github.io/ontology/dark-gravity#"
+    },
+    "@context": { "type": "object" },
+    "summary": {
+      "type": "object",
+      "required": ["node_count", "edge_count", "counts_by_type"],
+      "properties": {
+        "node_count": { "type": "integer", "minimum": 1 },
+        "edge_count": { "type": "integer", "minimum": 1 },
+        "counts_by_type": {
+          "type": "object",
+          "required": [
+            "Repository",
+            "Agent",
+            "Service",
+            "Experiment",
+            "ArchitectureDecision",
+            "ResearchHypothesis"
+          ]
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "entity_type",
+          "label",
+          "summary",
+          "verification_status",
+          "canonical_url",
+          "updated_at"
+        ],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "entity_type": {
+            "type": "string",
+            "enum": [
+              "Repository",
+              "Agent",
+              "Service",
+              "Experiment",
+              "ArchitectureDecision",
+              "ResearchHypothesis"
+            ]
+          },
+          "label": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string", "maxLength": 280 },
+          "verification_status": {
+            "type": "string",
+            "enum": [
+              "designed",
+              "implemented",
+              "tested",
+              "deployed",
+              "runtime_verified",
+              "verified",
+              "experimental",
+              "unverified"
+            ]
+          },
+          "canonical_url": { "type": "string", "pattern": "^https://" },
+          "updated_at": { "type": "string" },
+          "properties": { "type": "object" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "target", "relation", "evidence_url", "confidence"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "source": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "OWNS_SERVICE",
+              "EXECUTES_AGENT",
+              "VALIDATES_HYPOTHESIS",
+              "GOVERNS_COMPONENT",
+              "DEPENDS_ON",
+              "PRODUCES_EVIDENCE",
+              "FORKED_FROM",
+              "DEPLOYED_BY",
+              "AUDITS",
+              "INDEXES",
+              "MEASURES",
+              "IMPLEMENTS"
+            ]
+          },
+          "evidence_url": { "type": "string", "minLength": 1 },
+          "confidence": { "type": "string", "enum": ["verified", "documented", "inferred"] }
+        }
+      }
+    }
+  }
+}
