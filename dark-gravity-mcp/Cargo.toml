@@ -6,4 +6,37 @@ description = "Read-only Model Context Protocol (MCP) server for Dark Gravity ec
 license = "MIT"
 repository = "https://github.com/lgcorzo/lgcorzo.github.io"
 
-# Dependencies (rmcp, tokio, serde, serde_json, reqwest, axum) will be added in Sprint 4 (T045-T048).
+[lib]
+name = "dark_gravity_mcp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dark-gravity-mcp"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+axum = "0.8"
+clap = { version = "4", features = ["derive", "env"] }
+hex = "0.4"
+jiff = "0.2"
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls"] }
+rmcp = { version = "3.12", default-features = false, features = ["base64", "macros", "server", "transport-io", "transport-streamable-http-server"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.11"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+tokio-util = "0.7"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+futures = "0.3"
+tempfile = "3"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = "s"
+strip = true

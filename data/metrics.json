@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-11-27T11:17:47Z",
+  "window": "rolling_30d_and_cumulative_evidence",
+  "collection_sources": [
+    "github_rest_api",
+    "evidence_records",
+    "verified_experiment_logs"
+  ],
+  "domains": {
+    "development": [
+      {
+        "metric_id": "development.lead_time_hours",
+        "name": "Lead Time for Changes",
+        "value": null,
+        "unit": "hours",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Multi-run fleet-wide issue-to-merge series requires authenticated GitHub webhook/API history across all target repositories."
+      },
+      {
+        "metric_id": "development.cycle_time_hours",
+        "name": "Cycle Time",
+        "value": 0.049,
+        "unit": "hours",
+        "window": "single_verified_mission_exp_2026_013",
+        "measurement_status": "partial",
+        "collection_method": "cluster_telemetry_snapshot",
+        "evidence_source": "https://lgcorzo.github.io/notebooks.html#exp-2026-013",
+        "notes": "Observed 2m57s (0.049 h) end-to-end 5-step Hatchet DAG run in Mission #476 (EXP-2026-013; target < 60 min). Scope N=1 single run; fleet rolling average pending."
+      },
+      {
+        "metric_id": "development.mttr_hours",
+        "name": "Mean Time to Recovery (MTTR)",
+        "value": null,
+        "unit": "hours",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "evidence_records",
+        "evidence_source": "https://lgcorzo.github.io/notebooks.html#exp-2026-006",
+        "notes": "UNMEASURED (baseline_pending): Architecture target is < 45 s and Hatchet crash resume measured 8.4 s (EXP-2026-006); multi-incident rolling remediation MTTR pending."
+      },
+      {
+        "metric_id": "development.deployment_frequency_per_week",
+        "name": "Deployment Frequency",
+        "value": null,
+        "unit": "per_week",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Continuous weekly FluxCD tag and GitHub release counter pending multi-week automated collection."
+      }
+    ],
+    "quality": [
+      {
+        "metric_id": "quality.defect_density_per_kloc",
+        "name": "Defect Density",
+        "value": null,
+        "unit": "per_kloc",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "manual_audit",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Requires normalized KLOC counters paired with CodeQL/linters across all 64 public repositories."
+      },
+      {
+        "metric_id": "quality.escaped_defects_count",
+        "name": "Escaped Defects",
+        "value": null,
+        "unit": "count",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Post-release regression/hotfix issue classification across factory targets pending multi-release tracking."
+      },
+      {
+        "metric_id": "quality.pr_acceptance_rate_pct",
+        "name": "PR Acceptance Rate",
+        "value": null,
+        "unit": "percent",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Fleet-wide merged vs. closed-unmerged autonomous PR ratio pending authenticated GitHub telemetry."
+      }
+    ],
+    "security": [
+      {
+        "metric_id": "security.vulnerabilities_found_count",
+        "name": "Vulnerabilities Found",
+        "value": 3369,
+        "unit": "count",
+        "window": "cluster_snapshot_exp_2026_012",
+        "measurement_status": "partial",
+        "collection_method": "cluster_telemetry_snapshot",
+        "evidence_source": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+        "notes": "Cluster Trivy snapshot post-remediation: 396 CRITICAL + 2,973 HIGH active findings (down from 429 CRITICAL + 3,660 HIGH). FR-008/CTRL-02 remains TESTED while AUD-010 is open (CTRL-04/05/07/08 runtime_verified)."
+      },
+      {
+        "metric_id": "security.vulnerabilities_fixed_count",
+        "name": "Vulnerabilities Fixed",
+        "value": 720,
+        "unit": "count",
+        "window": "cluster_snapshot_exp_2026_012",
+        "measurement_status": "partial",
+        "collection_method": "cluster_telemetry_snapshot",
+        "evidence_source": "https://lgcorzo.github.io/notebooks.html#exp-2026-012",
+        "notes": "Verified Trivy CRITICAL+HIGH vulnerabilities remediated (EXP-2026-012), alongside 9/11 audit findings (AUD-001..009) closed and 54.2 ns ZeroizeOnDrop memory wipe verified. FR-008/CTRL-02 kept TESTED pending AUD-010."
+      },
+      {
+        "metric_id": "security.mean_remediation_time_hours",
+        "name": "Mean Remediation Time",
+        "value": null,
+        "unit": "hours",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Alert created_at -> fixed_at duration aggregation across GitHub Project 6 pending continuous sweep."
+      }
+    ],
+    "agents": [
+      {
+        "metric_id": "agents.agent_success_rate_pct",
+        "name": "Agent Success Rate",
+        "value": null,
+        "unit": "percent",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "evidence_records",
+        "evidence_source": "https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence/records",
+        "notes": "UNMEASURED (baseline_pending): Offline evidence check verified 11/11 non-mock passed requirement records (FR-008 TESTED while AUD-010 open); live Mission #476 R2R Hatchet recorded 87 COMPLETED / 0 failed tasks; rolling multi-mission percentage pending."
+      },
+      {
+        "metric_id": "agents.hitl_approval_rate_pct",
+        "name": "HITL Approval Rate",
+        "value": null,
+        "unit": "percent",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "github_api",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Vertex 4 human approval rate across agent-authored PRs pending multi-mission series."
+      },
+      {
+        "metric_id": "agents.autonomous_completion_rate_pct",
+        "name": "Autonomous Completion Rate",
+        "value": null,
+        "unit": "percent",
+        "window": "rolling_30d",
+        "measurement_status": "baseline_pending",
+        "collection_method": "evidence_records",
+        "evidence_source": "https://lgcorzo.github.io/docs/auditor/metrics.md",
+        "notes": "UNMEASURED (baseline_pending): Ratio of missions reaching Stage 5 factory-deliver without prior human override pending multi-mission series."
+      }
+    ]
+  }
+}

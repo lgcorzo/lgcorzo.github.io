@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start Here: Dark Gravity Autonomous Software Factory Portal</title>
+  <meta name="description" content="Unified canonical entry portal for engineers, auditors, and AI agents evaluating Dark Gravity: architecture, 64-repo topology, RQ1-RQ4, EXP-2026-001..014, KPIs, and dark-gravity-mcp.">
+  <link rel="canonical" href="https://lgcorzo.github.io/start-here.html">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <!--SHELL:HEADER-->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="start-here/index.html" class="nav-link" title="5-minute onboarding across repos, RQs, metrics & MCP">Start Here</a></li>
+          <li><a href="ai-agents/index.html" class="nav-link" title="Quick-entry portal for external AI coding agents">AI Agents</a></li>
+          <li><a href="architecture.html" class="nav-link">Architecture</a></li>
+          <li><a href="lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
+          <li><a href="metrics.html" class="nav-link" title="Development, Quality, Security &amp; Agents KPIs">Metrics</a></li>
+          <li><a href="notebooks.html" class="nav-link">Lab notebook</a></li>
+          <li><a href="https://github.com/lgcorzo" class="nav-link" title="GitHub profile and ecosystem overview (@lgcorzo)">GitHub Overview</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--/SHELL:HEADER-->
+
+  <main id="main">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Start Here</p>
+
+      <section class="hero" aria-labelledby="top">
+        <p class="hero-tagline">Unified Ecosystem Entry Portal &bull; Root Compatibility View</p>
+        <h1 id="top">Dark Gravity: Complete Architectural &amp; Empirical Orientation in 5 Minutes</h1>
+        <p class="lede">
+          Dark Gravity is an experimental Continuous Agentic / Continuous Deployment (<code>CA/CD</code>) software factory built in Rust Edition 2024 and Kubernetes. Do <strong>not</strong> evaluate any individual <code>@lgcorzo</code> repository in isolation &mdash; inspect the integrated topology across the seven sections below.
+        </p>
+        <div class="cta-group">
+          <a href="start-here/index.html" class="btn btn-primary">Open Canonical <code>/start-here/</code></a>
+          <a href="ai-agents/index.html" class="btn btn-secondary">AI Agents Portal</a>
+          <a href="docs/auditor/executive-summary.md" class="btn btn-secondary">Auditor Pack</a>
+          <a href="knowledge_graph.json" class="btn btn-secondary">Knowledge Graph JSON</a>
+        </div>
+      </section>
+
+      <section id="executive-summary">
+        <h2>1. Executive Summary</h2>
+        <p>
+          Dark Gravity converts labeled GitHub issues into verified Pull Requests through a <strong>5-phase durable mission pipeline</strong> (<code>rustant-plan</code>, <code>zeroclaw-execute</code>, <code>zeroclaw-validate</code>, <code>rustant-review</code>, <code>factory-deliver</code>) after Kafka <code>mission-input</code> ingestion. Autonomous merges into <code>main</code> are strictly forbidden by Vertex 4 HITL governance. Compliance wording: all controls are architectural readiness measures; No third-party certification (EU AI Act, SOC 2 or other) is claimed.
+        </p>
+      </section>
+
+      <section id="architecture-overview">
+        <h2>2. Architecture Overview</h2>
+        <p>
+          Five Rust Edition 2024 Onion crates (<code>rust_CACD_autonomous_factory</code> v0.3.4), five Hatchet steps, Ed25519 W3C-VC signing, 300 s Vault JIT credentials (<code>54.2 ns</code> <code>zeroize</code>), OpenZiti mTLS, and <code>gVisor (runsc)</code> sandboxes (<code>FR-008</code>/<code>CTRL-02</code> kept <code>TESTED</code> while <code>AUD-010</code> is open). See <a href="architecture.html">Architecture</a> and <a href="docs/auditor/architecture.md">Auditor Architecture Pack</a>.
+        </p>
+      </section>
+
+      <section id="repository-map">
+        <h2>3. Repository Map &amp; Fork Policy</h2>
+        <p>
+          Total portfolio: <strong>64 public repositories</strong> (22 original + <strong>42 maintained</strong> open-source forks under <code>MAINTAINED_FORK_PROFILE</code>), reconciled with <code>69</code> historical baseline and <code>72</code> Spec <code>004</code> inventory (private repos redacted under <code>DOC-011</code> as <code>Internal GitOps Control Plane</code> and <code>Internal Incident Remediation Service</code>). <code>lgcorzo/kes</code> is permanently <code>FROZEN_READONLY</code>. See <a href="REPOSITORIES.md">REPOSITORIES.md</a> and <a href="fork-policy.html">Fork policy</a>.
+        </p>
+      </section>
+
+      <section id="research-vision">
+        <h2>4. Research Vision (<code>RQ1</code>&ndash;<code>RQ4</code>)</h2>
+        <p>
+          Four formal research hypotheses track MTTR reduction (<code>RQ1</code>), cryptographic NHI governance (<code>RQ2</code>), GitOps &amp; sandbox security boundaries (<code>RQ3</code>), and AST/GraphRAG workflow efficiency (<code>RQ4</code>). See <a href="RESEARCH.md">RESEARCH.md</a>.
+        </p>
+      </section>
+
+      <section id="experiments-catalog">
+        <h2>5. Experiments Catalog (<code>EXP-2026-001</code>..<code>014</code>)</h2>
+        <p>
+          Covers <code>EXP-2026-001</code> through <code>EXP-2026-014</code> including Mission #476 (<code>2m57s</code> DAG, 87/87 R2R Hatchet tasks) and Swarm Mode Mission #478 (3 parallel lanes, 3x <code>r2r-reader</code> replicas). See <a href="EXPERIMENTS.md">EXPERIMENTS.md</a> and <a href="notebooks.html">Lab notebook</a>.
+        </p>
+      </section>
+
+      <section id="platform-metrics">
+        <h2>6. Platform Metrics &amp; Epistemic Evidence</h2>
+        <p>
+          Thirteen KPIs across Development, Quality, Security, and Agents live in <a href="data/metrics.json">data/metrics.json</a> and <a href="metrics.html">metrics.html</a>; unmeasured fleet baselines remain labeled <code>UNMEASURED</code> (<code>baseline_pending</code>).
+        </p>
+      </section>
+
+      <section id="ai-agent-entry">
+        <h2>7. AI Agent Quick-Entry, MCP &amp; Knowledge Graph</h2>
+        <p>
+          Agents can query <a href="ai-agents/index.html">/ai-agents/</a>, <a href="DARK_GRAVITY_MANIFEST.md">DARK_GRAVITY_MANIFEST.md</a>, <a href="knowledge_graph.json">knowledge_graph.json</a>, <a href="knowledge_graph.graphml">knowledge_graph.graphml</a>, <a href="knowledge_graph.rdf">knowledge_graph.rdf</a>, or run read-only Rust <code>dark-gravity-mcp</code>.
+        </p>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="next" href="start-here/index.html" rel="next"><small>Canonical Portal &rarr;</small><strong>Start Here</strong><br><span class="note">Unified ecosystem entry portal for engineers &amp; auditors</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
+    </div>
+  </main>
+
+  <!--SHELL:FOOTER-->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="index.html#status-tags">what the tags mean</a> and the
+          <a href="index.html#glossary">glossary</a>.</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="start-here/index.html">Start Here</a></li>
+            <li><a href="ai-agents/index.html">AI Agents</a></li>
+            <li><a href="architecture.html">Architecture</a></li>
+            <li><a href="lifecycle.html">Lifecycle</a></li>
+            <li><a href="fork-policy.html">Fork policy</a></li>
+            <li><a href="metrics.html">Metrics</a></li>
+            <li><a href="notebooks.html">Lab notebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Sources</p>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
+      </div>
+    </div>
+  </footer>
+  <!--/SHELL:FOOTER-->
+</body>
+</html>

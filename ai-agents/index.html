@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agents Quick-Entry: Dark Gravity Ecosystem Portal</title>
+  <meta name="description" content="Machine-readable endpoints, AI Auditor Pack, triple-format Knowledge Graph, and read-only Rust dark-gravity-mcp integration guide for external coding agents.">
+  <link rel="canonical" href="https://lgcorzo.github.io/ai-agents/">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2300f0ff' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <!--SHELL:HEADER-->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main">
+        <a href="../index.html" class="site-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Dark Gravity Lab</span></a>
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="../start-here/index.html" class="nav-link" title="5-minute onboarding across repos, RQs, metrics & MCP">Start Here</a></li>
+          <li><a href="../ai-agents/index.html" class="nav-link" aria-current="page" title="Quick-entry portal for external AI coding agents">AI Agents</a></li>
+          <li><a href="../architecture.html" class="nav-link">Architecture</a></li>
+          <li><a href="../lifecycle.html" class="nav-link" title="Mission flow: from issue to human-reviewed PR">Lifecycle</a></li>
+          <li><a href="../fork-policy.html" class="nav-link" title="Dependency governance: 42 maintained open-source forks">Fork policy</a></li>
+          <li><a href="../metrics.html" class="nav-link" title="Development, Quality, Security &amp; Agents KPIs">Metrics</a></li>
+          <li><a href="../notebooks.html" class="nav-link">Lab notebook</a></li>
+          <li><a href="https://github.com/lgcorzo" class="nav-link" title="GitHub profile and ecosystem overview (@lgcorzo)">GitHub Overview</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--/SHELL:HEADER-->
+
+  <main id="main">
+    <div class="container">
+      <p class="breadcrumb"><a href="../index.html">Home</a> &rsaquo; AI Agents</p>
+
+      <section class="hero" aria-labelledby="top">
+        <p class="hero-tagline">External Coding Agents &bull; Automated Auditors &bull; MCP Clients</p>
+        <h1 id="top">Dark Gravity AI Agent Quick-Entry &amp; Machine-Readable Surface</h1>
+        <p class="lede">
+          Zero-credential, <code>DOC-011</code>-clean entry surface for GitHub Copilot Agent, Claude Code, Codex, Cursor, Devin, and external reviewers. Read this manifest chain first so every audit recognizes the full <strong>64 public repositories</strong> (22 original + <strong>42 maintained</strong> forks), the <strong>5-phase durable mission pipeline</strong> (five Hatchet steps after Kafka ingestion), and mandatory Vertex 4 HITL merge constraints.
+        </p>
+        <div class="cta-group">
+          <a href="../DARK_GRAVITY_MANIFEST.md" class="btn btn-primary">Read DARK_GRAVITY_MANIFEST.md</a>
+          <a href="../docs/auditor/executive-summary.md" class="btn btn-secondary">Auditor Pack</a>
+          <a href="../knowledge_graph.json" class="btn btn-secondary">Knowledge Graph JSON</a>
+          <a href="../data/metrics.json" class="btn btn-secondary">Platform Metrics JSON</a>
+        </div>
+      </section>
+
+      <section id="endpoints">
+        <h2>Direct Machine-Readable Endpoints</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th scope="col">Artifact</th><th scope="col">Format</th><th scope="col">Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><a href="../DARK_GRAVITY_MANIFEST.md"><code>DARK_GRAVITY_MANIFEST.md</code></a></td><td>YAML + Markdown (&lt; 1,200 tokens)</td><td>Compact entry contract pointing to hub, MCP, KG, and HITL rules</td></tr>
+              <tr><td><a href="../docs/auditor/executive-summary.md"><code>docs/auditor/executive-summary.md</code></a></td><td>YAML Frontmatter + MD</td><td>5-document self-contained Auditor Pack (<code>executive-summary</code>, <code>architecture</code>, <code>research</code>, <code>metrics</code>, <code>ecosystem</code>)</td></tr>
+              <tr><td><a href="../knowledge_graph.json"><code>knowledge_graph.json</code></a></td><td>JSON-LD</td><td>Unified 6-entity / 12-predicate Ecosystem Knowledge Graph</td></tr>
+              <tr><td><a href="../knowledge_graph.graphml"><code>knowledge_graph.graphml</code></a></td><td>GraphML 1.0 XML</td><td>Directed graph export matching JSON node/edge sets identically</td></tr>
+              <tr><td><a href="../knowledge_graph.rdf"><code>knowledge_graph.rdf</code></a></td><td>RDF/XML</td><td>Ontology-typed RDF using uppercase <code>dg:&lt;RELATION&gt;</code> predicates</td></tr>
+              <tr><td><a href="../data/ecosystem-registry.json"><code>data/ecosystem-registry.json</code></a></td><td>JSON Schema v1.0</td><td>Canonical repos, agents, services, ADRs, and <code>FROZEN_READONLY</code> <code>kes</code> guard</td></tr>
+              <tr><td><a href="../data/metrics.json"><code>data/metrics.json</code></a></td><td>JSON Schema v1.0</td><td>13 KPIs across 4 domains with strict <code>UNMEASURED</code> / <code>baseline_pending</code> integrity</td></tr>
+              <tr><td><a href="../RESEARCH.md"><code>RESEARCH.md</code></a> &amp; <a href="../EXPERIMENTS.md"><code>EXPERIMENTS.md</code></a></td><td>Markdown</td><td>Explicit <code>RQ1</code>&ndash;<code>RQ4</code> hypotheses and <code>EXP-2026-001</code>..<code>014</code> empirical logs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="mcp-server">
+        <h2>Official Read-Only Rust MCP Server: <code>dark-gravity-mcp</code></h2>
+        <p>
+          Located in <a href="https://github.com/lgcorzo/lgcorzo.github.io/tree/main/dark-gravity-mcp"><code>lgcorzo.github.io/dark-gravity-mcp</code></a> (Rust Edition 2024, <code>rmcp</code> SDK). It is strictly read-only, completely decoupled from the privileged runtime gateway (<code>factory-mcp-server</code>), and exposes six tools plus seven <code>dark-gravity://</code> resources:
+        </p>
+        <ul>
+          <li><strong>Tools</strong>: <code>get_architecture</code>, <code>get_research</code>, <code>get_repository_map</code> (includes <code>has_repositories_md</code>), <code>get_adrs</code>, <code>get_experiments</code>, <code>get_metrics</code>.</li>
+          <li><strong>Resources</strong>: <code>dark-gravity://manifest</code>, <code>dark-gravity://knowledge-graph</code>, and the five <code>dark-gravity://auditor/*</code> documents.</li>
+        </ul>
+        <p class="note">
+          Compliance wording: No third-party certification (EU AI Act, SOC 2 or other) is claimed. Unmeasured aggregate KPIs remain labeled <code>UNMEASURED</code> (<code>baseline_pending</code>).
+        </p>
+      </section>
+
+      <!--SHELL:PAGER-->
+      <nav class="pager" aria-label="Reading order">
+        <a class="prev" href="../start-here/index.html" rel="prev"><small>&larr; Previous</small><strong>Start Here</strong><br><span class="note">Unified ecosystem entry portal for engineers &amp; auditors</span></a>
+        <a class="next" href="../architecture.html" rel="next"><small>Next &rarr;</small><strong>Architecture</strong><br><span class="note">How the system is built and where it runs</span></a>
+      </nav>
+      <!--/SHELL:PAGER-->
+      <p class="to-top"><a href="#main">&uarr; Back to top</a></p>
+    </div>
+  </main>
+
+  <!--SHELL:FOOTER-->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <p class="footer-title">About this site</p>
+          <p>A public engineering notebook. Every claim carries a status tag;
+          see <a href="../index.html#status-tags">what the tags mean</a> and the
+          <a href="../index.html#glossary">glossary</a>.</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Pages</p>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../start-here/index.html">Start Here</a></li>
+            <li><a href="../ai-agents/index.html">AI Agents</a></li>
+            <li><a href="../architecture.html">Architecture</a></li>
+            <li><a href="../lifecycle.html">Lifecycle</a></li>
+            <li><a href="../fork-policy.html">Fork policy</a></li>
+            <li><a href="../metrics.html">Metrics</a></li>
+            <li><a href="../notebooks.html">Lab notebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <p class="footer-title">Sources</p>
+          <ul class="footer-links">
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory">Main repository</a></li>
+            <li><a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/tree/main/evidence">Evidence folder</a></li>
+            <li><a href="https://github.com/lgcorzo">All public repositories</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Site content &amp; original code: MIT License. Forked repositories: respective upstream open-source licenses.</span>
+        <span>Version: <a href="https://github.com/lgcorzo/rust_CACD_autonomous_factory/releases/tag/v0.3.4">v0.3.4</a></span>
+      </div>
+    </div>
+  </footer>
+  <!--/SHELL:FOOTER-->
+</body>
+</html>

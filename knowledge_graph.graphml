@@ -1,0 +1,1344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="d_entity_type" for="node" attr.name="entity_type" attr.type="string" />
+  <key id="d_label" for="node" attr.name="label" attr.type="string" />
+  <key id="d_summary" for="node" attr.name="summary" attr.type="string" />
+  <key id="d_verification_status" for="node" attr.name="verification_status" attr.type="string" />
+  <key id="d_canonical_url" for="node" attr.name="canonical_url" attr.type="string" />
+  <key id="d_properties_json" for="node" attr.name="properties_json" attr.type="string" />
+  <key id="d_relation" for="edge" attr.name="relation" attr.type="string" />
+  <key id="d_evidence_url" for="edge" attr.name="evidence_url" attr.type="string" />
+  <key id="d_confidence" for="edge" attr.name="confidence" attr.type="string" />
+  <graph id="dark-gravity" edgedefault="directed">
+    <node id="ADR-001">
+      <data key="d_entity_type">ArchitectureDecision</data>
+      <data key="d_label">ADR-001: gVisor (runsc) Sandbox Execution &amp; Forensic Zeroize Memory Bounds</data>
+      <data key="d_summary">Status: accepted. Source: rust_CACD_autonomous_factory/crates/factory-core/src/security.rs.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_properties_json">{"adr_status": "accepted", "date": "2026-10-15", "governs": ["repo:rust_CACD_autonomous_factory", "svc:gvisor", "svc:vault", "agent:zeroclaw"], "source_path": "rust_CACD_autonomous_factory/crates/factory-core/src/security.rs"}</data>
+    </node>
+    <node id="ADR-008">
+      <data key="d_entity_type">ArchitectureDecision</data>
+      <data key="d_label">ADR-008: Adoption of Google AX Declarative Patterns, CRD Scope, and SSOT Reconciliation Contract (v3.1)</data>
+      <data key="d_summary">ADR-008 v3 (accepted) plus v3.1 amendment (proposed) resolving workspace↔mission cardinality, spec mutability, and the scope of the 30Mi/250m resource bound.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_properties_json">{"adr_status": "accepted", "date": "2026-11-12", "governs": ["repo:rust_CACD_autonomous_factory", "repo:internal-gitops-control-plane", "svc:hatchet", "svc:gvisor"], "source_path": "rust_CACD_autonomous_factory/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md"}</data>
+    </node>
+    <node id="EXP-2026-001">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">FluxCD CI Pipeline: Kubeconform Validation False Positives</data>
+      <data key="d_summary">Filtering raw Helm values and unrendered templates eliminates false-positive schema validation failures in GitOps CI while keeping rendered manifests strictly validated.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-001</data>
+      <data key="d_properties_json">{"date": "2026-09-18", "key_metrics": {"false_positive_ci_blocks": 0, "rendered_kustomize_validation": "passed"}, "outcome": "passed", "related_rqs": ["RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-002">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Cargo Audit Gates vs. Unmaintained Transitive Crates</data>
+      <data key="d_summary">Explicit risk-acceptance registries (`.cargo/audit.toml`) prevent unexploitable transitive Rust advisories from halting delivery without disabling CVE gates.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-002</data>
+      <data key="d_properties_json">{"date": "2026-10-13", "key_metrics": {"risk_register": ".cargo/audit.toml", "unexploitable_gate_bypass": false}, "outcome": "passed", "related_rqs": ["RQ3", "RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-003">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Durable Orchestration: Hatchet DAGs vs. In-House Actor State Machines</data>
+      <data key="d_summary">Adopting Hatchet durable workflows backed by PostgreSQL eliminates bespoke scheduler crashes during worker node eviction.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-003</data>
+      <data key="d_properties_json">{"date": "2026-10-01", "key_metrics": {"orchestrator": "Hatchet + CloudNativePG", "status": "implemented_production"}, "outcome": "baseline", "related_rqs": ["RQ1", "RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-004">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Kubernetes Control Plane &amp; Worker Node Hardening</data>
+      <data key="d_summary">Systematic CIS Kubernetes benchmark auditing eliminates privileged service accounts and enforces least-privilege RBAC across namespaces.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-004</data>
+      <data key="d_properties_json">{"date": "2026-05-14", "key_metrics": {"audit_scope": "control-plane + worker-nodes", "privileged_sa_eliminated": true}, "outcome": "passed", "related_rqs": ["RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-005">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Asymmetric Secret Governance: SealedSecrets Key Rotation &amp; DR</data>
+      <data key="d_summary">Strict-scoped Bitnami SealedSecrets allow safe public/private GitOps declarative secrets without storing private decryption keys in Git.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-005</data>
+      <data key="d_properties_json">{"date": "2026-06-22", "key_metrics": {"git_plaintext_secrets": 0, "scope": "strict"}, "outcome": "passed", "related_rqs": ["RQ2", "RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-006">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Durable Execution &amp; Idempotency Under Node Termination</data>
+      <data key="d_summary">Hatchet step checkpointing resumes killed workflows automatically without corrupting repository state.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-006</data>
+      <data key="d_properties_json">{"date": "2026-07-09", "key_metrics": {"resume_latency_seconds": 8.4, "state_corruption": false}, "outcome": "passed", "related_rqs": ["RQ1", "RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-007">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Zero-Trust Execution Boundary: Syscall Filtering &amp; Calico Egress Blocking</data>
+      <data key="d_summary">Combining gVisor user-space syscall interception with default-deny NetworkPolicies blocks raw sockets and unauthorized exfiltration attempts.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-007</data>
+      <data key="d_properties_json">{"date": "2026-08-11", "key_metrics": {"egress_exfiltration_blocked": true, "raw_socket_blocked": true}, "outcome": "passed", "related_rqs": ["RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-008">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge</data>
+      <data key="d_summary">Relying solely on LLM judges misses subtle logic defects, whereas mandatory deterministic test execution eliminates silent logic regressions.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-008</data>
+      <data key="d_properties_json">{"date": "2026-08-29", "key_metrics": {"deterministic_suite_required": true, "llm_judge_false_negative_rate_pct": 44.0}, "outcome": "passed", "related_rqs": ["RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-009">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">AST Subgraphs vs. Raw Grep</data>
+      <data key="d_summary">2-hop Tree-sitter AST neighborhood extraction reduces prompt context size while increasing first-pass code generation accuracy.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-009</data>
+      <data key="d_properties_json">{"date": "2026-09-04", "key_metrics": {"first_pass_accuracy_pct": 94.0, "token_reduction_pct": 91.8}, "outcome": "passed", "related_rqs": ["RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-010">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping</data>
+      <data key="d_summary">Explicit cgroup memory limits (`512Mi` compilation profile, `30Mi` micro-sandbox) prevent noisy-neighbor OOM exhaustion on host nodes.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-010</data>
+      <data key="d_properties_json">{"date": "2026-09-27", "key_metrics": {"compilation_ram_limit": "512Mi", "host_oom_incidents": 0, "micro_sandbox_ram_limit": "30Mi"}, "outcome": "passed", "related_rqs": ["RQ3", "RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-011">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Autonomous Security Remediation at Scale</data>
+      <data key="d_summary">Separating meta-orchestration, credentialed factory controls, and surgical code-fix loops enables automated CVE remediation with sharp LLM token savings across the historical 69-repo portfolio (`64` public = `22` original + `42` maintained forks, plus `5` private/archived). A...</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_properties_json">{"date": "2026-10-20", "key_metrics": {"historical_repos_audited": 69, "merged_remediation_prs": 10, "public_repos_total": 64, "token_savings_pct": 85.0}, "outcome": "passed", "related_rqs": ["RQ1", "RQ2", "RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-012">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Supply Chain Upgrade Paradox Across Fleet &amp; Cluster</data>
+      <data key="d_summary">Synchronized lockfile exports and hash-pinned transitives prevent secondary vulnerabilities introduced by naive package bumps while reducing active Trivy cluster findings (`429 -&gt; 396` CRITICAL, `3,660 -&gt; 2,973` HIGH, `720` fixed).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_properties_json">{"date": "2026-10-25", "key_metrics": {"trivy_critical_after": 396, "trivy_critical_before": 429, "trivy_high_after": 2973, "trivy_high_before": 3660, "vulnerabilities_fixed": 720}, "outcome": "passed", "related_rqs": ["RQ1", "RQ3"]}</data>
+    </node>
+    <node id="EXP-2026-013">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">End-to-End Autonomous Mission &amp; Hatchet-Orchestrated R2R GraphRAG (`Mission #476`)</data>
+      <data key="d_summary">Post-merge-only R2R v3 GraphRAG ingestion orchestrated via Hatchet produces zero duplicate ingestions, reliable Leiden community graphs, and grounded MCP retrieval.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_properties_json">{"date": "2026-11-26", "key_metrics": {"cycle_time_seconds": 177, "hatchet_r2r_tasks_completed": 87, "hatchet_r2r_tasks_failed": 0, "mission_id": 476, "mlops_communities": 17, "mlops_entities": 180, "mlops_relationships": 232, "pr_number": 477}, "outcome": "passed", "related_rqs": ["RQ1", "RQ2", "RQ4"]}</data>
+    </node>
+    <node id="EXP-2026-014">
+      <data key="d_entity_type">Experiment</data>
+      <data key="d_label">Parallel Autonomous Swarm Mode &amp; Contention-Free R2R GraphRAG (`Mission #478`)</data>
+      <data key="d_summary">Parallel `[P]` execution across isolated gVisor lanes with `fan-in-synthesize` and read/write-split `r2r-reader` RO replicas increases throughput without Postgres/pgvector lock contention.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_properties_json">{"date": "2026-11-26", "key_metrics": {"mission_id": 478, "mlops_collection_docs": 5, "peak_parallel_lanes": 3, "pr_number": 479, "r2r_reader_replicas": 3, "swarm_mode": true}, "outcome": "passed", "related_rqs": ["RQ1", "RQ4"]}</data>
+    </node>
+    <node id="RQ1">
+      <data key="d_entity_type">ResearchHypothesis</data>
+      <data key="d_label">RQ1: Can autonomous agents safely reduce Mean Time to Recovery (`MTTR`) under strict HITL gates?</data>
+      <data key="d_summary">Contract-driven agent pipelines backed by durable Hatchet checkpoints, R2R GraphRAG context, and Review Guidance loops reduce remediation cycle time and MTTR without sacrificing CI verification or Vertex 4 human approval.</data>
+      <data key="d_verification_status">experimental</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/RESEARCH.md#rq1</data>
+      <data key="d_properties_json">{"evaluation_status": "partially_supported", "linked_experiments": ["EXP-2026-003", "EXP-2026-006", "EXP-2026-011", "EXP-2026-012", "EXP-2026-013", "EXP-2026-014"], "question": "Can autonomous agents safely reduce Mean Time to Recovery (`MTTR`) under strict HITL gates?", "target_metrics": ["development.mttr_hours", "development.cycle_time_hours", "security.mean_remediation_time_hours", "agents.agent_success_rate_pct"]}</data>
+    </node>
+    <node id="RQ2">
+      <data key="d_entity_type">ResearchHypothesis</data>
+      <data key="d_label">RQ2: Can cryptographic Non-Human Identities (NHI) and Verifiable Credentials improve governance and traceability?</data>
+      <data key="d_summary">Binding agent missions to Ed25519 W3C Verifiable Credentials (`Ed25519Signature2020`), 300 s Vault JIT tokens (`54.2 ns` `ZeroizeOnDrop`), LiteLLM `X-Vtag-*` FinOps headers, and causal Semantica lineage yields tamper-evident attribution across multi-repo PRs.</data>
+      <data key="d_verification_status">experimental</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/RESEARCH.md#rq2</data>
+      <data key="d_properties_json">{"evaluation_status": "evidence_collecting", "linked_experiments": ["EXP-2026-005", "EXP-2026-011", "EXP-2026-013"], "question": "Can cryptographic Non-Human Identities (NHI) and Verifiable Credentials improve governance and traceability?", "target_metrics": ["agents.hitl_approval_rate_pct", "agents.agent_success_rate_pct", "development.lead_time_hours"]}</data>
+    </node>
+    <node id="RQ3">
+      <data key="d_entity_type">ResearchHypothesis</data>
+      <data key="d_label">RQ3: Can declarative GitOps, admission policies, and kernel sandboxing act as an enforceable security boundary?</data>
+      <data key="d_summary">Combining FluxCD v2 declarative reconciliation, OpenZiti mTLS 1.3, default-deny NetworkPolicies, `ValidatingAdmissionPolicy` resource clamps (`&lt;= 30 Mi` / `250m` micro-sandbox, `&lt;= 512 Mi` / `500m` compilation), and `gVisor (runsc)` prevents privilege escalation and fleet reg...</data>
+      <data key="d_verification_status">experimental</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/RESEARCH.md#rq3</data>
+      <data key="d_properties_json">{"evaluation_status": "partially_supported", "linked_experiments": ["EXP-2026-001", "EXP-2026-002", "EXP-2026-004", "EXP-2026-005", "EXP-2026-006", "EXP-2026-007", "EXP-2026-010", "EXP-2026-011", "EXP-2026-012"], "question": "Can declarative GitOps, admission policies, and kernel sandboxing act as an enforceable security boundary?", "target_metrics": ["security.vulnerabilities_found_count", "security.vulnerabilities_fixed_count", "quality.escaped_defects_count"]}</data>
+    </node>
+    <node id="RQ4">
+      <data key="d_entity_type">ResearchHypothesis</data>
+      <data key="d_label">RQ4: Can structured, AST- and GraphRAG-grounded agentic workflows outperform ad-hoc workflows on reliability and token efficiency?</data>
+      <data key="d_summary">Pairing AST neighborhood extraction (`OSR &lt; 5%`), deterministic test verification (replacing pure LLM judges), R2R Leiden GraphRAG with `r2r-reader` RO replicas, and parallel Swarm `[P]` execution yields higher first-pass accuracy and lower token overhead per merged PR.</data>
+      <data key="d_verification_status">experimental</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/RESEARCH.md#rq4</data>
+      <data key="d_properties_json">{"evaluation_status": "partially_supported", "linked_experiments": ["EXP-2026-002", "EXP-2026-003", "EXP-2026-008", "EXP-2026-009", "EXP-2026-010", "EXP-2026-013", "EXP-2026-014"], "question": "Can structured, AST- and GraphRAG-grounded agentic workflows outperform ad-hoc workflows on reliability and token efficiency?", "target_metrics": ["agents.autonomous_completion_rate_pct", "quality.pr_acceptance_rate_pct", "quality.defect_density_per_kloc", "development.deployment_frequency_per_week"]}</data>
+    </node>
+    <node id="agent:aethelgard">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">Aethelgard</data>
+      <data key="d_summary">Role: reviewer. Phases: sast-llm-judge-gate. Auth: LiteLLM Frontier Route.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["sast-llm-judge-gate"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "LiteLLM Frontier Route", "role": "reviewer", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:auditor">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">AuditorAgent</data>
+      <data key="d_summary">Role: security_auditor. Phases: rustant-review, post-mortem. Auth: Ed25519 W3C-VC + X-Vtag-Team.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["rustant-review", "post-mortem"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 W3C-VC + X-Vtag-Team", "role": "security_auditor", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:doc-agent">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">DocumentationAgent</data>
+      <data key="d_summary">Role: documenter. Phases: factory-deliver, stage-4-okf-wiki. Auth: Ed25519 W3C-VC.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["factory-deliver", "stage-4-okf-wiki"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 W3C-VC", "role": "documenter", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:finops">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">FinOpsAgent</data>
+      <data key="d_summary">Role: finops. Phases: cross-cutting-budget-guard. Auth: LiteLLM X-Vtag-* + FinOpsStopStore.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["cross-cutting-budget-guard"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "LiteLLM X-Vtag-* + FinOpsStopStore", "role": "finops", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:git-platform-poller">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">GitPlatformPoller</data>
+      <data key="d_summary">Role: poller. Phases: outbound-30s-poll, stage-5-index-code. Auth: Ed25519 Signed Mission Payload.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["outbound-30s-poll", "stage-5-index-code"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 Signed Mission Payload", "role": "poller", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:incident-remediator">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">Internal Incident Remediation Service</data>
+      <data key="d_summary">Role: remediator. Phases: fluxcd-alert-remediation. Auth: Kubernetes RBAC + SealedSecrets.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["fluxcd-alert-remediation"], "hitl_constrained": true, "home_repo": "repo:internal-incident-remediation-service", "nhi_auth_method": "Kubernetes RBAC + SealedSecrets", "role": "remediator", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:qa-observer">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">QAObserverAgent</data>
+      <data key="d_summary">Role: qa_observer. Phases: zeroclaw-validate, sentry-closed-loop-15m. Auth: Ed25519 W3C-VC + Sentry Token.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["zeroclaw-validate", "sentry-closed-loop-15m"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 W3C-VC + Sentry Token", "role": "qa_observer", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:rustant">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">RustantAgent</data>
+      <data key="d_summary">Role: planner. Phases: rustant-plan, rustant-review. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["rustant-plan", "rustant-review"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop)", "role": "planner", "sandbox_profile": "hardened_k8s_pod"}</data>
+    </node>
+    <node id="agent:zeroclaw">
+      <data key="d_entity_type">Agent</data>
+      <data key="d_label">ZeroClawAgent</data>
+      <data key="d_summary">Role: developer. Phases: zeroclaw-execute, zeroclaw-validate. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"execution_phases": ["zeroclaw-execute", "zeroclaw-validate"], "hitl_constrained": true, "home_repo": "repo:rust_CACD_autonomous_factory", "nhi_auth_method": "Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop)", "role": "developer", "sandbox_profile": "gvisor_runsc"}</data>
+    </node>
+    <node id="repo:R2R-Engine">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">R2R-Engine</data>
+      <data key="d_summary">Sovereign hybrid vector (pgvector) + Leiden GraphRAG corporate memory engine patched for deterministic Hatchet collection graph sync.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/R2R-Engine</data>
+      <data key="d_properties_json">{"direct_injection_target": false, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": false, "has_architecture_md": false, "has_manifest_md": false, "has_repositories_md": false, "is_fork": true, "primary_language": "Python", "tier": "maintained_fork", "upstream_repo": "SciPhi-AI/R2R", "visibility": "public"}</data>
+    </node>
+    <node id="repo:dark-litellm">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">dark-litellm</data>
+      <data key="d_summary">Hardened sovereign LLM gateway and priority router enforcing X-Vtag-* FinOps telemetry, RedisPriorityScheduler, and A2A policy enforcement.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/dark-litellm</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": true, "primary_language": "Python", "tier": "maintained_fork", "upstream_repo": "BerriAI/litellm", "visibility": "public"}</data>
+    </node>
+    <node id="repo:deepwiki-rs">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">deepwiki-rs</data>
+      <data key="d_summary">Tree-sitter Rust AST analyzer and Orphan Symbol Rate (OSR &lt; 5%) verifier generating grounded OKF architectural maps.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/deepwiki-rs</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": true, "primary_language": "Rust", "tier": "maintained_fork", "upstream_repo": "sopaco/deepwiki-rs", "visibility": "public"}</data>
+    </node>
+    <node id="repo:fastapi-autogen-team">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">fastapi-autogen-team</data>
+      <data key="d_summary">Native Rust (Axum + Rig) multi-agent streaming SSE microservice serving OpenAI-compatible multi-agent squads integrated with R2R.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/fastapi-autogen-team</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Rust", "tier": "owned_domain", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:internal-gitops-control-plane">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">Internal GitOps Control Plane</data>
+      <data key="d_summary">Private FluxCD v2 GitOps control plane managing the 10-namespace Kubernetes topology, SealedSecrets, OpenZiti mesh, and NetworkPolicies (anonymized per DOC-011).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "YAML", "tier": "private_gitops", "upstream_repo": null, "visibility": "private"}</data>
+    </node>
+    <node id="repo:internal-incident-remediation-service">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">Internal Incident Remediation Service</data>
+      <data key="d_summary">Private Kubernetes incident remediation daemon listening to FluxCD alerts, classifying errors, logging MLflow runs, and generating patch PRs (anonymized per DOC-011).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Python", "tier": "private_gitops", "upstream_repo": null, "visibility": "private"}</data>
+    </node>
+    <node id="repo:kes">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">kes</data>
+      <data key="d_summary">Archived Key Encryption Server reference fork locked permanently to FROZEN_READONLY and cataloged read-only without mutations.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/kes</data>
+      <data key="d_properties_json">{"direct_injection_target": false, "fork_profile": "FROZEN_READONLY", "has_agents_md": false, "has_architecture_md": false, "has_manifest_md": false, "has_repositories_md": false, "is_fork": true, "primary_language": "Go", "tier": "maintained_fork", "upstream_repo": "minio/kes", "visibility": "public"}</data>
+    </node>
+    <node id="repo:lgcorzo">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">lgcorzo</data>
+      <data key="d_summary">GitHub profile entry repository routing human reviewers and external agents to Dark Gravity's unified portal, auditor pack, and ecosystem topology.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/lgcorzo</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Markdown", "tier": "public_portal", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:lgcorzo.github.io">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">lgcorzo.github.io</data>
+      <data key="d_summary">Canonical public Dark Gravity engineering hub hosting /start-here, /ai-agents, Lab Notebooks, RESEARCH.md, EXPERIMENTS.md, /docs/auditor/, Knowledge Graph, metrics, and read-only Rust dark-gravity-mcp.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "HTML/Python/Rust", "tier": "public_portal", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:llmops-python-package">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">llmops-python-package</data>
+      <data key="d_summary">Domain-driven LLMOps platform aligned with ISO/IEC/IEEE 42010 &amp; 15289 standards, prompt evaluations, Hatchet DSLs, MCP registries, and OpenWiki living documentation.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/llmops-python-package</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Python", "tier": "owned_domain", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:minio">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">minio</data>
+      <data key="d_summary">Sovereign S3-compatible object storage fork built hermetically to GHCR storing checkpoints, provenance bundles, and R2R documents.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/minio</data>
+      <data key="d_properties_json">{"direct_injection_target": false, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": false, "has_architecture_md": false, "has_manifest_md": false, "has_repositories_md": false, "is_fork": true, "primary_language": "Go", "tier": "maintained_fork", "upstream_repo": "minio/minio", "visibility": "public"}</data>
+    </node>
+    <node id="repo:mlops-python-package">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">mlops-python-package</data>
+      <data key="d_summary">First-party MLOps standard package (DVC, MLflow, Hydra, SHAP, CycloneDX SBOM, OpenWiki) serving as continuous validation target for autonomous missions (#476, #478).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/mlops-python-package</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Python", "tier": "owned_domain", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:rust_CACD_autonomous_factory">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">rust_CACD_autonomous_factory</data>
+      <data key="d_summary">Core 5-crate Rust 2024 CA/CD orchestrator, AgentWorkspace operator, Hatchet DAG runner, gVisor SandboxDriver, and runtime MCP server.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Rust", "tier": "core_factory", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:semantica">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">semantica</data>
+      <data key="d_summary">Semantic domain ontology and causal provenance engine consuming Kafka agent-thought streams and detecting cross-lane conflicts.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": true, "primary_language": "Python", "tier": "maintained_fork", "upstream_repo": "Hawksight-AI/semantica", "visibility": "public"}</data>
+    </node>
+    <node id="repo:spec-kit">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">spec-kit</data>
+      <data key="d_summary">Sovereign fork of GitHub Spec-Kit powering Dark Gravity's WHAT contract workflows (/speckit-specify, /speckit-plan, /speckit-tasks).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/spec-kit</data>
+      <data key="d_properties_json">{"direct_injection_target": false, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": false, "has_architecture_md": false, "has_manifest_md": false, "has_repositories_md": false, "is_fork": true, "primary_language": "Python", "tier": "maintained_fork", "upstream_repo": "github/spec-kit", "visibility": "public"}</data>
+    </node>
+    <node id="repo:speckit-superpowers-bridge">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">speckit-superpowers-bridge</data>
+      <data key="d_summary">Contract handoff bridge uniting Spec-Kit (WHAT: constitution, spec, plan, tasks) with Superpowers execution discipline (HOW: TDD, subagents, verification gates) and guard-command enforcement.</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/speckit-superpowers-bridge</data>
+      <data key="d_properties_json">{"direct_injection_target": true, "fork_profile": null, "has_agents_md": true, "has_architecture_md": true, "has_manifest_md": true, "has_repositories_md": true, "is_fork": false, "primary_language": "Shell/Markdown", "tier": "orchestration_bridge", "upstream_repo": null, "visibility": "public"}</data>
+    </node>
+    <node id="repo:superpowers">
+      <data key="d_entity_type">Repository</data>
+      <data key="d_label">superpowers</data>
+      <data key="d_summary">Sovereign fork of the Superpowers agentic discipline harness powering HOW workflows (TDD, subagents, debugging, verification gates).</data>
+      <data key="d_verification_status">verified</data>
+      <data key="d_canonical_url">https://github.com/lgcorzo/superpowers</data>
+      <data key="d_properties_json">{"direct_injection_target": false, "fork_profile": "MAINTAINED_FORK_PROFILE", "has_agents_md": false, "has_architecture_md": false, "has_manifest_md": false, "has_repositories_md": false, "is_fork": true, "primary_language": "Shell/Markdown", "tier": "maintained_fork", "upstream_repo": "obra/superpowers", "visibility": "public"}</data>
+    </node>
+    <node id="svc:dark-gravity-mcp">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Dark Gravity Read-Only MCP Server</data>
+      <data key="d_summary">Namespace `agents` (mcp_knowledge): Strictly Read-Only + DOC-011 Public Cache + RunAsNonRoot Distroless.</data>
+      <data key="d_verification_status">implemented</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "mcp_knowledge", "cluster_namespace": "agents", "security_boundary": "Strictly Read-Only + DOC-011 Public Cache + RunAsNonRoot Distroless", "upstream_repo": "repo:lgcorzo.github.io"}</data>
+    </node>
+    <node id="svc:gvisor">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">gVisor (runsc) Sandbox Runtime</data>
+      <data key="d_summary">Namespace `development` (sandbox_runtime): Restricted PodSecurity + ValidatingAdmissionPolicy + Deny-All Egress (TESTED pending AUD-010).</data>
+      <data key="d_verification_status">tested</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "sandbox_runtime", "cluster_namespace": "development", "security_boundary": "Restricted PodSecurity + ValidatingAdmissionPolicy + Deny-All Egress (TESTED pending AUD-010)", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:hatchet">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Hatchet Engine</data>
+      <data key="d_summary">Namespace `orchestrators` (orchestrator): Calico Default-Deny NetworkPolicy + CloudNativePG SSOT.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "orchestrator", "cluster_namespace": "orchestrators", "security_boundary": "Calico Default-Deny NetworkPolicy + CloudNativePG SSOT", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:kafka">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Apache Kafka (KRaft)</data>
+      <data key="d_summary">Namespace `confluent` (event_bus): Cluster-internal Event Bus + Default-Deny Egress.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "event_bus", "cluster_namespace": "confluent", "security_boundary": "Cluster-internal Event Bus + Default-Deny Egress", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:keda">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">KEDA Autoscaler</data>
+      <data key="d_summary">Namespace `orchestrators` (orchestrator): Kafka Lag &amp; QPS Metric Autoscaling.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "orchestrator", "cluster_namespace": "orchestrators", "security_boundary": "Kafka Lag &amp; QPS Metric Autoscaling", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:keycloak">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Keycloak IAM (OIDC)</data>
+      <data key="d_summary">Namespace `security` (identity): Native OIDC + OAuth2-Proxy Identity Boundary.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "identity", "cluster_namespace": "security", "security_boundary": "Native OIDC + OAuth2-Proxy Identity Boundary", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:litellm">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Dark-LiteLLM Gateway</data>
+      <data key="d_summary">Namespace `llm-apps` (llm_gateway): Keycloak OIDC + RedisPriorityScheduler + X-Vtag PEP.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "llm_gateway", "cluster_namespace": "llm-apps", "security_boundary": "Keycloak OIDC + RedisPriorityScheduler + X-Vtag PEP", "upstream_repo": "repo:dark-litellm"}</data>
+    </node>
+    <node id="svc:minio">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Sovereign MinIO S3 &amp; Operator</data>
+      <data key="d_summary">Namespace `storage` (object_storage): SealedSecrets + Calico NetworkPolicy.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "object_storage", "cluster_namespace": "storage", "security_boundary": "SealedSecrets + Calico NetworkPolicy", "upstream_repo": "repo:minio"}</data>
+    </node>
+    <node id="svc:mlflow">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">MLflow &amp; CloudNativePG mlflow-db</data>
+      <data key="d_summary">Namespace `llm-apps` (database): 1 RW + 3 RO CNPG Cluster + SealedSecrets.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "database", "cluster_namespace": "llm-apps", "security_boundary": "1 RW + 3 RO CNPG Cluster + SealedSecrets", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:openziti">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">OpenZiti Zero-Trust Overlay</data>
+      <data key="d_summary">Namespace `openziti` (zero_trust_network): mTLS 1.3 Dark Mesh + Zero Inbound Public Ports.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "zero_trust_network", "cluster_namespace": "openziti", "security_boundary": "mTLS 1.3 Dark Mesh + Zero Inbound Public Ports", "upstream_repo": null}</data>
+    </node>
+    <node id="svc:r2r">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">R2R-Engine (v3 GraphRAG)</data>
+      <data key="d_summary">Namespace `llm-apps` (knowledge_rag): OpenZiti mTLS + CloudNativePG pgvector.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "knowledge_rag", "cluster_namespace": "llm-apps", "security_boundary": "OpenZiti mTLS + CloudNativePG pgvector", "upstream_repo": "repo:R2R-Engine"}</data>
+    </node>
+    <node id="svc:r2r-reader">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">r2r-reader (KEDA Read Pool)</data>
+      <data key="d_summary">Namespace `llm-apps` (knowledge_rag): agents-only Ingress NetworkPolicy + Read-Only CNPG Replica.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "knowledge_rag", "cluster_namespace": "llm-apps", "security_boundary": "agents-only Ingress NetworkPolicy + Read-Only CNPG Replica", "upstream_repo": "repo:R2R-Engine"}</data>
+    </node>
+    <node id="svc:semantica">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">Semantica-AGI</data>
+      <data key="d_summary">Namespace `llm-apps` (knowledge_graph): Kafka agent-thought Stream + MinIO Provenance S3.</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "knowledge_graph", "cluster_namespace": "llm-apps", "security_boundary": "Kafka agent-thought Stream + MinIO Provenance S3", "upstream_repo": "repo:semantica"}</data>
+    </node>
+    <node id="svc:vault">
+      <data key="d_entity_type">Service</data>
+      <data key="d_label">HashiCorp Vault JIT</data>
+      <data key="d_summary">Namespace `security` (secrets): 300s Ephemeral JIT Tokens + ZeroizeOnDrop (54.2 ns).</data>
+      <data key="d_verification_status">deployed</data>
+      <data key="d_canonical_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_properties_json">{"category": "secrets", "cluster_namespace": "security", "security_boundary": "300s Ephemeral JIT Tokens + ZeroizeOnDrop (54.2 ns)", "upstream_repo": null}</data>
+    </node>
+    <edge id="edge:ADR-001--GOVERNS_COMPONENT--agent:zeroclaw" source="ADR-001" target="agent:zeroclaw">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-001--GOVERNS_COMPONENT--repo:rust_CACD_autonomous_factory" source="ADR-001" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-001--GOVERNS_COMPONENT--svc:gvisor" source="ADR-001" target="svc:gvisor">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-001--GOVERNS_COMPONENT--svc:vault" source="ADR-001" target="svc:vault">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-008--GOVERNS_COMPONENT--repo:internal-gitops-control-plane" source="ADR-008" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-008--GOVERNS_COMPONENT--repo:rust_CACD_autonomous_factory" source="ADR-008" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-008--GOVERNS_COMPONENT--svc:gvisor" source="ADR-008" target="svc:gvisor">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:ADR-008--GOVERNS_COMPONENT--svc:hatchet" source="ADR-008" target="svc:hatchet">
+      <data key="d_relation">GOVERNS_COMPONENT</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-001--MEASURES--RQ3" source="EXP-2026-001" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-001</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-001--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-001" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-001</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-002--MEASURES--RQ3" source="EXP-2026-002" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-002</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-002--MEASURES--RQ4" source="EXP-2026-002" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-002</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-002--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-002" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-002</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-002--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-002" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-002</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-003--MEASURES--RQ1" source="EXP-2026-003" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-003</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-003--MEASURES--RQ4" source="EXP-2026-003" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-003</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-003--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-003" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-003</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-003--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-003" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-003</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-004--MEASURES--RQ3" source="EXP-2026-004" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-004</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-004--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-004" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-004</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-005--MEASURES--RQ2" source="EXP-2026-005" target="RQ2">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-005</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-005--MEASURES--RQ3" source="EXP-2026-005" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-005</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-005--VALIDATES_HYPOTHESIS--RQ2" source="EXP-2026-005" target="RQ2">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-005</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-005--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-005" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-005</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-006--MEASURES--RQ1" source="EXP-2026-006" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-006</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-006--MEASURES--RQ3" source="EXP-2026-006" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-006</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-006--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-006" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-006</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-006--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-006" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-006</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-007--MEASURES--RQ3" source="EXP-2026-007" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-007</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-007--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-007" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-007</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-008--MEASURES--RQ4" source="EXP-2026-008" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-008</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-008--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-008" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-008</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-009--MEASURES--RQ4" source="EXP-2026-009" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-009</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-009--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-009" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-009</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-010--MEASURES--RQ3" source="EXP-2026-010" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-010</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-010--MEASURES--RQ4" source="EXP-2026-010" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-010</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-010--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-010" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-010</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-010--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-010" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-010</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--MEASURES--RQ1" source="EXP-2026-011" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--MEASURES--RQ2" source="EXP-2026-011" target="RQ2">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--MEASURES--RQ3" source="EXP-2026-011" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-011" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ2" source="EXP-2026-011" target="RQ2">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-011--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-011" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-012--MEASURES--RQ1" source="EXP-2026-012" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-012--MEASURES--RQ3" source="EXP-2026-012" target="RQ3">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-012--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-012" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-012--VALIDATES_HYPOTHESIS--RQ3" source="EXP-2026-012" target="RQ3">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--MEASURES--RQ1" source="EXP-2026-013" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--MEASURES--RQ2" source="EXP-2026-013" target="RQ2">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--MEASURES--RQ4" source="EXP-2026-013" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-013" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ2" source="EXP-2026-013" target="RQ2">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-013--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-013" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-014--MEASURES--RQ1" source="EXP-2026-014" target="RQ1">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-014--MEASURES--RQ4" source="EXP-2026-014" target="RQ4">
+      <data key="d_relation">MEASURES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-014--VALIDATES_HYPOTHESIS--RQ1" source="EXP-2026-014" target="RQ1">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:EXP-2026-014--VALIDATES_HYPOTHESIS--RQ4" source="EXP-2026-014" target="RQ4">
+      <data key="d_relation">VALIDATES_HYPOTHESIS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:agent:auditor--AUDITS--EXP-2026-012" source="agent:auditor" target="EXP-2026-012">
+      <data key="d_relation">AUDITS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-012</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:agent:auditor--AUDITS--repo:rust_CACD_autonomous_factory" source="agent:auditor" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">AUDITS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/executive-summary.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:agent:auditor--AUDITS--svc:gvisor" source="agent:auditor" target="svc:gvisor">
+      <data key="d_relation">AUDITS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/architecture.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:agent:auditor--PRODUCES_EVIDENCE--EXP-2026-011" source="agent:auditor" target="EXP-2026-011">
+      <data key="d_relation">PRODUCES_EVIDENCE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-011</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:agent:zeroclaw--PRODUCES_EVIDENCE--EXP-2026-013" source="agent:zeroclaw" target="EXP-2026-013">
+      <data key="d_relation">PRODUCES_EVIDENCE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--DEPENDS_ON--svc:hatchet" source="repo:R2R-Engine" target="svc:hatchet">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/R2R-Engine</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--DEPENDS_ON--svc:r2r" source="repo:R2R-Engine" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/R2R-Engine</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--FORKED_FROM--svc:hatchet" source="repo:R2R-Engine" target="svc:hatchet">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/R2R-Engine</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--FORKED_FROM--svc:r2r" source="repo:R2R-Engine" target="svc:r2r">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/R2R-Engine</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--OWNS_SERVICE--svc:r2r" source="repo:R2R-Engine" target="svc:r2r">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:R2R-Engine--OWNS_SERVICE--svc:r2r-reader" source="repo:R2R-Engine" target="svc:r2r-reader">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:dark-litellm--DEPENDS_ON--svc:litellm" source="repo:dark-litellm" target="svc:litellm">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/dark-litellm</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:dark-litellm--FORKED_FROM--svc:litellm" source="repo:dark-litellm" target="svc:litellm">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/dark-litellm</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:dark-litellm--OWNS_SERVICE--svc:litellm" source="repo:dark-litellm" target="svc:litellm">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:deepwiki-rs--DEPENDS_ON--svc:r2r" source="repo:deepwiki-rs" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/deepwiki-rs</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:deepwiki-rs--FORKED_FROM--svc:r2r" source="repo:deepwiki-rs" target="svc:r2r">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/deepwiki-rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:fastapi-autogen-team--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:fastapi-autogen-team" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/fastapi-autogen-team</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:fastapi-autogen-team--DEPENDS_ON--svc:litellm" source="repo:fastapi-autogen-team" target="svc:litellm">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/fastapi-autogen-team</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:fastapi-autogen-team--DEPENDS_ON--svc:r2r" source="repo:fastapi-autogen-team" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/fastapi-autogen-team</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:internal-gitops-control-plane" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:hatchet" source="repo:internal-gitops-control-plane" target="svc:hatchet">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:kafka" source="repo:internal-gitops-control-plane" target="svc:kafka">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:keycloak" source="repo:internal-gitops-control-plane" target="svc:keycloak">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:minio" source="repo:internal-gitops-control-plane" target="svc:minio">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:openziti" source="repo:internal-gitops-control-plane" target="svc:openziti">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-gitops-control-plane--DEPENDS_ON--svc:vault" source="repo:internal-gitops-control-plane" target="svc:vault">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-incident-remediation-service--DEPENDS_ON--repo:internal-gitops-control-plane" source="repo:internal-incident-remediation-service" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-incident-remediation-service--DEPENDS_ON--svc:litellm" source="repo:internal-incident-remediation-service" target="svc:litellm">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-incident-remediation-service--DEPENDS_ON--svc:mlflow" source="repo:internal-incident-remediation-service" target="svc:mlflow">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:internal-incident-remediation-service--EXECUTES_AGENT--agent:incident-remediator" source="repo:internal-incident-remediation-service" target="agent:incident-remediator">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo--DEPENDS_ON--repo:lgcorzo.github.io" source="repo:lgcorzo" target="repo:lgcorzo.github.io">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/lgcorzo</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:lgcorzo" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/lgcorzo</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:lgcorzo.github.io" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--DEPENDS_ON--svc:dark-gravity-mcp" source="repo:lgcorzo.github.io" target="svc:dark-gravity-mcp">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--DEPENDS_ON--svc:r2r" source="repo:lgcorzo.github.io" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ1" source="repo:lgcorzo.github.io" target="RQ1">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/RESEARCH.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ2" source="repo:lgcorzo.github.io" target="RQ2">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/RESEARCH.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ3" source="repo:lgcorzo.github.io" target="RQ3">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/RESEARCH.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--IMPLEMENTS--RQ4" source="repo:lgcorzo.github.io" target="RQ4">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/RESEARCH.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:lgcorzo.github.io--OWNS_SERVICE--svc:dark-gravity-mcp" source="repo:lgcorzo.github.io" target="svc:dark-gravity-mcp">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:llmops-python-package--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:llmops-python-package" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/llmops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:llmops-python-package--DEPENDS_ON--svc:hatchet" source="repo:llmops-python-package" target="svc:hatchet">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/llmops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:llmops-python-package--DEPENDS_ON--svc:litellm" source="repo:llmops-python-package" target="svc:litellm">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/llmops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:llmops-python-package--DEPENDS_ON--svc:r2r" source="repo:llmops-python-package" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/llmops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:minio--DEPENDS_ON--svc:minio" source="repo:minio" target="svc:minio">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/minio</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:minio--FORKED_FROM--svc:minio" source="repo:minio" target="svc:minio">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/minio</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:minio--OWNS_SERVICE--svc:minio" source="repo:minio" target="svc:minio">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:mlops-python-package--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:mlops-python-package" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/mlops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:mlops-python-package--DEPENDS_ON--svc:mlflow" source="repo:mlops-python-package" target="svc:mlflow">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/mlops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:mlops-python-package--DEPENDS_ON--svc:r2r" source="repo:mlops-python-package" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/mlops-python-package</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:mlops-python-package--PRODUCES_EVIDENCE--EXP-2026-013" source="repo:mlops-python-package" target="EXP-2026-013">
+      <data key="d_relation">PRODUCES_EVIDENCE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:mlops-python-package--PRODUCES_EVIDENCE--EXP-2026-014" source="repo:mlops-python-package" target="EXP-2026-014">
+      <data key="d_relation">PRODUCES_EVIDENCE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--repo:internal-gitops-control-plane" source="repo:rust_CACD_autonomous_factory" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--repo:speckit-superpowers-bridge" source="repo:rust_CACD_autonomous_factory" target="repo:speckit-superpowers-bridge">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:gvisor" source="repo:rust_CACD_autonomous_factory" target="svc:gvisor">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:hatchet" source="repo:rust_CACD_autonomous_factory" target="svc:hatchet">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:kafka" source="repo:rust_CACD_autonomous_factory" target="svc:kafka">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:litellm" source="repo:rust_CACD_autonomous_factory" target="svc:litellm">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:r2r" source="repo:rust_CACD_autonomous_factory" target="svc:r2r">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:semantica" source="repo:rust_CACD_autonomous_factory" target="svc:semantica">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--DEPENDS_ON--svc:vault" source="repo:rust_CACD_autonomous_factory" target="svc:vault">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:aethelgard" source="repo:rust_CACD_autonomous_factory" target="agent:aethelgard">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:auditor" source="repo:rust_CACD_autonomous_factory" target="agent:auditor">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:doc-agent" source="repo:rust_CACD_autonomous_factory" target="agent:doc-agent">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:finops" source="repo:rust_CACD_autonomous_factory" target="agent:finops">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:git-platform-poller" source="repo:rust_CACD_autonomous_factory" target="agent:git-platform-poller">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:qa-observer" source="repo:rust_CACD_autonomous_factory" target="agent:qa-observer">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:rustant" source="repo:rust_CACD_autonomous_factory" target="agent:rustant">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--EXECUTES_AGENT--agent:zeroclaw" source="repo:rust_CACD_autonomous_factory" target="agent:zeroclaw">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--IMPLEMENTS--ADR-001" source="repo:rust_CACD_autonomous_factory" target="ADR-001">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:rust_CACD_autonomous_factory--IMPLEMENTS--ADR-008" source="repo:rust_CACD_autonomous_factory" target="ADR-008">
+      <data key="d_relation">IMPLEMENTS</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:semantica--DEPENDS_ON--svc:kafka" source="repo:semantica" target="svc:kafka">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:semantica--DEPENDS_ON--svc:minio" source="repo:semantica" target="svc:minio">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:semantica--DEPENDS_ON--svc:semantica" source="repo:semantica" target="svc:semantica">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:semantica--FORKED_FROM--svc:kafka" source="repo:semantica" target="svc:kafka">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:semantica--FORKED_FROM--svc:minio" source="repo:semantica" target="svc:minio">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:semantica--FORKED_FROM--svc:semantica" source="repo:semantica" target="svc:semantica">
+      <data key="d_relation">FORKED_FROM</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/semantica</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:repo:semantica--OWNS_SERVICE--svc:semantica" source="repo:semantica" target="svc:semantica">
+      <data key="d_relation">OWNS_SERVICE</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/data/ecosystem-registry.json</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:rust_CACD_autonomous_factory" source="repo:speckit-superpowers-bridge" target="repo:rust_CACD_autonomous_factory">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/speckit-superpowers-bridge</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:spec-kit" source="repo:speckit-superpowers-bridge" target="repo:spec-kit">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/speckit-superpowers-bridge</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:repo:speckit-superpowers-bridge--DEPENDS_ON--repo:superpowers" source="repo:speckit-superpowers-bridge" target="repo:superpowers">
+      <data key="d_relation">DEPENDS_ON</data>
+      <data key="d_evidence_url">https://github.com/lgcorzo/speckit-superpowers-bridge</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:dark-gravity-mcp" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--ADR-001" source="svc:dark-gravity-mcp" target="ADR-001">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--ADR-008" source="svc:dark-gravity-mcp" target="ADR-008">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--RQ1" source="svc:dark-gravity-mcp" target="RQ1">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--RQ2" source="svc:dark-gravity-mcp" target="RQ2">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--RQ3" source="svc:dark-gravity-mcp" target="RQ3">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:dark-gravity-mcp--INDEXES--RQ4" source="svc:dark-gravity-mcp" target="RQ4">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/ai-agents/</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:gvisor--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:gvisor" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:hatchet" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:aethelgard" source="svc:hatchet" target="agent:aethelgard">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:auditor" source="svc:hatchet" target="agent:auditor">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:doc-agent" source="svc:hatchet" target="agent:doc-agent">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:finops" source="svc:hatchet" target="agent:finops">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:git-platform-poller" source="svc:hatchet" target="agent:git-platform-poller">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:incident-remediator" source="svc:hatchet" target="agent:incident-remediator">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:qa-observer" source="svc:hatchet" target="agent:qa-observer">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:rustant" source="svc:hatchet" target="agent:rustant">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:hatchet--EXECUTES_AGENT--agent:zeroclaw" source="svc:hatchet" target="agent:zeroclaw">
+      <data key="d_relation">EXECUTES_AGENT</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/architecture.html</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:kafka--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:kafka" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:keda--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:keda" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:keycloak--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:keycloak" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:litellm--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:litellm" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:minio--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:minio" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:mlflow--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:mlflow" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:openziti--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:openziti" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:r2r--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:r2r" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:r2r--INDEXES--EXP-2026-013" source="svc:r2r" target="EXP-2026-013">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-013</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:svc:r2r--INDEXES--repo:mlops-python-package" source="svc:r2r" target="repo:mlops-python-package">
+      <data key="d_relation">INDEXES</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/notebooks.html#exp-2026-014</data>
+      <data key="d_confidence">verified</data>
+    </edge>
+    <edge id="edge:svc:r2r-reader--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:r2r-reader" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:semantica--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:semantica" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+    <edge id="edge:svc:vault--DEPLOYED_BY--repo:internal-gitops-control-plane" source="svc:vault" target="repo:internal-gitops-control-plane">
+      <data key="d_relation">DEPLOYED_BY</data>
+      <data key="d_evidence_url">https://lgcorzo.github.io/docs/auditor/ecosystem.md</data>
+      <data key="d_confidence">documented</data>
+    </edge>
+  </graph>
+</graphml>

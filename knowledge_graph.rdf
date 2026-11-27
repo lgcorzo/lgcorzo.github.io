@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:dg="https://lgcorzo.github.io/ontology/dark-gravity#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/ADR-001">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ArchitectureDecision" />
+    <dg:nodeId>ADR-001</dg:nodeId>
+    <rdfs:label>ADR-001: gVisor (runsc) Sandbox Execution &amp; Forensic Zeroize Memory Bounds</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/crates/factory-core/src/security.rs</dg:canonicalUrl>
+    <dg:summary>Status: accepted. Source: rust_CACD_autonomous_factory/crates/factory-core/src/security.rs.</dg:summary>
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/agent/zeroclaw" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/svc/gvisor" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/svc/vault" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/ADR-008">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ArchitectureDecision" />
+    <dg:nodeId>ADR-008</dg:nodeId>
+    <rdfs:label>ADR-008: Adoption of Google AX Declarative Patterns, CRD Scope, and SSOT Reconciliation Contract (v3.1)</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/rust_CACD_autonomous_factory/blob/main/wiki/architecture/decisions/adr-008-google-ax-crd-workspace-standard-v3.1.md</dg:canonicalUrl>
+    <dg:summary>ADR-008 v3 (accepted) plus v3.1 amendment (proposed) resolving workspace↔mission cardinality, spec mutability, and the scope of the 30Mi/250m resource bound.</dg:summary>
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/svc/gvisor" />
+    <dg:GOVERNS_COMPONENT rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-001">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-001</dg:nodeId>
+    <rdfs:label>FluxCD CI Pipeline: Kubeconform Validation False Positives</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-001</dg:canonicalUrl>
+    <dg:summary>Filtering raw Helm values and unrendered templates eliminates false-positive schema validation failures in GitOps CI while keeping rendered manifests strictly validated.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-002">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-002</dg:nodeId>
+    <rdfs:label>Cargo Audit Gates vs. Unmaintained Transitive Crates</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-002</dg:canonicalUrl>
+    <dg:summary>Explicit risk-acceptance registries (`.cargo/audit.toml`) prevent unexploitable transitive Rust advisories from halting delivery without disabling CVE gates.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-003">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-003</dg:nodeId>
+    <rdfs:label>Durable Orchestration: Hatchet DAGs vs. In-House Actor State Machines</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-003</dg:canonicalUrl>
+    <dg:summary>Adopting Hatchet durable workflows backed by PostgreSQL eliminates bespoke scheduler crashes during worker node eviction.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-004">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-004</dg:nodeId>
+    <rdfs:label>Kubernetes Control Plane &amp; Worker Node Hardening</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-004</dg:canonicalUrl>
+    <dg:summary>Systematic CIS Kubernetes benchmark auditing eliminates privileged service accounts and enforces least-privilege RBAC across namespaces.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-005">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-005</dg:nodeId>
+    <rdfs:label>Asymmetric Secret Governance: SealedSecrets Key Rotation &amp; DR</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-005</dg:canonicalUrl>
+    <dg:summary>Strict-scoped Bitnami SealedSecrets allow safe public/private GitOps declarative secrets without storing private decryption keys in Git.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-006">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-006</dg:nodeId>
+    <rdfs:label>Durable Execution &amp; Idempotency Under Node Termination</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-006</dg:canonicalUrl>
+    <dg:summary>Hatchet step checkpointing resumes killed workflows automatically without corrupting repository state.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-007">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-007</dg:nodeId>
+    <rdfs:label>Zero-Trust Execution Boundary: Syscall Filtering &amp; Calico Egress Blocking</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-007</dg:canonicalUrl>
+    <dg:summary>Combining gVisor user-space syscall interception with default-deny NetworkPolicies blocks raw sockets and unauthorized exfiltration attempts.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-008">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-008</dg:nodeId>
+    <rdfs:label>Verification Triad: Deterministic Pytest Suites vs. LLM-as-a-Judge</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-008</dg:canonicalUrl>
+    <dg:summary>Relying solely on LLM judges misses subtle logic defects, whereas mandatory deterministic test execution eliminates silent logic regressions.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-009">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-009</dg:nodeId>
+    <rdfs:label>AST Subgraphs vs. Raw Grep</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-009</dg:canonicalUrl>
+    <dg:summary>2-hop Tree-sitter AST neighborhood extraction reduces prompt context size while increasing first-pass code generation accuracy.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-010">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-010</dg:nodeId>
+    <rdfs:label>Predictable Cloud-Native Execution: Strict 512Mi Memory Clamping</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-010</dg:canonicalUrl>
+    <dg:summary>Explicit cgroup memory limits (`512Mi` compilation profile, `30Mi` micro-sandbox) prevent noisy-neighbor OOM exhaustion on host nodes.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-011">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-011</dg:nodeId>
+    <rdfs:label>Autonomous Security Remediation at Scale</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-011</dg:canonicalUrl>
+    <dg:summary>Separating meta-orchestration, credentialed factory controls, and surgical code-fix loops enables automated CVE remediation with sharp LLM token savings across the historical 69-repo portfolio (`64` public = `22` original + `42` maintained forks, plus `5` private/archived). A...</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-012">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-012</dg:nodeId>
+    <rdfs:label>Supply Chain Upgrade Paradox Across Fleet &amp; Cluster</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-012</dg:canonicalUrl>
+    <dg:summary>Synchronized lockfile exports and hash-pinned transitives prevent secondary vulnerabilities introduced by naive package bumps while reducing active Trivy cluster findings (`429 -&gt; 396` CRITICAL, `3,660 -&gt; 2,973` HIGH, `720` fixed).</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-013">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-013</dg:nodeId>
+    <rdfs:label>End-to-End Autonomous Mission &amp; Hatchet-Orchestrated R2R GraphRAG (`Mission #476`)</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-013</dg:canonicalUrl>
+    <dg:summary>Post-merge-only R2R v3 GraphRAG ingestion orchestrated via Hatchet produces zero duplicate ingestions, reliable Leiden community graphs, and grounded MCP retrieval.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/EXP-2026-014">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Experiment" />
+    <dg:nodeId>EXP-2026-014</dg:nodeId>
+    <rdfs:label>Parallel Autonomous Swarm Mode &amp; Contention-Free R2R GraphRAG (`Mission #478`)</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/notebooks.html#exp-2026-014</dg:canonicalUrl>
+    <dg:summary>Parallel `[P]` execution across isolated gVisor lanes with `fan-in-synthesize` and read/write-split `r2r-reader` RO replicas increases throughput without Postgres/pgvector lock contention.</dg:summary>
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:MEASURES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:VALIDATES_HYPOTHESIS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/RQ1">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ResearchHypothesis" />
+    <dg:nodeId>RQ1</dg:nodeId>
+    <rdfs:label>RQ1: Can autonomous agents safely reduce Mean Time to Recovery (`MTTR`) under strict HITL gates?</rdfs:label>
+    <dg:verificationStatus>experimental</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/RESEARCH.md#rq1</dg:canonicalUrl>
+    <dg:summary>Contract-driven agent pipelines backed by durable Hatchet checkpoints, R2R GraphRAG context, and Review Guidance loops reduce remediation cycle time and MTTR without sacrificing CI verification or Vertex 4 human approval.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/RQ2">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ResearchHypothesis" />
+    <dg:nodeId>RQ2</dg:nodeId>
+    <rdfs:label>RQ2: Can cryptographic Non-Human Identities (NHI) and Verifiable Credentials improve governance and traceability?</rdfs:label>
+    <dg:verificationStatus>experimental</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/RESEARCH.md#rq2</dg:canonicalUrl>
+    <dg:summary>Binding agent missions to Ed25519 W3C Verifiable Credentials (`Ed25519Signature2020`), 300 s Vault JIT tokens (`54.2 ns` `ZeroizeOnDrop`), LiteLLM `X-Vtag-*` FinOps headers, and causal Semantica lineage yields tamper-evident attribution across multi-repo PRs.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/RQ3">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ResearchHypothesis" />
+    <dg:nodeId>RQ3</dg:nodeId>
+    <rdfs:label>RQ3: Can declarative GitOps, admission policies, and kernel sandboxing act as an enforceable security boundary?</rdfs:label>
+    <dg:verificationStatus>experimental</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/RESEARCH.md#rq3</dg:canonicalUrl>
+    <dg:summary>Combining FluxCD v2 declarative reconciliation, OpenZiti mTLS 1.3, default-deny NetworkPolicies, `ValidatingAdmissionPolicy` resource clamps (`&lt;= 30 Mi` / `250m` micro-sandbox, `&lt;= 512 Mi` / `500m` compilation), and `gVisor (runsc)` prevents privilege escalation and fleet reg...</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/RQ4">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#ResearchHypothesis" />
+    <dg:nodeId>RQ4</dg:nodeId>
+    <rdfs:label>RQ4: Can structured, AST- and GraphRAG-grounded agentic workflows outperform ad-hoc workflows on reliability and token efficiency?</rdfs:label>
+    <dg:verificationStatus>experimental</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/RESEARCH.md#rq4</dg:canonicalUrl>
+    <dg:summary>Pairing AST neighborhood extraction (`OSR &lt; 5%`), deterministic test verification (replacing pure LLM judges), R2R Leiden GraphRAG with `r2r-reader` RO replicas, and parallel Swarm `[P]` execution yields higher first-pass accuracy and lower token overhead per merged PR.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/aethelgard">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:aethelgard</dg:nodeId>
+    <rdfs:label>Aethelgard</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: reviewer. Phases: sast-llm-judge-gate. Auth: LiteLLM Frontier Route.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/auditor">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:auditor</dg:nodeId>
+    <rdfs:label>AuditorAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: security_auditor. Phases: rustant-review, post-mortem. Auth: Ed25519 W3C-VC + X-Vtag-Team.</dg:summary>
+    <dg:AUDITS rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-012" />
+    <dg:AUDITS rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:AUDITS rdf:resource="https://lgcorzo.github.io/kg/svc/gvisor" />
+    <dg:PRODUCES_EVIDENCE rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-011" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/doc-agent">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:doc-agent</dg:nodeId>
+    <rdfs:label>DocumentationAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: documenter. Phases: factory-deliver, stage-4-okf-wiki. Auth: Ed25519 W3C-VC.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/finops">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:finops</dg:nodeId>
+    <rdfs:label>FinOpsAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: finops. Phases: cross-cutting-budget-guard. Auth: LiteLLM X-Vtag-* + FinOpsStopStore.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/git-platform-poller">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:git-platform-poller</dg:nodeId>
+    <rdfs:label>GitPlatformPoller</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: poller. Phases: outbound-30s-poll, stage-5-index-code. Auth: Ed25519 Signed Mission Payload.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/incident-remediator">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:incident-remediator</dg:nodeId>
+    <rdfs:label>Internal Incident Remediation Service</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: remediator. Phases: fluxcd-alert-remediation. Auth: Kubernetes RBAC + SealedSecrets.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/qa-observer">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:qa-observer</dg:nodeId>
+    <rdfs:label>QAObserverAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: qa_observer. Phases: zeroclaw-validate, sentry-closed-loop-15m. Auth: Ed25519 W3C-VC + Sentry Token.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/rustant">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:rustant</dg:nodeId>
+    <rdfs:label>RustantAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: planner. Phases: rustant-plan, rustant-review. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/agent/zeroclaw">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Agent" />
+    <dg:nodeId>agent:zeroclaw</dg:nodeId>
+    <rdfs:label>ZeroClawAgent</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Role: developer. Phases: zeroclaw-execute, zeroclaw-validate. Auth: Ed25519 W3C-VC + Vault JIT (54.2 ns ZeroizeOnDrop).</dg:summary>
+    <dg:PRODUCES_EVIDENCE rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-013" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/R2R-Engine">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:R2R-Engine</dg:nodeId>
+    <rdfs:label>R2R-Engine</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/R2R-Engine</dg:canonicalUrl>
+    <dg:summary>Sovereign hybrid vector (pgvector) + Leiden GraphRAG corporate memory engine patched for deterministic Hatchet collection graph sync.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/r2r-reader" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/dark-litellm">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:dark-litellm</dg:nodeId>
+    <rdfs:label>dark-litellm</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/dark-litellm</dg:canonicalUrl>
+    <dg:summary>Hardened sovereign LLM gateway and priority router enforcing X-Vtag-* FinOps telemetry, RedisPriorityScheduler, and A2A policy enforcement.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/deepwiki-rs">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:deepwiki-rs</dg:nodeId>
+    <rdfs:label>deepwiki-rs</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/deepwiki-rs</dg:canonicalUrl>
+    <dg:summary>Tree-sitter Rust AST analyzer and Orphan Symbol Rate (OSR &lt; 5%) verifier generating grounded OKF architectural maps.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/fastapi-autogen-team">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:fastapi-autogen-team</dg:nodeId>
+    <rdfs:label>fastapi-autogen-team</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/fastapi-autogen-team</dg:canonicalUrl>
+    <dg:summary>Native Rust (Axum + Rig) multi-agent streaming SSE microservice serving OpenAI-compatible multi-agent squads integrated with R2R.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:internal-gitops-control-plane</dg:nodeId>
+    <rdfs:label>Internal GitOps Control Plane</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Private FluxCD v2 GitOps control plane managing the 10-namespace Kubernetes topology, SealedSecrets, OpenZiti mesh, and NetworkPolicies (anonymized per DOC-011).</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/kafka" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/keycloak" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/openziti" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/vault" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/internal-incident-remediation-service">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:internal-incident-remediation-service</dg:nodeId>
+    <rdfs:label>Internal Incident Remediation Service</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/ecosystem.md</dg:canonicalUrl>
+    <dg:summary>Private Kubernetes incident remediation daemon listening to FluxCD alerts, classifying errors, logging MLflow runs, and generating patch PRs (anonymized per DOC-011).</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/mlflow" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/incident-remediator" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/kes">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:kes</dg:nodeId>
+    <rdfs:label>kes</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/kes</dg:canonicalUrl>
+    <dg:summary>Archived Key Encryption Server reference fork locked permanently to FROZEN_READONLY and cataloged read-only without mutations.</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/lgcorzo">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:lgcorzo</dg:nodeId>
+    <rdfs:label>lgcorzo</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/lgcorzo</dg:canonicalUrl>
+    <dg:summary>GitHub profile entry repository routing human reviewers and external agents to Dark Gravity's unified portal, auditor pack, and ecosystem topology.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/lgcorzo.github.io" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/lgcorzo.github.io">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:lgcorzo.github.io</dg:nodeId>
+    <rdfs:label>lgcorzo.github.io</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/</dg:canonicalUrl>
+    <dg:summary>Canonical public Dark Gravity engineering hub hosting /start-here, /ai-agents, Lab Notebooks, RESEARCH.md, EXPERIMENTS.md, /docs/auditor/, Knowledge Graph, metrics, and read-only Rust dark-gravity-mcp.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/dark-gravity-mcp" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/dark-gravity-mcp" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/llmops-python-package">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:llmops-python-package</dg:nodeId>
+    <rdfs:label>llmops-python-package</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/llmops-python-package</dg:canonicalUrl>
+    <dg:summary>Domain-driven LLMOps platform aligned with ISO/IEC/IEEE 42010 &amp; 15289 standards, prompt evaluations, Hatchet DSLs, MCP registries, and OpenWiki living documentation.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/minio">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:minio</dg:nodeId>
+    <rdfs:label>minio</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/minio</dg:canonicalUrl>
+    <dg:summary>Sovereign S3-compatible object storage fork built hermetically to GHCR storing checkpoints, provenance bundles, and R2R documents.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/mlops-python-package">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:mlops-python-package</dg:nodeId>
+    <rdfs:label>mlops-python-package</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/mlops-python-package</dg:canonicalUrl>
+    <dg:summary>First-party MLOps standard package (DVC, MLflow, Hydra, SHAP, CycloneDX SBOM, OpenWiki) serving as continuous validation target for autonomous missions (#476, #478).</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/mlflow" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:PRODUCES_EVIDENCE rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-013" />
+    <dg:PRODUCES_EVIDENCE rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-014" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:rust_CACD_autonomous_factory</dg:nodeId>
+    <rdfs:label>rust_CACD_autonomous_factory</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/rust_CACD_autonomous_factory</dg:canonicalUrl>
+    <dg:summary>Core 5-crate Rust 2024 CA/CD orchestrator, AgentWorkspace operator, Hatchet DAG runner, gVisor SandboxDriver, and runtime MCP server.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/speckit-superpowers-bridge" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/gvisor" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/hatchet" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/kafka" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/litellm" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/r2r" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/semantica" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/vault" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/aethelgard" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/auditor" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/doc-agent" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/finops" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/git-platform-poller" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/qa-observer" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/rustant" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/zeroclaw" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/ADR-001" />
+    <dg:IMPLEMENTS rdf:resource="https://lgcorzo.github.io/kg/ADR-008" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/semantica">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:semantica</dg:nodeId>
+    <rdfs:label>semantica</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/semantica</dg:canonicalUrl>
+    <dg:summary>Semantic domain ontology and causal provenance engine consuming Kafka agent-thought streams and detecting cross-lane conflicts.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/kafka" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/svc/semantica" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/kafka" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/minio" />
+    <dg:FORKED_FROM rdf:resource="https://lgcorzo.github.io/kg/svc/semantica" />
+    <dg:OWNS_SERVICE rdf:resource="https://lgcorzo.github.io/kg/svc/semantica" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/spec-kit">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:spec-kit</dg:nodeId>
+    <rdfs:label>spec-kit</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/spec-kit</dg:canonicalUrl>
+    <dg:summary>Sovereign fork of GitHub Spec-Kit powering Dark Gravity's WHAT contract workflows (/speckit-specify, /speckit-plan, /speckit-tasks).</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/speckit-superpowers-bridge">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:speckit-superpowers-bridge</dg:nodeId>
+    <rdfs:label>speckit-superpowers-bridge</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/speckit-superpowers-bridge</dg:canonicalUrl>
+    <dg:summary>Contract handoff bridge uniting Spec-Kit (WHAT: constitution, spec, plan, tasks) with Superpowers execution discipline (HOW: TDD, subagents, verification gates) and guard-command enforcement.</dg:summary>
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/rust_CACD_autonomous_factory" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/spec-kit" />
+    <dg:DEPENDS_ON rdf:resource="https://lgcorzo.github.io/kg/repo/superpowers" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/repo/superpowers">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Repository" />
+    <dg:nodeId>repo:superpowers</dg:nodeId>
+    <rdfs:label>superpowers</rdfs:label>
+    <dg:verificationStatus>verified</dg:verificationStatus>
+    <dg:canonicalUrl>https://github.com/lgcorzo/superpowers</dg:canonicalUrl>
+    <dg:summary>Sovereign fork of the Superpowers agentic discipline harness powering HOW workflows (TDD, subagents, debugging, verification gates).</dg:summary>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/dark-gravity-mcp">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:dark-gravity-mcp</dg:nodeId>
+    <rdfs:label>Dark Gravity Read-Only MCP Server</rdfs:label>
+    <dg:verificationStatus>implemented</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `agents` (mcp_knowledge): Strictly Read-Only + DOC-011 Public Cache + RunAsNonRoot Distroless.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/ADR-001" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/ADR-008" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/RQ1" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/RQ2" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/RQ3" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/RQ4" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/gvisor">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:gvisor</dg:nodeId>
+    <rdfs:label>gVisor (runsc) Sandbox Runtime</rdfs:label>
+    <dg:verificationStatus>tested</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `development` (sandbox_runtime): Restricted PodSecurity + ValidatingAdmissionPolicy + Deny-All Egress (TESTED pending AUD-010).</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/hatchet">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:hatchet</dg:nodeId>
+    <rdfs:label>Hatchet Engine</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `orchestrators` (orchestrator): Calico Default-Deny NetworkPolicy + CloudNativePG SSOT.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/aethelgard" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/auditor" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/doc-agent" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/finops" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/git-platform-poller" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/incident-remediator" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/qa-observer" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/rustant" />
+    <dg:EXECUTES_AGENT rdf:resource="https://lgcorzo.github.io/kg/agent/zeroclaw" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/kafka">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:kafka</dg:nodeId>
+    <rdfs:label>Apache Kafka (KRaft)</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `confluent` (event_bus): Cluster-internal Event Bus + Default-Deny Egress.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/keda">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:keda</dg:nodeId>
+    <rdfs:label>KEDA Autoscaler</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `orchestrators` (orchestrator): Kafka Lag &amp; QPS Metric Autoscaling.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/keycloak">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:keycloak</dg:nodeId>
+    <rdfs:label>Keycloak IAM (OIDC)</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `security` (identity): Native OIDC + OAuth2-Proxy Identity Boundary.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/litellm">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:litellm</dg:nodeId>
+    <rdfs:label>Dark-LiteLLM Gateway</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `llm-apps` (llm_gateway): Keycloak OIDC + RedisPriorityScheduler + X-Vtag PEP.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/minio">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:minio</dg:nodeId>
+    <rdfs:label>Sovereign MinIO S3 &amp; Operator</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `storage` (object_storage): SealedSecrets + Calico NetworkPolicy.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/mlflow">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:mlflow</dg:nodeId>
+    <rdfs:label>MLflow &amp; CloudNativePG mlflow-db</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `llm-apps` (database): 1 RW + 3 RO CNPG Cluster + SealedSecrets.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/openziti">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:openziti</dg:nodeId>
+    <rdfs:label>OpenZiti Zero-Trust Overlay</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `openziti` (zero_trust_network): mTLS 1.3 Dark Mesh + Zero Inbound Public Ports.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/r2r">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:r2r</dg:nodeId>
+    <rdfs:label>R2R-Engine (v3 GraphRAG)</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `llm-apps` (knowledge_rag): OpenZiti mTLS + CloudNativePG pgvector.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/EXP-2026-013" />
+    <dg:INDEXES rdf:resource="https://lgcorzo.github.io/kg/repo/mlops-python-package" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/r2r-reader">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:r2r-reader</dg:nodeId>
+    <rdfs:label>r2r-reader (KEDA Read Pool)</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `llm-apps` (knowledge_rag): agents-only Ingress NetworkPolicy + Read-Only CNPG Replica.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/semantica">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:semantica</dg:nodeId>
+    <rdfs:label>Semantica-AGI</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `llm-apps` (knowledge_graph): Kafka agent-thought Stream + MinIO Provenance S3.</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://lgcorzo.github.io/kg/svc/vault">
+    <rdf:type rdf:resource="https://lgcorzo.github.io/ontology/dark-gravity#Service" />
+    <dg:nodeId>svc:vault</dg:nodeId>
+    <rdfs:label>HashiCorp Vault JIT</rdfs:label>
+    <dg:verificationStatus>deployed</dg:verificationStatus>
+    <dg:canonicalUrl>https://lgcorzo.github.io/docs/auditor/architecture.md</dg:canonicalUrl>
+    <dg:summary>Namespace `security` (secrets): 300s Ephemeral JIT Tokens + ZeroizeOnDrop (54.2 ns).</dg:summary>
+    <dg:DEPLOYED_BY rdf:resource="https://lgcorzo.github.io/kg/repo/internal-gitops-control-plane" />
+  </rdf:Description>
+</rdf:RDF>
